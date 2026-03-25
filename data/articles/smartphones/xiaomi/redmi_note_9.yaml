@@ -1,0 +1,303 @@
+marque: "Xiaomi"
+logo_marque: "logo_xiaomi.webp"
+
+modeles:   
+  - nom: "Redmi Note 9"
+    date: "30 avril 2020"
+    couleurs:
+      - nom: "Blanc Polaire"
+        code: "#F5F5F5"
+      - nom: "Grid de Minuit"
+        code: "#2C2F3D"
+      - nom: "Vert Forêt"
+        code: "#2f6b4f"
+      - nom: "Noir Onyx"
+        code: "#0A0A0A"
+    processeur: "MTK Helio G85 Octa-core"
+    graphique: "ARM G52 MC2"
+    os: "Android 10 avec MIUI"
+    camera_ar: quadruple 48 MP + 8 MP + 2 MP + 2 MP
+    resol_ar: 1080@30fps, 720p@30/60/120fps
+    camera_av: simple 13 MP
+    ram: 3 Go, 4 Go
+    stockage: 64 Go, 128 Go
+    ecran: DotDisplay, 6.53"
+    resolution: 1080 x 2340 pixels (FHD+)
+    protection: Corning Gorilla Glass 5
+    battery: 5020 mAh (Li‑Po)
+    charge: Charge rapide 18 W
+    hautparleur: "mono ultra-linéaire (module 1216 – 12 × 16 mm), grande amplitude Xmax 0,5 mm, amplificateur Smart PA 11V"
+    ecouteur: "écouteur d’appel intégré (module non précisé)"
+    sim: Dual Nano-SIM
+    sd: emplacement dédié, jusqu’à 512 Go
+    reseaux: 2G / 3G / 4G LTE
+    wifi: Wi-Fi 2.4G / Wi-Fi 5G
+    bluetooth: "5.0"
+    gps: GPS, A-GPS, GLONASS, BeiDou
+    nfc: OUI
+    dimensions: 162,3 × 77,2 × 8,9 mm
+    poids: 199 g
+
+
+  - nom: "Redmi Note 9S"
+    date: "23 mars 2020"
+    couleurs:
+      - nom: "Gris Interstellaire"
+        code: "#8A8C90"
+      - nom: "Bleu Aurora"
+        code: "#3C7DD9"
+      - nom: "Blanc Glacial"
+        code: "#F0F8FF"
+    processeur: "Qualcomm® Snapdragon™ 720G Octa-core"
+    graphique: "Adreno™ 618"
+    os: "Android 10 avec MIUI"
+    camera_ar: quadruple 48 MP + 8 MP + 5 MP + 2 MP
+    resol_ar: 4K@30fps, 1080p@30/60/120fps
+    camera_av: simple 16 MP
+    resol_av: 
+    ram: 4 Go, 6 Go
+    stockage: 64 Go, 128 Go
+    ecran: DotDisplay, 6.67"
+    resolution: 1080 x 2400 pixels (FHD)
+    protection: Corning Gorilla Glass 5
+    battery: 5020 mAh (Li‑Po)
+    charge: Charge rapide 18 W
+    hautparleur: "mono ultra-linéaire (module 1216 – 12 × 16 mm), grande amplitude Xmax 0,5 mm, amplificateur Smart PA 10V"
+    ecouteur: "écouteur d’appel intégré (module non précisé)"
+    sim: Dual Nano-SIM
+    sd: emplacement dédié, jusqu’à 512 Go
+    reseaux: 2G / 3G / 4G LTE
+    wifi: Wi-Fi 2.4G / Wi-Fi 5G
+    bluetooth: "5.0"
+    gps: GPS, A-GPS, GLONASS, BeiDou
+    nfc: NON
+    dimensions: 165,75 × 76,68 × 8,8 mm
+    poids: 209 g
+
+
+  - nom: "Redmi Note 9 Pro"
+    date: "30 avril 2020"
+    couleurs:
+      - nom: "Blanc Polaire"
+        code: "#F5F5F5"
+      - nom: "Grid de Minuit"
+        code: "#2C2F3D"
+      - nom: "Vert Forêt"
+        code: "#2f6b4f"
+    processeur: "Qualcomm® Snapdragon™ 720G Octa-core"
+    graphique: "Adreno™ 618"
+    os: "Android 10 avec MIUI"
+    camera_ar: quadruple 64 MP + 8 MP + 5 MP + 2 MP
+    resol_ar: 4K@30fps, 1080p@30/60/120fps
+    camera_av: simple 16 MP
+    resol_av: 
+    ram: 6 Go
+    stockage: 64 Go, 128 Go
+    ecran: DotDisplay, 6.67"
+    resolution: 1080 x 2400 pixels (FHD+)
+    protection: Corning Gorilla Glass 5
+    battery: 5020 mAh (Li‑Po)
+    charge: Charge rapide 30 W
+    hautparleur: "mono ultra-linéaire (module 1216 – 12 × 16 mm), grande amplitude Xmax 0,5 mm, amplificateur Smart PA 10V"
+    ecouteur: "écouteur d’appel intégré (module non précisé)"
+    sim: Dual Nano-SIM
+    sd: emplacement dédié, jusqu’à 512 Go
+    reseaux: 2G / 3G / 4G LTE
+    wifi: Wi-Fi 2.4G / Wi-Fi 5G
+    bluetooth: "5.0"
+    gps: GPS, A-GPS, GLONASS, BeiDou
+    nfc: OUI
+    dimensions: 165,75 × 76,68 × 8,8 mm
+    poids: 209 g
+
+cotes:
+  haut:
+    - Émetteur infrarouge (IR blaster)
+    - Microphone secondaire
+  bas:
+    - Prise jack 3,5 mm
+    - Port USB-C
+    - Haut-parleur
+    - Microphone principal
+  droite:
+    - Bouton marche / arrêt
+    - Boutons volume + / −
+  gauche:
+    - Tiroir SIM / microSD
+
+capteurs_securite:
+  capteurs:
+    - nom: "Accéléromètre"
+    - nom: "Gyroscope"
+    - nom: "Capteur de proximité"
+    - nom: "Capteur de luminosité"
+    - nom: "Boussole :"
+      modeles:
+        - nom: "**Redmi Note 9**"
+          valeur: "Numérique"
+        - nom: "**Redmi Note 9S**"
+          valeur: "Électronique"
+        - nom: "**Redmi Note 9 Pro**"
+          valeur: "Électronique"
+  securite:
+    - nom: "Lecteur d’empreintes digitales :"
+      modeles:
+        - nom: "**Redmi Note 9**"
+          valeur: "Arrière"
+        - nom: "**Redmi Note 9S**"
+          valeur: "Intégré au bouton d'alimentation"
+        - nom: "**Redmi Note 9 Pro**"
+          valeur: "Intégré au bouton d'alimentation"
+    - nom: "**Déverrouillage facial**"
+      description: "Caméra frontale"
+
+
+images: 
+  - image: "Redmi Note 9"
+    fichier: "redmi-note-9-1.webp"
+  - image: "Redmi Note 9S"
+    fichier: "redmi-note-9-2.webp"
+  - image: "Redmi Note 9S"
+    fichier: "redmi-note-9-3.webp"
+  - image: "Redmi Note 9 Pro"
+    fichier: "redmi-note-9-4.webp"    
+
+
+evaluation_1:
+  modeles:
+    - nom: "Redmi Note 9"
+      positifs:
+        - Très bonne autonomie (batterie 5020 mAh)
+        - Design correct et prise en main agréable
+        - NFC présent + bonne connectivité globale
+        - Bon rapport performances-prix pour usage basique
+      negatifs:
+        - Performances limitées pour les jeux exigeants
+        - Écran IPS un peu sombre et manque de contraste
+        - Interface parfois lente et présence d’applications préinstallées
+      note: 7,0
+      conclusion: Smartphone équilibré pour budget modéré, avec une excellente autonomie, mais qui ne brille pas sur la performance pure ou l’écran par rapport à des modèles plus récents
+
+evaluation_2:
+  modeles:
+    - nom: "Redmi Note 9S"
+      positifs:
+        - Écran large et agréable pour multimedia
+        - Excellente autonomie et batterie durable
+        - Performance fluide pour la majorité des usages (Snapdragon 720G)
+        - Quad-caméra polyvalent pour la gamme budget
+      negatifs:
+        - Pas de NFC
+        - Charge rapide limitée à 18 W
+        - Écran 60 Hz seulement (pas de taux de rafraîchissement plus élevé)
+      note: 8,0
+      conclusion: "Une valeur sûre dans le segment milieu de gamme abordable : fluide, autonome et complet, mais limité par l’absence de NFC et un écran ''classique'' "
+
+evaluation_3:
+  modeles:
+    - nom: "Redmi Note 9 Pro"
+      positifs:
+        - Performances solides pour la catégorie grâce au Snapdragon 720G
+        - Très bonne autonomie
+        - Bonne polyvalence photo jour / portrait dans la gamme prix
+        - NFC, microSD, double SIM complet côté connectivité
+      negatifs:
+        - Qualité photo pas exceptionnelle comparée à certains concurrents
+        - Applications préinstallées et petites limitations logicielles parfois regrettées
+        - Performances en jeu plus modestes, environ 30 FPS sur titres lourds
+      note: 8,0
+      conclusion: Choix idéal à petit prix pour un usage quotidien fluide, avec une excellente autonomie et quelques limites en photo et en jeu
+
+
+differences:
+  - Performance (processeur)
+  - Qualité de la photo principale
+  - Écran 
+  - Batterie
+  - NFC 
+
+acheter_1:
+  - vendeur: "Xiaomi"
+    modele: "Redmi Note 9"
+    url: "https://www.mi.com/fr/redmi-note-9/?skupanel=1"
+    logo: "/images/xiaomi.svg"
+
+  - vendeur: "Amazon"
+    modele: "Redmi Note 9"
+    url: "https://www.amazon.fr/Xiaomi-Redmi-Note-Smartphone-Reconditionn%C3%A9/dp/B0DZK46PR5?th=1"
+    logo: "/images/amazon.svg"
+
+  - vendeur: "Darty"
+    modele: "Redmi Note 9"
+    url: "https://www.darty.com/nav/achat/ref/MC343925645.html?ofmp=1028578255&dartycid=sem_free-listing_MP-telephonie-et-mobilite_telephone-mobile"
+    logo: "/images/darty.svg"
+
+  - vendeur: "Cdiscount"
+    modele: "Redmi Note 9"
+    url: "https://www.cdiscount.com/telephonie/telephone-mobile/xiaomi-redmi-note-9-128-go-vert-2020-reconditi/f-1440402-rcdxia0287760ec.html?o=4297652263&p=87.74&cid=search_pla&gad_campaignid=17321694237"
+    logo: "/images/cdiscount.svg"
+
+
+acheter_2:
+  - vendeur: "Xiaomi"
+    modele: "Redmi Note 9S"
+    url: "https://www.mi.com/fr/redmi-note-9s/?skupanel=1"
+    logo: "/images/xiaomi.svg"
+
+  - vendeur: "Amazon"
+    modele: "Redmi Note 9S"
+    url: "https://www.amazon.fr/Xiaomi-Redmi-Note-Smartphone-interstellaire/dp/B085S4DSZH/ref=sr_1_5?__mk_fr_FR=%C3%85M%C3%85%C5%BD%C3%95%C3%91&crid=JZR1SYL33QDG&dib=eyJ2IjoiMSJ9.KET3v5mu8yKh2Wsdql2ae5BRYe-5J-hXPt3XYdhxC8V2oXWm_cQrKBN9mHmOOCMZifNkug2RCQqV-eHNC_YGyujn6KJ7-lkSXswNwHDVSJKYNlR6AsumIxdo1Pj_QJ3F0bapSu2JLJ5ZUoUHwkaZcmzUR0HTCLONvHPrLI-VphR4OXwoy0-jFfgIbY80t0PYR5RJyfgxTbfGFmxB7y4LKLwxAQ44ClqwwTGz2DZOYRCZxRpRkTZtWerLVoKY2pDCco5kO9tkWa7ZYiE4sIBObocUg2CCxwFl39TndbPzsHo.uArINsc13ompqskX6-_mak1w22IQfW_dQyyVKADvVg0&dib_tag=se&keywords=Redmi%2BNote%2B9S&qid=1771785907&s=electronics&sprefix=redmi%2Bnote%2B9s%2Celectronics%2C281&sr=1-5&th=1"
+    logo: "/images/amazon.svg"
+
+  - vendeur: "Darty"
+    modele: "Redmi Note 9S"
+    url: "https://www.darty.com/nav/achat/ref/MC343145630.html"
+    logo: "/images/darty.svg"
+
+  - vendeur: "Cdiscount"
+    modele: "Redmi Note 9S"
+    url: "https://www.cdiscount.com/telephonie/telephone-mobile/xiaomi-redmi-note-9s-bleu-aurore-128-go/f-14404-xia6941059643043.html?o=4288121555&p=108.93&cid=search_pla&cm_mmc=PLA!COR!!MP!17321694237!m5729447347_pXIA6941059643043-4288121555_l9040861_tpla-294682000766__a137602897192&gad_source=1&gad_campaignid=17321694237&gbraid=0AAAAABIIGv8-d4LElef_zqQxhftMJV1mM"
+    logo: "/images/cdiscount.svg"
+
+
+acheter_3:
+  - vendeur: "Xiaomi"
+    modele: "Redmi Note 9 Pro"
+    url: "https://www.mi.com/fr/redmi-note-9-pro/?skupanel=1"
+    logo: "/images/xiaomi.svg"
+
+  - vendeur: "Amazon"
+    modele: "Redmi Note 9 Pro"
+    url: "https://www.amazon.fr/Xiaomi-Smartphone-DotDisplay-5020mAh-Interstellar/dp/B0888P4CB7/ref=asc_df_B0888P4CB7?mcid=d55277e214db330d9ee69db29b6a4f27&tag=googshopfr-21&linkCode=df0&hvadid=701669398511&hvpos=&hvnetw=g&hvrand=12727808416609554818&hvpone=&hvptwo=&hvqmt=&hvdev=c&hvdvcmdl=&hvlocint=&hvlocphy=9040861&hvtargid=pla-915663959235&hvocijid=12727808416609554818-B0888P4CB7-&hvexpln=0&th=1"
+    logo: "/images/amazon.svg"
+
+  - vendeur: "Cdiscount"
+    modele: "Redmi Note 9 Pro"
+    url: "https://www.cdiscount.com/telephonie/telephone-mobile/xiaomi-redmi-note-9-pro-gris-interstellaire-128-go/f-14404-xiaomiredmino9pg.html#mpos=1|mp"
+    logo: "/images/cdiscount.svg"
+
+connexes:
+  - serie: "Série Redmi Note 8"
+    url: "https://high-tech.pages.dev/smartphones/xiaomi/redmi-note-8/"
+  - serie: "Série Redmi Note 10"
+    url: "https://high-tech.pages.dev/smartphones/xiaomi/redmi-note-10/"
+  - serie: "Série Redmi Note 11"
+    url: "https://high-tech.pages.dev/smartphones/xiaomi/redmi-note-11/"
+  - serie: "Série Redmi Note 12"
+    url: "https://high-tech.pages.dev/smartphones/xiaomi/redmi-note-12/"
+  - serie: "Série Redmi Note 13"
+    url: "https://high-tech.pages.dev/smartphones/xiaomi/redmi-note-13/"
+  - serie: "Série Redmi Note 14"
+    url: "https://high-tech.pages.dev/smartphones/xiaomi/redmi-note-14/"
+  - serie: "Série Redmi Note 15"
+    url: "https://high-tech.pages.dev/smartphones/xiaomi/redmi-note-15/"
+
+externes:
+  - fiche: "Fiche officielle Redmi Note 9 (Xiaomi)"
+    url: "https://www.mi.com/fr/redmi-note-9/specs/"
+  - fiche: "Fiche officielle Redmi Note 9S (Xiaomi)"
+    url: "https://www.mi.com/fr/redmi-note-9s/specs/"
+  - fiche: "Fiche officielle Redmi Note 9 Pro (Xiaomi)"
+    url: "https://www.mi.com/fr/redmi-note-9-pro/specs/"
+
+

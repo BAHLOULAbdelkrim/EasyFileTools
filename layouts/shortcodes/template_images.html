@@ -1,0 +1,15 @@
+{{/* Charger le YAML */}}
+
+{{ $brand := .Page.Params.brand }}
+{{ $serie := .Page.Params.serie }}
+
+{{ $data := index site.Data.articles.smartphones $brand $serie }}
+
+{{ range $data.images }}
+
+    <figure>
+      <img src="/images/{{ .fichier }}" class="clickable-img">
+      <figcaption>{{ .image }}</figcaption>
+    </figure>
+
+{{ end }}

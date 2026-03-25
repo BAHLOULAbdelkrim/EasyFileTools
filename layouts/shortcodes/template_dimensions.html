@@ -1,0 +1,16 @@
+{{/* Charger le YAML */}}
+
+{{ $brand := .Page.Params.brand }}
+{{ $serie := .Page.Params.serie }}
+
+{{ $data := index site.Data.articles.smartphones $brand $serie }}
+
+{{ range $data.modeles }}
+
+### • **{{ .nom }}**
+
+&nbsp;&nbsp;&nbsp;• **Dimensions (H × L × P) :** {{ .dimensions }}
+
+&nbsp;&nbsp;&nbsp;• **Poids :** {{ .poids }}
+
+{{ end }}

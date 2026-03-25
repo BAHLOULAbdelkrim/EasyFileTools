@@ -1,0 +1,105 @@
+# -------------------------------------------------------------
+# CONFIGURATION PRINCIPALE DU SITE HUGO
+# -------------------------------------------------------------
+# Ce fichier définit :
+# - les informations globales du site
+# - la pagination
+# - la configuration du moteur Markdown
+# - les paramètres personnalisés utilisés par ton thème
+# -------------------------------------------------------------
+
+# URL de base du site (obligatoire pour Cloudflare Pages)
+baseURL = "https://high-tech.pages.dev/"
+
+# Titre global du site (utilisé dans <title> et SEO)
+title = "High-Tech — Nouvelles Technologies, Tests et Comparatifs"
+
+# Langue principale
+languageCode = "fr"             # Pour HTML / SEO
+defaultContentLanguage = "fr"   # Langue par défaut du site
+
+# Thème Hugo utilisé
+theme = "high-tech-theme"
+
+# -------------------------------------------------------------
+# PAGINATION
+# -------------------------------------------------------------
+# Nombre d’articles par page lors de l'affichage des listes
+[pagination]
+  pagerSize = 10
+
+# -------------------------------------------------------------
+# CONFIGURATION MARKDOWN (Goldmark)
+# -------------------------------------------------------------
+# "unsafe = true" permet l’injection de HTML dans le Markdown
+# (utile pour intégrer des iframes, styles personnalisés, etc.)
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
+
+# ----------------------------------------------------------------------------------
+# Limiter le sommaire aux titres des sections (exclure les titres des sous-sections)
+# ----------------------------------------------------------------------------------
+[markup.tableOfContents]
+startLevel = 2
+endLevel = 2
+
+# -------------------------------------------------------------
+# PARAMÈTRES PERSONNALISÉS DU THÈME
+# -------------------------------------------------------------
+[params]
+
+  # Description du site (utilisée pour les meta-description SEO)
+  description = "Nouveautés & Tendances High-Tech : smartphones, ordinateurs, tablettes, caméras et objets connectés. Tests, actualités, comparatifs et guides d'achat complets."
+
+  # Logo affiché dans le header
+  logo = "images/logo-bg.webp"
+
+  # -----------------------------------------------------------
+  # PALETTE DE COULEURS DU THÈME
+  # -----------------------------------------------------------
+  # Les couleurs sont utilisées pour les menus, sous-menus,
+  # hover, et différents éléments de l’interface.
+  # -----------------------------------------------------------
+
+  # Couleur principale MAINTENUE (tu n’utilises plus mainColor)
+  # mainColor = "#34d399ff"
+
+  # Menu principal
+  mainViolet       = "#6b21a8ff"    # Violet utilisé dans la typographie
+  menuBg           = "#d1fae5ff"    # Fond du menu (vert clair)
+  menuText         = "#6b21a8ff"    # Texte du menu (violet)
+  
+  # Hover du menu principal
+  menuHoverBg      = "#ede9feff"    # Fond au survol (violet très clair)
+  menuHoverText    = "#047857ff"    # Texte au survol (vert foncé)
+
+  # Sous-menus
+  submenuBg        = "#f7afaf"      # Fond du sous-menu
+  submenuText      = "#1e3a8aff"    # Texte du sous-menu
+  
+  # Hover du sous-menu
+  submenuHoverBg   = "#84a4fc"      # Fond au survol
+  submenuHoverText = "#ff0000"      # Texte au survol (rouge)
+
+  # Intervalle entre slides (carrousel)
+  slidesInterval = 3000
+
+# -------------------------------------------------------------
+# TAXONOMIES (SEO interne)
+# -------------------------------------------------------------
+# Permet à Hugo de générer automatiquement :
+# - /categories/<nom>/
+# - /tags/<nom>/
+[taxonomies]
+  category = "categories"
+  tag = "tags"
+
+# -------------------------------------------------------------
+# CONFIG PERMALIENS (URLs propres + canoniques SEO)
+# -------------------------------------------------------------
+# Génère des URLs propres du type : https://site.com/mon-article/
+[permalinks]
+  posts = "/:slug/"
+

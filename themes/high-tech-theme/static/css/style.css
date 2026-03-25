@@ -1,0 +1,737 @@
+/* ============================
+   ARTICLE — STRUCTURE GÉNÉRALE
+   ============================ */
+
+article {
+    font-family: Inter, sans-serif;
+    line-height: 1.6;
+    font-size: 18px;
+    color: #000;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Encadrés d'information / notes */
+.info-box {
+    border-left: 4px solid #d1fae5ff;
+    background-color: #f0f8ff;
+    padding: 12px 16px;
+    margin: 1em 0;
+    border-radius: 4px;
+}
+
+/* ============================
+   TITRES (H1, H2, H3)
+   ============================ */
+
+article h1, article h2, article h3 {
+    font-weight: bold;
+    margin-top: 0.0em;
+    margin-bottom: 0.5em;
+}
+
+article h1 {
+    font-size: 2.2rem;
+    color: #6b21a8;   /* violet-700 */
+    margin-top: 0.5em;
+}
+
+article h2 {
+    font-size: 1.7rem;
+    color: #00af5d;   /* violet principal */
+    margin-top: 0.5em;
+}
+
+article h3 {
+    font-size: 1.3rem;
+    color: #00af5d;   /* emerald-700 */
+    margin-top: 0.5em;
+}
+
+/* ============================
+   IMAGES DANS L'ARTICLE
+   ============================ */
+
+/* Images principales */
+.article-image {
+    display: block;
+    margin: 0 auto;
+    max-width: 70%;
+    height: auto;
+    border-radius: 12px;
+}
+
+/* Toutes les images dans article */
+article img, 
+.article-image {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;  /* centre l'image */
+    max-width: 100%;
+    border-radius: 8px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+article img:hover {
+    transform: scale(1.03);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+}
+
+/* Tailles d'images */
+.img-small  { width: 225px; }
+.img-medium { width: 450px; }
+.img-large  { width: 900px; }
+
+/* Figure + légende */
+figure.img-center {
+  display: block;
+  text-align: center;
+  margin: 20px auto;   /* centre horizontalement le bloc */
+}
+
+figure figcaption {
+    font-size: 14px;
+    color: #6b21a8;              /* Légende en bleu */
+    margin-top: 6px;
+    font-style: italic;
+}
+
+/* Centrer d'autres éléments si besoin */
+.img-center {
+    text-align: center;
+}
+
+/* Mettre deux images (ou plus) côte à côte + légendes */
+.img-row {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    margin: 20px 0;
+}
+
+.img-row figure {
+    flex: 1;
+    text-align: center;
+}
+
+.img-row img {
+    width: 100%;
+    max-width: 700px; /* limite pour éviter d'être trop grand */
+    border-radius: 8px;
+}
+
+/* Style des images des sous-menus : */
+.section-cover {
+  display: block;
+  max-width: 900px;
+  width: 100%;
+  margin: 20px auto 40px auto;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+  object-fit: cover;
+  border-radius: 12px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  position: relative; /* nécessaire pour le pseudo-élément */
+  overflow: hidden;   /* pour que le shine ne déborde pas */
+}
+
+.section-cover::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -75%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(120deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.5) 50%, rgba(255,255,255,0) 100%);
+  transform: skewX(-20deg);
+  z-index: 2;
+}
+
+.section-cover:hover::before {
+  animation: shine-image 0.7s forwards;
+}
+
+@keyframes shine-image {
+  0% { left: -75%; }
+  100% { left: 125%; }
+}
+
+.section-cover:hover {
+  transform: scale(1.05); /* zoom */
+  box-shadow: 0 6px 25px rgba(0,0,0,0.25); /* profondeur */
+}
+
+/* Images miniatures des sous-menus — Mobile optimisé */
+.submenus img,
+.articles-grid .card img {
+    max-width: 100%;
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* ============================
+   SOMMAIRE
+   ============================ */
+
+.toc {
+    border-left: 4px solid #6b21a8;
+    padding: 10px 16px;
+    background-color: #f5f3ff;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    margin-left: 0;
+    margin-right: 0;
+}
+
+.toc h2 {
+    margin-top: 0;
+}
+
+.toc ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.toc li a {
+    text-decoration: none;
+    color: #6b21a8;
+    transition: color 0.2s ease;
+}
+
+.toc li a:hover {
+    color: #047857ff;
+}
+
+/* ============================
+   TABLEAUX
+   ============================ */
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 1em 0;
+    font-size: 18px;
+    transition: all 0.3s ease;
+}
+
+/* Bordure globale */
+table, th, td {
+    border: 1px solid #777;
+}
+
+/* En-tête */
+thead tr {
+    background-color: #d1fae5ff;
+    color: #6b21a8ff;
+    font-weight: bold;
+}
+
+/* Lignes paires / impaires pour alternance de couleur */
+tbody tr:nth-child(even) {
+    background-color: #f7f7f7;
+}
+
+tbody tr:hover {
+    background-color: #ede9feff;
+}
+
+/* Cellules */
+th, td {
+    padding: 10px;
+    text-align: left;
+}
+
+/* Bordures épaisses en haut et bas */
+thead tr {
+    border-bottom: 3px double #000; 
+}
+tfoot tr {
+    border-top: 3px double #000;
+}
+
+/* ============================
+   LINKS — LIENS CLIQUABLES
+   ============================ */
+
+/* Supprimer le soulignement de tous les liens dans les cartes, articles et sous-menus */
+article a,
+.articles-grid a,
+.latest-grid a,
+.submenus a,
+.left-column a,
+.right-column a {
+    text-decoration: none;
+    color: #6b21a8;
+}
+
+/* Ajouter un effet au survol pour indiquer que c’est cliquable */
+article a:hover,
+.articles-grid a:hover,
+.latest-grid a:hover,
+.submenus a:hover,
+.left-column a:hover,
+.right-column a:hover {
+    text-decoration: underline;
+    color: #6b21a8;
+}
+
+/* ============================
+   ANIMATIONS
+   ============================ */
+
+.fade-in {
+    opacity: 0;
+    transform: translateY(30px);
+    filter: blur(8px);
+    transition: opacity 0.9s ease, transform 0.9s ease, filter 1s ease;
+}
+
+.fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+}
+
+
+/* Génèrer des <h1> et <h2> en dehors de <article> */
+
+.content-column h1 {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-top: 0.0em;
+    margin-bottom: 12px;
+}
+
+.articles-grid h2 {
+    font-size: 1.4rem;
+    font-weight: bold;
+    margin-bottom: 12px;
+}
+
+/* Logo de marque : taille fixe et responsive */
+.brand-logo-img {
+  height: 100px;   /* fixe la hauteur sur desktop */
+  width: auto;     /* garde les proportions */
+  max-width: 150px; /* limite la largeur si écran très petit */
+  display: inline-block;
+}
+
+/* ============================== 
+   Couleurs pour les produits
+   ============================== */
+
+.color-swatches {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
+  gap: 14px;
+  margin: 1rem 0;
+}
+
+.swatch {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+}
+
+.swatch input {
+  display: none;
+}
+
+/* Le carré de couleur */
+.swatch .color {
+  width: clamp(36px, 10vw, 50px);
+  height: clamp(36px, 10vw, 50px);
+  border-radius: 12px;
+  background: var(--c);
+  border: 2px solid #ddd;
+  box-shadow: inset 0 0 0 1px rgba(0,0,0,0.05);
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+/* Label */
+.swatch .label {
+  margin-top: 6px;
+  font-size: 13px;
+  text-align: center;
+}
+
+/* Sélection */
+.swatch input:checked + .color {
+  border-color: #6b21a8;
+  transform: scale(1.05);
+}
+
+/* =====================================================
+   COMPARISON : TABLE (DESKTOP) + ACCORDION (MOBILE)
+   ===================================================== */
+
+.comparison {
+  margin: 2rem 0;
+}
+
+/* ===== TABLEAU DESKTOP ===== */
+.comparison-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: center;
+}
+
+.comparison-table th,
+.comparison-table td {
+  border: 1px solid #ccc;
+  padding: 10px 12px;
+}
+
+.comparison-table thead th {
+  background-color: #d1fae5ff;
+  font-weight: bold;
+}
+
+.comparison-table tbody th {
+  text-align: left;
+  background-color: #f7f7f7;
+}
+
+/* ===== ACCORDION MOBILE ===== */
+.comparison-accordion {
+  display: block;
+}
+
+.comparison-accordion details {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  margin-bottom: 12px;
+  overflow: hidden;
+  background: #fff;
+}
+
+.comparison-accordion summary {
+  padding: 12px 14px;
+  font-weight: bold;
+  color: #6b21a8;
+  cursor: pointer;
+  background-color: #d1fae5ff;
+  list-style: none;
+}
+
+.comparison-accordion summary::-webkit-details-marker {
+  display: none;
+}
+
+.comparison-accordion ul {
+  list-style: none;
+  padding: 12px 14px;
+  margin: 0;
+}
+
+.comparison-accordion li {
+  padding: 6px 0;
+  border-bottom: 1px dashed #ddd;
+}
+
+.comparison-accordion li:last-child {
+  border-bottom: none;
+}
+
+.comparison-accordion summary::before {
+  content: "▶";
+  display: inline-block;
+  transition: transform 0.2s ease;
+}
+
+.comparison-accordion details[open] summary::before {
+  transform: rotate(90deg);
+}
+
+/* ============================
+   Version MOBILE
+   ============================ */
+
+@media (max-width: 900px) {
+/* Coins plus petits, marge réduite */
+  .section-cover {
+    margin: 15px auto 25px auto;
+    border-radius: 8px;
+  }
+
+/* Hover Desktop */
+    .submenus img:hover,
+    .articles-grid .card img:hover {
+        transform: scale(1.03);
+        box-shadow: 0 4px 15px rgba(0,0,0,0.25);
+    }
+
+/* Hover Desktop seulement */
+    .section-cover:hover {
+        transform: scale(1.03);
+        box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+    }
+
+  /* Article général */
+  article {
+    padding: 12px 10px !important; /* réduit l'espace */
+    font-size: 16px !important;    /* texte plus petit sur mobile */
+    line-height: 1.5 !important;
+  }
+
+  /* Titres */
+  article h1 { font-size: 1.6rem !important; }
+  article h2 { font-size: 1.3rem !important; }
+  article h3 { font-size: 1.1rem !important; }
+
+/* Images des articles — version mobile */
+  .article-body img {
+        max-width: 100%;
+        width: 100%;
+        height: auto;
+        border-radius: 10px;
+    }
+
+  /* Images */
+  article img,
+  .article-image,
+  .img-row img,
+  figure img {
+    width: 100% !important;
+    max-width: 100% !important;
+    height: auto !important;
+    border-radius: 8px !important;
+    display: block !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+
+  .img-row {
+    flex-direction: column !important; /* empile les images au lieu de les mettre côte à côte */
+    gap: 12px !important;
+  }
+
+  figure figcaption {
+    font-size: 12px !important; /* légendes plus petites */
+  }
+
+  /* Sommaire */
+  .toc {
+    padding: 8px 10px !important;
+    font-size: 14px !important;
+  }
+
+  .toc li a {
+    font-size: 14px !important;
+  }
+
+  /* ===== Tableaux ===== */
+  table, th, td {
+    font-size: 12px !important;
+    padding: 6px 8px !important;
+    overflow-x: auto;
+    display: block;
+    width: 100% !important;
+    box-sizing: border-box;
+  }
+
+  thead, tfoot { display: none !important; } /* masquer header/footer pour mobile */
+
+  tbody tr {
+    display: block !important;
+    margin-bottom: 12px !important;
+    border-bottom: 2px solid #ddd !important;
+  }
+
+  tbody tr td {
+    display: block !important;
+    text-align: right !important;
+    border: none !important;
+    position: relative !important;
+    padding-left: 50% !important;
+  }
+
+  tbody tr td::before {
+    content: attr(data-label); /* tu peux ajouter data-label dans tes td pour mobile */
+    position: absolute;
+    left: 10px;
+    width: 45%;
+    padding-right: 10px;
+    white-space: nowrap;
+    font-weight: bold;
+    text-align: left;
+  }
+
+  /* ===== Info-box ===== */
+  .info-box {
+    padding: 8px 10px !important;
+    font-size: 14px !important;
+  }
+
+/* Logo de marque : taille fixe et responsive */
+  .brand-logo-img {
+    height: 60px !important; /* réduit légèrement sur mobile */
+    max-width: 60px !important;
+  }
+
+/* ===== RESPONSIVE SWITCH ===== */
+
+  /* Cache TOTALEMENT le tableau sur mobile */
+  .comparison .comparison-table {
+    display: none !important;
+  }
+
+  /* Affiche uniquement l’accordion */
+  .comparison-accordion {
+    display: block !important;
+  }
+}
+
+/* Desktop : on respecte ton HTML actuel */
+.img-row > div {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 10px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.img-row img {
+  height: 350px;
+  width: auto;
+}
+
+/* 📱 Mobile uniquement */ 
+@media (max-width: 900px) {
+  .img-row > div {
+    flex-direction: column !important;
+    align-items: center;
+  }
+
+  .img-row img {
+    height: auto !important;
+    width: 100% !important;
+    max-width: 350px;
+  }
+}
+
+
+
+
+
+
+
+.note {
+  position: relative;
+  overflow: hidden;
+}
+
+/* Brillance */
+.note::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -75%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(120deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.5) 50%, rgba(255,255,255,0) 100%);
+  transform: skewX(-20deg);
+  transition: none;
+  z-index:1;
+}
+
+/* Hover */
+.note:hover::before {
+  animation: shine 0.7s forwards;
+}
+
+@keyframes shine {
+  0% { left: -75%; }
+  100% { left: 125%; }
+}
+
+/* Inversion couleurs + agrandissement */
+.note:hover {
+  color: #047857ff !important;        
+  background-color: #ede9feff !important; 
+  transform: scale(1.1); 
+  z-index:2;
+}
+
+
+
+.conclusion-text {
+  display:inline-block;
+  position:relative;
+  animation: fadeInMove 1.2s ease forwards;
+}
+
+@keyframes fadeInMove {
+  0% { opacity:0; transform: translateY(10px); }
+  100% { opacity:1; transform: translateY(0); }
+}
+
+.conclusion-text:hover {
+  color:#6b21a8;        /* change légèrement au hover */
+  transform: scale(1.05);
+  transition: all 0.3s ease;
+}
+
+
+
+
+/* Rendre les images de l'article cliquables */ 
+
+/* Curseur pointer */
+.clickable-img {
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.clickable-img:hover {
+  transform: scale(1.03);
+}
+
+/* Overlay */
+.image-modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+/* Image agrandie */
+.image-modal img {
+  max-width: 80%;
+  max-height: 80%;
+  border-radius: 10px;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+  animation: zoomIn 0.3s ease;
+}
+
+/* Bouton fermer */
+.close-modal {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: #d1fae5ff;
+  color: #6b21a8;
+  font-size: 30px;
+  font-weight: bold;
+  padding: 8px 12px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+@keyframes zoomIn {
+  from { transform: scale(0.8); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+
+
+
+

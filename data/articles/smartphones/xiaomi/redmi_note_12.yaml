@@ -1,0 +1,420 @@
+marque: "Xiaomi"
+logo_marque: "logo_xiaomi.webp"
+
+modeles:
+  - nom: "Redmi Note 12"
+    date: "23 mars 2023"
+    couleurs:
+      - nom: "Gris Onyx"
+        code: "#3a3a3c"
+      - nom: "Vert Menthe"
+        code: "#98f5c9"
+      - nom: "Bleu Givre"
+        code: "#a9c9e8"
+      - nom: "Or Lever de Soleil"
+        code: "#f6c28b"
+    processeur: "Qualcomm Snapdragon 685 Octa-core"
+    graphique: "Adreno 610"
+    os: "Android 13 avec MIUI 14"
+    camera_ar: "triple 50 MP + 8 MP + 2 MP"
+    resol_ar: "1080p@30fps, 720p@30fps"
+    camera_av: "simple 13 MP"
+    ram: "4 Go, 6 Go, 8 Go"
+    stockage: "128 Go"
+    ecran: "AMOLED DotDisplay, 6.67\""
+    resolution: "1080 x 2400 pixels (FHD+)"
+    protection: "Non précisé"
+    battery: "5000 mAh (Li-Po)"
+    charge: "Charge rapide 33 W"
+    hautparleur: "mono (haut-parleur multimédia unique)"
+    ecouteur: "écouteur d’appel intégré"
+    sim: "Dual Nano-SIM"
+    sd: "emplacement microSD, jusqu’à 1 To"
+    reseaux: "2G / 3G / 4G LTE"
+    wifi: "802.11 a/b/g/n/ac (2.4 GHz / 5 GHz)"
+    bluetooth: "5.0"
+    gps: "GPS, GLONASS, Galileo"
+    nfc: "OUI"
+    dimensions: "165,66 × 75,96 × 7,85 mm"
+    poids: "183,5 g"
+
+
+  - nom: "Redmi Note 12 5G"
+    date: "23 mars 2023"
+    couleurs:
+      - nom: "Gris Onyx"
+        code: "#3b3b3b"
+      - nom: "Bleu Givre"
+        code: "#a8c7e8"
+      - nom: "Vert Forêt"
+        code: "#2e6f57"
+    processeur: "Qualcomm Snapdragon 4 Gen 1 Octa-core"
+    graphique: "Adreno 619"
+    os: "Android 12 avec MIUI 14"
+    camera_ar: "triple 48 MP + 8 MP + 2 MP"
+    resol_ar: "1080p@30fps, 720p@30fps"
+    camera_av: "simple 13 MP"
+    ram: "4 Go, 6 Go, 8 Go"
+    stockage: "128 Go, 256 Go"
+    ecran: "AMOLED DotDisplay, 6.67\""
+    resolution: "2400 x 1080 pixels (FHD+)"
+    protection: "Non précisé"
+    battery: "5000 mAh (Li-Po)"
+    charge: "Charge rapide 33 W"
+    hautparleur: "mono (haut-parleur multimédia unique)"
+    ecouteur: "écouteur d’appel intégré"
+    sim: "Dual Nano-SIM"
+    sd: "emplacement hybride (SIM ou microSD), jusqu’à 1 To"
+    reseaux: "2G / 3G / 4G LTE / 5G"
+    wifi: "Wi-Fi 802.11 a/b/g/n/ac (2.4 GHz / 5 GHz)"
+    bluetooth: "5.1"
+    gps: "GPS, GLONASS, BeiDou, Galileo"
+    nfc: "OUI"
+    dimensions: "165,88 × 76,21 × 7,98 mm"
+    poids: "189 g"
+
+
+  - nom: "Redmi Note 12 Pro 4G"
+    date: "Mars 2023"
+    couleurs:
+      - nom: "Gris Graphite"
+        code: "#3a3a3a"
+      - nom: "Bleu Glacier"
+        code: "#9fc7e8"
+      - nom: "Blanc Polaire"
+        code: "#f2f2f2"
+      - nom: "Bleu Étoile"
+        code: "#2f4f8f"
+    processeur: "Qualcomm Snapdragon 732G Octa-core"
+    graphique: "Adreno 618"
+    os: "Android 11 avec MIUI 13"
+    camera_ar: "quadruple 108 MP + 8 MP + 2 MP + 2 MP"
+    resol_ar: "4K@30fps, 1080@30/60fps, 720@30fps"
+    camera_av: "simple 16 MP"
+    ram: "6 Go, 8 Go"
+    stockage: "128 Go, 256 Go"
+    ecran: "AMOLED DotDisplay, 6.67\""
+    resolution: "1080 x 2400 pixels (FHD+)"
+    protection: "Corning Gorilla Glass 5"
+    battery: "5000 mAh (Li-Po)"
+    charge: "Charge rapide 67 W"
+    hautparleur: "stéréo (haut-parleur principal + écouteur d’appel utilisé comme second canal), Dolby Atmos"
+    ecouteur: "écouteur d’appel intégré (utilisé comme second haut-parleur stéréo)"
+    sim: "Dual Nano-SIM"
+    sd: "emplacement hybride (SIM ou microSD), jusqu’à 1 To"
+    reseaux: "2G / 3G / 4G LTE"
+    wifi: "Wi-Fi 802.11 a/b/g/n/ac (2.4 GHz / 5 GHz)"
+    bluetooth: "5.0"
+    gps: "GPS, GLONASS, BeiDou, Galileo"
+    nfc: "OUI"
+    dimensions: "164,2 × 76,1 × 8,12 mm"
+    poids: "201,8 g"
+
+
+  - nom: "Redmi Note 12 Pro 5G"
+    date: "23 mars 2023"
+    couleurs:
+      - nom: "Noir Minuit"
+        code: "#1f1f1f"
+      - nom: "Bleu Ciel"
+        code: "#8fb8e8"
+      - nom: "Blanc Polaire"
+        code: "#f2f2f2"
+    processeur: "MediaTek Dimensity 1080 Octa-core"
+    graphique: "Mali-G68"
+    os: "Android 12 avec MIUI 14"
+    camera_ar: "triple 50 MP + 8 MP + 2 MP"
+    resol_ar: "4K@30fps, 1080@30/60fps, 720@30fps, 1080@120fps, 720@120/240/960fps"
+    camera_av: "simple 16 MP"
+    ram: "6 Go, 8 Go"
+    stockage: "128 Go, 256 Go"
+    ecran: "Flow AMOLED, 6.67\""
+    resolution: "1080 x 2400 pixels (FHD+)"
+    protection: "Corning Gorilla Glass 5"
+    battery: "5000 mAh (Li-Po)"
+    charge: "Charge turbo 67 W"
+    hautparleur: "stéréo (haut-parleur principal + écouteur d’appel utilisé comme second canal), Dolby Atmos"
+    ecouteur: "écouteur d’appel intégré (utilisé comme second haut-parleur stéréo)"
+    sim: "Dual Nano-SIM"
+    sd: "Non"
+    reseaux: "2G / 3G / 4G LTE / 5G"
+    wifi: "Wi-Fi 6 / Wi-Fi 5 / Wi-Fi 4 (802.11 a/b/g/n/ac)"
+    bluetooth: "5.2"
+    gps: "GPS, GLONASS, BeiDou, Galileo"
+    nfc: "OUI"
+    dimensions: "162,9 × 76 × 7,9 mm"
+    poids: "187 g"
+
+
+  - nom: "Redmi Note 12 Pro+ 5G"
+    date: "23 mars 2023"
+    couleurs:
+      - nom: "Noir Minuit"
+        code: "#1f1f1f"
+      - nom: "Bleu Ciel"
+        code: "#8fb8e8"
+      - nom: "Blanc Polaire"
+        code: "#f2f2f2"
+    processeur: "MediaTek Dimensity 1080 Octa-core"
+    graphique: "Mali-G68"
+    os: "Android 12 avec MIUI 14"
+    camera_ar: "triple 200 MP + 8 MP + 2 MP"
+    resol_ar: "4K@30fps, 1080@30/60fps, 720@30fps, 1080@120fps, 720@120/240/960fps"
+    camera_av: "simple 16 MP"
+    ram: "8 Go"
+    stockage: "256 Go"
+    ecran: "Flow AMOLED, 6.67\""
+    resolution: "2400 x 1080 pixels (FHD+)"
+    protection: "Corning Gorilla Glass 5"
+    battery: "5000 mAh (Li-Po)"
+    charge: "HyperCharge 120 W"
+    hautparleur: "stéréo (double haut-parleur), Dolby Atmos"
+    ecouteur: "écouteur d’appel intégré (utilisé comme second haut-parleur stéréo)"
+    sim: "Dual Nano-SIM"
+    sd: "Non"
+    reseaux: "2G / 3G / 4G LTE / 5G"
+    wifi: "Wi-Fi 6 / Wi-Fi 5 / Wi-Fi 4 (802.11 a/b/g/n/ac)"
+    bluetooth: "5.2"
+    gps: "GPS, GLONASS, BeiDou, Galileo"
+    nfc: "OUI"
+    dimensions: "162,9 × 76 × 8,98 mm"
+    poids: "210,5 g"
+
+cotes:
+  haut:
+    - "Émetteur infrarouge (IR blaster)"
+    - "Microphone secondaire"
+    - "Haut-parleur (stéréo)"
+  bas:
+    - "Port USB Type-C"
+    - "Haut-parleur (stéréo)"
+    - "Microphone principal"
+    - "Tiroir SIM"
+  droite:
+    - "Bouton marche / arrêt avec capteur d’empreintes"
+    - "Boutons volume + / −"
+  gauche:
+    - "Aucun élément"
+
+capteurs_securite:
+  capteurs:
+    - nom: "Accéléromètre"
+    - nom: "Capteur de proximité"
+    - nom: "Capteur de luminosité ambiante"
+    - nom: "Boussole électronique"
+    - nom: "Gyroscope"
+      modeles:
+        - nom: "**Redmi Note 12**"
+          valeur: "Gyroscope logiciel (virtual gyroscope)"
+        - nom: "**Redmi Note 12 5G**"
+          valeur: "Gyroscope logiciel (virtual gyroscope)"
+        - nom: "**Redmi Note 12 Pro 4G**"
+          valeur: "Gyroscope matériel"
+        - nom: "**Redmi Note 12 Pro 5G**"
+          valeur: "Gyroscope matériel"
+        - nom: "**Redmi Note 12 Pro+ 5G**"
+          valeur: "Gyroscope matériel"
+
+  securite:
+    - nom: "**Lecteur d’empreintes digitales**"
+      description: "Capteur d’empreintes intégré au bouton d’alimentation sur le côté droit"
+    - nom: "**Déverrouillage facial**"
+      description: "Reconnaissance faciale via la caméra frontale (2D)"
+
+images:
+  - image: "Redmi Note 12"
+    fichier: "redmi-note-12-1.webp"
+  - image: "Redmi Note 12 5G"
+    fichier: "redmi-note-12-2.webp"
+  - image: "Redmi Note 12 Pro 4G"
+    fichier: "redmi-note-12-3.webp"
+  - image: "Redmi Note 12 Pro 5G"
+    fichier: "redmi-note-12-4.webp"
+  - image: "Redmi Note 12 Pro+ 5G"
+    fichier: "redmi-note-12-5.webp"
+
+evaluation_1:
+  modeles:
+    - nom: "Redmi Note 12"
+      positifs:
+        - "Écran AMOLED 120 Hz lumineux"
+        - "Bonne autonomie batterie 5000 mAh"
+        - "Design fin et poids léger"
+        - "Prix généralement très accessible"
+      negatifs:
+        - "Performances limitées pour les jeux"
+        - "Capteur photo secondaire peu utile"
+        - "Pas de compatibilité 5G"
+      note: "7,5"
+      conclusion: "Smartphone équilibré pour un usage quotidien simple. Convient aux utilisateurs cherchant un écran AMOLED fluide et une bonne autonomie à prix réduit."
+
+evaluation_2:
+  modeles:
+    - nom: "Redmi Note 12 5G"
+      positifs:
+        - "Connectivité 5G rapide"
+        - "Écran AMOLED 120 Hz fluide"
+        - "Bonne autonomie batterie 5000 mAh"
+        - "Stockage extensible par microSD"
+      negatifs:
+        - "Performances modestes pour gaming"
+        - "Capteur photo principal moyen"
+        - "Gyroscope virtuel moins précis"
+      note: "7,8"
+      conclusion: "Version 5G du Note 12 offrant un bon écran et une connectivité moderne. Idéal pour un usage quotidien et internet mobile rapide."
+
+evaluation_3:
+  modeles:
+    - nom: "Redmi Note 12 Pro 4G"
+      positifs:
+        - "Capteur photo principal 108 MP"
+        - "Écran AMOLED 120 Hz de qualité"
+        - "Charge rapide 67 W efficace"
+        - "Gyroscope matériel plus précis"
+      negatifs:
+        - "Processeur ancien Snapdragon 732G"
+        - "Pas de connectivité 5G"
+        - "Design assez proche anciens modèles"
+      note: "7,6"
+      conclusion: "Modèle orienté photo avec capteur 108 MP et charge rapide. Intéressant pour la photographie à petit prix, mais limité par l'absence de 5G."
+
+evaluation_4:
+  modeles:
+    - nom: "Redmi Note 12 Pro 5G"
+      positifs:
+        - "Capteur Sony IMX766 avec OIS"
+        - "Bon processeur Dimensity 1080"
+        - "Écran AMOLED 120 Hz HDR"
+        - "Charge rapide 67 W efficace"
+      negatifs:
+        - "Pas de carte microSD"
+        - "Ultra grand angle moyen"
+        - "Autonomie correcte sans plus"
+      note: "8,3"
+      conclusion: "Smartphone milieu de gamme très équilibré avec bon appareil photo et performances solides. Convient bien aux utilisateurs recherchant polyvalence et connectivité 5G."
+
+evaluation_5:
+  modeles:
+    - nom: "Redmi Note 12 Pro+ 5G"
+      positifs:
+        - "Capteur photo principal 200 MP"
+        - "Charge ultra rapide 120 W"
+        - "Écran AMOLED 120 Hz lumineux"
+        - "Bon processeur Dimensity 1080"
+      negatifs:
+        - "Autonomie moyenne usage intensif"
+        - "Pas de stockage extensible"
+        - "Prix plus élevé de la série"
+      note: "8,5"
+      conclusion: "Modèle le plus complet de la série avec photo 200 MP et charge extrêmement rapide. Idéal pour les amateurs de photographie mobile et de performances équilibrées."
+
+differences:
+  - "**Performance :** Snapdragon 685/732G vs Dimensity 1080"
+  - "**Qualité photo principale :** 50 MP/108 MP/200 MP selon modèle"
+  - "**Connectivité :** 4G uniquement vs 5G sur modèles Pro et 12 5G"
+  - "**Charge rapide :** 33 W sur Note 12/12 5G, 67 W sur Pro, 120 W sur Pro+"
+  - "**Stockage extensible :** microSD sur Note 12/12 5G, absent sur Pro/Pro+"
+
+acheter_1:
+  - vendeur: "Amazon"
+    modele: "Redmi Note 12"
+    url: "https://www.amazon.fr/redmi-note-12/s?k=redmi+note+12"  # Exemples d’offres disponibles sur Amazon.fr :contentReference[oaicite:0]{index=0}
+    logo: "/images/amazon.svg"
+  - vendeur: "Cdiscount"
+    modele: "Redmi Note 12"
+    url: "https://www.cdiscount.com/telephonie/telephone-mobile/xiaomi/xiaomi-redmi-note-12/l-144043892.html"  # Redmi Note 12 4G/5G sur Cdiscount :contentReference[oaicite:1]{index=1}
+    logo: "/images/cdiscount.svg"
+  - vendeur: "Bouygues Telecom"
+    modele: "Redmi Note 12"
+    url: "https://www.bouyguestelecom.fr/telephones-mobiles/xiaomi-redmi-note-12-4g"  # Disponible avec ou sans forfait :contentReference[oaicite:2]{index=2}
+    logo: "/images/bouyguestelecom.svg"
+
+acheter_2:
+  - vendeur: "Amazon"
+    modele: "Redmi Note 12 5G"
+    url: "https://www.amazon.fr/Xiaomi-Redmi-Note-12-5G-4GB-128GB/dp/B0BW8TNS6R"  # Offre Amazon pour le 12 5G :contentReference[oaicite:3]{index=3}
+    logo: "/images/amazon.svg"
+  - vendeur: "Cdiscount"
+    modele: "Redmi Note 12 5G"
+    url: "https://www.cdiscount.com/telephonie/r-xiaomi%2Bredmi%2Bnote%2B12%2Bpro%2B5g.html"  # Liste incluant modèles 5G :contentReference[oaicite:4]{index=4}
+    logo: "/images/cdiscount.svg"
+  - vendeur: "Fnac"
+    modele: "Redmi Note 12 5G"
+    url: "https://www.fnac.com/Xiaomi-Redmi-Note-12-Note-12-Pro-Note-12-Pro-Plus/nsh554452/w-4"  # Listing général Fnac incluant le modèle :contentReference[oaicite:5]{index=5}
+    logo: "/images/fnac.svg"
+
+acheter_3:
+  - vendeur: "Cdiscount"
+    modele: "Redmi Note 12 Pro 4G"
+    url: "https://www.cdiscount.com/telephonie/r-xiaomi%2Bredmi%2Bnote%2B12%2Bpro.html"  # Offre pour Note 12 Pro 4G et variantes :contentReference[oaicite:6]{index=6}
+    logo: "/images/cdiscount.svg"
+  - vendeur: "Fnac"
+    modele: "Redmi Note 12 Pro 4G"
+    url: "https://www.fnac.com/Xiaomi-Redmi-Note-12-Note-12-Pro-Note-12-Pro-Plus/nsh554452/w-4"  # Listing Fnac, souvent avec Pro en stock :contentReference[oaicite:7]{index=7}
+    logo: "/images/fnac.svg"
+  - vendeur: "Amazon"
+    modele: "Redmi Note 12 Pro 4G"
+    url: "https://www.amazon.fr/s?k=redmi+note+12+pro+4g"  # Amazon recherche par modèle :contentReference[oaicite:8]{index=8}
+    logo: "/images/amazon.svg"
+
+acheter_4:
+  - vendeur: "Cdiscount"
+    modele: "Redmi Note 12 Pro 5G"
+    url: "https://www.cdiscount.com/telephonie/r-xiaomi%2Bredmi%2Bnote%2B12%2Bpro%2B5g.html"  # Nombreuses offres pour Pro 5G :contentReference[oaicite:9]{index=9}
+    logo: "/images/cdiscount.svg"
+  - vendeur: "Amazon"
+    modele: "Redmi Note 12 Pro 5G"
+    url: "https://www.amazon.fr/s?k=redmi+note+12+pro+5g"  # Recherche Amazon :contentReference[oaicite:10]{index=10}
+    logo: "/images/amazon.svg"
+  - vendeur: "Welcom"
+    modele: "Redmi Note 12 Pro 5G"
+    url: "https://www.wel-com.fr/boutique/xiaomi-redmi-note-12-pro-5g-256-go-noir-bon-etat-occasion/"  # Vente reconditionnée :contentReference[oaicite:11]{index=11}
+    logo: "/images/welcom.svg"
+
+acheter_5:
+  - vendeur: "Amazon"
+    modele: "Redmi Note 12 Pro+ 5G"
+    url: "https://www.amazon.fr/Xiaomi-Smartphone-Processeur-Dimensity-1080Gravure/dp/B0BW69LVCF"  # Offre Pro+ 5G sur Amazon :contentReference[oaicite:12]{index=12}
+    logo: "/images/amazon.svg"
+  - vendeur: "Cdiscount"
+    modele: "Redmi Note 12 Pro+ 5G"
+    url: "https://www.cdiscount.com/telephonie/r-redmi%2Bnote%2B12%2Bpro%2Bplus.html"  # Offres marketplace Pro+ 5G :contentReference[oaicite:13]{index=13}
+    logo: "/images/cdiscount.svg"
+  - vendeur: "Fnac"
+    modele: "Redmi Note 12 Pro+ 5G"
+    url: "https://www.fnac.com/Smartphone-Xiaomi-Redmi-Note-12-Pro-Plus-6-67-5G-Double-nano-SIM-256-Go-Noir/a17793156/w-4"  # Fnac listing Pro+ 5G :contentReference[oaicite:14]{index=14}
+    logo: "/images/fnac.svg"
+
+connexes:
+  - serie: "Série Redmi Note 8"
+    url: "https://high-tech.pages.dev/smartphones/xiaomi/redmi-note-8/"
+  - serie: "Série Redmi Note 9"
+    url: "https://high-tech.pages.dev/smartphones/xiaomi/redmi-note-9/"
+  - serie: "Série Redmi Note 10"
+    url: "https://high-tech.pages.dev/smartphones/xiaomi/redmi-note-10/"
+  - serie: "Série Redmi Note 11"
+    url: "https://high-tech.pages.dev/smartphones/xiaomi/redmi-note-11/"
+  - serie: "Série Redmi Note 13"
+    url: "https://high-tech.pages.dev/smartphones/xiaomi/redmi-note-13/"
+  - serie: "Série Redmi Note 14"
+    url: "https://high-tech.pages.dev/smartphones/xiaomi/redmi-note-14/"
+  - serie: "Série Redmi Note 15"
+    url: "https://high-tech.pages.dev/smartphones/xiaomi/redmi-note-15/"
+
+externes:
+  - fiche: "Fiche officielle Redmi Note 12 (Xiaomi)"
+    url: "https://www.mi.com/fr/product/redmi-note-12/specs/"
+
+  - fiche: "Fiche officielle Redmi Note 12 5G (Xiaomi)"
+    url: "https://www.mi.com/fr/product/redmi-note-12-5g/specs/"
+
+  - fiche: "Fiche officielle Redmi Note 12 Pro (Xiaomi)"
+    url: "https://www.mi.com/fr/product/redmi-note-12-pro/specs/"
+
+  - fiche: "Fiche officielle Redmi Note 12 Pro 5G (Xiaomi)"
+    url: "https://www.mi.com/fr/product/redmi-note-12-pro-5g/specs/"
+
+  - fiche: "Fiche officielle Redmi Note 12 Pro+ 5G (Xiaomi)"
+    url: "https://www.mi.com/fr/product/redmi-note-12-pro-plus-5g/specs/"
+
+

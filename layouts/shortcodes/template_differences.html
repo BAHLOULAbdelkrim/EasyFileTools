@@ -1,0 +1,12 @@
+{{/* Charger le YAML */}}
+
+{{ $brand := .Page.Params.brand }}
+{{ $serie := .Page.Params.serie }}
+
+{{ $data := index site.Data.articles.smartphones $brand $serie }}
+
+{{ range $data.differences }}
+
+&nbsp;&nbsp;&nbsp;•  {{ . }}
+
+{{ end }}

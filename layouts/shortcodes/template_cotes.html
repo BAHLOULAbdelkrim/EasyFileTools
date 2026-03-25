@@ -1,0 +1,27 @@
+{{/* Charger le YAML */}}
+
+{{ $brand := .Page.Params.brand }}
+{{ $serie := .Page.Params.serie }}
+
+{{ $data := index site.Data.articles.smartphones $brand $serie }}
+
+&nbsp;&nbsp;&nbsp;• **Côté Haut :**
+{{ range $data.cotes.haut }}
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;♦ {{ . }}
+{{ end }}
+
+&nbsp;&nbsp;&nbsp;• **Côté Bas :**
+{{ range $data.cotes.bas }}
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;♦ {{ . }}
+{{ end }}
+
+&nbsp;&nbsp;&nbsp;• **Côté Droite :**
+{{ range $data.cotes.droite }}
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;♦ {{ . }}
+{{ end }}
+
+&nbsp;&nbsp;&nbsp;• **Côté Gauche :**
+{{ range $data.cotes.gauche }}
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;♦ {{ . }}
+{{ end }}
+

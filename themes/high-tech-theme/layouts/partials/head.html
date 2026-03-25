@@ -1,0 +1,89 @@
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- Titre du site -->
+  <title>{{ if .Title }}{{ .Title }} - {{ end }}{{ .Site.Title }}</title>
+  
+  <!-- Description SEO -->
+  <meta name="description" content="{{ .Site.Params.description }}">
+  <link rel="icon" type="image/png" href="{{ "favicon_2.png" | absURL }}">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap" rel="stylesheet">
+     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap" rel="stylesheet">
+     <!-- Styles personnalisés -->
+     <style>
+     body { font-family: 'Inter', sans-serif; }
+     /* small helpers */
+     .main-color { --tw-bg-opacity:1; background-color: theme(colors.emerald.400); }
+     </style>
+
+  <!-- ---------------------------------------------------------
+       MÉTA-DONNÉES DE BASE + TITRE
+       --------------------------------------------------------- -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+
+  <!-- Title : PageTitle — SiteTitle -->
+  <title>{{ if .Title }}{{ .Title }} — {{ end }}{{ .Site.Title }}</title>
+
+  <!-- Description SEO -->
+  <meta name="description" content="{{ .Site.Params.description }}">
+
+  <!-- ---------------------------------------------------------
+       URL CANONIQUE (IMPORTANT POUR LE SEO)
+       --------------------------------------------------------- -->
+  <link rel="canonical" href="{{ .Permalink }}">
+
+  <!-- ---------------------------------------------------------
+       OPEN GRAPH : aperçu partage réseaux sociaux
+       --------------------------------------------------------- -->
+  <meta property="og:title" content="{{ if .Title }}{{ .Title }} — {{ end }}{{ .Site.Title }}">
+  <meta property="og:description" content="{{ .Site.Params.description }}">
+  <meta property="og:type" content="{{ if .IsPage }}article{{ else }}website{{ end }}">
+  <meta property="og:url" content="{{ .Permalink }}">
+  <!-- Option image OG (si tu veux ajouter plus tard) -->
+  <!-- <meta property="og:image" content="{{ .Site.BaseURL }}images/og-default.jpg"> -->
+
+  <!-- ---------------------------------------------------------
+       TWITTER CARDS
+       --------------------------------------------------------- -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="{{ if .Title }}{{ .Title }} — {{ end }}{{ .Site.Title }}">
+  <meta name="twitter:description" content="{{ .Site.Params.description }}">
+  <!-- <meta name="twitter:image" content="{{ .Site.BaseURL }}images/og-default.jpg"> -->
+
+  <!-- ---------------------------------------------------------
+       POLICES GOOGLE FONTS
+       ---------------------------------------------------------
+       Optimisation performances :
+       - Preconnect = prépare la connexion
+       - Preload = charge la police en avance, amélioration du LCP
+       --------------------------------------------------------- -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <!-- Preload fonts -->
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Inter:wght@400;600;700&display=swap" as="style">
+
+  <!-- Fallback stylesheet link -->
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <!-- ---------------------------------------------------------
+       CSS DU SITE
+       --------------------------------------------------------- -->
+  <link rel="stylesheet" href="{{ "css/main.css" | relURL }}">
+  <link rel="stylesheet" href="{{ "css/style.css" | relURL }}">
+  <link rel="stylesheet" href="{{ "css/custom.css" | relURL }}">
+
+  <!-- ---------------------------------------------------------
+       JAVASCRIPT DU SITE
+       --------------------------------------------------------- -->
+  <script defer src="{{ "js/main.js" | relURL }}"></script>
+
+</head>

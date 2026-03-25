@@ -1,0 +1,18 @@
+{{/* Charger le YAML */}}
+
+{{ $brand := .Page.Params.brand }}
+{{ $serie := .Page.Params.serie }}
+
+{{ $data := index site.Data.articles.smartphones $brand $serie }}
+
+{{ range $data.modeles }}
+
+### • **{{ .nom }}**
+
+&nbsp;&nbsp;&nbsp;• **Processeur (CPU) :** {{ .processeur }}
+
+&nbsp;&nbsp;&nbsp;• **Processeur graphique (GPU) :** {{ .graphique }}
+
+&nbsp;&nbsp;&nbsp;• **Système d'exploitation (OS) initial :** {{ .os }}
+
+{{ end }}

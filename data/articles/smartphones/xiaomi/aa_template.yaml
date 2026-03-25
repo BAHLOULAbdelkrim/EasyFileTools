@@ -1,0 +1,104 @@
+
+marque: "..."                 # La marque des modèles (par exemple : Xiaomi)
+logo_marque: "logo_xxx.webp"  # Remplacer les xxx par le nom de la marque en minuscules (par exemple : logo_xiaomi.webp)
+
+modeles:                      
+  - nom: "..."                # Nom du modèle (par exemple : Redmi Note 7 Pro)
+    date: "..."               # Date officielle de sortie mondiale du modèle (par exemple : 15 mars 2017)
+    couleurs:                 # Répéter "nom" et "code" tant le nombre des couleurs proposées
+      - nom: "..."            # Nom de la couleur (par exemple : Vert Forêt, toujours le nom de la couleur en premier, puis un éventuel nom, les deux commencent par une lettre majuscule)
+        code: "..."           # Code Hex ou RGB de la couleur (à toi de proposer le code qui convient mieux à la couleur, par exemple : #2f6b4f)
+    processeur: "..."         # Processeur et le nombre de "core" (par exemple : MTK Helio G85 Octa-core)
+    graphique: "..."          # Carte graphique (par exemple : ARM G52 MC2)
+    os: "..."                 # Système d'exploitation initial (par exemple : Android 10 avec MIUI)
+    camera_ar: "..."          # Caméra arrière : nombre x_uple N1 MP + N2 MP + N3 MP + etc (par exemple : quadruple 48 MP + 8 MP + 2 MP + 2 MP)
+    resol_ar: "..."           # Résolution de la caméra arrière : "x"@"y"fps (par exemple : 4K@30fps, 1080@30fps, 720@30/60/120fps, etc)
+    camera_av: "..."          # Type : simple, double, triple, etc et le nombre en MP (par exemple : simple 13 MP)
+    ram: "..."                # Les RAM proposées (par exemple : 3 Go, 6 Go, etc)
+    stockage: "..."           # Les capacités de stockage proposées (par exemple 64 Go, 128 Go)
+    ecran: "..."              # Nom de l'écran et la taille (par exemple : DotDisplay, 6.53")
+    resolution: "..."         # Résolution de l'écran et le type de HD (par exemple : 1080 x 2340 pixels (FHD+)  ) 
+    protection: "..."         # Type de la protection de l'écran (par exemple : Corning Gorilla Glass 5)
+    battery: "..."            # Autonomie et type (par exemple : 5020 mAh (Li‑Po)    )
+    charge: "..."             # Type de charge (par exemple : Charge rapide 18 W)
+    hautparleur: "..."        # Nom du module du haut-parleur principal (pour le multimédia), par exemple : mono ultra-linéaire (module 1217 – 12 × 17 mm), à citer aussi d’autres infos pertinentes comme : Smart PA, puissance maximale, cavité acoustique, etc
+    ecouteur: "..."           # Nom du haut-parleur secondaire (écouteur d’appel), par exemple : mono ultra-linéaire (module 1217 – 12 × 17 mm),  à citer aussi d’autres informations pertinentes comme : Puissance max, etc
+    sim: "..."                # Simple ou dual et le type de SIM (par exemple : Dual Nano-SIM)
+    sd: "..."                 # Emplacement de la carte micro SD et capacité max (par exemple : emplacement dédié (ou hybride), jusqu’à 512 Go)
+    reseaux: "..."            # Réseaux supportés (par exemple : 2G / 3G / 4G LTE / 5G)
+    wifi: "..."               # Les Wi-Fi supportés (par exemple : Wi-Fi 2.4G / Wi-Fi 5G)
+    bluetooth: "..."          # Le bluetooth (par exemple : 5.0)
+    gps: "..."                # Les GPS proposés (par exemple : GPS, A-GPS, GLONASS, BeiDou)
+    nfc: "..."                # Le NFC : OUI ou NON
+    dimensions: "..."         # dimension Hauteur × Largeur × Epaisseur en mm (par exemple : 162,3 × 77,2 × 8,9 mm)
+    poids: "..."              # Le poids en grammes (par exemple : 199 g)
+
+cotes:                        # Pour citer ce qu'il existe sur chaque coté du smartphone
+  haut:                       # Pour citer ce qu'il existe sur le coté haut
+    - "..."                   # à répéter pour chaque élément, par exemple : Émetteur infrarouge (IR blaster),  Microphone secondaire, etc
+  bas:                        # Pour citer ce qu'il existe sur le coté bas
+    - "..."                   # à répéter pour chaque élément, par exemple : Prise jack 3,5 mm, Port USB-C, Haut-parleur, Microphone principal, etc
+  droite:                     # Pour citer ce qu'il existe sur le coté droite
+    - "..."                   # à répéter pour chaque élément, par exemple : Bouton marche / arrêt, Boutons volume + / −
+  gauche:                     # Pour citer ce qu'il existe sur le coté gauche
+    - "..."                   # à répéter pour chaque élément, par exemple : Tiroir SIM / microSD
+
+capteurs_securite:
+  capteurs:                   # Pour citer les capteurs qui équipent le smartphone
+    - nom: "..."              # à répéter pour chaque capteur, par exemple : Accéléromètre, Gyroscope, Capteur de proximité, Capteur de luminosité, Boussole, etc
+      modeles:                # s'il y a des capteurs qui diffèrent d'un modèle à l'autre, on fait une séparation de chaque modèle à part : 
+        - nom: "**...**"          # nom du modèle
+          valeur: "..."       # précision sur le capteur qui diffère d'un modèle à l'autre
+  securite:                   # Pour citer la technologie qui équipe le smartphone pour rendre sécurisé
+    - nom: "..."              # nom de l'équipement, par exemple : Lecteur d’empreintes digitales, Déverrouillage facial
+      modeles:                # s'il y a des technologies qui diffèrent d'un modèle à l'autre, on fait une séparation de chaque modèle à part : 
+        - nom: "..."          # nom du modèle
+          valeur: "..."       # précision sur la technologie qui diffère d'un modèle à l'autre
+    - nom: "**...**"              # nom de l'équipement, par exemple : Déverrouillage facial
+      description: "..."      # un description de la technologie, par exemple : caméra frontal (pour le cas du Déverrouillage facial)
+
+ia:                           # Pour citer les fonctionnalités IA si elles existent.
+  modeles:
+  - nom: "..."                # Nom du modèle
+    valeur: "..."             # Description des fonctionnalités IA. Par exemple : Effacement IA Pro - Suppression de reflet IA - Extension d’image IA - IA Sky - Bokeh IA - Amélioration d’image IA - Embellissement IA - Film IA - Cercle pour Rechercher avec Google - Google Gemini - Fonds d’écran dynamiques IA - Assistant de créativité IA
+
+images: 
+  - image: "..."              # nom du modèle, par exemple : Redmi Note 9
+    fichier: "xxx.svg"       # Remplacer les xxx par le nom du modèle en minuscules (par exemple : redmi-note-9.webp)
+
+evaluation_1:
+  modeles:
+    - nom: "..."              # Nom du modèle
+      positifs:               
+        - "..."               # Citer trois à quatre points positifs (un après l'autre, pas trop long, entre 4 et 8 mots, voire 10 grand max)
+      negatifs:
+        - "..."               # Citer entre deux et 3 points négatifs (un après l'autre, pas trop long, entre 4 et 8 mots, voire 10 grand max)
+      note: "..."             # Note sur 10 de la forme : A,B
+      conclusion:             # Conclusion relativement courte (entre 15 et 30 mots grand max) sur le smartphone d'une façon générale (performances, design, etc), et à qui est destiné ou à éviter pour qui
+
+differences:
+  - "..."                     # Citer trois à cinq différences principales entre les modèles de cette série (une après l'autre), par exemple : Performance (processeur), Qualité de la photo principale, Écran, Batterie, NFC 
+
+acheter_1:                    # Cette section est destinée à proposer des sites pour l'achat du modèle (de 2 à 5 vendeurs en ligne max, les infos ci-dessous à répéter pour chaque vendeur)
+  - vendeur: "..."            # nom du site, par exemple : Amazon
+    modele: "..."             # nom du modèle du smartphone
+    url: "..."                # URL vers la page du modèle en vente sur le site du vendeur
+    logo: "/images/xxx.svg"   # remplacer xxx par le nom du vendeur en lettres minuscules
+
+connexes:
+  - serie: "Série Redmi Note 8"
+    url: "https://high-tech.pages.dev/smartphones/xiaomi/redmi-note-8/"
+  - serie: "Série Redmi Note 10"
+    url: "https://high-tech.pages.dev/smartphones/xiaomi/redmi-note-10/"
+  - serie: "Série Redmi Note 11"
+    url: "https://high-tech.pages.dev/smartphones/xiaomi/redmi-note-11/"
+  - serie: "Série Redmi Note 12"
+    url: "https://high-tech.pages.dev/smartphones/xiaomi/redmi-note-12/"
+  - serie: "Série Redmi Note 13"
+    url: "https://high-tech.pages.dev/smartphones/xiaomi/redmi-note-13/"
+  - serie: "Série Redmi Note 14"
+    url: "https://high-tech.pages.dev/smartphones/xiaomi/redmi-note-14/"
+
+externes:
+  - fiche: "Fiche officielle xxx (yyy)" # Remplacer xxx par le nom du modèle et yyy par le nom de la marque du modèle
+    url: "..."                          # URL vers la page officielle de la fiche technique du modèle

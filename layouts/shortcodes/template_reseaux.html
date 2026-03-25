@@ -1,0 +1,22 @@
+{{/* Charger le YAML */}}
+
+{{ $brand := .Page.Params.brand }}
+{{ $serie := .Page.Params.serie }}
+
+{{ $data := index site.Data.articles.smartphones $brand $serie }}
+
+{{ range $data.modeles }}
+
+### • **{{ .nom }}**
+
+&nbsp;&nbsp;&nbsp;• **Réseaux :** {{ .reseaux }}
+
+&nbsp;&nbsp;&nbsp;• **Wi-Fi :** {{ .wifi }}
+
+&nbsp;&nbsp;&nbsp;• **Bluetooth :** {{ .bluetooth }}
+
+&nbsp;&nbsp;&nbsp;• **GPS :** {{ .gps }}
+
+&nbsp;&nbsp;&nbsp;• **NFC :** {{ .nfc }}
+
+{{ end }}

@@ -1,0 +1,40 @@
+{{/* Charger le YAML */}}
+
+{{ $brand := .Page.Params.brand }}
+{{ $serie := .Page.Params.serie }}
+
+{{ $data := index site.Data.articles.smartphones $brand $serie }}
+
+### • **Marque**
+
+<div class="brand-logo" style="text-align:center">
+  <strong>{{ $data.marque }}</strong><br>
+  <img src="/images/{{ $data.logo_marque }}" alt="Logo Xiaomi" class="brand-logo-img">
+</div>
+
+### • **Modèles & Dates de sortie**
+
+{{ range $data.modeles }}
+&nbsp;&nbsp;&nbsp;• **{{ .nom }} :** {{ .date }}  
+{{ end }}
+
+### • **Couleurs**
+
+{{ range $data.modeles }}
+&nbsp;&nbsp;&nbsp;• **{{ .nom }} :** 
+
+<div class="color-swatches">
+
+  {{ range .couleurs }}
+
+  <label class="swatch">
+    <input type="radio" name="color">
+    <span class="color" style="--c:{{ .code }}"></span>
+    <span class="label"><strong>{{ .nom }}</strong></span>
+  </label>
+
+  {{ end }}
+
+</div> 
+
+{{ end }}

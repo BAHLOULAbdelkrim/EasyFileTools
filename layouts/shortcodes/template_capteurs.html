@@ -1,0 +1,34 @@
+{{/* Charger le YAML */}}
+
+{{ $brand := .Page.Params.brand }}
+{{ $serie := .Page.Params.serie }}
+
+{{ $data := index site.Data.articles.smartphones $brand $serie }}
+
+&nbsp;&nbsp;&nbsp;• **Capteurs :**
+
+{{ range $data.capteurs_securite.capteurs }}
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;♦ {{ .nom }}{{ if .description }} : {{ .description }}{{ end }}  
+
+{{ if .modeles }}
+{{ range .modeles }}
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-- {{ .nom }} : {{ .valeur }}  
+{{ end }}
+{{ end }}
+
+{{ end }}
+
+&nbsp;&nbsp;&nbsp;• **Sécurité :**
+
+{{ range $data.capteurs_securite.securite }}
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;♦ {{ .nom }}{{ if .description }} : {{ .description }}{{ end }}  
+
+{{ if .modeles }}
+{{ range .modeles }}
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-- {{ .nom }} : {{ .valeur }}  
+{{ end }}
+{{ end }}
+
+{{ end }}

@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="fr">
+
+{{ partial "head.html" . }}
+
+<!-- -----------------------------------------------------------
+     BODY
+     -----------------------------------------------------------
+     - Ajout d'une classe "home" ou "not-home" selon la page
+     - Ajout de data-section="<section>" utile pour JS/CSS
+     ----------------------------------------------------------- -->
+<body class="{{ if .IsHome }}home{{ else }}not-home{{ end }}" data-section="{{ .Section }}">
+
+  <!-- ---------------------------------------------------------
+       HEADER GLOBAL (logo + menu principal)
+       --------------------------------------------------------- -->
+  {{ partial "header.html" . }}
+
+  <!-- ---------------------------------------------------------
+       BARRE DE RECHERCHE + LANGUE
+       ---------------------------------------------------------
+       Partiel personnalisé ajouté par toi
+       --------------------------------------------------------- -->
+  {{ partial "search-lang.html" . }}
+
+  <!-- ---------------------------------------------------------
+       MENU MOBILE
+       ---------------------------------------------------------
+       Chargé dans un partiel
+       --------------------------------------------------------- -->
+  {{ partial "mobilemenu.html" . }}
+
+  <!-- ---------------------------------------------------------
+       CONTENU PRINCIPAL DYNAMIQUE
+       ---------------------------------------------------------
+       Les pages enfants remplacent le block "main"
+       --------------------------------------------------------- -->
+  <main class="site-main">
+    {{ block "main" . }}{{ end }}
+  </main>
+
+  <!-- ---------------------------------------------------------
+       FOOTER
+       --------------------------------------------------------- -->
+  {{ partial "footer.html" . }}
+
+
+<div class="image-modal" id="imageModal">
+  <span class="close-modal" id="closeModal">✕</span>
+  <img id="modalImage">
+</div>
+
+
+</body>
+</html>
+

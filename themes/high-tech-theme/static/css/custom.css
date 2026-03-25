@@ -1,0 +1,440 @@
+
+/*======= Beamer Box ========*/
+
+.beamer-box {
+    border-radius: 12px;    /* on garde l’arrondi si tu veux */
+    box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+/*    box-shadow: none; */       /* supprime l’ombre si nécessaire */
+    margin: 1.5rem 0;
+    overflow: hidden;
+    border: none;           /* supprime le contour global */
+    font-family: inherit;        /* hérite de la police du site */
+    background-color: rgb(248, 255, 251); /* couleur du corps */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.beamer-box:hover {
+    transform: scale(1.03); /* agrandissement léger */
+    box-shadow: 0 8px 20px rgb(248, 255, 251); /* ombre portée */
+}
+
+.beamer-title {
+    border: none;           /* supprime le trait sous le titre */
+    background-color: #d1fae5ff;  
+    color: #6b21a8ff;
+    font-weight: bold;
+    padding: 0.75rem 1rem;
+    font-size: 1.5rem;
+    position: relative;
+}
+
+/* Transition douce au bas de l’en-tête */
+.beamer-title::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;          /* commence exactement à la limite du titre */
+    height: 8px;         /* zone de transition */
+    background: linear-gradient(to bottom, #d1fae5ff 0%, rgb(248, 255, 251) 100%);
+    pointer-events: none; /* pour ne pas gêner la sélection du texte */
+}
+
+.beamer-body {
+    background-color: transparent; /* IMPORTANT */ /* bleu clair comme dans texte=darkred!10 */
+    color: #000;
+    padding-top: 0.3rem;  /* diminue pour remonter le texte */
+    padding-right: 1.2rem;
+    padding-bottom: 1rem;
+    padding-left: 1.2rem;
+    font-size: 1.5rem;
+}
+
+.beamer-body ul {
+    margin-top: 0.5rem;
+}
+
+.beamer-body > :first-child {
+  margin-top: 0 !important;
+}
+
+
+/*============== Beamer Table ============*/
+
+.beamer-body table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: center;
+    margin: 1 auto;
+}
+
+.beamer-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: center;
+    margin: 1rem auto;
+}
+
+.beamer-body th, .beamer-body td {
+    border: 1px solid rgb(0, 197, 26);
+    padding: 0.5rem 0.75rem;
+}
+
+.beamer-body th {
+    background-color: #d1fae5ff; /* un bleu clair pour l'entête */
+    font-weight: bold;
+}
+
+/* Lignes horizontales */
+.beamer-table tr.top-border th,
+.beamer-table tr.bottom-border td {
+    border-top: 3px solid rgb(0, 197, 26); /* bordure supérieure ou inférieure en gras */
+    border-bottom: 3px solid rgb(0, 197, 26);
+}
+
+.beamer-table tr.mid-border.single th,
+.beamer-table tr.mid-border.single td {
+    border-bottom: 1px solid rgb(0, 197, 26); /* ligne simple */
+}
+
+.beamer-table tr.mid-border.double th,
+.beamer-table tr.mid-border.double td {
+    border-bottom: 3px double rgb(0, 197, 26); /* ligne double */
+}
+
+/* Lignes horizontales */
+.beamer-table-segmented tr.top-border th {
+    border-top: 3px solid rgb(0, 197, 26);
+}
+.beamer-table-segmented tr.bottom-border td {
+    border-bottom: 3px solid rgb(0, 197, 26);
+}
+.beamer-table-segmented tr.mid-border.single th,
+.beamer-table-segmented tr.mid-border.single td {
+    border-bottom: 1px solid rgb(0, 197, 26);
+}
+.beamer-table-segmented tr.mid-border.double th,
+.beamer-table-segmented tr.mid-border.double td {
+    border-bottom: 3px double rgb(0, 197, 26);
+}
+
+/* Bordures verticales : Supprime toutes les bordures gauche et droite (border-left: 0, border-right: 0) */
+.beamer-table th, 
+.beamer-table td {
+    border-left: 0px;  /* par défaut on supprime la gauche */
+    border-right: 0px; /* par défaut on supprime la droite */
+    padding: 0.5rem;
+}
+
+/* Lignes verticales : Ajoute une bordure droite bleue uniquement sur les cellules marquées .vline */
+.beamer-table td.vline,
+.beamer-table th.vline {
+    border-right: 1px solid rgb(0, 197, 26);
+}
+
+/* Facultatif : ajouter verticales sur certaines colonnes */
+.beamer-table td.has-left-border {
+    border-left: 1px solid rgb(0, 197, 26);
+}
+.beamer-table td.has-right-border {
+    border-right: 1px solid rgb(0, 197, 26);
+}
+
+/* Optionnel : mettre la dernière colonne avec une ligne verticale */
+.beamer-table td:last-child {
+    border-right: 0;
+}
+
+/* CSS pour les segments verticaux */
+
+.beamer-table-segmented {
+    border-collapse: separate;
+    border-spacing: 0;
+    width: 100%;
+    text-align: center;
+    margin: 1rem auto;
+}
+
+/* Segment vertical uniquement via pseudo-élément */
+.vline-segment {
+    position: relative;
+}
+
+/* Segment vertical */
+.vline-segment::after {
+    content: '';
+    position: absolute;
+    top: 4px;       /* commence juste après la ligne horizontale supérieure */
+    bottom: 4px;    /* finit juste avant la ligne horizontale inférieure */
+    right: 0;
+    width: 1px;
+    background-color: rgb(0, 197, 26);
+}
+
+/* On supprime toutes les bordures verticales classiques */
+.beamer-table-segmented th,
+.beamer-table-segmented td {
+    border-left: 0;
+    border-right: 0;
+    padding: 0.5rem;
+}
+
+
+.beamer-box {
+    position: relative;
+    overflow: hidden;
+    background-color: rgb(248, 255, 251); /* déplacé ici */
+}
+
+/* image de fond des box */
+.beamer-box::before {
+  content: "";
+  position: absolute;
+  inset: 90px 10% 5% 10%;
+  background-image: var(--beamer-bg);
+  background-repeat: no-repeat;
+  background-position: center;
+/*  background-size: min(60%, 60%);  */
+  background-size: contain;
+  opacity: 0.05;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* contenu */
+.beamer-title,
+.beamer-body {
+  position: relative;
+  z-index: 1;
+}
+
+.shop-name {
+  color: #009933; /* vert */
+}
+
+.shop-price {
+  font-weight: normal;
+  color: #000000;
+}
+
+.shop-line {
+  display: flex;
+  flex-wrap: wrap;        /* permet au texte de passer à la ligne sur mobile */
+  align-items: center;    /* aligne verticalement texte et logo */
+  gap: 4px;               /* petit espace entre texte et logo */
+  margin: 0;
+}
+
+.shop-price {
+  display: inline-flex;   /* garde texte et logo sur la même ligne */
+  align-items: center;    /* aligne verticalement le texte et le logo */
+  gap: 4px;               /* petit espace entre texte et logo */
+}
+
+.shop-logo {
+  height: 28px;           /* desktop */
+  width: auto;
+  vertical-align: middle;
+  margin-left: 4px;   /* espace entre texte et logo */
+}
+
+/* ============================================================
+                        Version MOBILE
+   ============================================================ */
+
+@media (max-width: 900px) {
+  /* ===== Beamer-box ===== */
+  .beamer-box {
+    width: 100% !important;
+    padding: 0.5rem 0.8rem !important;
+    margin: 0.8rem 0 !important;
+    border-radius: 8px !important;
+  }
+
+  /* Box hover pour mobile */
+  .beamer-box:hover,
+  .beamer-box.hover {
+    transform: scale(1.03);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.25);
+  }
+
+  .beamer-title {
+    font-size: 1.2rem !important;
+    padding: 0.5rem 0.8rem !important;
+  }
+
+  .beamer-body {
+    font-size: 14px !important;
+    padding: 0.6rem 0.8rem !important;
+  }
+
+  /* --- 1) Images parfaitement fluides (toutes) --- */
+/*  img,
+  figure img,
+  .article-image,
+  .img-row img {
+      width: 100% !important;
+      max-width: 100% !important;
+      height: auto !important;
+  }    */
+
+  /* Annule les tailles fixes .img-small/.img-medium/.img-large */
+/*  .img-small,   */
+/*  .img-medium,  */
+  .img-large {
+      width: 100% !important;
+      max-width: 100% !important;
+  }
+
+  /* Les lignes d’images passent toujours en colonne */
+  .img-row {
+      flex-direction: column !important;
+      gap: 12px !important;
+  }
+
+  article img,
+  article figure img,
+  article .article-image,
+  article .img-row img {
+      width: 100% !important;
+      max-width: 100% !important;
+      height: auto !important;
+  }
+
+  article .img-small,
+  article .img-medium,
+  article .img-large {
+      width: 100% !important;
+      max-width: 100% !important;
+  }
+
+  article .img-row {
+      flex-direction: column !important;
+  }
+
+  /* --- 2) Beamer Box responsive --- */
+  .beamer-box {
+      width: 100% !important;
+      border-radius: 8px !important;
+      margin: 1rem 0 !important;
+      box-shadow: none !important;   /* évite débordement */
+      padding: 0 !important;
+  }
+
+  .beamer-title {
+      font-size: 1.1rem !important;
+      padding: 0.5rem 0.8rem !important;
+      white-space: normal !important;
+      text-align: center !important;
+  }
+
+  .beamer-body {
+      font-size: 14px !important;
+      padding: 0.8rem !important;
+      line-height: 1.45 !important;
+      overflow-x: auto !important;
+  }
+
+
+  /* --- 3) Tables Beamer 100% responsives --- */
+
+  /* On applique la même logique que tes tables standards */
+  .beamer-table,
+  .beamer-table-segmented,
+  .beamer-body table {
+      display: block !important;
+      width: 100% !important;
+      overflow-x: auto !important;
+      font-size: 13px !important;
+  }
+
+  .beamer-body th,
+  .beamer-body td {
+      padding: 6px 8px !important;
+      font-size: 13px !important;
+      white-space: nowrap !important;  /* évite la cassure verticale */
+  }
+
+  /* Masque l’en-tête comme pour tes tables classiques */
+  .beamer-table thead,
+  .beamer-table-segmented thead {
+      display: none !important;
+  }
+
+  /* Style mobile sur les lignes */
+  .beamer-table tbody tr,
+  .beamer-table-segmented tbody tr {
+      display: block !important;
+      margin-bottom: 10px !important;
+      border-bottom: 2px solid #ddd !important;
+  }
+
+  .beamer-table td,
+  .beamer-table-segmented td {
+      display: block !important;
+      text-align: right !important;
+      padding-left: 50% !important;
+      position: relative !important;
+      border-left: none !important;
+      border-right: none !important;
+  }
+
+  /* On utilise data-label pour les Beamer tables aussi */
+  .beamer-table td::before,
+  .beamer-table-segmented td::before {
+      content: attr(data-label);
+      position: absolute;
+      left: 10px;
+      width: 45%;
+      text-align: left;
+      font-weight: bold;
+  }
+
+  /* Supprime toutes les bordures verticales sur mobile */
+  .vline,
+  .vline-segment,
+  .vline-segment::after {
+      display: none !important;
+  }
+
+/* Image fond de la box */
+  .beamer-box::before {
+    background-size: min(80%, 80%);
+    opacity: 0.1;
+  }
+
+.shop-name {
+  color: #009933; /* vert */
+}
+
+.shop-price {
+  font-weight: normal;
+  color: #000000;
+  display: inline-flex;   /* garde texte et logo sur la même ligne */
+  align-items: center;    /* aligne verticalement le texte et le logo */
+  gap: 4px;               /* petit espace entre texte et logo */
+}
+
+.shop-line {
+  display: flex;
+  flex-wrap: wrap;        /* permet au texte de passer à la ligne sur mobile */
+  align-items: center;    /* aligne verticalement texte et logo */
+  gap: 4px;               /* petit espace entre texte et logo */
+  margin: 0;
+}
+
+.shop-logo {
+  height: 22px !important;         /* réduit sur mobile */
+  width: auto !important;
+  margin-left: 3px !important;
+}
+
+}
+
+
+
+
+
+
+
+

@@ -1,0 +1,20 @@
+{{/* Charger le YAML */}}
+
+{{ $brand := .Page.Params.brand }}
+{{ $serie := .Page.Params.serie }}
+
+{{ $data := index site.Data.articles.smartphones $brand $serie }}
+
+{{ range $data.acheter_5 }}
+
+<h3>
+  • <strong class="shop-name">{{ .vendeur }} :</strong>
+  <span class="shop-price">
+    voir le prix à jour du {{ .modele }} sur 
+    <a href="{{ .url }}" class="tag-link" target="_blank" rel="noopener noreferrer">
+      <img src="{{ .logo }}" alt="{{ .vendeur }}" class="shop-logo">
+    </a>
+  </span>
+</h3>
+
+{{ end }}

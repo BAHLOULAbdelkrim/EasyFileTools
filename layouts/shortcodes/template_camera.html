@@ -1,0 +1,18 @@
+{{/* Charger le YAML */}}
+
+{{ $brand := .Page.Params.brand }}
+{{ $serie := .Page.Params.serie }}
+
+{{ $data := index site.Data.articles.smartphones $brand $serie }}
+
+{{ range $data.modeles }}
+
+### • **{{ .nom }}**
+
+&nbsp;&nbsp;&nbsp;• **Caméra arrière :** {{ .camera_ar }}
+
+&nbsp;&nbsp;&nbsp;• **Résolution vidéo :** {{ .resol_ar }}
+
+&nbsp;&nbsp;&nbsp;• **Caméra frontale :** {{ .camera_av }}
+
+{{ end }}

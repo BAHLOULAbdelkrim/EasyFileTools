@@ -1,0 +1,7 @@
+<div class="beamer-box"
+     {{ with .Get "bg" }}style="--beamer-bg: url('{{ . }}')"{{ end }}>
+  <div class="beamer-title">{{ .Get "title" }}</div>
+  <div class="beamer-body">
+    {{ .Inner | markdownify }}
+  </div>
+</div>

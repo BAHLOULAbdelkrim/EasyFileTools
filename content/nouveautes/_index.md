@@ -1,0 +1,4 @@
+---
+title: "Nouveautés"
+---
+Page actualite.

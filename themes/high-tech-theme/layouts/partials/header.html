@@ -1,0 +1,86 @@
+<header class="site-header">
+<div class="header-container">
+  <div class="header-left">
+    <a href="{{ "/" | relURL }}" class="home-link">
+      <img src="{{ .Site.Params.logo | relURL }}" alt="Logo" class="logo">
+      <span class="orbitron">High-Tech</span>
+    </a>
+  </div>
+
+    <nav class="top-menus" aria-label="Top navigation">
+      {{/* mapping des noms abrégés pour le menu */}}
+      {{ $menuNames := dict
+          "smartphones" "Smartphones"
+          "tablettes" "Tablettes"
+          "pc-portables" "PC Portables"
+          "ordinateurs" "Ordinateurs"
+          "photo-video" "Photo & Vidéo"
+          "tv-cinema" "TV & Cinéma"
+          "gaming" "Gaming"
+          "domotique" "Domotique"
+          "audio" "Audio"
+          "obj-connectes" "Obj. Connectés"
+          "impression" "Impression"
+          "peripheriques" "Périphériques"
+      }}
+
+      <ul class="menu-grid">
+        {{ range $i, $m := slice "smartphones" "tablettes" "pc-portables" "ordinateurs" "photo-video" "tv-cinema" "gaming" "domotique" "audio" "obj-connectes" "impression" "peripheriques" }}
+          {{ $page := site.GetPage (printf "/%s/_index.md" $m) }}
+          <li class="menu-item">
+            <a href="{{ if $page }}{{ $page.RelPermalink }}{{ else }}{{ printf "/%s/" $m | relURL }}{{ end }}" data-menu="{{ $m }}">
+              {{ with index $menuNames $m }}
+                {{ . }}
+              {{ else }}
+                {{ humanize $m }}
+              {{ end }}
+            </a>
+          </li>
+        {{ end }}
+      </ul>
+
+    </nav>
+</div>
+
+<!-- Burger mobile -->
+<button id="menu-toggle" class="mobile-burger">
+  <span class="burger-line"></span>
+  <span class="burger-line"></span>
+  <span class="burger-line"></span>
+</button>
+
+</header>
+
+<section class="hero">
+  {{ if .IsHome }}
+
+    <!-- ➤ Slideshow si page d'accueil -->
+    <div class="slideshow" id="slideshow">
+      <img src="{{ "images/slide1.webp" | relURL }}" class="slide visible">
+      <img src="{{ "images/slide2.webp" | relURL }}" class="slide">
+      <img src="{{ "images/slide3.webp" | relURL }}" class="slide">
+      <img src="{{ "images/slide4.webp" | relURL }}" class="slide">
+    </div>
+
+  {{ else }}
+
+    <!-- ➤ Toujours récupérer l'image du MENU parent -->
+    {{ $menu := site.GetPage (printf "/%s/_index.md" .Section) }}
+    {{ $menuImg := $menu.Params.menu_image }}
+
+    {{ if $menuImg }}
+      <div class="hero-static">
+        <img src="{{ $menuImg | relURL }}" alt="menu image">
+      </div>
+    {{ else }}
+      <!-- fallback slideshow -->
+      <div class="slideshow" id="slideshow">
+        <img src="{{ "images/slide1.webp" | relURL }}" class="slide visible">
+        <img src="{{ "images/slide2.webp" | relURL }}" class="slide">
+        <img src="{{ "images/slide3.webp" | relURL }}" class="slide">
+        <img src="{{ "images/slide4.webp" | relURL }}" class="slide">
+      </div>
+    {{ end }}
+
+  {{ end }}
+</section>

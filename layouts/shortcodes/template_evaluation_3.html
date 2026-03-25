@@ -1,0 +1,61 @@
+{{/* Charger le YAML */}}
+
+{{ $brand := .Page.Params.brand }}
+{{ $serie := .Page.Params.serie }}
+
+{{ $data := index site.Data.articles.smartphones $brand $serie }}
+
+{{ range $data.evaluation_3.modeles }}
+
+### • **Points positifs**
+
+{{ range .positifs }}
+&nbsp;&nbsp;&nbsp;**+** {{ . }}  
+{{ end }}
+
+### • **Points négatifs**
+
+{{ range .negatifs }}
+&nbsp;&nbsp;&nbsp;**-** {{ . }}  
+{{ end }}
+
+### • **Note globale**
+
+<div style="text-align:center; margin:0px 0;">
+  <div class="note" style="
+    display:inline-block;
+    position:relative;
+    padding:15px 30px;
+    border-radius:12px;
+    font-size:1.2em;
+    font-weight:bold;
+    text-align:center;
+    cursor:pointer;
+    color:#6b21a8ff;
+    background-color:#d1fae5ff;
+    overflow:hidden;
+    transition: all 0.4s ease;
+  ">
+    ⭐ {{ .note }} / 10 ⭐
+  </div>
+</div>
+
+### • **Conclusion**
+
+<div style="
+  text-align:center;
+  font-style:italic;
+  font-weight:500;
+  font-size:1.1em;
+  color:#4b0082;
+  margin:0px 0;
+  padding:0; 
+  overflow:hidden;
+  display:inline-block;
+  position:relative;
+">
+  <span class="conclusion-text"> {{ .conclusion }} </span>
+</div>
+
+{{ end }}
+

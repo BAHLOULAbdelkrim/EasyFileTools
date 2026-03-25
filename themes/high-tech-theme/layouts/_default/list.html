@@ -1,0 +1,54 @@
+{{ define "main" }}
+  <div class="container section-list">
+    <aside class="left-column">
+      {{ partial "leftmenus.html" . }}
+    </aside>
+    <section class="content-column">
+      <h1>{{ .Title }}</h1>
+
+      <!-- ✔️ AJOUT : afficher l’image de la section (menus + sous-menus) -->
+      {{ if .Params.image }}
+        <img class="section-cover" src="{{ .Params.image }}" alt="{{ .Title }}">
+      {{ end }}
+
+      <div class="submenus">
+        <ul>
+          {{ range .Sections }}
+            <li><a href="{{ .RelPermalink }}">{{ .Title }}</a></li>
+          {{ end }}
+        </ul>
+      </div>
+
+<div class="articles-grid">
+  <!-- 1️⃣ Affiche les sous-menus -->
+<!--  {{ range .Sections }}
+    <article class="card">
+      <a href="{{ .RelPermalink }}">
+        <h2>{{ .Title }}</h2>
+        <p>{{ .Summary }}</p>
+        {{ with .Params.menu_image }}
+          <img src="{{ . | relURL }}" alt="{{ $.Title }}">
+        {{ end }}
+      </a>
+    </article>
+  {{ end }}           -->
+  <!-- 2️⃣ Affiche uniquement les articles normaux (pas les _index.md des sous-menus) -->
+  {{ range where .Pages "Kind" "in" (slice "page") }}
+    <article class="card">
+      <a href="{{ .RelPermalink }}">
+        <h2>{{ .Title }}</h2>
+        <p>{{ .Summary }}</p>
+        {{ with .Params.image }}
+          <img src="{{ . | relURL }}" alt="{{ $.Title }}">
+        {{ end }}
+      </a>
+    </article>
+  {{ end }}              
+</div>
+
+      {{ if .Paginator }}
+        {{ template "_internal/pagination.html" . }}
+      {{ end }}
+    </section>
+  </div>
+{{ end }}
