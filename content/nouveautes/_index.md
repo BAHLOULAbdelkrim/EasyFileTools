@@ -1,4 +1,0 @@
----
-title: "Nouveautés"
----
-Page actualite.

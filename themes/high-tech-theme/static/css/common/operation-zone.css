@@ -1,0 +1,738 @@
+/* =========================
+   OPERATION ZONE
+========================= */
+
+.operation-zone {
+
+    margin-top: 40px;
+    padding: 25px;
+
+    background: #FDFBFF;
+
+    border: 3px dashed var(--violet);
+
+    border-radius: 18px;
+
+}
+
+
+/* =========================
+   TOP ACTIONS
+========================= */
+
+.operation-top {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    margin-bottom: 25px;
+}
+
+
+/* DOWNLOAD ALL */
+
+.operation-download-all,
+.operation-clear-all {
+
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 8px;
+
+    border: none;
+
+    border-radius: 14px;
+
+    padding: 13px 22px;
+
+    font-size: 16px;
+
+    font-weight: 600;
+
+    transition: all 0.25s ease;
+
+}
+
+
+/* DOWNLOAD ALL */
+
+.operation-download-all {
+
+    background: gray;
+
+    color: white;
+
+    opacity: 0.5;
+
+    cursor: not-allowed;
+}
+
+.operation-download-all.active {
+
+    background: var(--violet);
+
+    opacity: 1;
+
+    cursor: pointer;
+}
+
+.operation-download-all.active:hover {
+
+    background: var(--green-text);
+
+    transform: scale(1.05);
+}
+
+
+/* CLEAR ALL */
+
+.operation-clear-all {
+
+    background: gray;
+
+    color: white;
+
+    opacity: 0.5;
+
+    cursor: not-allowed;
+}
+
+.operation-clear-all.active {
+
+    background: #ef4444;
+
+    opacity: 1;
+
+    cursor: pointer;
+}
+
+.operation-clear-all.active:hover {
+
+    background: #dc2626;
+
+    transform: scale(1.05);
+}
+
+
+/* =========================
+   FORMAT LISTS
+========================= */
+
+.download-all-formats,
+.conversion-formats {
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    gap: 10px;
+
+    flex-wrap: wrap;
+
+    margin-top: 15px;
+
+    margin-bottom: 20px;
+}
+
+.download-all-formats.hidden,
+.conversion-formats.hidden {
+
+    display: none;
+}
+
+/* =========================
+   FORMAT SELECTOR
+========================= */
+
+.operation-format-selector {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    margin-bottom: 15px;
+}
+
+
+.operation-choose-format {
+    font-size: 30px;
+    font-weight: 700;
+
+    color: gray;
+
+    opacity: 0.65;
+
+    cursor: default;
+
+    transition:
+        color 0.25s ease,
+        opacity 0.25s ease,
+        transform 0.25s ease;
+}
+
+.operation-choose-format.active {
+    color: var(--violet);
+    opacity: 1;
+}
+
+
+/* =========================
+   AUDIO FORMAT BUTTONS
+========================= */
+
+.audio-format-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-width: 70px;
+    padding: 10px 16px;
+
+    border: 2px solid transparent;
+    border-radius: 12px;
+
+    background: #d1d5db;
+    color: #6b7280;
+
+    font-size: 14px;
+    font-weight: 700;
+
+    cursor: not-allowed;
+
+    opacity: 0.65;
+
+    position: relative;
+    overflow: hidden;
+
+    transition: all 0.25s ease;
+}
+
+.audio-format-btn.active {
+    background: var(--green-hover);
+    color: #000000;
+    opacity: 1;
+    cursor: pointer;
+}
+
+.audio-format-btn.active:hover {
+    transform: scale(1.08);
+}
+
+.audio-format-btn.selected {
+    background: var(--green-text);
+    color: white;
+    border-color: var(--green-text);
+    opacity: 1;
+    cursor: pointer;
+    transform: scale(1.06);
+}
+
+.audio-format-btn::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -120%;
+    width: 60%;
+    height: 100%;
+
+    background: linear-gradient(
+        120deg,
+        transparent,
+        rgba(255,255,255,0.55),
+        transparent
+    );
+
+    transform: skewX(-20deg);
+}
+
+.audio-format-btn.active:hover::before,
+.audio-format-btn.selected:hover::before {
+    animation: operationButtonShine 0.7s ease;
+}
+
+/* =========================
+   OPERATION CONTROLS
+========================= */
+
+.operation-controls {
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    gap: 12px;
+
+    margin-top: 20px;
+}
+
+
+.operation-controls button {
+
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 8px;
+
+    border: none;
+
+    border-radius: 14px;
+
+    padding: 13px 24px;
+
+    font-size: 16px;
+
+    font-weight: 600;
+
+    transition: all 0.25s ease;
+}
+
+
+/* CANCEL */
+
+.operation-cancel {
+    background: gray;
+    color: white;
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.operation-cancel.active {
+    background: #ef4444;
+    color: white;
+    opacity: 1;
+    cursor: pointer;
+}
+
+.operation-cancel.active:hover {
+    background: #dc2626;
+    transform: scale(1.05);
+}
+
+/* CONVERT */
+
+.operation-convert {
+
+    background: gray;
+
+    color: white;
+
+    opacity: 0.5;
+
+    cursor: not-allowed;
+}
+
+.operation-convert.active {
+
+    background: var(--violet);
+
+    opacity: 1;
+
+    cursor: pointer;
+}
+
+.operation-convert.active:hover {
+
+    background: var(--green-text);
+
+    transform: scale(1.06);
+}
+
+
+/* PAUSE */
+
+.operation-pause {
+
+    background: gray;
+
+    color: white;
+
+    opacity: 0.5;
+
+    cursor: not-allowed;
+}
+
+.operation-pause.active {
+
+    background: #f59e0b;
+
+    opacity: 1;
+
+    cursor: pointer;
+}
+
+
+/* =========================
+   PROGRESS
+========================= */
+
+.operation-progress {
+
+    margin-top: 30px;
+}
+
+
+.progress-block {
+
+    margin-bottom: 18px;
+}
+
+
+.progress-label {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    margin-bottom: 7px;
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+    color: #000000;
+}
+
+
+.progress-bar {
+
+    width: 100%;
+
+    height: 14px;
+
+    background: #d1d5db;
+
+    border-radius: 20px;
+
+    overflow: hidden;
+}
+
+
+.progress-fill {
+    height: 100%;
+    width: 0;
+    border-radius: 20px;
+    transition:
+        width 0.2s ease,
+        background 0.2s ease;
+
+    position: relative;
+    overflow: hidden;
+}
+
+/* CURRENT FILE */
+
+.current-file-progress {
+    background: linear-gradient(
+        to right,
+        var(--green-hover),
+        var(--violet-light)
+    );
+}
+
+/* ALL FILES */
+
+.all-files-progress {
+    background: linear-gradient(
+        to right,
+        var(--green-text),
+        var(--violet)
+    );
+}
+
+
+/* =========================
+   PROGRESS SHINE
+========================= */
+
+.progress-fill.progress-shine::after {
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    left: -60px;
+
+    width: 50px;
+    height: 100%;
+
+    background: rgba(255, 255, 255, 0.45);
+
+    transform: skewX(-20deg);
+
+    pointer-events: none;
+
+    animation:
+        progressBarShine 1s ease;
+}
+
+
+@keyframes progressBarShine {
+
+    from {
+        left: -60px;
+    }
+
+    to {
+        left: 120%;
+    }
+}
+
+
+/* =========================
+   BOTTOM NAVIGATION
+========================= */
+
+.operation-navigation {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    margin-top: 30px;
+}
+
+
+.operation-home,
+.operation-top-btn {
+
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 8px;
+
+    padding: 11px 18px;
+
+    border: none;
+
+    border-radius: 12px;
+
+    background: var(--violet);
+
+    color: white;
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+    text-decoration: none;
+
+    cursor: pointer;
+
+    transition: all 0.25s ease;
+}
+
+
+.operation-home:hover,
+.operation-top-btn:hover {
+
+    background: var(--green-text);
+
+    transform: scale(1.05);
+}
+
+
+/* =========================
+   LUCIDE ICONS
+========================= */
+
+.operation-zone svg {
+
+    width: 20px;
+    height: 20px;
+
+    flex-shrink: 0;
+}
+
+
+/* =========================
+   BUTTON SHINE EFFECT
+========================= */
+
+.operation-download-all,
+.operation-clear-all,
+.operation-cancel,
+.operation-convert,
+.operation-pause,
+.operation-home,
+.operation-top-btn {
+    position: relative;
+    overflow: hidden;
+}
+
+.operation-download-all::before,
+.operation-clear-all::before,
+.operation-cancel::before,
+.operation-convert::before,
+.operation-pause::before,
+.operation-home::before,
+.operation-top-btn::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -120%;
+    width: 60%;
+    height: 100%;
+    background: linear-gradient(
+        120deg,
+        transparent,
+        rgba(255,255,255,0.45),
+        transparent
+    );
+    transform: skewX(-20deg);
+}
+
+.operation-download-all.active:hover::before,
+.operation-clear-all.active:hover::before,
+.operation-cancel.active:hover::before,
+.operation-convert.active:hover::before,
+.operation-pause.active:hover::before,
+.operation-home:hover::before,
+.operation-top-btn:hover::before {
+    animation: operationButtonShine 0.7s ease;
+}
+
+@keyframes operationButtonShine {
+
+    from {
+        left: -120%;
+    }
+
+    to {
+        left: 140%;
+    }
+
+}
+
+
+
+/* =========================================================
+   GLOBAL PROGRESS — STATE
+========================================================= */
+
+.operation-progress .progress-label {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: gray;
+}
+
+
+/* ACTIVE */
+
+.operation-progress .progress-block.active .progress-label {
+    color: var(--violet);
+}
+
+
+/* INACTIVE BAR */
+
+.operation-progress .progress-block:not(.active) .progress-bar {
+    background: #e5e7eb;
+}
+
+
+/* INACTIVE FILL */
+
+.operation-progress .progress-block:not(.active) .progress-fill {
+    background: #e5e7eb !important;
+}
+
+
+
+/* =========================================================
+   DOWNLOAD ALL FORMATS
+========================================================= */
+
+.download-all-formats {
+    display: flex;
+    justify-content: flex-start;
+    gap: 10px;
+
+    margin-top: 10px;
+}
+
+
+.download-all-formats.hidden {
+    display: none;
+}
+
+
+.download-format-btn {
+    min-width: 90px;
+
+    padding: 9px 16px;
+
+    border: none;
+    border-radius: 10px;
+
+    background: var(--violet-light);
+
+    color: #000000;
+
+    font-size: 16px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.2s ease,
+        background 0.2s ease;
+}
+
+
+.download-format-btn:hover {
+    background: var(--green-hover);
+
+    transform: scale(1.05);
+}
+
+
+/* =========================================================
+   DOWNLOAD FORMAT HIGHLIGHT
+========================================================= */
+
+.download-all-formats.highlight {
+    padding: 12px;
+
+    border-radius: 14px;
+
+    box-shadow:
+        0 0 0 3px var(--violet-light),
+        0 0 24px rgba(107, 33, 168, 0.35);
+
+    animation:
+        downloadFormatsHighlight
+        0.8s ease-in-out
+        2;
+}
+
+
+@keyframes downloadFormatsHighlight {
+
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.04);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}

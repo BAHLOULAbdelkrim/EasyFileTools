@@ -1,23 +1,3 @@
 {{ define "main" }}
-  <div class="container home-content">
-    <aside class="left-column">
-      {{ partial "leftmenus.html" . }}
-    </aside>
-
-    <section class="content-column">
-
-      <h2 class="latest-title">Derniers articles ...</h2>
-      <div class="latest-grid">
-        {{ range first 9 .Site.RegularPages.ByDate.Reverse }}
-          <article class="card">
-            <a href="{{ .RelPermalink }}">
-              <img src="{{ .Params.image }}" alt="{{ .Title }}">
-              <h3>{{ .Title }}</h3>
-              <p>{{ .Summary }}</p>
-            </a>
-          </article>
-        {{ end }}
-      </div>
-    </section>
-  </div>
+  {{ partial "homepage.html" . }}
 {{ end }}

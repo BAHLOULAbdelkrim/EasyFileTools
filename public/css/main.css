@@ -7,6 +7,7 @@
   --main-emerald: #34d399ff;     /* texte général du site (emerald-400) */
   --main-black: rgb(0, 0, 0);    /* texte général du site (noir) */
   --violet_nom_site: rgb(85, 0, 155);            /* Couleur du nom du site */
+  --color_nom_site: rgb(255, 0, 0);            /* Couleur du nom du site */
 
 /*  --violet: #6b21a8ff;            /* texte des menus (violet-800) */
 /*  --menu-bg: #d1fae5ff;           /* fond des menus (emerald-100) */
@@ -46,8 +47,26 @@ body{
 /* Nom du site en Orbitron */
 .orbitron{
   font-family:'Orbitron',sans-serif;
-  color:var(--violet_nom_site);
+  color:var(--violet);
   font-weight:900;                 /* Définir l’épaisseur (le “gras”) des caractères : de 100 à 900 */
+  font-size:1.4rem;                /* Définir la taille du texte : "rem" Taille relative à la racine (html), il y a aussi : px, em, ...%, larger, smaller, vw (Relative à la largeur de l’écran (utile en responsive design) */
+  margin-left:8px;                 /* Marge gauche  */
+}
+
+/* Nom du site en Roboto */
+.roboto{
+  font-family:'Roboto',sans-serif;
+  color:var(--violet_nom_site);
+  font-weight:700;                 /* Définir l’épaisseur (le “gras”) des caractères : de 100 à 900 */
+  font-size:1.4rem;                /* Définir la taille du texte : "rem" Taille relative à la racine (html), il y a aussi : px, em, ...%, larger, smaller, vw (Relative à la largeur de l’écran (utile en responsive design) */
+  margin-left:8px;                 /* Marge gauche  */
+}
+
+/* Nom du site en orbitron */
+.orbitron1{
+  font-family:'Orbitron',sans-serif;
+  color:rgb(0, 132, 255);
+  font-weight:700;                 /* Définir l’épaisseur (le “gras”) des caractères : de 100 à 900 */
   font-size:1.4rem;                /* Définir la taille du texte : "rem" Taille relative à la racine (html), il y a aussi : px, em, ...%, larger, smaller, vw (Relative à la largeur de l’écran (utile en responsive design) */
   margin-left:8px;                 /* Marge gauche  */
 }
@@ -63,7 +82,7 @@ body{
   padding: 12px 12px;      /* Espace interne : top - right - bottom - left */
   display: flex;           /* Définir comment un élément se comporte dans la page : "block" occupe toute la largeur, "inline" ne prend que l’espace du contenu, "grid" grille structurée (lignes/colonnes) */
                            /* "inline-block" comme inline mais peut régler la largeur et hauteur, "none" élément est complètement caché, "flex" conteneur flexible pour organiser facilement ses enfants   */
-  align-items: flex-start; /* Propriété utilisée uniquement dans un conteneur Flex ou Grid pour aligner les éléments enfants sur l’axe vertical */
+  align-items: center; /* Propriété utilisée uniquement dans un conteneur Flex ou Grid pour aligner les éléments enfants sur l’axe vertical */
 /* "stretch" : (par défaut) Étire les éléments pour remplir la hauteur disponible
    "flex-start" Aligne les éléments **au début** de l’axe transversal
    "flex-end" Aligne **à la fin** de l’axe transversal
@@ -110,15 +129,24 @@ body{
 
 /* Logo */
 .logo {
-  width: 56px;
-  height: 56px;
+  width: 1000px;
+
   object-fit: contain;
 }
 
+.site-name {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centre EasyFile et Tools */
+    line-height: 1.3;
+}
+
+
 /* Grille des menus du haut */
 .menu-grid {
-  display: grid;
-  grid-template-columns: repeat(6, 1fr);
+  display: grid !important;
+/*  grid-template-columns: repeat(5, 1fr) !important;  */
+  grid-template-columns: repeat(5, max-content) !important;
   gap: 6px;
   list-style: none;
   padding: 0;
@@ -127,7 +155,9 @@ body{
 
 /* Menu principal avec brillance */
 .menu-item a {
-  display: block;
+  display: flex;
+  align-items: center;
+  gap: 8px;
   background: var(--menu-bg);
   color: var(--violet);
   padding: var(--menu-padding);
@@ -138,6 +168,7 @@ body{
   transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease, color 0.25s ease;
   position: relative;       /* nécessaire pour le ::before */
   overflow: hidden;         /* nécessaire pour le ::before */
+  width: 190px;
 }
 
 .menu-item a::before {
@@ -363,66 +394,6 @@ body{
   margin-bottom: 20px;
 }
 
-/*-------------------------------------------*/
-/*            leftmenu.html                  */
-/*-------------------------------------------*/
-
-/* Règle bien fermée et appliquée */
-.icon-small {
-  width: 20px !important;
-  height: 20px !important;
-  vertical-align: middle;
-  margin-right: 6px;
-}
-
-/* Menu latéral avec même style que les menus du haut */
-.side-links .menu-item a {
-  display: flex;         /* mettre icône et texte sur la même ligne */
-  align-items: center;   /* centrer verticalement */
-  gap: 8px;              /* espace entre icône et texte */
-  white-space: nowrap;   /* empêcher le texte de passer à la ligne */
-  background: var(--menu-bg);
-  color: var(--violet);
-  padding: var(--menu-padding);
-  text-decoration: none;
-  font-weight: 600;
-  border-radius: 6px;
-  position: relative;   /* nécessaire pour ::before */
-  overflow: hidden;     /* nécessaire pour ::before */
-  transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease, color 0.25s ease;
-}
-
-.side-links .menu-item {
-  margin-bottom: 10px;   /* espace vertical entre chaque menu */
-}
-
-.side-links .menu-item a::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: -75%;
-  width: 50%;
-  height: 100%;
-  background: linear-gradient(120deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.5) 50%, rgba(255,255,255,0) 100%);
-  transform: skewX(-20deg);
-}
-
-.side-links .menu-item a:hover::before {
-  animation: shine 0.7s forwards;
-}
-
-.side-links .menu-item a:hover {
-  background: var(--menu-hover-bg);
-  color: var(--menu-hover-text);
-    transform: translateY(-2px);
-  box-shadow: 0 6px 14px rgba(0,0,0,0.12);
-}
-
-.side-links ul {
-  list-style: none;   /* enlève les puces */
-  padding: 0;         /* supprime le retrait gauche par défaut */
-  margin: 0;          /* supprime la marge par défaut */
-}
 
 /*-------------------------------------------*/
 /*               index.html                  */
@@ -595,118 +566,6 @@ body.menu-open {
 }
 
 /* ==============================
-   BARRE RECHERCHE (no Langue)
-   ============================== */
-
-.search-lang-bar {
-  background-color: #fff;
-  border-bottom: 1px solid #eee;
-  padding: 12px 0;
-}
-
-.search-lang-container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 16px;
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  gap: 12px;
-  padding: 8px 16px;
-}
-
-/* Barre de recherche */
-.search-input {
-  flex: 1;
-  max-width: 1200px; /* Tu peux ajuster ici la largeur */
-  padding: 10px 14px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  font-size: 1rem;
-}
-
-/* Formulaire barre de recherche */
-.search-form {
-  position: relative;
-  flex: 1; /* prend tout l'espace disponible */
-  display: flex;
-  align-items: center;
-}
-
-/* Bouton Rechercher */
-.search-button {
-  position: absolute;
-  right: 4px;
-  top: 50%;
-  transform: translateY(-50%);
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  color: #000;
-  font-weight: 600;
-  transition: color 0.2s ease;
-}
-
-.search-button .search-icon {
-  width: 22px;
-  height: 22px;
-  color: #ede9feff;
-  transition: color 0.2s ease;
-}
-
-.search-button:hover .search-icon {
-  color: #6b21a8ff;
-}
-
-/* Styles de l’icône de recherche */
-.icon-search {
-  width: 20px;
-  height: 20px;
-  margin-right: 6px;
-  color: rgb(179, 103, 241);
-  stroke: currentColor;
-  transition: color 0.2s ease;
-}
-
-/* Effet hover */
-.search-button:hover .icon-search {
-  color: rgb(68, 0, 124);
-}
-
-/* ==============================
-   Logo en arrière plan
-   ============================== */
-
-/* Ajoute un logo en arrière-plan dans les articles */
-.container.article {
-  position: relative;
-  overflow: hidden;
-}
-
-.container.article::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-/*  background-image: url("/images/logo-bg.webp");   */
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: 800px; /* ajuste la taille du logo */
-  opacity: 0.1; /* transparence discrète */
-  pointer-events: none; /* ne bloque pas le texte */
-  z-index: 0;
-}
-
-/* Le contenu reste au-dessus du logo */
-.container.article * {
-  position: relative;
-  z-index: 1;
-}
-
-/* ==============================
    Version mobile
    ============================== */
 
@@ -809,8 +668,5 @@ body.menu-open {
   } 
 
 }
-
-
-
 
 

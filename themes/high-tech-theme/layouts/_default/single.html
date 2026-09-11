@@ -1,20 +1,6 @@
 {{ define "main" }}
   <div class="container article">
 
-    <!-- Colonne gauche : pub + menus -->
-    <aside class="left-ad">
-      <!-- Zone de pub gauche -->
-      <div class="ad-slot ad-left">
-        <!-- Tu pourras mettre ici une image, une bannière, ou un code pub -->
-        <!-- Exemple : <img src="{{ "images/pub-left.jpg" | relURL }}" alt="Publicité gauche"> -->
-      </div>
-
-      <!-- Menus latéraux existants -->
-      <div class="left-column">
-        {{ partial "leftmenus.html" . }}
-      </div>
-    </aside>
-
     <!-- Colonne centrale : contenu principal -->
     <article class="content-column">
       <h1>{{ .Title }}</h1>
@@ -37,5 +23,6 @@
     </aside>
 
   </div>
-{{ end }}
+
+  {{ end }}
 

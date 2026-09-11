@@ -1,6 +1,17 @@
 ---
 title: "Audio"
-menu_image: "/images/menu_audio.webp"
 url: "/audio/"          # URL SEO-friendly
+icon: "headphones"
+description: "Convert, compress, trim, merge and optimize audio files online. Fast, secure and free."
+keywords:
+  - audio tools
+  - audio converter
+  - compress audio
+  - trim audio
+  - merge audio
+  - online audio editor
 ---
-Page principale de la section Audio.
+
+{{< login-signup category="" >}}
+
+<div class="section-spacer"></div>

@@ -1,0 +1,16 @@
+---
+title: "Smart Extraction"
+url: "/archives/smart-extraction/"
+description: "........"
+keywords:
+  - .....
+  - .....
+tags: 
+  - blabla
+  - blabla
+weight: 6
+---
+🚧 Coming soon !
+
+This tool is currently under development.
+

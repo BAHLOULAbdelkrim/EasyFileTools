@@ -1,0 +1,509 @@
+/* =========================================================
+   ZONE DE CHARGEMENT GÉNÉRIQUE
+========================================================= */
+
+/* DROP ZONE */
+
+#drop-zone {
+
+    border:
+        3px dashed var(--violet);
+
+    border-radius:
+        20px;
+
+    padding:
+        50px 20px;
+
+    background:
+        #faf5ff;
+
+    text-align:
+        center;
+
+    transition:
+        0.3s;
+}
+
+
+/* DRAG & DROP */
+
+#drop-zone.dragover {
+
+    background:
+        var(--green-hover);
+
+    border-color:
+        var(--green-text);
+}
+
+
+/* BUTTONS */
+
+.upload-actions {
+
+    display:
+        flex;
+
+    justify-content:
+        center;
+
+    gap:
+        20px;
+
+    flex-wrap:
+        wrap;
+}
+
+
+.upload-btn {
+
+    background:
+        var(--violet);
+
+    color:
+        white;
+
+    border:
+        none;
+
+    border-radius:
+        14px;
+
+    padding:
+        14px 24px;
+
+    font-size:
+        16px;
+
+    font-weight:
+        600;
+
+    align-items:
+        center;
+
+    gap:
+        8px;
+
+    cursor:
+        pointer;
+
+    transition:
+        all 0.25s ease;
+
+    text-decoration:
+        none;
+
+    display:
+        inline-flex;
+
+    position:
+        relative;
+
+    overflow:
+        hidden;
+}
+
+
+.upload-btn:hover {
+
+    transform:
+        scale(1.06);
+
+    background:
+        var(--green-text);
+
+    color:
+        #a78bfa;
+}
+
+
+/* DRAG & DROP BUTTON */
+
+.drag-drop {
+
+    color:
+        var(--violet);
+
+    align-items:
+        center;
+
+    font-size:
+        26px;
+
+    font-weight:
+        800;
+
+    gap:
+        8px;
+
+    display:
+        inline-flex;
+
+    position:
+        relative;
+
+    overflow:
+        hidden;
+
+    cursor:
+        default;
+}
+
+
+/* SHINY EFFECT */
+
+.upload-btn::before {
+
+    content:
+        "";
+
+    position:
+        absolute;
+
+    top:
+        0;
+
+    left:
+        -80px;
+
+    width:
+        50px;
+
+    height:
+        100%;
+
+    background:
+        rgba(255,255,255,0.3);
+
+    transform:
+        skewX(-20deg);
+}
+
+
+.upload-btn:hover::before {
+
+    animation:
+        shine 0.6s;
+}
+
+
+@keyframes shine {
+
+    100% {
+
+        left:
+            120%;
+    }
+}
+
+
+/* FILE INPUT */
+
+input[type="file"] {
+
+    display:
+        none;
+}
+
+
+/* INFO */
+
+.upload-info {
+
+    margin-top:
+        25px;
+
+    color:
+        var(--gray);
+
+    font-size:
+        14px;
+}
+
+
+/* ICON */
+
+.upload-btn .icon {
+
+    width:
+        24px;
+
+    height:
+        24px;
+
+    flex-shrink:
+        0;
+}
+
+
+/* FROM URL */
+
+.url-modal.hidden {
+
+    display:
+        none;
+}
+
+
+.url-modal {
+
+    position:
+        fixed;
+
+    inset:
+        0;
+
+    background:
+        rgba(0,0,0,.4);
+
+    display:
+        flex;
+
+    justify-content:
+        center;
+
+    align-items:
+        center;
+
+    z-index:
+        1000;
+
+    animation:
+        fadeIn 0.2s ease;
+}
+
+
+.url-box {
+
+    background:
+        var(--green-hover);
+
+    padding:
+        20px;
+
+    border-radius:
+        12px;
+
+    width:
+        500px;
+
+    max-width:
+        90%;
+}
+
+
+.url-box h3 {
+
+    color:
+        var(--violet);
+
+    font-size:
+        20px;
+
+    font-weight:
+        700;
+}
+
+
+.url-box input {
+
+    width:
+        100%;
+
+    padding:
+        10px;
+
+    margin-top:
+        10px;
+
+    border:
+        1px solid var(--violet);
+
+    border-radius:
+        8px;
+
+    outline:
+        none;
+}
+
+
+.url-box input::placeholder {
+
+    color:
+        #c175ff;
+
+    opacity:
+        1;
+}
+
+
+.url-box input:focus {
+
+    box-shadow:
+        0 0 0 2px var(--violet);
+}
+
+
+.url-actions {
+
+    display:
+        flex;
+
+    justify-content:
+        flex-end;
+
+    gap:
+        10px;
+
+    margin-top:
+        15px;
+}
+
+
+.url-actions button {
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    gap:
+        6px;
+
+    background:
+        var(--violet);
+
+    color:
+        white;
+
+    border:
+        none;
+
+    padding:
+        8px 14px;
+
+    border-radius:
+        8px;
+
+    cursor:
+        pointer;
+
+    transition:
+        0.2s;
+}
+
+
+.url-actions button:hover {
+
+    opacity:
+        0.85;
+}
+
+
+#urlCancel {
+
+    background:
+        rgb(255, 61, 61);
+
+    color:
+        white;
+}
+
+
+#urlAdd {
+
+    background:
+        var(--violet);
+
+    color:
+        white;
+}
+
+
+/* CLEAR ALL */
+
+#clearAllConfirm {
+
+    background:
+        #ef4444;
+
+    color:
+        white;
+
+    border:
+        none;
+}
+
+
+#clearAllConfirm:hover {
+
+    background:
+        #dc2626;
+}
+
+
+#clearAllCancel {
+
+    background:
+        var(--violet);
+
+    color:
+        white;
+
+    border:
+        none;
+}
+
+
+#clearAllCancel:hover {
+
+    background:
+        var(--violet);
+}
+
+
+/* FOCUS */
+
+button:focus {
+
+    outline:
+        none;
+}
+
+
+.active-focus {
+
+    outline:
+        2px solid #fbbf24;
+
+    transform:
+        scale(1.05);
+}
+
+
+#clearAllCancel.active-focus {
+
+    outline:
+        2px solid #fbbf24;
+
+    transform:
+        scale(1.05);
+}
+
+
+@keyframes fadeIn {
+
+    from {
+
+        opacity:
+            0;
+    }
+
+    to {
+
+        opacity:
+            1;
+    }
+}

@@ -1,0 +1,70 @@
+
+@import url("login-signup.css");
+@import url("clear-all.css");
+
+
+:root {
+    --violet: #6b21a8;
+    --violet-light: #ede9fe;
+    --green-hover: #d1fae5;
+    --green-text: #047857;
+    --gray: #6b7280;
+}
+
+/* PAGE */
+
+.convert-container {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 20px;
+}
+
+/* TITLE */
+
+.page-title {
+    text-align: center;
+    font-size: 42px;
+    font-weight: 800;
+    color: var(--violet);
+    margin-top: 0px;
+    margin-bottom: 20px;
+}
+
+
+.image-modal {
+    display: none !important;
+}
+
+
+
+/* ============================
+   TITRE DES CATÉGORIES
+============================ */
+
+.category-title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+}
+
+.category-title h1 {
+    margin: 0;
+    font-size: 42px;
+    font-weight: 800;
+    color: var(--violet);
+}
+
+.category-icon {
+    width: 30px;
+    height: 30px;
+    flex-shrink: 0;
+    color: var(--violet);
+}
+
+
+
+/* Espace vertical entre les sections */
+.section-spacer {
+    height: 40px;
+}

@@ -1,0 +1,526 @@
+/* COUNTER */
+
+.file-counter {
+    margin-top: 30px;
+    margin-bottom: 15px;
+
+    font-size: 18px;
+    font-weight: 700;
+
+    color: #6b21a8;
+}
+
+/* FILE LIST */
+
+#file-list {
+    margin-top: 35px;
+}
+
+/* FILE ITEM */
+
+.file-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+
+    background: white;
+
+    border: 2px solid #ede9fe;
+
+    border-radius: 16px;
+
+    padding: 18px 20px;
+
+    margin-bottom: 15px;
+
+    transition: 0.25s;
+}
+
+.file-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+}
+
+/* STATUS ICON */
+
+.status-icon {
+    font-size: 22px;
+}
+
+/* STATES */
+
+.pending {
+    color: #f59e0b;
+    animation: spin 1s linear infinite;
+}
+
+.success {
+    color: #10b981;
+}
+
+.error {
+    color: red;
+}
+
+/* FILE NAME */
+
+.file-name {
+    font-weight: 600;
+    color: #374151;
+}
+
+/* FILE ERROR */
+
+.file-error {
+    color: red;
+    text-decoration: line-through;
+}
+
+/* DOWNLOAD BUTTON */
+
+.download-btn {
+    background: gray;
+    color: white;
+    display:flex;
+    align-items:center;
+    gap:6px;
+    border-radius: 12px;
+    padding: 10px 16px;
+    font-size: 14px;
+    opacity: 0.6;
+    cursor: not-allowed;
+    user-select: none;
+}
+
+/* RIGHT SIDE */
+
+.file-right {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+/* DOWNLOAD ACTIVE */
+
+.download-btn.active {
+    background: #6b21a8;
+    opacity: 1;
+    cursor: pointer;
+}
+
+.download-btn.active:hover {
+    background: #047857;
+    transform: scale(1.05);
+}
+
+
+/* IMAGE PREVIEW */
+
+.image-preview {
+    width: 70px;
+    height: 70px;
+
+    border-radius: 14px;
+
+    object-fit: cover;
+
+    border: 2px solid #ede9fe;
+}
+
+/* FILE LEFT */
+
+.file-left {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+}
+
+/* FILE INFO */
+
+.file-info {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+/* FILE EXTENSION */
+
+.file-extension {
+    font-size: 13px;
+    color: #6b7280;
+}
+
+/* REMOVE BUTTON */
+
+.remove-btn {
+    position: relative; /* IMPORTANT */
+    overflow: hidden;   /* IMPORTANT */
+    background: #ef4444;
+    color: white;
+    border: none;
+    border-radius: 12px;
+    padding: 10px 14px;
+    cursor: pointer;
+    transition: 0.25s;
+}
+
+.remove-btn:hover {
+    background: #dc2626;
+    transform: scale(1.06);
+}
+
+/* shiny effect */
+
+.remove-btn::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -80px;
+    width: 50px;
+    height: 100%;
+    background: rgba(255,255,255,0.3);
+    transform: skewX(-20deg);
+    opacity: 0;
+}
+
+.remove-btn:hover::before {
+    opacity: 1;
+    animation: shine 0.6s ease;
+}
+
+/* animation keyframes */
+@keyframes shine {
+    0% {
+        left: -80px;
+    }
+    100% {
+        left: 120%;
+    }
+}
+
+/* FILE RIGHT */
+
+.file-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+/* Drag & Drop entre fichiers */ 
+
+.file-item {
+
+    transition:
+        background-color 0.2s ease,
+        opacity 0.2s ease,
+        transform 0.2s ease;
+}
+
+.dragging {
+    opacity: 0.4;
+    transform: scale(0.98);
+}
+
+.drop-target {
+    border-top: 2px solid var(--violet);
+}
+
+.drag-handle {
+    cursor: grab;
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 700px) {
+
+    .file-item {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .file-right {
+        width: 100%;
+        justify-content: flex-end;
+    }
+}
+
+
+/* Classe globale pour l’effet shine */
+
+.shiny-btn {
+    position: relative;
+    overflow: hidden;
+}
+
+/* shine layer */
+.shiny-btn::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -80px;
+    width: 50px;
+    height: 100%;
+    background: rgba(255,255,255,0.3);
+    transform: skewX(-20deg);
+    opacity: 0;
+}
+
+/* animation */
+.shiny-btn:hover::before {
+    opacity: 1;
+    animation: shine 0.6s ease;
+}
+
+@keyframes shine {
+    0% { left: -80px; }
+    100% { left: 120%; }
+}
+
+
+.file-placeholder {
+    width: 60px;
+    height: 60px;
+    border-radius: 12px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: var(--green-hover);
+    color: var(--violet);
+}
+
+.file-placeholder svg {
+    width: 28px;
+    height: 28px;
+}
+
+.file-counter-main {
+    line-height: 1.2;
+    font-weight: 1000; /* important : remet l'accent visuel */
+}
+
+.drag-hint {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+
+    font-size: 14px; /* au lieu de 16 */
+    color: var(--gray);
+
+    margin-top: 4px;
+
+    font-weight: 400;
+}
+
+.drag-hint i {
+    width: 14px;   /* au lieu de 4 */
+    height: 14px;
+    color: var(--gray);
+}
+
+
+.file-item.drop-target {
+    border-color: var(--violet);
+    background: #faf5ff;
+    box-shadow: 0 0 0 3px var(--violet-light);
+    transform: translateY(-2px);
+}
+
+
+
+
+
+
+
+/* =========================
+   DOWNLOAD BUTTON
+========================= */
+
+.download-btn {
+    position: relative;
+    overflow: hidden;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 42px;
+    height: 42px;
+
+    border: none;
+    border-radius: 12px;
+
+    background: gray;
+    color: white;
+
+    opacity: 0.5;
+    cursor: not-allowed;
+
+    transition: all 0.25s ease;
+}
+
+.download-btn:not(:disabled) {
+    background: var(--violet);
+    color: white;
+    opacity: 1;
+    cursor: pointer;
+}
+
+.download-btn:not(:disabled):hover {
+    background: var(--green-text);
+    transform: scale(1.06);
+}
+
+.download-btn::before {
+    content: "";
+
+    position: absolute;
+    top: 0;
+    left: -120%;
+
+    width: 60%;
+    height: 100%;
+
+    background: linear-gradient(
+        120deg,
+        transparent,
+        rgba(255,255,255,0.45),
+        transparent
+    );
+
+    transform: skewX(-20deg);
+}
+
+.download-btn:not(:disabled):hover::before {
+    animation: fileDownloadShine 0.7s ease;
+}
+
+.download-btn svg {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+}
+
+@keyframes fileDownloadShine {
+
+    from {
+        left: -120%;
+    }
+
+    to {
+        left: 140%;
+    }
+
+}
+
+
+/* =========================================================
+   FILE STATE
+========================================================= */
+
+.file-state {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+
+    margin-top: 5px;
+
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+
+.file-state svg {
+    width: 17px;
+    height: 17px;
+
+    flex-shrink: 0;
+
+    color: var(--green-text);
+}
+
+
+.file-state span {
+    color: var(--violet);
+}
+
+
+/* =========================================================
+   FILE MAIN
+========================================================= */
+
+.file-main {
+    flex: 1;
+    min-width: 0;
+}
+
+
+
+/* =========================================================
+   LOCAL FILE PROGRESS
+========================================================= */
+
+.file-progress-block {
+    width: 100%;
+    margin-top: 10px;
+}
+
+.file-progress-container {
+    position: relative;
+
+    width: 100%;
+    height: 8px;
+
+    background: #e5e7eb;
+
+    border-radius: 999px;
+
+    overflow: hidden;
+}
+
+.file-progress-bar {
+    width: 0%;
+    height: 100%;
+
+    background: linear-gradient(
+        to right,
+        var(--green-hover),
+        var(--violet)
+    );
+
+    border-radius: 999px;
+
+    transition: width 0.25s ease;
+}
+
+
+/* =========================================================
+   LOADING — PROGRESSION INDÉTERMINÉE
+========================================================= */
+
+.file-progress-bar.is-loading {
+    width: 35% !important;
+
+    animation:
+        fileLoadingProgress 1.1s ease-in-out infinite;
+
+    transition: none;
+}
+
+
+@keyframes fileLoadingProgress {
+
+    0% {
+        transform: translateX(-120%);
+    }
+
+    50% {
+        transform: translateX(120%);
+    }
+
+    100% {
+        transform: translateX(300%);
+    }
+}

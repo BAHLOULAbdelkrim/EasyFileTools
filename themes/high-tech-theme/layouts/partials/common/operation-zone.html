@@ -1,0 +1,179 @@
+<div
+    id="operation-zone"
+    class="operation-zone"
+    data-category="{{ .category | default "" }}"
+>
+
+    <!-- =========================
+         TOP ACTIONS
+    ========================== -->
+
+    <div class="operation-top">
+
+        <!-- DOWNLOAD ALL -->
+
+        <div class="download-all-wrapper">
+
+            <button
+                type="button"
+                id="downloadAllBtn"
+                class="operation-download-all"
+                disabled
+            >
+                <i data-lucide="download"></i>
+                Download All
+            </button>
+
+        </div>
+
+
+        <!-- CLEAR ALL -->
+
+        <div class="clear-all-wrapper">
+
+            <button
+                type="button"
+                id="operationClearAllBtn"
+                class="operation-clear-all"
+                disabled
+            >
+                <i data-lucide="trash-2"></i>
+                Clear All
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         DOWNLOAD ALL FORMATS
+    ========================== -->
+
+    <div
+        id="downloadAllFormats"
+        class="download-all-formats hidden"
+    >
+    </div>
+
+
+    <div class="operation-format-selector">
+
+        <div
+            id="chooseFormatLabel"
+            class="operation-choose-format"
+        >
+            Choose Format
+        </div>
+
+    </div>
+
+
+    <div
+        id="conversionFormats"
+        class="conversion-formats"
+    >
+    </div>
+
+    <!-- =========================
+         CONVERSION CONTROLS
+    ========================== -->
+
+    <div class="operation-controls">
+
+        <button
+            type="button"
+            id="cancelOperationBtn"
+            class="operation-cancel"
+            disabled
+        >
+            <i data-lucide="x"></i>
+            Cancel
+        </button>
+
+
+        <button
+            type="button"
+            id="convertBtn"
+            class="operation-convert"
+            disabled
+        >
+            <i data-lucide="refresh-cw"></i>
+            Convert
+        </button>
+
+
+        <button
+            type="button"
+            id="pauseOperationBtn"
+            class="operation-pause"
+            disabled
+        >
+            <i data-lucide="pause"></i>
+            Pause
+        </button>
+
+    </div>
+
+    <!--
+    =========================
+        GLOBAL PROGRESS
+    ========================== -->
+
+    <div class="operation-progress">
+
+        <div class="progress-block">
+
+            <div class="progress-label">
+
+                <span id="globalProgressLabel">
+                    Conversion progress
+                </span>
+
+                <span id="globalProgressPercentage">
+                    0%
+                </span>
+
+            </div>
+
+            <div class="progress-bar">
+
+                <div
+                    id="globalProgress"
+                    class="progress-fill global-progress"
+                    style="width: 0%;"
+                ></div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- =========================
+         BOTTOM NAVIGATION
+    ========================== -->
+
+    <div class="operation-navigation">
+
+        <a
+            href="{{ "/" | relURL }}"
+            class="operation-home"
+        >
+            <i data-lucide="house"></i>
+            Go to homepage
+        </a>
+
+
+        <button
+            type="button"
+            id="goToTopBtn"
+            class="operation-top-btn"
+        >
+            <i data-lucide="arrow-up"></i>
+            Go to top
+        </button>
+
+    </div>
+
+</div>

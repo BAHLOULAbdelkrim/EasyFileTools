@@ -17,20 +17,6 @@
   {{ partial "header.html" . }}
 
   <!-- ---------------------------------------------------------
-       BARRE DE RECHERCHE + LANGUE
-       ---------------------------------------------------------
-       Partiel personnalisé ajouté par toi
-       --------------------------------------------------------- -->
-  {{ partial "search-lang.html" . }}
-
-  <!-- ---------------------------------------------------------
-       MENU MOBILE
-       ---------------------------------------------------------
-       Chargé dans un partiel
-       --------------------------------------------------------- -->
-  {{ partial "mobilemenu.html" . }}
-
-  <!-- ---------------------------------------------------------
        CONTENU PRINCIPAL DYNAMIQUE
        ---------------------------------------------------------
        Les pages enfants remplacent le block "main"
@@ -50,6 +36,7 @@
   <img id="modalImage">
 </div>
 
+  {{ partial "common/confirmation-modal.html" . }}
 
 </body>
 </html>

@@ -7,6 +7,7 @@
   
   <!-- Description SEO -->
   <meta name="description" content="{{ .Site.Params.description }}">
+
   <link rel="icon" type="image/png" href="{{ "favicon_2.png" | absURL }}">
 
   <!-- Tailwind CSS CDN -->
@@ -22,18 +23,6 @@
      /* small helpers */
      .main-color { --tw-bg-opacity:1; background-color: theme(colors.emerald.400); }
      </style>
-
-  <!-- ---------------------------------------------------------
-       MÉTA-DONNÉES DE BASE + TITRE
-       --------------------------------------------------------- -->
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-
-  <!-- Title : PageTitle — SiteTitle -->
-  <title>{{ if .Title }}{{ .Title }} — {{ end }}{{ .Site.Title }}</title>
-
-  <!-- Description SEO -->
-  <meta name="description" content="{{ .Site.Params.description }}">
 
   <!-- ---------------------------------------------------------
        URL CANONIQUE (IMPORTANT POUR LE SEO)
@@ -77,13 +66,59 @@
   <!-- ---------------------------------------------------------
        CSS DU SITE
        --------------------------------------------------------- -->
-  <link rel="stylesheet" href="{{ "css/main.css" | relURL }}">
-  <link rel="stylesheet" href="{{ "css/style.css" | relURL }}">
-  <link rel="stylesheet" href="{{ "css/custom.css" | relURL }}">
+     <link rel="stylesheet" href="{{ "css/main.css" | relURL }}">
+     <link rel="stylesheet" href="{{ "css/homepage/main.css" | relURL }}">
+     <link rel="stylesheet" href="{{ "css/common/zone-chargement.css" | relURL }}">
+     <link rel="stylesheet" href="{{ "css/common/liste-files.css" | relURL }}">
+     <link rel="stylesheet" href="{{ "css/common/operation-zone.css" | relURL }}">
+     <link rel="stylesheet" href="{{ "css/common/confirmation-modal.css" | relURL }}">
+     <link rel="stylesheet" href="{{ "css/common/notifications.css" | relURL }}">
 
   <!-- ---------------------------------------------------------
        JAVASCRIPT DU SITE
        --------------------------------------------------------- -->
-  <script defer src="{{ "js/main.js" | relURL }}"></script>
+     <script defer src="{{ "js/common/app-config.js" | relURL }}"></script>
+     <script defer src="{{ "js/common/file-categories.js" | relURL }}"></script>
+     <script defer src="{{ "js/common/file-utils.js" | relURL }}"></script>
+     <script defer src="{{ "js/common/file-storage.js" | relURL }}"></script>
+     <script defer src="{{ "js/common/file-list.js" | relURL }}"></script>
+     <script defer src="{{ "js/common/file-upload.js" | relURL }}"></script>
+     <script defer src="{{ "js/common/icons.js" | relURL }}"></script>
+     <script defer src="{{ "js/common/zone-chargement.js" | relURL }}"></script>
+     <script defer src="{{ "js/common/notifications.js" | relURL }}"></script>
+     <script defer src="{{ "js/common/operation-zone.js" | relURL }}"></script>
+     <script defer src="{{ "js/common/confirmation-modal.js" | relURL }}"></script>
+
+     {{ if eq .RelPermalink "/" }}
+          <script defer src="{{ "js/homepage/file-operations.js" | relURL }}"></script>
+          <script defer src="{{ "js/homepage/liste-files.js" | relURL }}"></script>
+          <script defer src="{{ "js/homepage/homepage-storage.js" | relURL }}"></script>
+          <script defer src="{{ "js/homepage/main.js" | relURL }}"></script>
+     {{ end }}
+
+     {{ if and (eq .Section "audio") (ne .RelPermalink "/audio/") }}
+          <script defer src="{{ "js/audio/audio-upload-zone.js" | relURL }}"></script>
+     {{ end }}
+
+     {{ if eq .RelPermalink "/audio/convert-audio/" }}
+          <script defer src="{{ "js/audio/convert-audio/lib/ffmpeg.js" | relURL }}"></script>
+          <script defer src="{{ "js/audio/convert-audio/ffmpeg-loader.js" | relURL }}"></script>
+          <script defer src="{{ "js/audio/convert-audio/audio-conversion-ui.js" | relURL }}"></script>
+          <script defer src="{{ "js/audio/convert-audio/audio-converter.js" | relURL }}"></script>
+     {{ end }}
+
+     {{ if eq .RelPermalink "/" }}
+          <script>
+               document.addEventListener("DOMContentLoaded", async () => {
+               console.log("[FILE STORAGE] Checking for saved files...");
+               await restoreSelectedFiles();
+               });
+          </script>
+     {{ end }}
+
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+     <script> pdfjsLib.GlobalWorkerOptions.workerSrc = "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js"; </script>
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 
 </head>
+

@@ -1,0 +1,115 @@
+<!-- =========================================================
+     MODAL DE CONFIRMATION GÉNÉRIQUE
+========================================================= -->
+
+<div
+    id="confirmation-modal"
+    class="confirmation-modal hidden"
+>
+
+    <div
+        class="confirmation-modal-box"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="confirmation-modal-title"
+    >
+
+        <!-- HEADER -->
+
+        <div class="confirmation-modal-header">
+
+            <i
+                id="confirmation-modal-icon"
+                data-lucide="triangle-alert"
+                class="confirmation-modal-icon"
+            ></i>
+
+            <h3 id="confirmation-modal-title">
+                Confirmation
+            </h3>
+
+        </div>
+
+        <!-- MESSAGE -->
+
+        <div
+            id="confirmation-modal-message"
+            class="confirmation-modal-message"
+        >
+        </div>
+
+        <!-- ACTIONS -->
+
+        <div class="confirmation-modal-actions">
+
+            <button
+                type="button"
+                id="confirmation-modal-cancel"
+                class="confirmation-modal-cancel"
+            >
+                <i data-lucide="x"></i>
+                Cancel
+            </button>
+
+            <button
+                type="button"
+                id="confirmation-modal-download-all"
+                class="confirmation-modal-download-all hidden"
+            >
+                <i data-lucide="download"></i>
+                Download All
+            </button>
+
+            <button
+                type="button"
+                id="confirmation-modal-confirm"
+                class="confirmation-modal-confirm"
+            >
+                <i data-lucide="check"></i>
+                Confirm
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =========================================================
+     NOTIFICATION TOAST GÉNÉRIQUE
+========================================================= -->
+
+<div
+    id="notification-toast"
+    class="notification-toast hidden"
+    role="status"
+    aria-live="polite"
+    aria-atomic="true"
+>
+    <div class="notification-toast-icon-wrapper">
+
+        <i
+            id="notification-toast-icon"
+            data-lucide="circle-check"
+            class="notification-toast-icon"
+        ></i>
+
+    </div>
+
+    <div class="notification-toast-content">
+
+        <div
+            id="notification-toast-title"
+            class="notification-toast-title"
+        >
+        </div>
+
+        <div
+            id="notification-toast-message"
+            class="notification-toast-message"
+        >
+        </div>
+
+    </div>
+</div>

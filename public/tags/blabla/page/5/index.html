@@ -1,0 +1,472 @@
+<!doctype html>
+<html lang="fr">
+
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  
+  <title>Blabla - EasyFileTools — Outil tout-en-un pour gérer, convertir, transformer et automatiser des fichiers</title>
+  
+  
+  <meta name="description" content="Outil tout-en-un pour gérer, convertir, transformer et automatiser des fichiers : audio, vidéos, images, documents texte, tableurs, présentations, graphiques vectoriels, scripts, 3D, CAO, images médicales.">
+
+  <link rel="icon" type="image/png" href="http://localhost:1313/favicon_2.png">
+
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+
+     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap" rel="stylesheet">
+     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap" rel="stylesheet">
+     
+     <style>
+     body { font-family: 'Inter', sans-serif; }
+      
+     .main-color { --tw-bg-opacity:1; background-color: theme(colors.emerald.400); }
+     </style>
+
+  
+  <link rel="canonical" href="http://localhost:1313/tags/blabla/">
+
+  
+  <meta property="og:title" content="Blabla — EasyFileTools — Outil tout-en-un pour gérer, convertir, transformer et automatiser des fichiers">
+  <meta property="og:description" content="Outil tout-en-un pour gérer, convertir, transformer et automatiser des fichiers : audio, vidéos, images, documents texte, tableurs, présentations, graphiques vectoriels, scripts, 3D, CAO, images médicales.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="http://localhost:1313/tags/blabla/">
+  
+  
+
+  
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Blabla — EasyFileTools — Outil tout-en-un pour gérer, convertir, transformer et automatiser des fichiers">
+  <meta name="twitter:description" content="Outil tout-en-un pour gérer, convertir, transformer et automatiser des fichiers : audio, vidéos, images, documents texte, tableurs, présentations, graphiques vectoriels, scripts, 3D, CAO, images médicales.">
+  
+
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Inter:wght@400;600;700&display=swap" as="style">
+
+  
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+  
+     <link rel="stylesheet" href="/css/main.css">
+     <link rel="stylesheet" href="/css/homepage/main.css">
+     <link rel="stylesheet" href="/css/common/zone-chargement.css">
+     <link rel="stylesheet" href="/css/common/liste-files.css">
+     <link rel="stylesheet" href="/css/common/operation-zone.css">
+     <link rel="stylesheet" href="/css/common/confirmation-modal.css">
+     <link rel="stylesheet" href="/css/common/notifications.css">
+
+  
+     <script defer src="/js/common/app-config.js"></script>
+     <script defer src="/js/common/file-categories.js"></script>
+     <script defer src="/js/common/file-utils.js"></script>
+     <script defer src="/js/common/file-storage.js"></script>
+     <script defer src="/js/common/file-list.js"></script>
+     <script defer src="/js/common/file-upload.js"></script>
+     <script defer src="/js/common/icons.js"></script>
+     <script defer src="/js/common/zone-chargement.js"></script>
+     <script defer src="/js/common/notifications.js"></script>
+     <script defer src="/js/common/operation-zone.js"></script>
+     <script defer src="/js/common/confirmation-modal.js"></script>
+
+     
+
+     
+
+     
+
+     
+
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+     <script> pdfjsLib.GlobalWorkerOptions.workerSrc = "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js"; </script>
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+
+</head>
+
+
+
+
+<body class="not-home" data-section="tags">
+
+  
+  <header class="site-header">
+<div class="header-container">
+  <div class="header-left">
+    <a href="/" class="home-link">
+      <img src="/images/logo_3.webp" alt="Logo" class="logo">
+    <div class="site-name">
+    
+      </div>       
+    </a>
+  </div>
+
+    <nav class="top-menus" aria-label="Top navigation">
+      
+
+      <ul class="menu-grid">
+        
+          
+          <li class="menu-item">
+            <a href="/audio/" 
+              data-menu="audio">
+
+              
+
+              <i data-lucide="headphones" class="menu-icon"></i>
+              <span>Audio</span>
+
+            </a>
+          </li>
+        
+          
+          <li class="menu-item">
+            <a href="/video/" 
+              data-menu="video">
+
+              
+
+              <i data-lucide="video" class="menu-icon"></i>
+              <span>Video</span>
+
+            </a>
+          </li>
+        
+          
+          <li class="menu-item">
+            <a href="/images/" 
+              data-menu="images">
+
+              
+
+              <i data-lucide="image" class="menu-icon"></i>
+              <span>Images</span>
+
+            </a>
+          </li>
+        
+          
+          <li class="menu-item">
+            <a href="/documents/" 
+              data-menu="documents">
+
+              
+
+              <i data-lucide="file-text" class="menu-icon"></i>
+              <span>Documents</span>
+
+            </a>
+          </li>
+        
+          
+          <li class="menu-item">
+            <a href="/presentations/" 
+              data-menu="presentations">
+
+              
+
+              <i data-lucide="presentation" class="menu-icon"></i>
+              <span>Presentations</span>
+
+            </a>
+          </li>
+        
+          
+          <li class="menu-item">
+            <a href="/spreadsheets/" 
+              data-menu="spreadsheets">
+
+              
+
+              <i data-lucide="sheet" class="menu-icon"></i>
+              <span>Spreadsheets</span>
+
+            </a>
+          </li>
+        
+          
+          <li class="menu-item">
+            <a href="/vector-graphics/" 
+              data-menu="vector-graphics">
+
+              
+
+              <i data-lucide="pen-tool" class="menu-icon"></i>
+              <span>Vector Graphics</span>
+
+            </a>
+          </li>
+        
+          
+          <li class="menu-item">
+            <a href="/archives/" 
+              data-menu="archives">
+
+              
+
+              <i data-lucide="archive" class="menu-icon"></i>
+              <span>Archives</span>
+
+            </a>
+          </li>
+        
+          
+          <li class="menu-item">
+            <a href="/code/" 
+              data-menu="code">
+
+              
+
+              <i data-lucide="code-xml" class="menu-icon"></i>
+              <span>Code</span>
+
+            </a>
+          </li>
+        
+          
+          <li class="menu-item">
+            <a href="/3d-cad/" 
+              data-menu="cad-3d">
+
+              
+
+              <i data-lucide="boxes" class="menu-icon"></i>
+              <span>3D / CAD</span>
+
+            </a>
+          </li>
+        
+      </ul>
+
+    </nav>
+    
+</div>
+
+
+
+</header>
+
+
+
+
+
+  
+  <main class="site-main">
+    
+
+  <div class="container section-list">
+    <section class="content-column">
+      <div class="category-title">
+
+          <i class="category-icon"
+            data-lucide=""></i>
+
+          <h1 class="page-title">Blabla</h1>
+
+          <i class="category-icon"
+            data-lucide=""></i>
+
+      </div>
+
+      
+
+      
+
+      <div class="submenus">
+        <ul>
+          
+        </ul>
+      </div>
+
+<div class="articles-grid">
+
+                
+</div>
+
+      
+        
+    <ul class="pagination pagination-default">
+      <li class="page-item">
+        <a href="/tags/blabla/" aria-label="First" class="page-link" role="button"><span aria-hidden="true">&laquo;&laquo;</span></a>
+      </li>
+      <li class="page-item">
+        <a href="/tags/blabla/page/4/" aria-label="Previous" class="page-link" role="button"><span aria-hidden="true">&laquo;</span></a>
+      </li>
+      <li class="page-item">
+        <a href="/tags/blabla/page/3/" aria-label="Page 3" class="page-link" role="button">3</a>
+      </li>
+      <li class="page-item">
+        <a href="/tags/blabla/page/4/" aria-label="Page 4" class="page-link" role="button">4</a>
+      </li>
+      <li class="page-item active">
+        <a aria-current="page" aria-label="Page 5" class="page-link" role="button">5</a>
+      </li>
+      <li class="page-item">
+        <a href="/tags/blabla/page/6/" aria-label="Page 6" class="page-link" role="button">6</a>
+      </li>
+      <li class="page-item">
+        <a href="/tags/blabla/page/7/" aria-label="Page 7" class="page-link" role="button">7</a>
+      </li>
+      <li class="page-item">
+        <a href="/tags/blabla/page/6/" aria-label="Next" class="page-link" role="button"><span aria-hidden="true">&raquo;</span></a>
+      </li>
+      <li class="page-item">
+        <a href="/tags/blabla/page/10/" aria-label="Last" class="page-link" role="button"><span aria-hidden="true">&raquo;&raquo;</span></a>
+      </li>
+    </ul>
+      
+    </section>
+  </div>
+
+
+
+
+  </main>
+
+  
+  <footer class="site-footer" style="padding:20px 0; background-color:#d1fae5ff;">
+  <div class="footer-container" style="max-width:1200px; margin:0 auto; text-align:center; display:flex; flex-direction:column; gap:10px;">
+
+    
+    
+
+    
+    
+
+    
+    
+  
+    
+    <p style="margin-top:15px;">© 2026 EasyFile Tools — All rights reserved.</p>
+
+  </div>
+</footer>
+
+
+
+<div class="image-modal" id="imageModal">
+  <span class="close-modal" id="closeModal">✕</span>
+  <img id="modalImage">
+</div>
+
+  
+
+<div
+    id="confirmation-modal"
+    class="confirmation-modal hidden"
+>
+
+    <div
+        class="confirmation-modal-box"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="confirmation-modal-title"
+    >
+
+        
+
+        <div class="confirmation-modal-header">
+
+            <i
+                id="confirmation-modal-icon"
+                data-lucide="triangle-alert"
+                class="confirmation-modal-icon"
+            ></i>
+
+            <h3 id="confirmation-modal-title">
+                Confirmation
+            </h3>
+
+        </div>
+
+        
+
+        <div
+            id="confirmation-modal-message"
+            class="confirmation-modal-message"
+        >
+        </div>
+
+        
+
+        <div class="confirmation-modal-actions">
+
+            <button
+                type="button"
+                id="confirmation-modal-cancel"
+                class="confirmation-modal-cancel"
+            >
+                <i data-lucide="x"></i>
+                Cancel
+            </button>
+
+            <button
+                type="button"
+                id="confirmation-modal-download-all"
+                class="confirmation-modal-download-all hidden"
+            >
+                <i data-lucide="download"></i>
+                Download All
+            </button>
+
+            <button
+                type="button"
+                id="confirmation-modal-confirm"
+                class="confirmation-modal-confirm"
+            >
+                <i data-lucide="check"></i>
+                Confirm
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+
+<div
+    id="notification-toast"
+    class="notification-toast hidden"
+    role="status"
+    aria-live="polite"
+    aria-atomic="true"
+>
+    <div class="notification-toast-icon-wrapper">
+
+        <i
+            id="notification-toast-icon"
+            data-lucide="circle-check"
+            class="notification-toast-icon"
+        ></i>
+
+    </div>
+
+    <div class="notification-toast-content">
+
+        <div
+            id="notification-toast-title"
+            class="notification-toast-title"
+        >
+        </div>
+
+        <div
+            id="notification-toast-message"
+            class="notification-toast-message"
+        >
+        </div>
+
+    </div>
+</div>
+
+</body>
+</html>
+

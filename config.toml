@@ -9,10 +9,10 @@
 # -------------------------------------------------------------
 
 # URL de base du site (obligatoire pour Cloudflare Pages)
-baseURL = "https://high-tech.pages.dev/"
+baseURL = "https://easyfiletools.app/"
 
 # Titre global du site (utilisé dans <title> et SEO)
-title = "High-Tech — Nouvelles Technologies, Tests et Comparatifs"
+title = "EasyFileTools — Outil tout-en-un pour gérer, convertir, transformer et automatiser des fichiers"
 
 # Langue principale
 languageCode = "fr"             # Pour HTML / SEO
@@ -51,10 +51,11 @@ endLevel = 2
 [params]
 
   # Description du site (utilisée pour les meta-description SEO)
-  description = "Nouveautés & Tendances High-Tech : smartphones, ordinateurs, tablettes, caméras et objets connectés. Tests, actualités, comparatifs et guides d'achat complets."
+  description = "Outil tout-en-un pour gérer, convertir, transformer et automatiser des fichiers : audio, vidéos, images, documents texte, tableurs, présentations, graphiques vectoriels, scripts, 3D, CAO, images médicales."
 
   # Logo affiché dans le header
-  logo = "images/logo-bg.webp"
+  # logo = "images/logo-bg.webp"
+  logo = "images/logo_3.webp"
 
   # -----------------------------------------------------------
   # PALETTE DE COULEURS DU THÈME

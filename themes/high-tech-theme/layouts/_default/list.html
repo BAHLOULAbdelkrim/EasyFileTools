@@ -1,12 +1,25 @@
 {{ define "main" }}
-  <div class="container section-list">
-    <aside class="left-column">
-      {{ partial "leftmenus.html" . }}
-    </aside>
-    <section class="content-column">
-      <h1>{{ .Title }}</h1>
 
-      <!-- ✔️ AJOUT : afficher l’image de la section (menus + sous-menus) -->
+  <div class="container section-list">
+    <section class="content-column">
+      <div class="category-title">
+
+          <i class="category-icon"
+            data-lucide="{{ .Params.icon }}"></i>
+
+          <h1 class="page-title">{{ .Title }}</h1>
+
+          <i class="category-icon"
+            data-lucide="{{ .Params.icon }}"></i>
+
+      </div>
+
+      {{ if .Content }}
+          <div class="category-description">
+              {{ .Content }}
+          </div>
+      {{ end }}
+
       {{ if .Params.image }}
         <img class="section-cover" src="{{ .Params.image }}" alt="{{ .Title }}">
       {{ end }}
@@ -20,19 +33,7 @@
       </div>
 
 <div class="articles-grid">
-  <!-- 1️⃣ Affiche les sous-menus -->
-<!--  {{ range .Sections }}
-    <article class="card">
-      <a href="{{ .RelPermalink }}">
-        <h2>{{ .Title }}</h2>
-        <p>{{ .Summary }}</p>
-        {{ with .Params.menu_image }}
-          <img src="{{ . | relURL }}" alt="{{ $.Title }}">
-        {{ end }}
-      </a>
-    </article>
-  {{ end }}           -->
-  <!-- 2️⃣ Affiche uniquement les articles normaux (pas les _index.md des sous-menus) -->
+
   {{ range where .Pages "Kind" "in" (slice "page") }}
     <article class="card">
       <a href="{{ .RelPermalink }}">
@@ -51,4 +52,7 @@
       {{ end }}
     </section>
   </div>
+
+<!--  <script> lucide.createIcons();</script>  -->
+
 {{ end }}

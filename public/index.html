@@ -7,10 +7,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
   
-  <title>Accueil - High-Tech — Nouvelles Technologies, Tests et Comparatifs</title>
+  <title>Accueil - EasyFileTools — Outil tout-en-un pour gérer, convertir, transformer et automatiser des fichiers</title>
   
   
-  <meta name="description" content="Nouveautés &amp; Tendances High-Tech : smartphones, ordinateurs, tablettes, caméras et objets connectés. Tests, actualités, comparatifs et guides d&#39;achat complets.">
+  <meta name="description" content="Outil tout-en-un pour gérer, convertir, transformer et automatiser des fichiers : audio, vidéos, images, documents texte, tableurs, présentations, graphiques vectoriels, scripts, 3D, CAO, images médicales.">
+
   <link rel="icon" type="image/png" href="http://localhost:1313/favicon_2.png">
 
   
@@ -28,21 +29,11 @@
      </style>
 
   
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-
-  
-  <title>Accueil — High-Tech — Nouvelles Technologies, Tests et Comparatifs</title>
-
-  
-  <meta name="description" content="Nouveautés &amp; Tendances High-Tech : smartphones, ordinateurs, tablettes, caméras et objets connectés. Tests, actualités, comparatifs et guides d&#39;achat complets.">
-
-  
   <link rel="canonical" href="http://localhost:1313/">
 
   
-  <meta property="og:title" content="Accueil — High-Tech — Nouvelles Technologies, Tests et Comparatifs">
-  <meta property="og:description" content="Nouveautés &amp; Tendances High-Tech : smartphones, ordinateurs, tablettes, caméras et objets connectés. Tests, actualités, comparatifs et guides d&#39;achat complets.">
+  <meta property="og:title" content="Accueil — EasyFileTools — Outil tout-en-un pour gérer, convertir, transformer et automatiser des fichiers">
+  <meta property="og:description" content="Outil tout-en-un pour gérer, convertir, transformer et automatiser des fichiers : audio, vidéos, images, documents texte, tableurs, présentations, graphiques vectoriels, scripts, 3D, CAO, images médicales.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="http://localhost:1313/">
   
@@ -50,8 +41,8 @@
 
   
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Accueil — High-Tech — Nouvelles Technologies, Tests et Comparatifs">
-  <meta name="twitter:description" content="Nouveautés &amp; Tendances High-Tech : smartphones, ordinateurs, tablettes, caméras et objets connectés. Tests, actualités, comparatifs et guides d&#39;achat complets.">
+  <meta name="twitter:title" content="Accueil — EasyFileTools — Outil tout-en-un pour gérer, convertir, transformer et automatiser des fichiers">
+  <meta name="twitter:description" content="Outil tout-en-un pour gérer, convertir, transformer et automatiser des fichiers : audio, vidéos, images, documents texte, tableurs, présentations, graphiques vectoriels, scripts, 3D, CAO, images médicales.">
   
 
   
@@ -65,14 +56,54 @@
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 
   
-  <link rel="stylesheet" href="/css/main.css">
-  <link rel="stylesheet" href="/css/style.css">
-  <link rel="stylesheet" href="/css/custom.css">
+     <link rel="stylesheet" href="/css/main.css">
+     <link rel="stylesheet" href="/css/homepage/main.css">
+     <link rel="stylesheet" href="/css/common/zone-chargement.css">
+     <link rel="stylesheet" href="/css/common/liste-files.css">
+     <link rel="stylesheet" href="/css/common/operation-zone.css">
+     <link rel="stylesheet" href="/css/common/confirmation-modal.css">
+     <link rel="stylesheet" href="/css/common/notifications.css">
 
   
-  <script defer src="/js/main.js"></script>
+     <script defer src="/js/common/app-config.js"></script>
+     <script defer src="/js/common/file-categories.js"></script>
+     <script defer src="/js/common/file-utils.js"></script>
+     <script defer src="/js/common/file-storage.js"></script>
+     <script defer src="/js/common/file-list.js"></script>
+     <script defer src="/js/common/file-upload.js"></script>
+     <script defer src="/js/common/icons.js"></script>
+     <script defer src="/js/common/zone-chargement.js"></script>
+     <script defer src="/js/common/notifications.js"></script>
+     <script defer src="/js/common/operation-zone.js"></script>
+     <script defer src="/js/common/confirmation-modal.js"></script>
+
+     
+          <script defer src="/js/homepage/file-operations.js"></script>
+          <script defer src="/js/homepage/liste-files.js"></script>
+          <script defer src="/js/homepage/homepage-storage.js"></script>
+          <script defer src="/js/homepage/main.js"></script>
+     
+
+     
+
+     
+
+     
+          <script>
+               document.addEventListener("DOMContentLoaded", async () => {
+               console.log("[FILE STORAGE] Checking for saved files...");
+               await restoreSelectedFiles();
+               });
+          </script>
+     
+
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+     <script> pdfjsLib.GlobalWorkerOptions.workerSrc = "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js"; </script>
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 
 </head>
+
+
 
 
 <body class="home" data-section="">
@@ -82,427 +113,386 @@
 <div class="header-container">
   <div class="header-left">
     <a href="/" class="home-link">
-      <img src="/images/logo-bg.webp" alt="Logo" class="logo">
-      <span class="orbitron">High-Tech</span>
+      <img src="/images/logo_3.webp" alt="Logo" class="logo">
+    <div class="site-name">
+    
+      </div>       
     </a>
   </div>
 
     <nav class="top-menus" aria-label="Top navigation">
-      
       
 
       <ul class="menu-grid">
         
           
           <li class="menu-item">
-            <a href="/smartphones/" data-menu="smartphones">
+            <a href="/audio/" 
+              data-menu="audio">
+
               
-                Smartphones
-              
+
+              <i data-lucide="headphones" class="menu-icon"></i>
+              <span>Audio</span>
+
             </a>
           </li>
         
           
           <li class="menu-item">
-            <a href="/tablettes/" data-menu="tablettes">
+            <a href="/video/" 
+              data-menu="video">
+
               
-                Tablettes
-              
+
+              <i data-lucide="video" class="menu-icon"></i>
+              <span>Video</span>
+
             </a>
           </li>
         
           
           <li class="menu-item">
-            <a href="/pc-portables/" data-menu="pc-portables">
+            <a href="/images/" 
+              data-menu="images">
+
               
-                PC Portables
-              
+
+              <i data-lucide="image" class="menu-icon"></i>
+              <span>Images</span>
+
             </a>
           </li>
         
           
           <li class="menu-item">
-            <a href="/ordinateurs/" data-menu="ordinateurs">
+            <a href="/documents/" 
+              data-menu="documents">
+
               
-                Ordinateurs
-              
+
+              <i data-lucide="file-text" class="menu-icon"></i>
+              <span>Documents</span>
+
             </a>
           </li>
         
           
           <li class="menu-item">
-            <a href="/photo-video/" data-menu="photo-video">
+            <a href="/presentations/" 
+              data-menu="presentations">
+
               
-                Photo &amp; Vidéo
-              
+
+              <i data-lucide="presentation" class="menu-icon"></i>
+              <span>Presentations</span>
+
             </a>
           </li>
         
           
           <li class="menu-item">
-            <a href="/tv-cinema/" data-menu="tv-cinema">
+            <a href="/spreadsheets/" 
+              data-menu="spreadsheets">
+
               
-                TV &amp; Cinéma
-              
+
+              <i data-lucide="sheet" class="menu-icon"></i>
+              <span>Spreadsheets</span>
+
             </a>
           </li>
         
           
           <li class="menu-item">
-            <a href="/gaming/" data-menu="gaming">
+            <a href="/vector-graphics/" 
+              data-menu="vector-graphics">
+
               
-                Gaming
-              
+
+              <i data-lucide="pen-tool" class="menu-icon"></i>
+              <span>Vector Graphics</span>
+
             </a>
           </li>
         
           
           <li class="menu-item">
-            <a href="/domotique/" data-menu="domotique">
+            <a href="/archives/" 
+              data-menu="archives">
+
               
-                Domotique
-              
+
+              <i data-lucide="archive" class="menu-icon"></i>
+              <span>Archives</span>
+
             </a>
           </li>
         
           
           <li class="menu-item">
-            <a href="/audio/" data-menu="audio">
+            <a href="/code/" 
+              data-menu="code">
+
               
-                Audio
-              
+
+              <i data-lucide="code-xml" class="menu-icon"></i>
+              <span>Code</span>
+
             </a>
           </li>
         
           
           <li class="menu-item">
-            <a href="/objets-connectes/" data-menu="obj-connectes">
+            <a href="/3d-cad/" 
+              data-menu="cad-3d">
+
               
-                Obj. Connectés
-              
-            </a>
-          </li>
-        
-          
-          <li class="menu-item">
-            <a href="/impression/" data-menu="impression">
-              
-                Impression
-              
-            </a>
-          </li>
-        
-          
-          <li class="menu-item">
-            <a href="/peripheriques/" data-menu="peripheriques">
-              
-                Périphériques
-              
+
+              <i data-lucide="boxes" class="menu-icon"></i>
+              <span>3D / CAD</span>
+
             </a>
           </li>
         
       </ul>
 
     </nav>
+    
 </div>
 
 
-<button id="menu-toggle" class="mobile-burger">
-  <span class="burger-line"></span>
-  <span class="burger-line"></span>
-  <span class="burger-line"></span>
-</button>
 
 </header>
 
-<section class="hero">
-  
 
-    
-    <div class="slideshow" id="slideshow">
-      <img src="/images/slide1.webp" class="slide visible">
-      <img src="/images/slide2.webp" class="slide">
-      <img src="/images/slide3.webp" class="slide">
-      <img src="/images/slide4.webp" class="slide">
-    </div>
-
-  
-</section>
-
-
-  
-  <section class="search-lang-bar">
-  <div class="search-lang-container">
-
-    
-    <form action="/search" method="get" class="search-form">
-      <input
-        type="search"
-        name="q"
-        placeholder="Rechercher un produit, une catégorie..."
-        aria-label="Rechercher"
-        class="search-input"
-      />
-      <button type="submit" class="search-button">
-        <svg xmlns="http://www.w3.org/2000/svg" class="icon-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <circle cx="11" cy="11" r="8" />
-          <line x1="21" y1="21" x2="16.65" y2="16.65" />
-        </svg>
-        <span class="search-text">Rechercher</span>
-      </button>
-    </form>
-
-    
-
-
-  </div>
-</section>
-
-
-
-
-
-
-
-
-
-
-  
-  
-<nav id="mobile-nav" class="mobile-menu" aria-hidden="true">
-  
-  <button id="mobile-nav-close" class="close-mobile">  </button>
-
-  <ul>
-    
-
-    
-      
-      <li class="menu-item" data-id="smartphones">
-        <a href="/smartphones/">
-          
-            Smartphones
-          
-        </a>
-      </li>
-    
-      
-      <li class="menu-item" data-id="tablettes">
-        <a href="/tablettes/">
-          
-            Tablettes
-          
-        </a>
-      </li>
-    
-      
-      <li class="menu-item" data-id="pc-portables">
-        <a href="/pc-portables/">
-          
-            PC Portables
-          
-        </a>
-      </li>
-    
-      
-      <li class="menu-item" data-id="ordinateurs">
-        <a href="/ordinateurs/">
-          
-            Ordinateurs
-          
-        </a>
-      </li>
-    
-      
-      <li class="menu-item" data-id="photo-video">
-        <a href="/photo-video/">
-          
-            Photo &amp; Vidéo
-          
-        </a>
-      </li>
-    
-      
-      <li class="menu-item" data-id="tv-cinema">
-        <a href="/tv-cinema/">
-          
-            TV &amp; Cinéma
-          
-        </a>
-      </li>
-    
-      
-      <li class="menu-item" data-id="gaming">
-        <a href="/gaming/">
-          
-            Gaming
-          
-        </a>
-      </li>
-    
-      
-      <li class="menu-item" data-id="domotique">
-        <a href="/domotique/">
-          
-            Domotique
-          
-        </a>
-      </li>
-    
-      
-      <li class="menu-item" data-id="audio">
-        <a href="/audio/">
-          
-            Audio
-          
-        </a>
-      </li>
-    
-      
-      <li class="menu-item" data-id="obj-connectes">
-        <a href="/objets-connectes/">
-          
-            Objets Connectés
-          
-        </a>
-      </li>
-    
-      
-      <li class="menu-item" data-id="impression">
-        <a href="/impression/">
-          
-            Impression
-          
-        </a>
-      </li>
-    
-      
-      <li class="menu-item" data-id="peripheriques">
-        <a href="/peripheriques/">
-          
-            Périphériques
-          
-        </a>
-      </li>
-    
-
-    <li class="sep"></li>
-
-    
-    <li class="menu-item"><a href="/actualite/">Nouveautés</a></li>
-    <li class="menu-item"><a href="/comparatifs/">Trier par</a></li>
-
-    <li class="menu-item">
-      <a href="https://facebook.com" target="_blank">
-        <img src="/images/facebook.svg" alt="Facebook" class="icon-small">
-        Facebook
-      </a>
-    </li>
-  </ul>
-</nav>
 
 
 
   
   <main class="site-main">
     
-  <div class="container home-content">
-    <aside class="left-column">
-      <div class="side-links">
-  <ul>
-    <li class="menu-item"><a href="/nouveautes/">Nouveautés</a></li>
-    <li class="menu-item"><a href="/trier-par/">Trier par</a></li>
-    <li class="menu-item">
-      <a href="https://facebook.com" target="_blank">
-       <img src="/images/facebook.svg" alt="Facebook" class="icon-small">
-       Facebook
-      </a>
-    </li>
-  </ul>
+  
+<div class="convert-container">
+
+    
+
+    <div class="auth-bar">
+        <a href="/login" class="auth-left">
+            <i data-lucide="log-in"></i>
+            <span>Login</span>
+        </a>
+
+        <a href="/signup" class="auth-right">
+            <i data-lucide="user-plus"></i>
+            <span>Sign Up</span>
+        </a>
+    </div>
+
+
+    <h1 class="page-title">
+        Import your files
+    </h1>
+
+    <div
+    id="upload-zone-container"
+    data-category=""
+>
+
+    <div id="drop-zone">
+
+        <div class="upload-actions">
+
+            <label
+                for="fileInput"
+                class="upload-btn"
+            >
+                <i data-lucide="folder-open"></i>
+                Browse
+            </label>
+
+
+            <button
+                type="button"
+                class="drag-drop"
+                id="dragBtn"
+            >
+                <i data-lucide="upload"></i>
+                Drag & Drop here
+                <i data-lucide="upload"></i>
+            </button>
+
+
+            <button
+                type="button"
+                class="upload-btn"
+                id="urlBtn"
+            >
+                <i data-lucide="link"></i>
+                From URL
+            </button>
+
+        </div>
+
+
+        <input
+            type="file"
+            id="fileInput"
+            multiple
+        >
+
+
+        <div
+            id="urlModal"
+            class="url-modal hidden"
+        >
+
+            <div class="url-box">
+
+                <h3 id="urlModalTitle">
+                    Paste file URL
+                </h3>
+
+
+                <input
+                    type="text"
+                    id="urlInput"
+                    placeholder="https://example.com/file"
+                >
+
+
+                <div class="url-actions">
+
+                    <button
+                        type="button"
+                        id="urlCancel"
+                    >
+                        <i data-lucide="x"></i>
+                        Cancel
+                    </button>
+
+
+                    <button
+                        type="button"
+                        id="urlAdd"
+                    >
+                        <i data-lucide="plus"></i>
+                        Add
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <p
+            id="upload-info"
+            class="upload-info"
+        ></p>
+
+    </div>
+
 </div>
 
-    </aside>
+    <div
+    class="file-list-container"
+    data-category=""
+>
 
-    <section class="content-column">
+    <div class="file-counter">
 
-      <h2 class="latest-title">Derniers articles ...</h2>
-      <div class="latest-grid">
-        
-          <article class="card">
-            <a href="/smartphones/xiaomi/serie-redmi/redmi-note-15/">
-              <img src="/images/redmi-note-15.webp" alt="Série Redmi Note 15 – Guide, modèles et spécifications">
-              <h3>Série Redmi Note 15 – Guide, modèles et spécifications</h3>
-              <p>Guide des modèles de Xiaomi Redmi Note 15</p>
-            </a>
-          </article>
-        
-          <article class="card">
-            <a href="/smartphones/xiaomi/serie-redmi-note/redmi-note-15/">
-              <img src="/images/redmi-note-15.webp" alt="Série Redmi Note 15 – Guide, modèles et spécifications">
-              <h3>Série Redmi Note 15 – Guide, modèles et spécifications</h3>
-              <p>Guide des modèles de Xiaomi Redmi Note 15</p>
-            </a>
-          </article>
-        
-          <article class="card">
-            <a href="/smartphones/xiaomi/serie-redmi-c/redmi-note-15/">
-              <img src="/images/redmi-note-15.webp" alt="Série Redmi Note 15 – Guide, modèles et spécifications">
-              <h3>Série Redmi Note 15 – Guide, modèles et spécifications</h3>
-              <p>Guide des modèles de Xiaomi Redmi Note 15</p>
-            </a>
-          </article>
-        
-          <article class="card">
-            <a href="/smartphones/xiaomi/serie-redmi-a/redmi-note-15/">
-              <img src="/images/redmi-note-15.webp" alt="Série Redmi Note 15 – Guide, modèles et spécifications">
-              <h3>Série Redmi Note 15 – Guide, modèles et spécifications</h3>
-              <p>Guide des modèles de Xiaomi Redmi Note 15</p>
-            </a>
-          </article>
-        
-          <article class="card">
-            <a href="/smartphones/xiaomi/serie-redmi/redmi-note-14/">
-              <img src="/images/redmi-note-14.webp" alt="Série Redmi Note 14 – Guide, modèles et spécifications">
-              <h3>Série Redmi Note 14 – Guide, modèles et spécifications</h3>
-              <p>Guide des modèles de Xiaomi Redmi Note 14</p>
-            </a>
-          </article>
-        
-          <article class="card">
-            <a href="/smartphones/xiaomi/serie-redmi-note/redmi-note-14/">
-              <img src="/images/redmi-note-14.webp" alt="Série Redmi Note 14 – Guide, modèles et spécifications">
-              <h3>Série Redmi Note 14 – Guide, modèles et spécifications</h3>
-              <p>Guide des modèles de Xiaomi Redmi Note 14</p>
-            </a>
-          </article>
-        
-          <article class="card">
-            <a href="/smartphones/xiaomi/serie-redmi-c/redmi-note-14/">
-              <img src="/images/redmi-note-14.webp" alt="Série Redmi Note 14 – Guide, modèles et spécifications">
-              <h3>Série Redmi Note 14 – Guide, modèles et spécifications</h3>
-              <p>Guide des modèles de Xiaomi Redmi Note 14</p>
-            </a>
-          </article>
-        
-          <article class="card">
-            <a href="/smartphones/xiaomi/serie-redmi-a/redmi-note-14/">
-              <img src="/images/redmi-note-14.webp" alt="Série Redmi Note 14 – Guide, modèles et spécifications">
-              <h3>Série Redmi Note 14 – Guide, modèles et spécifications</h3>
-              <p>Guide des modèles de Xiaomi Redmi Note 14</p>
-            </a>
-          </article>
-        
-          <article class="card">
-            <a href="/smartphones/xiaomi/serie-xiaomi/xiaomi-12/">
-              <img src="/images/xiaomi-12.webp" alt="Série Xiaomi 12 – Guide, modèles et spécifications">
-              <h3>Série Xiaomi 12 – Guide, modèles et spécifications</h3>
-              <p>Guide des modèles de Xiaomi 12</p>
-            </a>
-          </article>
-        
-      </div>
-    </section>
-  </div>
+        <span id="fileCounter">
+            0 file
+        </span>
+
+    </div>
+
+    <div id="file-list"></div>
+
+</div>
+
+    <div class="clear-all-container">
+
+    <div class="compatible-wrapper">
+
+        <button id="compatibleOpBtn" class="compatible-op" disabled>
+
+            <i data-lucide="settings-2"></i>
+
+            Compatible Operations
+
+            <i data-lucide="settings-2"></i>
+
+        </button>
+
+    </div>
+
+
+    
+
+    <div class="clear-all-wrapper">
+
+        <button id="clearAllBtn" class="shiny-btn" disabled>
+
+            <i data-lucide="trash-2"></i>
+
+            Clear All
+
+        </button>
+
+    </div>
+
+
+    
+
+    <div id="operations-list"></div>
+
+
+    
+
+    <div id="clearAllModal" class="clear-all-modal hidden">
+
+        <div class="clear-all-box">
+
+            <h3 class="clear-all-title">
+                <i data-lucide="triangle-alert"></i>
+                Clear all files ?
+            </h3>
+
+            <p>
+                Are you sure you want to remove <strong>all files</strong> ?
+            </p>
+
+            <div class="clear-all-actions">
+
+                <button
+                    type="button"
+                    id="clearAllCancel"
+                >
+                    <i data-lucide="x"></i>
+                    Cancel
+                </button>
+
+                <button
+                    type="button"
+                    id="clearAllConfirm"
+                >
+                    <i data-lucide="check"></i>
+                    Confirm
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+</div>
+
 
   </main>
 
@@ -520,7 +510,7 @@
     
   
     
-    <p style="margin-top:15px;">© 2026 High-Tech — Tous droits réservés.</p>
+    <p style="margin-top:15px;">© 2026 EasyFile Tools — All rights reserved.</p>
 
   </div>
 </footer>
@@ -532,6 +522,117 @@
   <img id="modalImage">
 </div>
 
+  
+
+<div
+    id="confirmation-modal"
+    class="confirmation-modal hidden"
+>
+
+    <div
+        class="confirmation-modal-box"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="confirmation-modal-title"
+    >
+
+        
+
+        <div class="confirmation-modal-header">
+
+            <i
+                id="confirmation-modal-icon"
+                data-lucide="triangle-alert"
+                class="confirmation-modal-icon"
+            ></i>
+
+            <h3 id="confirmation-modal-title">
+                Confirmation
+            </h3>
+
+        </div>
+
+        
+
+        <div
+            id="confirmation-modal-message"
+            class="confirmation-modal-message"
+        >
+        </div>
+
+        
+
+        <div class="confirmation-modal-actions">
+
+            <button
+                type="button"
+                id="confirmation-modal-cancel"
+                class="confirmation-modal-cancel"
+            >
+                <i data-lucide="x"></i>
+                Cancel
+            </button>
+
+            <button
+                type="button"
+                id="confirmation-modal-download-all"
+                class="confirmation-modal-download-all hidden"
+            >
+                <i data-lucide="download"></i>
+                Download All
+            </button>
+
+            <button
+                type="button"
+                id="confirmation-modal-confirm"
+                class="confirmation-modal-confirm"
+            >
+                <i data-lucide="check"></i>
+                Confirm
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+
+<div
+    id="notification-toast"
+    class="notification-toast hidden"
+    role="status"
+    aria-live="polite"
+    aria-atomic="true"
+>
+    <div class="notification-toast-icon-wrapper">
+
+        <i
+            id="notification-toast-icon"
+            data-lucide="circle-check"
+            class="notification-toast-icon"
+        ></i>
+
+    </div>
+
+    <div class="notification-toast-content">
+
+        <div
+            id="notification-toast-title"
+            class="notification-toast-title"
+        >
+        </div>
+
+        <div
+            id="notification-toast-message"
+            class="notification-toast-message"
+        >
+        </div>
+
+    </div>
+</div>
 
 </body>
 </html>

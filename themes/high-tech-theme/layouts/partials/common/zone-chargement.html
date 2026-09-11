@@ -1,0 +1,101 @@
+<div
+    id="upload-zone-container"
+    data-category="{{ .category | default "" }}"
+>
+
+    <div id="drop-zone">
+
+        <div class="upload-actions">
+
+            <label
+                for="fileInput"
+                class="upload-btn"
+            >
+                <i data-lucide="folder-open"></i>
+                Browse
+            </label>
+
+
+            <button
+                type="button"
+                class="drag-drop"
+                id="dragBtn"
+            >
+                <i data-lucide="upload"></i>
+                Drag & Drop here
+                <i data-lucide="upload"></i>
+            </button>
+
+
+            <button
+                type="button"
+                class="upload-btn"
+                id="urlBtn"
+            >
+                <i data-lucide="link"></i>
+                From URL
+            </button>
+
+        </div>
+
+
+        <input
+            type="file"
+            id="fileInput"
+            multiple
+        >
+
+
+        <div
+            id="urlModal"
+            class="url-modal hidden"
+        >
+
+            <div class="url-box">
+
+                <h3 id="urlModalTitle">
+                    Paste file URL
+                </h3>
+
+
+                <input
+                    type="text"
+                    id="urlInput"
+                    placeholder="https://example.com/file"
+                >
+
+
+                <div class="url-actions">
+
+                    <button
+                        type="button"
+                        id="urlCancel"
+                    >
+                        <i data-lucide="x"></i>
+                        Cancel
+                    </button>
+
+
+                    <button
+                        type="button"
+                        id="urlAdd"
+                    >
+                        <i data-lucide="plus"></i>
+                        Add
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <p
+            id="upload-info"
+            class="upload-info"
+        ></p>
+
+    </div>
+
+</div>

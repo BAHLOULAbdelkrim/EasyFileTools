@@ -1,0 +1,16 @@
+
+<div class="convert-container">
+
+    {{ partial "common/login-signup.html" (dict "category" "") }}
+
+    <h1 class="page-title">
+        Import your files
+    </h1>
+
+    {{ partial "common/zone-chargement.html" (dict "category" "") }}
+
+    {{ partial "common/liste-files.html" (dict "category" "") }}
+
+    {{ partial "homepage/clear-all.html" . }}
+
+</div>
