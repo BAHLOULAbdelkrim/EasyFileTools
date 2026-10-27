@@ -1,0 +1,229 @@
+heading: "Document Formats"
+
+intro: "Compare common document and ebook formats and quickly choose the best option for sharing, editing, publishing or long-term storage."
+
+navigation_category: "documents"
+
+note:
+  title: "PDF processing note:"
+  text: "Merge and Split PDF copy existing PDF pages without image re-encoding. PDF to Image and Strong PDF compression render pages, so resolution and image quality settings matter for those operations."
+
+quick_choices:
+  - label: "Universal sharing"
+    formats: "PDF"
+
+  - label: "Microsoft Word editing"
+    formats: "DOCX"
+
+  - label: "Open office document"
+    formats: "ODT"
+
+  - label: "Plain text"
+    formats: "TXT"
+
+  - label: "Web document"
+    formats: "HTML"
+
+  - label: "Modern ebook"
+    formats: "EPUB"
+
+
+formats:
+
+  - name: "PDF"
+    extensions: ".pdf"
+    status: "Universal"
+    description: "Fixed-layout document format designed to preserve appearance across devices and operating systems."
+    facts:
+      - label: "Layout"
+        value: "Fixed"
+      - label: "Editing"
+        value: "Limited"
+      - label: "Images"
+        value: "Yes"
+      - label: "Compatibility"
+        value: "Excellent"
+    best_for: "Sharing, printing, forms and final documents"
+    action_label: "Explore PDF tools"
+    action_url: "/documents/"
+
+
+  - name: "DOCX"
+    extensions: ".docx"
+    status: "Editable"
+    description: "Modern XML-based Microsoft Word document format designed for rich editable content."
+    facts:
+      - label: "Layout"
+        value: "Flow / paged"
+      - label: "Editing"
+        value: "Excellent"
+      - label: "Images"
+        value: "Yes"
+      - label: "Compatibility"
+        value: "Excellent"
+    best_for: "Editable reports, letters and office documents"
+    action_label: "Explore Document tools"
+    action_url: "/documents/"
+
+
+  - name: "DOC"
+    extensions: ".doc"
+    status: "Legacy"
+    description: "Older binary Microsoft Word format used primarily by Word 97–2003 documents."
+    facts:
+      - label: "Type"
+        value: "Binary"
+      - label: "Editing"
+        value: "Yes"
+      - label: "Modern use"
+        value: "Legacy"
+      - label: "Compatibility"
+        value: "Good"
+    best_for: "Older Microsoft Word documents"
+    action_label: "Explore Document tools"
+    action_url: "/documents/"
+
+
+  - name: "ODT"
+    extensions: ".odt"
+    status: "Open"
+    description: "OpenDocument word-processing format commonly used by LibreOffice and other open office suites."
+    facts:
+      - label: "Editing"
+        value: "Excellent"
+      - label: "Open standard"
+        value: "Yes"
+      - label: "Images"
+        value: "Yes"
+      - label: "Compatibility"
+        value: "Good"
+    best_for: "Open-source office workflows"
+    action_label: "Explore Document tools"
+    action_url: "/documents/"
+
+
+  - name: "RTF"
+    extensions: ".rtf"
+    status: "Simple"
+    description: "Rich Text Format stores basic formatting while remaining simpler than full office document formats."
+    facts:
+      - label: "Formatting"
+        value: "Basic / Rich"
+      - label: "Editing"
+        value: "Yes"
+      - label: "Complex layout"
+        value: "Limited"
+      - label: "Compatibility"
+        value: "Very good"
+    best_for: "Simple formatted documents and interoperability"
+    action_label: "Explore Document tools"
+    action_url: "/documents/"
+
+
+  - name: "TXT"
+    extensions: ".txt"
+    status: "Plain"
+    description: "Plain-text format containing characters only, without document layout or rich formatting."
+    facts:
+      - label: "Formatting"
+        value: "None"
+      - label: "File size"
+        value: "Very small"
+      - label: "Editing"
+        value: "Universal"
+      - label: "Compatibility"
+        value: "Excellent"
+    best_for: "Notes, source text and maximum compatibility"
+    action_label: "Explore Document tools"
+    action_url: "/documents/"
+
+
+  - name: "HTML"
+    extensions: ".html • .htm"
+    status: "Web"
+    description: "Markup format used to structure web pages and browser-based documents."
+    facts:
+      - label: "Layout"
+        value: "Responsive"
+      - label: "Web use"
+        value: "Native"
+      - label: "Multimedia"
+        value: "Yes"
+      - label: "Compatibility"
+        value: "Excellent"
+    best_for: "Web pages and browser-based documents"
+    action_label: "Explore Document tools"
+    action_url: "/documents/"
+
+
+  - name: "EPUB"
+    extensions: ".epub"
+    status: "Ebook"
+    description: "Modern ebook format designed primarily for content that can adapt to different screen sizes."
+    facts:
+      - label: "Layout"
+        value: "Reflowable / Fixed"
+      - label: "Images"
+        value: "Yes"
+      - label: "Accessibility"
+        value: "Strong"
+      - label: "Ebook use"
+        value: "Excellent"
+    best_for: "Ebooks, digital publications and e-readers"
+    action_label: "Explore Document tools"
+    action_url: "/documents/"
+
+
+  - name: "MOBI"
+    extensions: ".mobi"
+    status: "Legacy"
+    description: "Older ebook format historically associated with early Kindle publishing workflows."
+    facts:
+      - label: "Type"
+        value: "Ebook"
+      - label: "Modern publishing"
+        value: "Legacy"
+      - label: "Amazon KDP"
+        value: "Not accepted"
+      - label: "Compatibility"
+        value: "Older readers"
+    best_for: "Existing legacy ebook collections"
+    note: "Amazon KDP stopped accepting MOBI uploads for new or updated ebooks."
+    action_label: "Explore Document tools"
+    action_url: "/documents/"
+
+
+  - name: "AZW3"
+    extensions: ".azw3"
+    status: "Kindle"
+    description: "Kindle-focused ebook format with richer layout capabilities than the older MOBI format."
+    facts:
+      - label: "Type"
+        value: "Ebook"
+      - label: "Ecosystem"
+        value: "Kindle"
+      - label: "Reflowable"
+        value: "Yes"
+      - label: "Interchange"
+        value: "Limited"
+    best_for: "Existing Kindle ebook libraries"
+    action_label: "Explore Document tools"
+    action_url: "/documents/"
+
+
+  - name: "DJVU"
+    extensions: ".djvu • .djv"
+    status: "Scans"
+    description: "Document format optimized for highly compressed scanned pages, books and technical archives."
+    facts:
+      - label: "Main use"
+        value: "Scans"
+      - label: "Compression"
+        value: "High"
+      - label: "Browser support"
+        value: "Limited"
+      - label: "Modern use"
+        value: "Niche"
+    best_for: "Scanned books and document archives"
+    action_label: "Explore Document tools"
+    action_url: "/documents/"

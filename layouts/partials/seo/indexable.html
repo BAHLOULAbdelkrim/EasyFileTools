@@ -1,0 +1,4 @@
+{{- $enabled := true -}}
+{{- if isset .Site.Params "seoindexable" -}}{{- $enabled = .Site.Params.seoindexable -}}{{- end -}}
+{{- $category := and (in (slice "audio" "video" "images" "documents") .Section) (eq .CurrentSection .FirstSection) -}}
+{{- return (and $enabled (not hugo.IsServer) (ne .Kind "404") (not .Params.noindex) (or .IsHome $category .Params.available .Params.seoindex)) -}}

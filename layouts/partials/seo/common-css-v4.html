@@ -1,0 +1,39 @@
+{{- /* V4 performance: concatenate common CSS in the exact historical cascade order.
+       The homepage stylesheet imported login-signup.css and clear-all.css;
+       inline their contents at the same position to remove the network waterfall.
+       Keep a single CSS file to reduce render-blocking HTTP requests.
+       Sources remain editable in their original theme/static locations. */ -}}
+{{- $paths := slice
+    "css/common/tailwind-compat.css"
+    "css/seo.css"
+    "css/main.css"
+    "css/homepage/login-signup.css"
+    "css/homepage/clear-all.css"
+    "css/homepage/main.css"
+    "css/common/zone-chargement.css"
+    "css/common/liste-files.css"
+    "css/common/operation-zone.css"
+    "css/common/confirmation-modal.css"
+    "css/common/notifications.css"
+    "css/common/operation-ui-components.css"
+-}}
+{{- $bundle := "" -}}
+{{- range $path := $paths -}}
+    {{- $source := printf "static/%s" $path -}}
+    {{- if not (fileExists $source) -}}
+        {{- $source = printf "themes/high-tech-theme/static/%s" $path -}}
+    {{- end -}}
+    {{- if not (fileExists $source) -}}
+        {{- errorf "V4: CSS introuvable : %s" $path -}}
+    {{- end -}}
+    {{- $content := readFile $source -}}
+    {{- if eq $path "css/homepage/main.css" -}}
+        {{- $content = replace $content `@import url("login-signup.css");` "" -}}
+        {{- $content = replace $content `@import url("clear-all.css");` "" -}}
+    {{- end -}}
+    {{- $bundle = printf "%s\n/* %s */\n%s\n" $bundle $path $content -}}
+{{- end -}}
+{{- $asset := resources.FromString "optimized/css/easyfile-common.css" $bundle -}}
+{{- $asset = resources.Minify $asset -}}
+{{- $asset = resources.Fingerprint "sha256" $asset -}}
+{{- return $asset.RelPermalink -}}

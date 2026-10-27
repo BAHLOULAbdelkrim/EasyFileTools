@@ -1,0 +1,354 @@
+<section
+    id="trimVideoSettings"
+    class="trim-video-settings"
+    aria-labelledby="chooseFormatLabel"
+>
+
+    <!-- =========================================
+         ACTIVE FILE
+    ========================================== -->
+
+    <div class="trim-video-section">
+
+        <div class="trim-video-title">
+            Edit settings for
+        </div>
+
+        <select id="trimVideoFileSelector">
+        </select>
+
+    </div>
+
+
+    <!-- =========================================
+         VIDEO PREVIEW
+    ========================================== -->
+
+    <div class="trim-video-preview-section">
+
+        <video
+            id="trimVideoPreview"
+            class="trim-video-preview"
+            preload="metadata"
+            playsinline
+        ></video>
+
+
+        <div class="trim-video-player-controls">
+
+            <button
+                id="trimVideoPlayBtn"
+                type="button"
+                class="trim-player-btn"
+            >
+                <i data-lucide="play"></i>
+                Play
+            </button>
+
+
+            <button
+                id="trimVideoPlaySelectionBtn"
+                type="button"
+                class="trim-player-btn"
+            >
+                <i data-lucide="circle-play"></i>
+                Play Selection
+            </button>
+
+
+            <button
+                id="trimVideoStopBtn"
+                type="button"
+                class="trim-player-btn"
+            >
+                <i data-lucide="square"></i>
+                Stop
+            </button>
+
+        </div>
+
+
+        <div class="trim-video-current-time">
+
+            <span>Current position</span>
+
+            <strong id="trimVideoCurrentTime">
+                00:00:00.000
+            </strong>
+
+        </div>
+
+
+        <input
+            id="trimVideoScrubber"
+            class="trim-video-scrubber eft-range"
+            type="range"
+            min="0"
+            max="1000"
+            step="1"
+            value="0"
+        >
+
+    </div>
+
+
+    <!-- =========================================
+         START / END
+    ========================================== -->
+
+    <div class="trim-video-time-grid">
+
+        <div class="trim-video-section">
+
+            <div class="trim-video-title">
+                Start
+            </div>
+
+            <input
+                id="trimVideoStart"
+                class="trim-time-input"
+                type="text"
+                value="00:00:00.000"
+                spellcheck="false"
+            >
+
+
+            <input
+                id="trimVideoStartRange"
+                class="eft-range"
+                type="range"
+                min="0"
+                max="1000"
+                step="1"
+                value="0"
+            >
+
+
+            <button
+                id="trimVideoSetStartBtn"
+                type="button"
+                class="trim-secondary-btn"
+            >
+                Use current position
+            </button>
+
+        </div>
+
+
+        <div class="trim-video-section">
+
+            <div class="trim-video-title">
+                End
+            </div>
+
+            <input
+                id="trimVideoEnd"
+                class="trim-time-input"
+                type="text"
+                value="00:00:00.000"
+                spellcheck="false"
+            >
+
+
+            <input
+                id="trimVideoEndRange"
+                class="eft-range"
+                type="range"
+                min="0"
+                max="1000"
+                step="1"
+                value="1000"
+            >
+
+
+            <button
+                id="trimVideoSetEndBtn"
+                type="button"
+                class="trim-secondary-btn"
+            >
+                Use current position
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================================
+         DURATION
+    ========================================== -->
+
+    <div class="trim-video-selection-info">
+
+        <span>
+            Selected duration
+        </span>
+
+        <strong id="trimVideoSelectedDuration">
+            0.000 s
+        </strong>
+
+    </div>
+
+
+    <!-- =========================================
+         PRECISION
+    ========================================== -->
+
+    <div class="trim-video-section">
+
+        <div class="trim-video-title">
+            Trim precision
+        </div>
+
+        <div class="trim-video-help">
+            Accurate is recommended. Fast avoids re-encoding but may cut near the closest keyframe.
+        </div>
+
+
+        <div class="trim-video-choice-group">
+
+            <button
+                type="button"
+                class="trim-choice-btn active"
+                data-trim-precision="accurate"
+            >
+                <strong>Accurate</strong>
+                <span>Precise • Re-encode</span>
+            </button>
+
+
+            <button
+                type="button"
+                class="trim-choice-btn"
+                data-trim-precision="fast"
+            >
+                <strong>Fast</strong>
+                <span>Very fast • Keyframe based</span>
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================================
+         OUTPUT
+    ========================================== -->
+
+    <div class="trim-video-setting-grid">
+
+        <div class="trim-video-section">
+
+            <div class="trim-video-title">
+                Output format
+            </div>
+
+            <select id="trimVideoOutputFormat">
+
+                <option value="same">
+                    Same as source
+                </option>
+
+                <option value="mp4">
+                    MP4
+                </option>
+
+                <option value="webm">
+                    WebM
+                </option>
+
+                <option value="mkv">
+                    MKV
+                </option>
+
+                <option value="mov">
+                    MOV
+                </option>
+
+                <option value="avi">
+                    AVI
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <div class="trim-video-section">
+
+            <div class="trim-video-title">
+                Accurate quality
+            </div>
+
+            <select id="trimVideoQuality">
+
+                <option value="high" selected>
+                    High
+                </option>
+
+                <option value="balanced">
+                    Balanced
+                </option>
+
+                <option value="small">
+                    Smaller file
+                </option>
+
+            </select>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================================
+         AUDIO
+    ========================================== -->
+
+    <div class="trim-video-section">
+
+        <label class="trim-video-check">
+
+            <input
+                id="trimVideoKeepAudio"
+                type="checkbox"
+                checked
+            >
+
+            <span>
+                Keep audio track
+            </span>
+
+        </label>
+
+    </div>
+
+
+    <!-- =========================================
+         INFO
+    ========================================== -->
+
+    <div
+        id="trimVideoModeInfo"
+        class="trim-video-mode-info"
+    >
+        Accurate mode re-encodes the selected interval for precise trimming.
+    </div>
+
+
+    <!-- =========================================
+         VALIDATION
+    ========================================== -->
+
+    <div
+        id="trimVideoValidation"
+        data-eft-readiness-status
+        class="trim-video-validation"
+        role="status"
+        aria-live="polite"
+    >
+        Load one or more videos.
+    </div>
+
+</section>

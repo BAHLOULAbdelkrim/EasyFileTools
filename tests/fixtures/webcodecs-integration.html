@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>WebCodecs Integration Test</title>
+<script>
+window.loadSelectedFiles = async () => ({files: []});
+window.__eftBrowserEvents = [];
+['easyfiletools:video-convert-complete','easyfiletools:video-conversion-ended','easyfiletools:video-convert-progress'].forEach(name => document.addEventListener(name, e => window.__eftBrowserEvents.push({name,detail:e.detail})));
+</script>
+<script defer src="/themes/high-tech-theme/static/js/video/convert-video/video-webcodecs.js"></script>
+<script defer src="/themes/high-tech-theme/static/js/video/convert-video/video-conversion-ui.js"></script>
+<script defer src="/themes/high-tech-theme/static/js/video/convert-video/video-converter.js"></script>
+</head><body>
+<div id="convertVideoSettings">
+  <button data-video-format="mp4">MP4</button><button data-video-format="webm">WebM</button>
+  <button data-video-format="mkv">MKV</button>
+  <select id="convertVideoResolution"><option value="original" selected>Original</option><option value="720">720</option></select>
+  <select id="convertVideoQuality"><option value="medium" selected>Medium</option><option value="low">Low</option><option value="high">High</option></select>
+  <input id="convertVideoFastCopy" type="checkbox" checked>
+  <input id="convertVideoKeepAudio" type="checkbox" checked>
+  <p id="convertVideoValidation"></p>
+</div>
+</body></html>

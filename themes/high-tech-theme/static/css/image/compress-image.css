@@ -1,0 +1,353 @@
+.compress-image-settings {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+
+.compress-setting-section {
+    margin-bottom: 20px;
+    padding: 18px;
+
+    background: #ffffff;
+
+    border: 1px solid #e5e7eb;
+    border-radius: 14px;
+}
+
+
+.compress-setting-title {
+    margin-bottom: 5px;
+
+    font-size: 16px;
+    font-weight: 750;
+}
+
+
+.compress-setting-help {
+    margin-bottom: 14px;
+
+    font-size: 13px;
+    color: #6b7280;
+}
+
+
+.compress-setting-header {
+    display: flex;
+
+    align-items: flex-start;
+    justify-content: space-between;
+
+    gap: 20px;
+}
+
+
+.compress-quality-value {
+    color: var(--violet);
+}
+
+
+#compressImageQuality {
+    width: 100%;
+}
+
+
+/* =========================================
+   PRESETS
+========================================= */
+
+.compression-presets {
+    display: grid;
+
+    grid-template-columns:
+        repeat(
+            3,
+            minmax(130px, 1fr)
+        );
+
+    gap: 12px;
+}
+
+
+.compression-preset-btn {
+    min-height: 72px;
+
+    display: flex;
+    flex-direction: column;
+
+    justify-content: center;
+    align-items: flex-start;
+
+    gap: 4px;
+
+    padding: 12px 14px;
+
+    background: #ffffff;
+
+    border: 1px solid #d1d5db;
+    border-radius: 11px;
+
+    cursor: pointer;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease,
+        transform 0.2s ease;
+}
+
+
+.compression-preset-btn:hover {
+    transform: translateY(-1px);
+}
+
+
+.compression-preset-btn.active {
+    border-color: var(--violet);
+
+    box-shadow:
+        0 0 0 2px
+        rgba(91, 33, 182, 0.12);
+}
+
+
+.compression-preset-btn span {
+    font-size: 12px;
+    color: #6b7280;
+}
+
+
+/* =========================================
+   CHECKBOX
+========================================= */
+
+.compress-checkbox-row {
+    display: flex;
+
+    align-items: flex-start;
+
+    gap: 11px;
+
+    cursor: pointer;
+}
+
+
+.compress-checkbox-row input {
+    margin-top: 4px;
+}
+
+
+.compress-checkbox-row span {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 3px;
+}
+
+
+.compress-checkbox-row small {
+    color: #6b7280;
+}
+
+
+/* =========================================
+   INFORMATION
+========================================= */
+
+.compress-information {
+    margin-bottom: 18px;
+
+    padding: 12px 14px;
+
+    background: #f5f3ff;
+
+    border-radius: 10px;
+
+    color: var(--violet);
+
+    font-size: 13px;
+}
+
+
+/* =========================================
+   SUMMARY
+========================================= */
+
+.compress-summary {
+    display: grid;
+
+    grid-template-columns:
+        repeat(
+            3,
+            minmax(120px, 1fr)
+        );
+
+    gap: 12px;
+
+    margin-bottom: 18px;
+}
+
+
+.compress-summary.hidden {
+    display: none;
+}
+
+
+.compress-summary > div {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 4px;
+
+    padding: 13px;
+
+    background: #f9fafb;
+
+    border-radius: 10px;
+}
+
+
+.compress-summary span {
+    font-size: 12px;
+
+    color: #6b7280;
+}
+
+
+.compress-summary strong {
+    font-size: 15px;
+}
+
+
+/* =========================================
+   VALIDATION
+========================================= */
+
+.compress-validation {
+    padding: 12px 14px;
+
+    background: #f3f4f6;
+
+    border-radius: 10px;
+
+    color: #6b7280;
+
+    font-weight: 600;
+}
+
+
+.compress-validation.valid {
+    background: var(--green-hover);
+
+    color: var(--green-text);
+}
+
+
+.compress-validation.error {
+    background: #fee2e2;
+
+    color: #991b1b;
+}
+
+
+@media (max-width: 650px) {
+
+    .compression-presets,
+    .compress-summary {
+        grid-template-columns: 1fr;
+    }
+
+
+    .compress-setting-header {
+        flex-direction: column;
+
+        gap: 4px;
+    }
+
+}
+/* =========================================================
+   COMPRESSION RESULT SUMMARY
+========================================================= */
+.compress-information {
+    border: 1px solid #a7f3d0;
+    background: var(--green-hover);
+    color: var(--green-text);
+    font-weight: 650;
+}
+
+.compress-summary-card {
+    margin-bottom: 18px;
+    padding: 16px;
+    border: 1px solid #a7f3d0;
+    border-radius: 14px;
+    background: var(--green-hover);
+}
+.compress-summary-card.hidden { display: none; }
+.compress-summary-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 13px;
+}
+.compress-summary-title { color: var(--green-text); font-size: 16px; font-weight: 800; }
+.compress-summary-subtitle { margin-top: 2px; color: #4b5563; font-size: 12px; }
+.compress-summary-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 7px 10px;
+    border: 1px solid #86efac;
+    border-radius: 9px;
+    background: #fff;
+    color: var(--green-text);
+    font-weight: 750;
+    cursor: pointer;
+}
+.compress-summary-toggle svg { width: 17px; height: 17px; transition: transform .2s ease; }
+.compress-summary-toggle.expanded svg { transform: rotate(90deg); }
+.compress-summary-totals {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(120px, 1fr));
+    gap: 10px;
+}
+.compress-summary-totals > div {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 12px;
+    border: 1px solid rgba(4,120,87,.13);
+    border-radius: 10px;
+    background: rgba(255,255,255,.68);
+}
+.compress-summary-totals span { color: #6b7280; font-size: 12px; }
+.compress-summary-totals strong { color: var(--green-text); font-size: 15px; }
+.compress-summary-details {
+    display: grid;
+    gap: 8px;
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid #a7f3d0;
+}
+.compress-summary-details.hidden { display: none; }
+.compress-summary-detail-row {
+    display: grid;
+    grid-template-columns: minmax(160px, 1.5fr) repeat(3, minmax(115px, .8fr));
+    gap: 10px;
+    align-items: center;
+    padding: 10px 11px;
+    border-radius: 9px;
+    background: rgba(255,255,255,.72);
+}
+.compress-summary-detail-row > strong { overflow: hidden; color: #1f2937; text-overflow: ellipsis; white-space: nowrap; }
+.compress-summary-detail-row > span { display: flex; flex-direction: column; gap: 2px; color: #6b7280; font-size: 11px; }
+.compress-summary-detail-row b { color: var(--green-text); font-size: 12px; }
+
+@media (max-width: 800px) {
+    .compress-summary-detail-row { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 650px) {
+    .compress-summary-heading { align-items: stretch; flex-direction: column; }
+    .compress-summary-toggle { justify-content: center; }
+    .compress-summary-totals, .compress-summary-detail-row { grid-template-columns: 1fr; }
+}

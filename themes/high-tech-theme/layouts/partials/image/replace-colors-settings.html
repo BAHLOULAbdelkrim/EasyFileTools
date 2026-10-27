@@ -1,0 +1,138 @@
+<div class="replace-colors-settings image-transform-settings">
+
+    <div class="image-transform-section eft-config-scope-card">
+        <div class="image-transform-title">Configuration scope</div>
+        <div class="image-transform-help">Use one set of color rules for every image, or configure rules independently for each image.</div>
+        <div class="eft-config-scope-actions" id="replaceColorsConfigScope">
+            <button type="button" class="eft-config-scope-btn active" data-replace-config-scope="all">Same configuration for all</button>
+            <button type="button" class="eft-config-scope-btn" data-replace-config-scope="per-file">Custom per image</button>
+        </div>
+        <div id="replaceColorsConfigScopeNote" class="eft-config-note">The same color rules will be applied to every loaded image.</div>
+    </div>
+
+    <details class="eft-preview-card replace-preview-section" open>
+        <summary>Interactive preview</summary>
+        <div class="eft-preview-body">
+            <div class="eft-preview-help">
+                Click the preview to pick a source color. The preview is lightweight; the final rules are applied to the full-resolution images.
+            </div>
+
+            <div class="eft-preview-toolbar replace-preview-toolbar">
+                <label>
+                    Preview image
+                    <select id="replaceColorsPreviewFile" disabled>
+                        <option value="">Load an image first</option>
+                    </select>
+                </label>
+                <span id="replaceColorsPreviewHint" class="eft-preview-hint replace-preview-hint">Click a pixel to select its color.</span>
+            </div>
+
+            <div class="eft-preview-stage replace-preview-stage" id="replaceColorsPreviewStage">
+                <canvas id="replaceColorsPreviewCanvas" width="720" height="420" aria-label="Replace Colors preview"></canvas>
+                <div id="replaceColorsPreviewEmpty" class="eft-preview-empty replace-preview-empty">Load an image to start picking colors.</div>
+            </div>
+        </div>
+    </details>
+
+    <div class="image-transform-section">
+        <div class="image-transform-title">Color rule</div>
+        <div class="image-transform-help">
+            Pick a source color, then choose whether to make it transparent or replace it with another color.
+        </div>
+
+        <div class="replace-rule-grid">
+            <div>
+                <div class="replace-control-label">Selected color</div>
+                <div class="eft-color-picker" data-eft-color-picker data-default-color="#00ff00">
+                    <label class="eft-color-swatch" title="Choose source color manually">
+                        <input id="replaceColorsSourceColor" type="color" value="#00ff00">
+                    </label>
+                    <span class="eft-color-code">#00FF00</span>
+                    <button type="button" class="eft-color-reset" data-eft-color-reset>Reset</button>
+                </div>
+            </div>
+
+            <div>
+                <div class="replace-control-label">Action</div>
+                <div class="image-transform-choice-group wrap" id="replaceColorsActionGroup">
+                    <button type="button" class="image-transform-choice active" data-replace-action="transparent">Transparent</button>
+                    <button type="button" class="image-transform-choice" data-replace-action="color">Custom color</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="replaceColorsTargetWrap" class="replace-target-wrap hidden">
+            <div class="replace-control-label">Replacement color</div>
+            <div class="eft-color-picker" data-eft-color-picker data-default-color="#ffffff">
+                <label class="eft-color-swatch" title="Choose replacement color">
+                    <input id="replaceColorsTargetColor" type="color" value="#ffffff">
+                </label>
+                <span class="eft-color-code">#FFFFFF</span>
+                <button type="button" class="eft-color-reset" data-eft-color-reset>Reset</button>
+            </div>
+        </div>
+
+        <div class="replace-slider-block">
+            <div class="replace-slider-header">
+                <div>
+                    <div class="replace-control-label">Tolerance</div>
+                    <div class="image-transform-help compact-help">Include colors close to the selected color.</div>
+                </div>
+                <strong id="replaceColorsToleranceValue">8%</strong>
+            </div>
+            <input id="replaceColorsTolerance" class="eft-range" type="range" min="0" max="35" step="1" value="8">
+        </div>
+
+        <div class="replace-slider-block">
+            <div class="replace-slider-header">
+                <div>
+                    <div class="replace-control-label">Edge softness</div>
+                    <div class="image-transform-help compact-help">Blend the edge of the selected color range.</div>
+                </div>
+                <strong id="replaceColorsSoftnessValue">2%</strong>
+            </div>
+            <input id="replaceColorsSoftness" class="eft-range" type="range" min="0" max="20" step="1" value="2">
+        </div>
+
+        <button type="button" id="replaceColorsAddRule" class="replace-primary-rule-btn" disabled>
+            Add color rule
+        </button>
+    </div>
+
+    <div id="replaceColorsRulesSection" class="image-transform-section hidden">
+        <div class="replace-rules-heading">
+            <div>
+                <div class="image-transform-title">Color rules</div>
+                <div id="replaceColorsRulesHelp" class="image-transform-help">Rules are evaluated against the original pixels; the strongest matching rule wins.</div>
+            </div>
+            <button type="button" id="replaceColorsClearRules" class="replace-secondary-btn">Clear rules</button>
+        </div>
+        <div id="replaceColorsRulesList" class="replace-rules-list"></div>
+    </div>
+
+    <div class="image-transform-section">
+        <div class="image-transform-title">Output format</div>
+        <div class="image-transform-help">PNG is recommended when any rule creates transparency.</div>
+
+        <div class="image-transform-choice-group wrap" id="replaceColorsFormatGroup">
+            <button type="button" class="image-transform-choice active" data-replace-format="png">PNG</button>
+            <button type="button" class="image-transform-choice" data-replace-format="webp">WebP</button>
+            <button type="button" class="image-transform-choice" data-replace-format="jpg">JPG</button>
+        </div>
+
+        <div id="replaceColorsQualityWrap" class="replace-slider-block eft-setting-disabled">
+            <div class="replace-slider-header">
+                <div>
+                    <div class="replace-control-label">Output quality</div>
+                    <div class="image-transform-help compact-help">Applies to WebP and JPG.</div>
+                </div>
+                <strong id="replaceColorsQualityValue">92%</strong>
+            </div>
+            <input id="replaceColorsQuality" class="eft-range" type="range" min="50" max="100" step="1" value="92" disabled>
+        </div>
+    </div>
+
+    <div id="replaceColorsValidation" data-eft-readiness-status class="image-transform-validation eft-readiness-note" role="status" aria-live="polite">
+        Load one or more images and add at least one color rule.
+    </div>
+</div>

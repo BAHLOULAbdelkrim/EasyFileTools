@@ -1,0 +1,216 @@
+heading: "Video Formats"
+
+intro: "Compare common video containers, understand the codecs they usually carry, and choose the best format for compatibility, compression, web delivery, editing or archiving."
+
+navigation_category: "video"
+
+note:
+  title: "Container vs codec:"
+  text: "MP4, WebM, MKV, MOV and AVI are containers. The container defines how video, audio, subtitles and metadata are packaged, while the codec controls how the video or audio is compressed. Two MP4 files can therefore have very different quality, size and compatibility depending on whether they use H.264, H.265, AV1 or another codec."
+
+secondary_note:
+  title: "Compatibility tip:"
+  text: "For maximum compatibility, MP4 with H.264 video and AAC audio remains one of the safest choices. WebM with VP9 or AV1 is excellent for modern web delivery, while MKV is better suited to flexible archives with multiple tracks and subtitles."
+
+quick_choices:
+  - label: "Best overall compatibility"
+    formats: "MP4 + H.264"
+
+  - label: "Best modern web efficiency"
+    formats: "WebM + VP9 / AV1"
+
+  - label: "Multiple audio & subtitle tracks"
+    formats: "MKV"
+
+  - label: "Apple / professional editing"
+    formats: "MOV"
+
+  - label: "Legacy Windows video"
+    formats: "AVI / WMV"
+
+  - label: "Legacy mobile / low bandwidth"
+    formats: "3GP"
+
+  - label: "Broadcast / camera streams"
+    formats: "TS / M2TS"
+
+formats:
+
+  - name: "MP4"
+    extensions: ".mp4"
+    status: "Recommended"
+    description: "Widely supported video container used across browsers, phones, streaming platforms and media players."
+    facts:
+      - label: "Type"
+        value: "Container"
+      - label: "Common video"
+        value: "H.264 / H.265 / AV1"
+      - label: "Common audio"
+        value: "AAC / MP3"
+      - label: "Compatibility"
+        value: "Excellent"
+    best_for: "Web, mobile, sharing, social media and general-purpose video"
+    action_label: "Convert MP4"
+    action_url: "/video/convert-video/"
+
+
+  - name: "WebM"
+    extensions: ".webm"
+    status: "Web"
+    description: "Open video container optimized for modern web delivery and efficient browser playback."
+    facts:
+      - label: "Type"
+        value: "Container"
+      - label: "Common video"
+        value: "VP8 / VP9 / AV1"
+      - label: "Common audio"
+        value: "Opus / Vorbis"
+      - label: "Web use"
+        value: "Excellent"
+    best_for: "Modern websites, streaming and efficient web video"
+    action_label: "Convert WebM"
+    action_url: "/video/convert-video/"
+
+
+  - name: "MKV"
+    extensions: ".mkv"
+    status: "Flexible"
+    description: "Highly flexible container designed to hold many video, audio, subtitle and metadata tracks in a single file."
+    facts:
+      - label: "Type"
+        value: "Container"
+      - label: "Video codecs"
+        value: "H.264 / H.265 / VP9 / AV1 and more"
+      - label: "Subtitles"
+        value: "Excellent"
+      - label: "Browser use"
+        value: "Limited"
+    best_for: "Movies, archives, multilingual tracks and subtitle-heavy content"
+    action_label: "Convert MKV"
+    action_url: "/video/convert-video/"
+
+
+  - name: "MOV"
+    extensions: ".mov"
+    status: "Editing"
+    description: "QuickTime container widely used in Apple environments, cameras and professional editing software."
+    facts:
+      - label: "Type"
+        value: "Container"
+      - label: "Editing"
+        value: "Excellent"
+      - label: "Codec variety"
+        value: "High"
+      - label: "File size"
+        value: "Can be large"
+    best_for: "Apple devices, cameras and professional editing workflows"
+    action_label: "Convert MOV"
+    action_url: "/video/convert-video/"
+
+
+  - name: "AVI"
+    extensions: ".avi"
+    status: "Legacy"
+    description: "Older Microsoft multimedia container still found in legacy video libraries and older applications."
+    facts:
+      - label: "Type"
+        value: "Container"
+      - label: "Codec variety"
+        value: "High"
+      - label: "Compression efficiency"
+        value: "Often lower"
+      - label: "Modern web"
+        value: "Poor"
+    best_for: "Legacy software, old cameras and historical video collections"
+    action_label: "Convert AVI"
+    action_url: "/video/convert-video/"
+
+
+  - name: "MPEG / MPG"
+    extensions: ".mpeg • .mpg"
+    status: "Legacy"
+    description: "Classic MPEG video formats commonly associated with MPEG-1 and MPEG-2 video."
+    facts:
+      - label: "Type"
+        value: "Container"
+      - label: "Common video"
+        value: "MPEG-1 / MPEG-2"
+      - label: "Efficiency"
+        value: "Legacy"
+      - label: "Typical use"
+        value: "Older video / discs"
+    best_for: "Legacy video, VCD/DVD workflows and older equipment"
+    action_label: "Convert MPEG"
+    action_url: "/video/convert-video/"
+
+
+  - name: "M4V"
+    extensions: ".m4v"
+    status: "Apple"
+    description: "MPEG-4 based video container closely related to MP4 and historically associated with Apple media applications."
+    facts:
+      - label: "Type"
+        value: "Container"
+      - label: "Common video"
+        value: "H.264"
+      - label: "Common audio"
+        value: "AAC"
+      - label: "Compatibility"
+        value: "Good"
+    best_for: "Apple-oriented video libraries and MPEG-4 workflows"
+    action_label: "Convert M4V"
+    action_url: "/video/convert-video/"
+
+
+  - name: "WMV"
+    extensions: ".wmv"
+    status: "Legacy"
+    description: "Microsoft video format family historically used for Windows playback and streaming."
+    facts:
+      - label: "Type"
+        value: "Container / codec family"
+      - label: "Ecosystem"
+        value: "Windows"
+      - label: "Modern web"
+        value: "Poor"
+      - label: "Compatibility"
+        value: "Legacy-focused"
+    best_for: "Older Windows applications and archived media"
+    action_label: "Convert WMV"
+    action_url: "/video/convert-video/"
+
+
+  - name: "3GP"
+    extensions: ".3gp • .3g2"
+    status: "Mobile"
+    description: "Compact multimedia container originally designed for mobile phones and low-bandwidth networks."
+    facts:
+      - label: "Type"
+        value: "Container"
+      - label: "File size"
+        value: "Small"
+      - label: "Quality"
+        value: "Basic"
+      - label: "Modern use"
+        value: "Limited"
+    best_for: "Legacy mobile phones and low-bandwidth media"
+    action_label: "Convert 3GP"
+    action_url: "/video/convert-video/"
+
+
+  - name: "TS / M2TS"
+    extensions: ".ts • .mts • .m2ts"
+    status: "Broadcast"
+    description: "Transport stream containers designed for broadcasting, cameras, streaming systems and Blu-ray workflows."
+    facts:
+      - label: "Type"
+        value: "Transport container"
+      - label: "Common video"
+        value: "H.264 / H.265"
+      - label: "Streaming"
+        value: "Very good"
+      - label: "Editing"
+        value: "Specialized"
+    best_for: "Broadcast, cameras, Blu-ray and transport streams"
+    action_label: "Convert Video"
+    action_url: "/video/convert-video/"

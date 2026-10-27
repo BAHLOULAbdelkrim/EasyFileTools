@@ -1,0 +1,250 @@
+<header class="site-header">
+
+<div class="header-container">
+
+  <div class="header-left">
+
+    <a
+        href="{{ "/" | relURL }}"
+        class="home-link"
+        data-easyfile-navigation
+        data-target-category=""
+    >
+
+      <img
+          src="{{ .Site.Params.logo | relURL }}"
+          alt="EasyFile Tools — Home"
+          width="493"
+          height="151"
+          class="logo"
+      >
+
+      <div class="site-name">
+      </div>
+
+    </a>
+
+  </div>
+
+
+    {{ $menuItems := dict
+
+      "audio"
+        (dict
+          "label" "Audio"
+          "icon" "headphones"
+        )
+
+      "video"
+        (dict
+          "label" "Video"
+          "icon" "video"
+        )
+
+      "images"
+        (dict
+          "label" "Images"
+          "icon" "image"
+        )
+
+      "documents"
+        (dict
+          "label" "Documents"
+          "icon" "file-text"
+        )
+
+      "presentations"
+        (dict
+          "label" "Presentations"
+          "icon" "presentation"
+        )
+
+      "spreadsheets"
+        (dict
+          "label" "Spreadsheets"
+          "icon" "sheet"
+        )
+
+      "vector-graphics"
+        (dict
+          "label" "Vector Graphics"
+          "icon" "pen-tool"
+        )
+
+      "archives"
+        (dict
+          "label" "Archives"
+          "icon" "archive"
+        )
+
+      "code"
+        (dict
+          "label" "Code"
+          "icon" "code-xml"
+        )
+
+      "cad-3d"
+        (dict
+          "label" "3D / CAD"
+          "icon" "boxes"
+        )
+
+    }}
+
+  <nav
+      class="top-menus"
+      aria-label="Top navigation"
+  >
+
+
+
+
+    <ul class="menu-grid">
+
+      {{ range $i, $m := slice
+          "audio"
+          "video"
+          "images"
+          "documents"
+          "presentations"
+          "spreadsheets"
+          "vector-graphics"
+          "archives"
+          "code"
+          "cad-3d"
+      }}
+
+        {{ $page :=
+            site.GetPage
+              (printf "/%s/_index.md" $m)
+        }}
+
+
+        {{/*
+            A main category becomes available
+            automatically if at least one
+            subsection is available.
+        */}}
+
+        {{ $available :=
+            false
+        }}
+
+
+        {{ if $page }}
+
+          {{ range $page.Sections }}
+
+            {{ if .Params.available }}
+
+              {{ $available =
+                  true
+              }}
+
+            {{ end }}
+
+          {{ end }}
+
+        {{ end }}
+
+
+        {{ $item :=
+            index
+              $menuItems
+              $m
+        }}
+
+
+        <li
+            class="
+              menu-item
+              {{ if not $available }}
+                is-disabled
+              {{ end }}
+            "
+        >
+
+          {{ if $available }}
+
+            <a
+                href="{{ if $page }}{{ $page.RelPermalink }}{{ else }}{{ printf "/%s/" $m | relURL }}{{ end }}"
+                data-menu="{{ $m }}"
+                data-easyfile-navigation
+                data-target-category="{{ $m }}"
+            >
+
+              <i
+                  data-lucide="{{ $item.icon }}"
+                  class="menu-icon"
+              ></i>
+
+              <span>
+                {{ $item.label }}
+              </span>
+
+            </a>
+
+
+          {{ else }}
+
+
+            <a
+                class="operation-disabled"
+                data-menu="{{ $m }}"
+                aria-disabled="true"
+                tabindex="-1"
+            >
+
+              <i
+                  data-lucide="{{ $item.icon }}"
+                  class="menu-icon"
+              ></i>
+
+              <span>
+                {{ $item.label }}
+              </span>
+
+            </a>
+
+
+          {{ end }}
+
+        </li>
+
+      {{ end }}
+
+    </ul>
+
+  </nav>
+
+  {{/* Native details/summary: keyboard and touch navigation without JS. */}}
+  <details class="eft-mobile-navigation">
+    <summary>Categories <span aria-hidden="true">▾</span></summary>
+    <nav aria-label="Mobile categories">
+      <ul>
+        {{ range $m := slice "audio" "video" "images" "documents" "presentations" "spreadsheets" "vector-graphics" "archives" "code" "cad-3d" }}
+          {{ $page := site.GetPage (printf "/%s/_index.md" $m) }}
+          {{ $available := false }}
+          {{ if $page }}
+            {{ range $page.Sections }}
+              {{ if .Params.available }}{{ $available = true }}{{ end }}
+            {{ end }}
+          {{ end }}
+          {{ $item := index $menuItems $m }}
+          <li>
+            {{ if $available }}
+              <a href="{{ $page.RelPermalink }}"
+                 data-easyfile-navigation data-target-category="{{ $m }}"
+                 data-menu="{{ $m }}">{{ $item.label }}</a>
+            {{ else }}
+              <span class="eft-mobile-unavailable" aria-disabled="true">{{ $item.label }} — Coming soon</span>
+            {{ end }}
+          </li>
+        {{ end }}
+      </ul>
+    </nav>
+  </details>
+
+</div>
+
+</header>

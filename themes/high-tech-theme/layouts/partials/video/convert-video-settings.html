@@ -1,0 +1,151 @@
+<section
+    id="convertVideoSettings"
+    class="video-operation-settings"
+    aria-labelledby="chooseFormatLabel"
+>
+
+    <div class="video-setting-section">
+
+        <div class="video-setting-title">
+            Output format
+        </div>
+
+        <div class="video-format-grid">
+
+            <button
+                type="button"
+                class="video-choice-btn"
+                data-video-format="mp4"
+            >
+                MP4
+            </button>
+
+            <button
+                type="button"
+                class="video-choice-btn"
+                data-video-format="webm"
+            >
+                WebM
+            </button>
+
+            <button
+                type="button"
+                class="video-choice-btn"
+                data-video-format="mkv"
+            >
+                MKV
+            </button>
+
+            <button
+                type="button"
+                class="video-choice-btn"
+                data-video-format="mov"
+            >
+                MOV
+            </button>
+
+            <button
+                type="button"
+                class="video-choice-btn"
+                data-video-format="avi"
+            >
+                AVI
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <div class="video-setting-grid">
+
+        <div class="video-setting-section">
+
+            <div class="video-setting-title">
+                Resolution
+            </div>
+
+            <select id="convertVideoResolution">
+
+                <option value="original">
+                    Original
+                </option>
+
+                <option value="1080">
+                    Maximum 1080p
+                </option>
+
+                <option value="720">
+                    Maximum 720p
+                </option>
+
+                <option value="480">
+                    Maximum 480p
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <div class="video-setting-section">
+
+            <div class="video-setting-title">
+                Quality
+            </div>
+
+            <select id="convertVideoQuality">
+
+                <option value="medium" selected>
+                    Medium — Balanced quality
+                </option>
+                <option value="low">
+                    Low — Smaller file (visible quality loss possible)
+                </option>
+                <option value="high">
+                    High — Best visual detail (larger file)
+                </option>
+
+            </select>
+
+        </div>
+
+    </div>
+
+
+    <div class="video-setting-section">
+        <label class="video-check-row">
+            <input id="convertVideoFastCopy" type="checkbox" checked>
+            <span>Copy compatible streams when possible (no quality loss)</span>
+        </label>
+        <p class="video-setting-note">Stream copy preserves original quality and is usually faster. Changing resolution or video codec requires re-encoding; the chosen quality then applies.</p>
+    </div>
+
+    <div class="video-setting-section">
+
+        <label class="video-check-row">
+
+            <input
+                id="convertVideoKeepAudio"
+                type="checkbox"
+                checked
+            >
+
+            <span>
+                Keep audio track
+            </span>
+
+        </label>
+
+    </div>
+
+
+    <div
+        id="convertVideoValidation"
+        data-eft-readiness-status
+        class="video-validation"
+    >
+        Load one or more videos and choose an output format.
+    </div>
+
+</section>

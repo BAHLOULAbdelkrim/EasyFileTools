@@ -11,29 +11,724 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     if (!operationZone) return;
 
+    const operationSuccessTitle =
+        operationZone.dataset.successTitle ||
+        "Operation completed";
+
+    const operationSuccessMessage =
+        operationZone.dataset.successMessage ||
+        "All files were processed successfully.";
+
+    const operationSlug =
+        (
+            operationZone.dataset.operation ||
+            "processed-files"
+        )
+            .trim()
+            .toLowerCase()
+            .replace(
+                /[^a-z0-9]+/g,
+                "-"
+            )
+            .replace(
+                /^-+|-+$/g,
+                ""
+            );
+
     /* =========================
        FICHIERS DE L'OPÉRATION
     ========================= */
 
     let operationFiles = [];
 
-    let selectedConversionFormat =
-        null;
-
-    let operationIsConverting =
-        false;
-
-    let operationIsPaused =
-        false;
-
     let operationIsDownloading =
         false;
 
-    let downloadAllCompleted =
-        false;
+    /* =========================
+    GENERIC RESULT LIFECYCLE
+    ========================= */
 
-    let operationFileProgress =
-        [];
+
+    /*
+    * Stable file identifier.
+    *
+    * Important:
+    * Cut Audio already uses the same
+    * name + size + lastModified logic.
+    */
+
+    function getOperationFileKey(
+        file
+    ) {
+
+        if (!file) {
+            return "";
+        }
+
+
+        return [
+
+            file.name || "",
+
+            file.size || 0,
+
+            file.lastModified || 0
+
+        ].join("::");
+
+    }
+
+    /*
+    * Find the file concerned by a
+    * settings-change event.
+    */
+
+    function findOperationFileIndex(
+        detail
+    ) {
+
+        if (
+            Number.isInteger(
+                detail.index
+            ) &&
+            detail.index >= 0 &&
+            detail.index <
+                operationFiles.length
+        ) {
+
+            return detail.index;
+        }
+
+
+        const key =
+            detail.key ||
+            (
+                detail.file
+                    ? getOperationFileKey(
+                        detail.file
+                    )
+                    : ""
+            );
+
+
+        if (!key) {
+            return -1;
+        }
+
+
+        return operationFiles.findIndex(
+            fileData =>
+                fileData.fileKey ===
+                key
+        );
+    }
+
+    function itemHasOperationResult(
+        item
+    ) {
+
+        if (!item) {
+
+            return false;
+
+        }
+
+
+        if (item.result) {
+
+            return true;
+
+        }
+
+
+        return (
+            Array.isArray(
+                item.outputs
+            ) &&
+            item.outputs.length > 0
+        );
+
+    }
+
+
+    function getOperationResultPreview(
+        item
+    ) {
+
+        if (!item) {
+
+            return null;
+
+        }
+
+
+        if (item.result) {
+
+            return item.result;
+
+        }
+
+
+        if (
+            Array.isArray(
+                item.outputs
+            ) &&
+            item.outputs.length > 0
+        ) {
+
+            return item.outputs[0];
+
+        }
+
+
+        return null;
+
+    }    
+
+    /*
+    * Notify the generic file-list UI
+    * that a result became stale/current.
+    */
+
+    function notifyResultStaleState(
+        index,
+        stale,
+        externalKey = null
+    ) {
+
+        const fileData =
+            operationFiles[index];
+
+
+        if (!fileData) {
+            return;
+        }
+
+
+        const resultItem =
+            window
+                .EasyFileOperationResults
+                ?.getItem?.(
+                    index
+                );
+
+
+        const result =
+            getOperationResultPreview(
+                resultItem
+            );
+
+
+        const outputs =
+            Array.isArray(
+                resultItem?.outputs
+            )
+                ? resultItem.outputs
+                : [];
+
+
+        document.dispatchEvent(
+            new CustomEvent(
+                "easyfiletools:file-operation-stale-changed",
+                {
+                    detail: {
+
+                        index,
+
+                        key:
+                            externalKey ||
+                            fileData.fileKey,
+
+                        stale:
+                            Boolean(stale),
+
+                        outputs,
+
+                        outputCount:
+                            outputs.length,
+
+                        outputUrl:
+                            result?.outputUrl ||
+                            null,
+
+                        outputName:
+                            result?.outputName ||
+                            null,
+
+                        outputSize:
+                            result?.outputSize ||
+                            0,
+
+                        outputFormat:
+                            result?.outputFormat ||
+                            null,
+
+                        completedLabel:
+                            result?.completedLabel ||
+                            "Processed",
+
+                        category:
+                            operationZone.dataset.category ||
+                            "",
+
+                        operation:
+                            operationZone.dataset.operation ||
+                            ""
+
+                    }
+                }
+            )
+        );
+    }
+
+    /* =========================
+    BATCH RESULT NOTIFICATION
+    ========================= */
+
+    function notifyBatchResultStaleState(
+        stale
+    ) {
+
+        const batch =
+            window
+                .EasyFileOperationResults
+                ?.getBatch?.();
+
+
+        const result =
+            batch?.result ||
+            {};
+
+
+        document.dispatchEvent(
+            new CustomEvent(
+                "easyfiletools:batch-result-stale-changed",
+                {
+                    detail: {
+
+                        stale:
+                            Boolean(
+                                stale
+                            ),
+
+                        outputUrl:
+                            result.outputUrl ||
+                            null,
+
+                        outputName:
+                            result.outputName ||
+                            null,
+
+                        outputSize:
+                            result.outputSize ||
+                            0,
+
+                        outputFormat:
+                            result.outputFormat ||
+                            null,
+
+                        completedLabel:
+                            result.completedLabel ||
+                            "Processed",
+
+                        category:
+                            operationZone.dataset
+                                .category ||
+                            "",
+
+                        operation:
+                            operationZone.dataset
+                                .operation ||
+                            ""
+
+                    }
+                }
+            )
+        );
+    }
+
+    /*
+    * Before replacing a stale result,
+    * protect results that were never downloaded.
+    */
+
+    async function confirmBeforeProcessing() {
+
+        const results =
+            window.EasyFileOperationResults;
+
+        const messages =
+            window.EasyFileOperationMessages;
+
+
+        if (
+            !results ||
+            !messages
+        ) {
+
+            return true;
+        }
+
+
+        const staleCount =
+            results
+                .getStaleUndownloadedCount();
+
+
+        if (
+            staleCount === 0
+        ) {
+
+            return true;
+        }
+
+
+        return await messages
+            .confirmReplaceResult(
+                staleCount
+            );
+    }
+
+    /*
+    * Public generic API.
+    *
+    * Every operation can call this
+    * immediately before starting.
+    */
+
+    /* =========================
+    PUBLIC SETTINGS API
+    ========================= */
+
+    function operationSettingsChanged(
+        {
+            operation = null,
+            scope = "file",
+            index = null,
+            key = null,
+            file = null,
+            inputs = null,
+            settings = {}
+        } = {}
+    ) {
+
+        const currentOperation =
+            operation ||
+            operationZone.dataset.operation ||
+            "";
+
+
+        if (!currentOperation) {
+
+            console.warn(
+                "[OPERATION LIFECYCLE] Missing operation name."
+            );
+
+            return;
+        }
+
+
+        /*
+        * This is the ONLY public gateway
+        * used by operation-specific scripts
+        * to report parameter changes.
+        */
+
+        document.dispatchEvent(
+            new CustomEvent(
+                "easyfiletools:operation-settings-changed",
+                {
+                    detail: {
+
+                        operation:
+                            currentOperation,
+
+                        scope,
+
+                        index,
+
+                        key,
+
+                        file,
+
+                        inputs,
+
+                        settings:
+                            settings || {}
+
+                    }
+                }
+            )
+        );
+
+    }
+
+    /* =========================
+    COMPLETE BATCH RESULT
+    ========================= */
+
+    function completeBatchResult(
+        {
+            outputUrl = null,
+            outputBlob = null,
+            outputName = null,
+            outputSize = 0,
+            outputFormat = null,
+            completedLabel = "Processed"
+        } = {}
+    ) {
+
+        const results =
+            window.EasyFileOperationResults;
+
+
+        if (!results) {
+            return;
+        }
+
+        const previousBatch =
+            results.getBatch();
+
+
+        const wasStale =
+            previousBatch?.stale ===
+            true;
+
+        results.completeBatch(
+            {
+                outputUrl,
+                outputBlob,
+                outputName,
+                outputSize,
+                outputFormat,
+                completedLabel
+            }
+        );
+
+
+        if (wasStale) {
+
+            notifyBatchResultStaleState(
+                false
+            );
+        }
+
+
+        document.dispatchEvent(
+            new CustomEvent(
+                "easyfiletools:batch-result-completed",
+                {
+                    detail: {
+
+                        outputUrl,
+
+                        outputBlob,
+
+                        outputName,
+
+                        outputSize,
+
+                        outputFormat,
+
+                        completedLabel,
+
+                        operation:
+                            operationZone.dataset
+                                .operation ||
+                            "",
+
+                        category:
+                            operationZone.dataset
+                                .category ||
+                            ""
+
+                    }
+                }
+            )
+        );
+    }
+
+    /* =========================
+    BATCH DOWNLOADED
+    ========================= */
+
+    function markBatchResultDownloaded() {
+
+        const results =
+            window.EasyFileOperationResults;
+
+
+        if (!results) {
+            return;
+        }
+
+
+        const batch =
+            results.getBatch();
+
+
+        if (!batch?.result) {
+            return;
+        }
+
+
+        results.markDownloaded();
+
+
+        console.log(
+            "[OPERATION LIFECYCLE] Batch result downloaded"
+        );
+    }
+
+    function getBatchResult() {
+
+        const batch =
+            window
+                .EasyFileOperationResults
+                ?.getBatch?.();
+
+
+        if (
+            !batch ||
+            !batch.result
+        ) {
+
+            return null;
+        }
+
+
+        return {
+
+            ...batch.result
+
+        };
+    }
+
+    function clearBatchResult() {
+
+        window
+            .EasyFileOperationResults
+            ?.clearBatch?.();
+
+
+        document.dispatchEvent(
+            new CustomEvent(
+                "easyfiletools:batch-result-cleared"
+            )
+        );
+    }
+
+    window.EasyFileOperationLifecycle = {
+
+        settingsChanged:
+            operationSettingsChanged,
+
+        confirmBeforeProcessing,
+
+        completeBatchResult,
+
+        markBatchResultDownloaded,
+
+        getBatchResult,
+
+        clearBatchResult
+
+    };
+
+    /* =========================
+    NOTIFY OPERATION FILES
+    ========================= */
+
+    /*
+     * Generic settings lifecycle: every operation returns to its initial
+     * choices when its last input disappears (Clear All or single removal).
+     * Reset DOM controls before operation-specific handlers are notified,
+     * then let the settings UIs clear their private JS state via this event.
+     */
+    function resetEmptyOperationSettings() {
+        const fieldset = document.getElementById("operationParametersFieldset");
+        if (!fieldset) return;
+        fieldset.querySelectorAll("input, select, textarea").forEach(control => {
+            if (control.type === "file" || control.type === "hidden") return;
+            if (control.type === "checkbox" || control.type === "radio") {
+                control.checked = control.defaultChecked;
+            } else if (control.tagName === "SELECT") {
+                const initial = Array.from(control.options).findIndex(option => option.defaultSelected);
+                control.selectedIndex = initial >= 0 ? initial : 0;
+            } else {
+                control.value = control.defaultValue;
+            }
+        });
+        fieldset.querySelectorAll("button.active, button[aria-pressed='true']").forEach(button => {
+            button.classList.remove("active");
+            if (button.hasAttribute("aria-pressed")) button.setAttribute("aria-pressed", "false");
+        });
+        document.dispatchEvent(new CustomEvent("easyfiletools:operation-settings-reset", {
+            detail: { operation: operationZone.dataset.operation || "" }
+        }));
+        window.EasyFileUIControls?.init?.(fieldset);
+    }
+
+    function notifyOperationFilesUpdated() {
+
+        if (operationFiles.length === 0) resetEmptyOperationSettings();
+
+        const results =
+            window.EasyFileOperationResults;
+
+        const config =
+            window.EasyFileOperationConfig
+                ?.get?.(
+                    operationZone.dataset.operation ||
+                    ""
+                );
+
+
+        if (results) {
+
+            results.setMode(
+                config?.resultMode ||
+                "per-file"
+            );
+
+            results.setInputs(
+                operationFiles
+            );
+        }        
+
+        document.dispatchEvent(
+            new CustomEvent(
+                "easyfiletools:operation-files-updated",
+                {
+                    detail: {
+                        files:
+                            operationFiles,
+
+                        category:
+                            operationZone.dataset.category || "",
+
+                        operation:
+                            operationZone.dataset.operation || ""
+                    }
+                }
+            )
+        );
+
+        // Operation-specific renderers may paint their default preset on the
+        // same update. When there are no inputs, no choice stays highlighted.
+        if (operationFiles.length === 0) {
+            queueMicrotask(() => {
+                document.querySelectorAll(
+                    "#operationParametersFieldset button.active, #operationParametersFieldset button[aria-pressed='true']"
+                ).forEach(button => {
+                    button.classList.remove("active");
+                    if (button.hasAttribute("aria-pressed")) {
+                        button.setAttribute("aria-pressed", "false");
+                    }
+                });
+            });
+        }
+    }
 
     /* =========================
        LUCIDE ICONS
@@ -79,9 +774,9 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 
 
-const operationClearAllBtn =
-    document.getElementById(
-        "operationClearAllBtn"
+const operationTop =
+    operationZone.querySelector(
+        ".operation-top"
     );
 
 const downloadAllBtn =
@@ -93,62 +788,6 @@ const downloadAllFormats =
     document.getElementById(
         "downloadAllFormats"
     );
-
-const convertBtn =
-    document.getElementById(
-        "convertBtn"
-    );
-
-const chooseFormatLabel =
-    document.getElementById(
-        "chooseFormatLabel"
-    );
-
-const cancelOperationBtn =
-    document.getElementById(
-        "cancelOperationBtn"
-    );
-
-const pauseOperationBtn =
-    document.getElementById(
-        "pauseOperationBtn"
-    );
-
-const conversionFormats =
-    document.getElementById(
-        "conversionFormats"
-    );
-
-
-/* =========================
-   CLEAR ALL
-========================= */
-
-function updateOperationClearAll() {
-
-    if (!operationClearAllBtn) {
-        return;
-    }
-
-    const hasFiles =
-        operationFiles.length > 0;
-
-    operationClearAllBtn.disabled =
-        !hasFiles;
-
-    if (hasFiles) {
-
-        operationClearAllBtn.classList.add(
-            "active"
-        );
-    }
-    else {
-
-        operationClearAllBtn.classList.remove(
-            "active"
-        );
-    }
-}
 
 /* =========================
    DOWNLOAD ALL FORMATS
@@ -197,71 +836,141 @@ function updateDownloadAll() {
         return;
     }
 
-    const allFilesConverted =
-        operationFiles.length > 0 &&
-        operationFiles.every(
-            fileData =>
-                fileData.convertedUrl
-        );
 
-    const canDownload =
-        allFilesConverted &&
-        !operationIsDownloading;
+    const config =
+        window
+            .EasyFileOperationConfig
+            ?.get?.(
+                operationZone
+                    .dataset
+                    .operation ||
+                ""
+            );
 
-    downloadAllBtn.disabled =
-        !canDownload;
 
-    if (canDownload) {
+    const resultMode =
+        config?.resultMode ||
+        "per-file";
 
-        downloadAllBtn.classList.add(
-            "active"
-        );
-    }
-    else {
+
+    /* =========================
+       BATCH
+    ========================= */
+
+    if (
+        resultMode ===
+        "batch"
+    ) {
+
+        if (operationTop) {
+            operationTop.hidden =
+                true;
+        }
+
+        downloadAllBtn.hidden =
+            true;
+
+        downloadAllBtn.disabled =
+            true;
 
         downloadAllBtn.classList.remove(
             "active"
         );
+
+
+        downloadAllFormats
+            ?.classList
+            .add(
+                "hidden"
+            );
+
+
+        return;
+
     }
+
+
+    /* =========================
+       PER_FILE / MULTI_OUTPUT
+    ========================= */
+
+    if (operationTop) {
+        operationTop.hidden =
+            false;
+    }
+
+    downloadAllBtn.hidden =
+        false;
+
+
+    const results =
+        window
+            .EasyFileOperationResults;
+
+
+    const canDownload =
+        operationFiles.length > 0 &&
+        results
+            ?.hasCurrentResult?.() ===
+            true &&
+        !operationIsDownloading;
+
+
+    downloadAllBtn.disabled =
+        !canDownload;
+
+
+    downloadAllBtn
+        .classList
+        .toggle(
+            "active",
+            canDownload
+        );
+
 }
 
+
 /* =========================
-   CREATE DOWNLOAD ALL ZIP
+   DOWNLOAD ALL ARCHIVE
 ========================= */
 
-async function downloadAllAsZip() {
+async function downloadAllArchive(
+    format
+) {
 
     if (operationIsDownloading) {
         return;
     }
 
+    const results =
+        window.EasyFileOperationResults;
+
+
+    const outputFiles =
+        results?.getCurrentOutputs?.() ||
+        [];
+
+
     if (
-        typeof JSZip === "undefined"
+        outputFiles.length === 0
     ) {
 
-        console.error(
-            "[OPERATION ZONE] JSZip unavailable"
+        console.warn(
+            "[OPERATION ZONE] No current output available"
         );
 
         return;
     }
 
-
-    const convertedFiles =
-        operationFiles.filter(
-            fileData =>
-                fileData.convertedUrl
-        );
+    const downloads =
+        window
+            .EasyFileOperationDownloads;
 
 
-    if (
-        convertedFiles.length === 0 ||
-        convertedFiles.length !==
-            operationFiles.length
-    ) {
+    if (!downloads) {
 
-        console.warn(
-            "[OPERATION ZONE] Not all files are converted"
+        console.error(
+            "[OPERATION ZONE] Generic download manager unavailable"
         );
 
         return;
@@ -270,165 +979,33 @@ async function downloadAllAsZip() {
 
     operationIsDownloading =
         true;
+    let archiveSucceeded = false;
 
     updateDownloadAll();
 
 
     try {
 
-        updateGlobalProgress(
-            0,
-            "Preparing ZIP..."
-        );
+        const success =
+            await downloads
+                .downloadArchive(
+                    outputFiles,
+                    format,
+                    `EasyFileTools-${operationSlug}`
+                );
 
 
-        const zip =
-            new JSZip();
-
-
-        for (
-            let index = 0;
-            index < convertedFiles.length;
-            index++
-        ) {
-
-            const fileData =
-                convertedFiles[index];
-
-
-            let convertedBlob =
-                fileData.convertedBlob;
-
-
-            /*
-             * Fallback :
-             * si le Blob n'est pas directement disponible,
-             * on le récupère depuis convertedUrl.
-             */
-
-            if (!convertedBlob) {
-
-                const response =
-                    await fetch(
-                        fileData.convertedUrl
-                    );
-
-                convertedBlob =
-                    await response.blob();
-            }
-
-
-            const fileName =
-                fileData.convertedName ||
-                `converted-file-${index + 1}`;
-
-
-            zip.file(
-                fileName,
-                convertedBlob
-            );
+        if (!success) {
+            return;
         }
 
-
-        const zipBlob =
-            await zip.generateAsync(
-                {
-                    type: "blob"
-                },
-                metadata => {
-
-                    updateGlobalProgress(
-                        metadata.percent,
-                        "Preparing ZIP..."
-                    );
-                }
-            );
-
-
-        updateGlobalProgress(
-            100,
-            "ZIP ready"
-        );
-
-
-        /* =========================
-           ZIP NAME
-        ========================= */
-
-        const category =
-            (
-                operationZone.dataset.category ||
-                "files"
-            )
-                .trim()
-                .toLowerCase()
-                .replace(
-                    /[^a-z0-9]+/g,
-                    "-"
-                )
-                .replace(
-                    /^-+|-+$/g,
-                    ""
-                );
-
-
-        const zipName =
-            `EasyFileTools-converted-${category || "files"}.zip`;
-
-
-        /* =========================
-           START DOWNLOAD
-        ========================= */
-
-        const downloadUrl =
-            URL.createObjectURL(
-                zipBlob
-            );
-
-
-        const link =
-            document.createElement(
-                "a"
-            );
-
-        link.href =
-            downloadUrl;
-
-        link.download =
-            zipName;
-
-        document.body.appendChild(
-            link
-        );
-
-        link.click();
-
-        link.remove();
-
-        downloadAllCompleted =
-            true;
-
-
-        setTimeout(
-            () => {
-
-                URL.revokeObjectURL(
-                    downloadUrl
-                );
-            },
-            1000
-        );
-
+        archiveSucceeded = true;
 
         console.log(
-            "[OPERATION ZONE] ZIP download started:",
-            zipName
+            "[OPERATION ZONE] Download All completed:",
+            format
         );
 
-
-        /* =========================
-           SUCCESS MESSAGE
-        ========================= */
 
         if (
             typeof showSuccessToast ===
@@ -437,7 +1014,7 @@ async function downloadAllAsZip() {
 
             showSuccessToast(
                 "Download started",
-                "Your ZIP file is ready and the download has started.",
+                `Your ${format.toUpperCase()} file is ready and the download has started.`,
                 2000
             );
         }
@@ -449,6 +1026,13 @@ async function downloadAllAsZip() {
             "[OPERATION ZONE] Download All failed:",
             error
         );
+
+        if (typeof showNotification === "function") {
+            const message = downloads.archiveErrorMessage?.(error) ||
+                "The archive could not be prepared. Try fewer files or download the results individually.";
+            showNotification(message, "warning", 9000);
+        }
+
     }
     finally {
 
@@ -457,734 +1041,15 @@ async function downloadAllAsZip() {
 
         updateDownloadAll();
 
-
-        /*
-         * La conversion reste terminée,
-         * donc on remet son état normal.
-         */
-
-        updateGlobalProgress(
-            100,
-            "Conversion progress"
-        );
-    }
-}
-
-/* =========================
-   TAR HELPERS
-========================= */
-
-function writeTarString(
-    buffer,
-    offset,
-    length,
-    value
-) {
-
-    const encoder =
-        new TextEncoder();
-
-    const bytes =
-        encoder.encode(
-            String(value)
-        );
-
-    const maxLength =
-        Math.min(
-            bytes.length,
-            length
-        );
-
-    buffer.set(
-        bytes.slice(
-            0,
-            maxLength
-        ),
-        offset
-    );
-}
-
-
-function writeTarOctal(
-    buffer,
-    offset,
-    length,
-    value
-) {
-
-    const octal =
-        Math.floor(value)
-            .toString(8)
-            .padStart(
-                length - 1,
-                "0"
-            );
-
-    writeTarString(
-        buffer,
-        offset,
-        length,
-        `${octal}\0`
-    );
-}
-
-
-function createTarHeader(
-    fileName,
-    fileSize
-) {
-
-    const header =
-        new Uint8Array(512);
-
-
-    /* FILE NAME */
-
-    writeTarString(
-        header,
-        0,
-        100,
-        fileName
-    );
-
-
-    /* FILE MODE */
-
-    writeTarString(
-        header,
-        100,
-        8,
-        "0000644\0"
-    );
-
-
-    /* USER ID */
-
-    writeTarString(
-        header,
-        108,
-        8,
-        "0000000\0"
-    );
-
-
-    /* GROUP ID */
-
-    writeTarString(
-        header,
-        116,
-        8,
-        "0000000\0"
-    );
-
-
-    /* FILE SIZE */
-
-    writeTarOctal(
-        header,
-        124,
-        12,
-        fileSize
-    );
-
-
-    /* MODIFICATION TIME */
-
-    writeTarOctal(
-        header,
-        136,
-        12,
-        Math.floor(
-            Date.now() / 1000
-        )
-    );
-
-
-    /* CHECKSUM PLACEHOLDER */
-
-    for (
-        let index = 148;
-        index < 156;
-        index++
-    ) {
-
-        header[index] =
-            32;
-    }
-
-
-    /* FILE TYPE */
-
-    writeTarString(
-        header,
-        156,
-        1,
-        "0"
-    );
-
-
-    /* USTAR SIGNATURE */
-
-    writeTarString(
-        header,
-        257,
-        6,
-        "ustar"
-    );
-
-    writeTarString(
-        header,
-        263,
-        2,
-        "00"
-    );
-
-
-    /* CHECKSUM */
-
-    let checksum =
-        0;
-
-    for (
-        const byte of header
-    ) {
-
-        checksum +=
-            byte;
-    }
-
-
-    const checksumString =
-        checksum
-            .toString(8)
-            .padStart(
-                6,
-                "0"
-            );
-
-
-    writeTarString(
-        header,
-        148,
-        8,
-        `${checksumString}\0 `
-    );
-
-
-    return header;
-}
-
-/* =========================
-   CREATE TAR
-========================= */
-
-async function createTarBlob(
-    convertedFiles,
-    progressCallback = null
-) {
-
-    const tarParts =
-        [];
-
-
-    for (
-        let index = 0;
-        index < convertedFiles.length;
-        index++
-    ) {
-
-        const fileData =
-            convertedFiles[index];
-
-
-        let convertedBlob =
-            fileData.convertedBlob;
-
-
-        if (!convertedBlob) {
-
-            const response =
-                await fetch(
-                    fileData.convertedUrl
-                );
-
-            convertedBlob =
-                await response.blob();
-        }
-
-
-        const fileName =
-            fileData.convertedName ||
-            `converted-file-${index + 1}`;
-
-
-        const fileBuffer =
-            new Uint8Array(
-                await convertedBlob.arrayBuffer()
-            );
-
-
-        const header =
-            createTarHeader(
-                fileName,
-                fileBuffer.length
-            );
-
-
-        tarParts.push(
-            header
-        );
-
-        tarParts.push(
-            fileBuffer
-        );
-
-
-        /* =========================
-           TAR PADDING
-        ========================= */
-
-        const paddingSize =
-            (
-                512 -
-                (
-                    fileBuffer.length %
-                    512
-                )
-            ) % 512;
-
-
-        if (paddingSize > 0) {
-
-            tarParts.push(
-                new Uint8Array(
-                    paddingSize
-                )
-            );
-        }
-
-
-        if (progressCallback) {
-
-            progressCallback(
-                (
-                    (index + 1) /
-                    convertedFiles.length
-                ) * 100
-            );
+        // Do not announce 100% after a rejected/oversized archive.
+        if (archiveSucceeded) {
+            updateGlobalProgress(100, defaultProgressLabel);
+        } else {
+            resetOperationProgress();
         }
     }
-
-
-    /*
-     * TAR se termine par
-     * deux blocs vides de 512 octets.
-     */
-
-    tarParts.push(
-        new Uint8Array(
-            1024
-        )
-    );
-
-
-    return new Blob(
-        tarParts,
-        {
-            type:
-                "application/x-tar"
-        }
-    );
 }
 
-/* =========================
-   DOWNLOAD BLOB
-========================= */
-
-function downloadBlob(
-    blob,
-    fileName
-) {
-
-    const downloadUrl =
-        URL.createObjectURL(
-            blob
-        );
-
-
-    const link =
-        document.createElement(
-            "a"
-        );
-
-    link.href =
-        downloadUrl;
-
-    link.download =
-        fileName;
-
-
-    document.body.appendChild(
-        link
-    );
-
-    link.click();
-
-    link.remove();
-
-
-    setTimeout(
-        () => {
-
-            URL.revokeObjectURL(
-                downloadUrl
-            );
-
-        },
-        1000
-    );
-}
-
-/* =========================
-   DOWNLOAD ALL AS TAR
-========================= */
-
-async function downloadAllAsTar() {
-
-    if (operationIsDownloading) {
-        return;
-    }
-
-
-    const convertedFiles =
-        operationFiles.filter(
-            fileData =>
-                fileData.convertedUrl
-        );
-
-
-    if (
-        convertedFiles.length === 0 ||
-        convertedFiles.length !==
-            operationFiles.length
-    ) {
-
-        console.warn(
-            "[OPERATION ZONE] Not all files are converted"
-        );
-
-        return;
-    }
-
-
-    operationIsDownloading =
-        true;
-
-    updateDownloadAll();
-
-
-    try {
-
-        updateGlobalProgress(
-            0,
-            "Preparing TAR..."
-        );
-
-
-        const tarBlob =
-            await createTarBlob(
-                convertedFiles,
-                percentage => {
-
-                    updateGlobalProgress(
-                        percentage,
-                        "Preparing TAR..."
-                    );
-                }
-            );
-
-
-        updateGlobalProgress(
-            100,
-            "TAR ready"
-        );
-
-
-        const category =
-            (
-                operationZone.dataset.category ||
-                "files"
-            )
-                .trim()
-                .toLowerCase()
-                .replace(
-                    /[^a-z0-9]+/g,
-                    "-"
-                )
-                .replace(
-                    /^-+|-+$/g,
-                    ""
-                );
-
-
-        const tarName =
-            `EasyFileTools-converted-${category || "files"}.tar`;
-
-
-        downloadBlob(
-            tarBlob,
-            tarName
-        );
-
-        downloadAllCompleted =
-            true;
-
-        console.log(
-            "[OPERATION ZONE] TAR download started:",
-            tarName
-        );
-
-
-        if (
-            typeof showSuccessToast ===
-            "function"
-        ) {
-
-            showSuccessToast(
-                "Download started",
-                "Your TAR file is ready and the download has started.",
-                2000
-            );
-        }
-
-    }
-    catch (error) {
-
-        console.error(
-            "[OPERATION ZONE] TAR creation failed:",
-            error
-        );
-    }
-    finally {
-
-        operationIsDownloading =
-            false;
-
-        updateDownloadAll();
-
-        updateGlobalProgress(
-            100,
-            "Conversion progress"
-        );
-    }
-}
-
-/* =========================
-   GZIP BLOB
-========================= */
-
-async function gzipBlob(
-    blob
-) {
-
-    if (
-        typeof CompressionStream ===
-        "undefined"
-    ) {
-
-        throw new Error(
-            "CompressionStream unavailable"
-        );
-    }
-
-
-    const compressionStream =
-        new CompressionStream(
-            "gzip"
-        );
-
-
-    const compressedStream =
-        blob
-            .stream()
-            .pipeThrough(
-                compressionStream
-            );
-
-
-    return await new Response(
-        compressedStream
-    ).blob();
-}
-
-/* =========================
-   DOWNLOAD ALL AS TAR.GZ
-========================= */
-
-async function downloadAllAsTarGz() {
-
-    if (operationIsDownloading) {
-        return;
-    }
-
-
-    const convertedFiles =
-        operationFiles.filter(
-            fileData =>
-                fileData.convertedUrl
-        );
-
-
-    if (
-        convertedFiles.length === 0 ||
-        convertedFiles.length !==
-            operationFiles.length
-    ) {
-
-        console.warn(
-            "[OPERATION ZONE] Not all files are converted"
-        );
-
-        return;
-    }
-
-
-    operationIsDownloading =
-        true;
-
-    updateDownloadAll();
-
-
-    try {
-
-        /*
-         * 0 → 75 %
-         * création du TAR
-         */
-
-        updateGlobalProgress(
-            0,
-            "Preparing TAR..."
-        );
-
-
-        const tarBlob =
-            await createTarBlob(
-                convertedFiles,
-                percentage => {
-
-                    updateGlobalProgress(
-                        percentage * 0.75,
-                        "Preparing TAR..."
-                    );
-                }
-            );
-
-
-        /*
-         * Compression gzip.
-         *
-         * CompressionStream ne fournit pas
-         * directement un pourcentage réel.
-         */
-
-        updateGlobalProgress(
-            80,
-            "Compressing TAR.GZ..."
-        );
-
-
-        const tarGzBlob =
-            await gzipBlob(
-                tarBlob
-            );
-
-
-        updateGlobalProgress(
-            100,
-            "TAR.GZ ready"
-        );
-
-
-        const category =
-            (
-                operationZone.dataset.category ||
-                "files"
-            )
-                .trim()
-                .toLowerCase()
-                .replace(
-                    /[^a-z0-9]+/g,
-                    "-"
-                )
-                .replace(
-                    /^-+|-+$/g,
-                    ""
-                );
-
-
-        const tarGzName =
-            `EasyFileTools-converted-${category || "files"}.tar.gz`;
-
-
-        downloadBlob(
-            tarGzBlob,
-            tarGzName
-        );
-
-        downloadAllCompleted =
-            true;
-
-        console.log(
-            "[OPERATION ZONE] TAR.GZ download started:",
-            tarGzName
-        );
-
-
-        if (
-            typeof showSuccessToast ===
-            "function"
-        ) {
-
-            showSuccessToast(
-                "Download started",
-                "Your TAR.GZ file is ready and the download has started.",
-                2000
-            );
-        }
-
-    }
-    catch (error) {
-
-        console.error(
-            "[OPERATION ZONE] TAR.GZ creation failed:",
-            error
-        );
-
-
-        if (
-            error.message ===
-            "CompressionStream unavailable"
-        ) {
-
-            console.warn(
-                "[OPERATION ZONE] This browser does not support native gzip compression."
-            );
-        }
-    }
-    finally {
-
-        operationIsDownloading =
-            false;
-
-        updateDownloadAll();
-
-        updateGlobalProgress(
-            100,
-            "Conversion progress"
-        );
-    }
-}
 
 /* =========================
    DOWNLOAD ALL
@@ -1194,7 +1059,7 @@ if (downloadAllBtn) {
 
     downloadAllBtn.addEventListener(
         "click",
-        () => {
+        async () => {
 
             if (
                 downloadAllBtn.disabled ||
@@ -1203,18 +1068,131 @@ if (downloadAllBtn) {
                 return;
             }
 
+
+            const config =
+                window
+                    .EasyFileOperationConfig
+                    ?.get?.(
+                        operationZone
+                            .dataset
+                            .operation ||
+                        ""
+                    );
+
+
+            const resultMode =
+                config?.resultMode ||
+                "per-file";
+
+
+            /* =========================
+               BATCH
+            ========================= */
+
+            if (
+                resultMode ===
+                "batch"
+            ) {
+
+                try {
+
+                    operationIsDownloading =
+                        true;
+
+                    updateDownloadAll();
+
+
+                    await window
+                        .EasyFileOperationDownloads
+                        ?.downloadBatchResult?.();
+
+                }
+                catch (error) {
+
+                    console.error(
+                        "[OPERATION ZONE] Batch download failed:",
+                        error
+                    );
+
+                }
+                finally {
+
+                    operationIsDownloading =
+                        false;
+
+                    updateDownloadAll();
+
+                }
+
+
+                return;
+
+            }
+
+
+            /* =========================
+               PER_FILE / MULTI_OUTPUT
+            ========================= */
+
             if (!downloadAllFormats) {
                 return;
             }
 
+
             renderDownloadAllFormats();
 
-            downloadAllFormats.classList.toggle(
-                "hidden"
-            );
+
+            downloadAllFormats
+                .classList
+                .toggle(
+                    "hidden"
+                );
+
         }
     );
+
 }
+
+/* =========================
+   DOWNLOAD ALL REQUEST
+========================= */
+
+document.addEventListener(
+    "easyfiletools:download-all-requested",
+    () => {
+
+        if (
+            !downloadAllBtn ||
+            downloadAllBtn.disabled ||
+            operationIsDownloading
+        ) {
+            return;
+        }
+
+        if (!downloadAllFormats) {
+            return;
+        }
+
+        renderDownloadAllFormats();
+
+        downloadAllFormats.classList.remove(
+            "hidden"
+        );
+
+        downloadAllFormats.classList.add(
+            "highlight"
+        );
+
+        downloadAllFormats.scrollIntoView({
+            behavior: "smooth",
+            block: "center"
+        });
+
+        console.log(
+            "[OPERATION ZONE] Download All requested externally"
+        );
+    }
+);
 
 if (downloadAllFormats) {
 
@@ -1247,7 +1225,7 @@ if (downloadAllFormats) {
                     "hidden"
                 );
 
-                await downloadAllAsZip();
+                await downloadAllArchive("zip");
 
                 return;
             }
@@ -1258,7 +1236,7 @@ if (downloadAllFormats) {
                     "hidden"
                 );
 
-                await downloadAllAsTarGz();
+                await downloadAllArchive("tar.gz");
 
                 return;
             }
@@ -1270,159 +1248,13 @@ if (downloadAllFormats) {
                     "hidden"
                 );
 
-                await downloadAllAsTar();
+                await downloadAllArchive("tar");
 
                 return;
             }
 
         }
     );
-}
-
-/* =========================
-   CANCEL
-========================= */
-
-function updateCancelButton() {
-
-    if (!cancelOperationBtn) {
-        return;
-    }
-
-    cancelOperationBtn.disabled =
-        !operationIsConverting;
-
-    if (operationIsConverting) {
-
-        cancelOperationBtn.classList.add(
-            "active"
-        );
-    }
-    else {
-
-        cancelOperationBtn.classList.remove(
-            "active"
-        );
-    }
-}
-
-/* =========================
-   PAUSE / RESUME
-========================= */
-
-function updatePauseButton() {
-
-    if (!pauseOperationBtn) {
-        return;
-    }
-
-    pauseOperationBtn.disabled =
-        !operationIsConverting;
-
-    if (!operationIsConverting) {
-
-        pauseOperationBtn.classList.remove(
-            "active"
-        );
-
-        pauseOperationBtn.innerHTML = `
-
-            <i data-lucide="pause"></i>
-
-            Pause
-
-        `;
-
-        createLocalIcons(
-            pauseOperationBtn
-        );
-
-        return;
-    }
-
-    pauseOperationBtn.classList.add(
-        "active"
-    );
-
-    if (operationIsPaused) {
-
-        pauseOperationBtn.innerHTML = `
-
-            <i data-lucide="play"></i>
-
-            Resume
-
-        `;
-    }
-    else {
-
-        pauseOperationBtn.innerHTML = `
-
-            <i data-lucide="pause"></i>
-
-            Pause
-
-        `;
-    }
-
-    createLocalIcons(
-        pauseOperationBtn
-    );
-}
-
-/* =========================
-   CONVERT
-========================= */
-
-function updateConvertButton() {
-
-    if (!convertBtn) {
-        return;
-    }
-
-    const canConvert =
-        operationFiles.length > 0 &&
-        selectedConversionFormat !== null &&
-        !operationIsConverting;
-
-    convertBtn.disabled =
-        !canConvert;
-
-    if (canConvert) {
-
-        convertBtn.classList.add(
-            "active"
-        );
-    }
-    else {
-
-        convertBtn.classList.remove(
-            "active"
-        );
-    }
-}
-
-function updateChooseFormatLabel() {
-
-    if (!chooseFormatLabel) {
-        return;
-    }
-
-    const hasFiles =
-        operationFiles.length > 0;
-
-    if (hasFiles) {
-
-        chooseFormatLabel.classList.add(
-            "active"
-        );
-    }
-    else {
-
-        chooseFormatLabel.classList.remove(
-            "active"
-        );
-    }
 }
 
 /* =========================
@@ -1434,75 +1266,34 @@ const globalProgress =
         "globalProgress"
     );
 
-const globalProgressPercentage =
-    document.getElementById(
-        "globalProgressPercentage"
-    );
-
 const globalProgressLabel =
     document.getElementById(
         "globalProgressLabel"
     );
+
+const defaultProgressLabel =
+    globalProgressLabel?.textContent.trim() ||
+    "Progress";
+
 
 function updateGlobalProgress(
     percentage,
     label = null
 ) {
 
-    const value =
-        Math.max(
-            0,
-            Math.min(
-                100,
-                Number(percentage) || 0
-            )
+    window
+        .EasyFileOperationProgress
+        ?.setProgress?.(
+            percentage,
+            label
         );
-
-    if (globalProgress) {
-
-        globalProgress.style.width =
-            `${value}%`;
-
-        globalProgress.classList.remove(
-            "progress-shine"
-        );
-
-        void globalProgress.offsetWidth;
-
-        globalProgress.classList.add(
-            "progress-shine"
-        );
-
-        globalProgress.style.background =
-            `linear-gradient(
-                to right,
-                var(--green-text),
-                var(--violet)
-            )`;
-    }
-
-    if (globalProgressPercentage) {
-
-        globalProgressPercentage.textContent =
-            `${Math.round(value)}%`;
-    }
-
-    if (
-        label !== null &&
-        globalProgressLabel
-    ) {
-
-        globalProgressLabel.textContent =
-            label;
-    }
 }
 
 function resetOperationProgress() {
 
-    updateGlobalProgress(
-        0,
-        "Conversion progress"
-    );
+    window
+        .EasyFileOperationProgress
+        ?.reset?.();
 
 }
 
@@ -1531,324 +1322,19 @@ function updateGlobalProgressState() {
 }
 
 /* =========================
-   DEMANDER LA CONVERSION
-========================= */
-
-if (convertBtn) {
-
-    convertBtn.addEventListener(
-        "click",
-        () => {
-            
-            console.log("[OPERATION ZONE TEST] Convert clicked");
-
-            if (
-                convertBtn.disabled
-            ) {
-                return;
-            }
-
-            if (
-                !selectedConversionFormat
-            ) {
-                return;
-            }
-
-            console.log(
-                "[OPERATION ZONE] Conversion requested:",
-                {
-                    files:
-                        operationFiles.length,
-                    format:
-                        selectedConversionFormat
-                }
-            );
-
-            document.dispatchEvent(
-                new CustomEvent(
-                    "easyfiletools:conversion-requested",
-                    {
-                        detail: {
-                            files:
-                                operationFiles,
-
-                            category:
-                                operationZone.dataset.category || "",
-
-                            format:
-                                selectedConversionFormat
-                        }
-                    }
-                )
-            );
-        }
-    );
-}
-
-/* =========================
-   ANNULER LA CONVERSION
-========================= */
-
-if (cancelOperationBtn) {
-
-    cancelOperationBtn.addEventListener(
-        "click",
-        () => {
-
-            if (
-                cancelOperationBtn.disabled ||
-                !operationIsConverting
-            ) {
-                return;
-            }
-
-            console.log(
-                "[OPERATION ZONE] Cancel requested"
-            );
-
-            document.dispatchEvent(
-                new CustomEvent(
-                    "easyfiletools:conversion-cancel-requested",
-                    {
-                        detail: {
-                            category:
-                                operationZone.dataset.category || ""
-                        }
-                    }
-                )
-            );
-        }
-    );
-}
-
-/* =========================
-   PAUSE / RESUME CONVERSION
-========================= */
-
-if (pauseOperationBtn) {
-
-    pauseOperationBtn.addEventListener(
-        "click",
-        () => {
-
-            if (
-                pauseOperationBtn.disabled ||
-                !operationIsConverting
-            ) {
-                return;
-            }
-
-            if (!operationIsPaused) {
-
-                console.log(
-                    "[OPERATION ZONE] Pause requested"
-                );
-
-                document.dispatchEvent(
-                    new CustomEvent(
-                        "easyfiletools:conversion-pause-requested",
-                        {
-                            detail: {
-                                category:
-                                    operationZone.dataset.category || ""
-                            }
-                        }
-                    )
-                );
-            }
-            else {
-
-                console.log(
-                    "[OPERATION ZONE] Resume requested"
-                );
-
-                document.dispatchEvent(
-                    new CustomEvent(
-                        "easyfiletools:conversion-resume-requested",
-                        {
-                            detail: {
-                                category:
-                                    operationZone.dataset.category || ""
-                            }
-                        }
-                    )
-                );
-            }
-        }
-    );
-}
-
-/* =========================
-   CLEAR ALL
-========================= */
-
-if (operationClearAllBtn) {
-
-    operationClearAllBtn.addEventListener(
-        "click",
-        async () => {
-
-
-            /* =========================
-               CONVERTED FILES ?
-            ========================= */
-
-            const hasConvertedFiles =
-                operationFiles.some(
-                    fileData =>
-                        fileData.convertedUrl
-                );
-
-
-            /* =========================
-               CASE 1
-               CONVERTED FILES NOT
-               DOWNLOADED WITH
-               DOWNLOAD ALL
-            ========================= */
-
-            if (
-                hasConvertedFiles &&
-                !downloadAllCompleted
-            ) {
-
-                const action =
-                    await showClearAllWarningModal(
-                        "Converted files not downloaded",
-                        "Some converted files have not been downloaded with <strong>Download All</strong>.<br><br>Clearing all files will permanently discard them."
-                    );
-
-
-                /* CANCEL */
-
-                if (
-                    action === "cancel"
-                ) {
-
-                    return;
-                }
-
-
-                /* DOWNLOAD ALL */
-
-                if (
-                    action === "download"
-                ) {
-
-                    if (
-                        downloadAllBtn &&
-                        !downloadAllBtn.disabled &&
-                        downloadAllFormats
-                    ) {
-
-                        renderDownloadAllFormats();
-
-                        downloadAllFormats.classList.remove(
-                            "hidden"
-                        );
-
-                        downloadAllFormats.classList.add(
-                            "highlight"
-                        );
-
-                        downloadAllFormats.scrollIntoView({
-                            behavior: "smooth",
-                            block: "center"
-                        });
-
-                        setTimeout(
-                            () => {
-
-                                downloadAllFormats.classList.remove(
-                                    "highlight"
-                                );
-
-                            },
-                            1500
-                        );
-                    }
-
-                    return;
-                }
-
-
-                /* CLEAR ALL */
-
-                if (
-                    action !== "clear"
-                ) {
-
-                    return;
-                }
-            }
-
-
-            /* =========================
-               CASE 2
-               NORMAL CONFIRMATION
-            ========================= */
-
-            else {
-
-                const confirmed =
-                    await showConfirmationModal(
-                        "Clear All files ?",
-                        "Are you sure you want to remove <strong>all files</strong> ?"
-                    );
-
-
-                if (!confirmed) {
-
-                    return;
-                }
-            }
-
-
-            /* =========================
-               DELETE
-            ========================= */
-
-            operationFiles =
-                [];
-
-            downloadAllCompleted =
-                false;
-
-
-            await clearStoredFiles();
-
-
-            document.dispatchEvent(
-                new CustomEvent(
-                    "easyfiletools:files-cleared"
-                )
-            );
-
-
-            updateOperationClearAll();
-
-            updateDownloadAll();
-
-
-            console.log(
-                "[OPERATION ZONE] All files cleared"
-            );
-
-        }
-    );
-}
-
-
-    /* =========================
        CHARGER LES FICHIERS
     ========================= */
 
     async function refreshOperationFiles() {
 
-        console.log("[OPERATION ZONE DEBUG] refreshOperationFiles()");
+        console.log(
+            "[OPERATION ZONE DEBUG] refreshOperationFiles()"
+        );
+
 
         if (
-            typeof loadSelectedFiles !== "function"
+            typeof loadSelectedFiles !==
+            "function"
         ) {
 
             console.warn(
@@ -1856,114 +1342,95 @@ if (operationClearAllBtn) {
             );
 
             return;
-
         }
+
 
         const data =
             await loadSelectedFiles();
 
-            console.log("[OPERATION ZONE DEBUG] Storage data:",data);
 
-            if (
-                !data ||
-                !data.files ||
-                data.files.length === 0
-            ) {
-
-                operationFiles = [];
-
-                selectedConversionFormat =
-                    null;
-
-                updateOperationClearAll();
-                updateDownloadAll();
-                updateChooseFormatLabel();
-                updateConvertButton();
-                updateGlobalProgressState();
-
-                console.log(
-                    "[OPERATION ZONE] No stored files"
-                );
-
-                return;
-            }
-
-        /*
-        =========================
-        PRESERVE CURRENT STATE
-        ========================= */
-
-        const previousOperationFiles =
-            operationFiles;
+        console.log(
+            "[OPERATION ZONE DEBUG] Storage data:",
+            data
+        );
 
 
-        /*
-        =========================
-        SYNCHRONIZE FILES
+        if (
+            !data ||
+            !data.files ||
+            data.files.length === 0
+        ) {
+
+            operationFiles = [];
+
+            /*
+             * Zero input files is a hard lifecycle boundary.
+             * Old PER_FILE, MULTI_OUTPUT and especially BATCH
+             * results must not survive and become downloadable
+             * after a completely new selection is added later.
+             */
+            const results =
+                window.EasyFileOperationResults;
+
+            results?.reset?.();
+
+            document.dispatchEvent(
+                new CustomEvent(
+                    "easyfiletools:batch-result-cleared"
+                )
+            );
+
+            notifyOperationFilesUpdated();
+
+            updateDownloadAll();
+
+            resetOperationProgress();
+
+            updateGlobalProgressState();
+
+            console.log(
+                "[OPERATION ZONE] No stored files"
+            );
+
+            return;
+
+        }
+
+
+        /* =========================
+        SYNCHRONIZE INPUT FILES
         ========================= */
 
         operationFiles =
             data.files.map(
                 storedFile => {
 
-                    const previousFileData =
-                        previousOperationFiles.find(
-                            fileData =>
-                                fileData.file.name ===
-                                    storedFile.file.name &&
-
-                                fileData.file.size ===
-                                    storedFile.file.size &&
-
-                                fileData.file.lastModified ===
-                                    storedFile.file.lastModified &&
-
-                                fileData.file.type ===
-                                    storedFile.file.type
-                        );
-
-
                     return {
 
                         file:
                             storedFile.file,
 
-                        convertedUrl:
-                            previousFileData?.convertedUrl ||
-                            null,
-
-                        convertedName:
-                            previousFileData?.convertedName ||
-                            null,
-
-                        convertedBlob:
-                            previousFileData?.convertedBlob ||
-                            null,
-
-                        convertedSize:
-                            previousFileData?.convertedSize ||
-                            0,
-
-                        convertedFormat:
-                            previousFileData?.convertedFormat ||
-                            null
+                        fileKey:
+                            getOperationFileKey(
+                                storedFile.file
+                            )
 
                     };
-
                 }
             );
+
 
         console.log(
             "[OPERATION ZONE] Files synchronized:",
             operationFiles.length
         );
 
-            updateOperationClearAll();
-            updateDownloadAll();
-            updateChooseFormatLabel();
-            updateConvertButton();
-            updateGlobalProgressState();
 
+        notifyOperationFilesUpdated();
+
+
+        updateDownloadAll();
+        updateGlobalProgressState();
     }
 
     /* =========================
@@ -1973,12 +1440,6 @@ if (operationClearAllBtn) {
     resetOperationProgress();
 
     renderDownloadAllFormats();
-
-    updateConvertButton();
-
-    updateCancelButton();
-
-    updatePauseButton();
 
     await refreshOperationFiles();
 
@@ -1992,10 +1453,236 @@ if (operationClearAllBtn) {
 
             await refreshOperationFiles();
 
-            updateOperationClearAll();
-            updateDownloadAll();
-            updateConvertButton();
+        }
+    );
 
+    /* =========================
+    OPERATION SETTINGS CHANGED
+    ========================= */
+
+    document.addEventListener(
+        "easyfiletools:operation-settings-changed",
+        event => {
+
+            const detail =
+                event.detail || {};
+
+
+            const currentOperation =
+                operationZone.dataset.operation ||
+                "";
+
+
+            if (
+                detail.operation &&
+                detail.operation !==
+                    currentOperation
+            ) {
+
+                return;
+            }
+
+
+            const results =
+                window.EasyFileOperationResults;
+
+
+            if (!results) {
+                return;
+            }
+
+
+            /* =========================
+            BATCH SETTINGS
+            ========================= */
+
+            if (
+                detail.scope ===
+                "batch"
+            ) {
+
+                const previousBatch =
+                    results.getBatch();
+
+
+                const previousStale =
+                    previousBatch?.stale ===
+                    true;
+
+
+                results.setBatchSettings(
+                    Array.isArray(
+                        detail.inputs
+                    )
+                        ? detail.inputs
+                        : operationFiles,
+
+                    detail.settings || {}
+                );
+
+
+                const batchState =
+                    results.getBatch();
+
+
+                const stale =
+                    batchState?.stale ===
+                    true;
+
+
+                if (
+                    previousStale !== stale &&
+                    batchState?.result
+                ) {
+
+                    notifyBatchResultStaleState(
+                        stale
+                    );
+                }
+
+
+                updateDownloadAll();
+
+                return;
+            }
+
+
+            /* =========================
+            ALL FILES SETTINGS
+            ========================= */
+
+            if (
+                detail.scope ===
+                "all"
+            ) {
+
+                const previousItems =
+                    results
+                        .getState()
+                        .items;
+
+
+                results.setSettings(
+                    detail.settings || {}
+                );
+
+
+                previousItems.forEach(
+                    (
+                        previousItem,
+                        index
+                    ) => {
+
+                        const resultItem =
+                            results.getItem(
+                                index
+                            );
+
+
+                        if (!resultItem) {
+                            return;
+                        }
+
+
+                        const previousStale =
+                            previousItem.stale ===
+                            true;
+
+
+                        const stale =
+                            resultItem.stale ===
+                            true;
+
+                        if (
+                            previousStale !== stale &&
+                            itemHasOperationResult(
+                                resultItem
+                            )
+                        ) {
+
+                            notifyResultStaleState(
+                                index,
+                                stale,
+                                resultItem.key
+                            );
+
+                        }
+                    }
+                );
+
+
+                updateDownloadAll();
+
+                return;
+            }
+
+
+            /* =========================
+            ONE FILE SETTINGS
+            ========================= */
+
+            const index =
+                findOperationFileIndex(
+                    detail
+                );
+
+
+            if (
+                index < 0
+            ) {
+
+                return;
+            }
+
+
+            const previousItem =
+                results.getItem(
+                    index
+                );
+
+
+            const previousStale =
+                previousItem?.stale ===
+                true;
+
+
+            results.setFileSettings(
+                index,
+                detail.settings || {}
+            );
+
+
+            const resultItem =
+                results.getItem(
+                    index
+                );
+
+
+            if (resultItem) {
+
+                const stale =
+                    resultItem.stale ===
+                    true;
+
+                if (
+                    previousStale !== stale &&
+                    itemHasOperationResult(
+                        resultItem
+                    )
+                ) {
+
+                    notifyResultStaleState(
+                        index,
+                        stale,
+                        resultItem.key
+                    );
+
+                }
+
+            }
+
+
+            updateDownloadAll();
         }
     );
 
@@ -2003,153 +1690,286 @@ if (operationClearAllBtn) {
     GLOBAL CONVERSION PROGRESS
     ========================= */
 
+    // A late worker callback must never repaint progress after Cancel.
+    let ignoreCancelledProgress = false;
+    document.addEventListener('easyfiletools:operation-cancel-requested', event => {
+        if (event.detail?.operation !== operationZone.dataset.operation) return;
+        ignoreCancelledProgress = true;
+        resetOperationProgress();
+        document.querySelectorAll('#file-list .file-item').forEach(item => {
+            setFileItemProgress(item, 0);
+        });
+    });
+
     document.addEventListener(
-        "easyfiletools:file-conversion-progress",
-        (event) => {
+        "easyfiletools:operation-file-progress",
+        event => {
+
+            const detail = event.detail || {};
+            if (ignoreCancelledProgress) return;
+            window.EasyFileOperationProgress?.setItemProgress?.(
+                detail.index, detail.percentage
+            );
+        }
+    );
+
+    document.addEventListener(
+        "easyfiletools:operation-file-error",
+        event => {
+            if (ignoreCancelledProgress) return;
 
             const detail =
                 event.detail || {};
 
             const index =
-                detail.index;
-
-            const percentage =
-                Math.max(
-                    0,
-                    Math.min(
-                        100,
-                        Number(
-                            detail.percentage
-                        ) || 0
-                    )
-                );
+                Number(detail.index);
 
             if (
-                index === undefined ||
-                index === null ||
+                !Number.isInteger(index) ||
                 index < 0
             ) {
                 return;
             }
 
-            if (
-                index >=
-                operationFileProgress.length
-            ) {
-                return;
-            }
-
-            operationFileProgress[index] =
-                percentage;
-
-            const total =
-                operationFileProgress.reduce(
-                    (sum, value) =>
-                        sum + value,
-                    0
+            window
+                .EasyFileOperationProgress
+                ?.setItemProgress?.(
+                    index,
+                    100
                 );
-
-            const globalPercentage =
-                operationFileProgress.length > 0
-                    ? total /
-                        operationFileProgress.length
-                    : 0;
-
-            updateGlobalProgress(
-                globalPercentage,
-                "Conversion progress"
-            );
         }
     );
 
     document.addEventListener(
-        "easyfiletools:file-converted",
+        "easyfiletools:operation-file-completed",
         (event) => {
-
-            downloadAllCompleted =
-                false;
+            if (ignoreCancelledProgress) return;
 
             const detail =
                 event.detail || {};
 
+
             const index =
                 detail.index;
 
+
             if (
-                index === undefined ||
-                index === null ||
-                index < 0 ||
-                index >=
-                    operationFileProgress.length
+                !Number.isInteger(index)
             ) {
+
                 return;
             }
 
-            operationFileProgress[index] =
-                100;
 
-            const total =
-                operationFileProgress.reduce(
-                    (sum, value) =>
-                        sum + value,
-                    0
+            const results =
+                window.EasyFileOperationResults;
+
+
+            if (!results) {
+                return;
+            }
+
+
+            /*
+            * Keep previous stale state
+            * before replacing the result.
+            */
+
+            const previousItem =
+                results.getItem(
+                    index
                 );
 
-            const globalPercentage =
-                operationFileProgress.length > 0
-                    ? total /
-                        operationFileProgress.length
-                    : 0;
 
-            updateGlobalProgress(
-                globalPercentage,
-                "Conversion progress"
+            const wasStale =
+                previousItem?.stale ===
+                true;
+
+
+            /*
+            * Store result in the generic
+            * results manager.
+            */
+
+            const operationConfig =
+                window
+                    .EasyFileOperationConfig
+                    ?.get?.(
+                        operationZone.dataset
+                            .operation ||
+                        ""
+                    );
+
+
+            const isMultiOutput =
+                operationConfig?.resultMode ===
+                    "multi-output" ||
+                Array.isArray(
+                    detail.outputs
+                );
+
+
+            if (isMultiOutput) {
+
+                results.completeMultiOutput(
+                    index,
+                    Array.isArray(
+                        detail.outputs
+                    )
+                        ? detail.outputs
+                        : []
+                );
+
+            }
+            else {
+
+                results.completeFile(
+                    index,
+                    {
+
+                        outputUrl:
+                            detail.outputUrl ||
+                            null,
+
+                        outputBlob:
+                            detail.outputBlob ||
+                            null,
+
+                        outputName:
+                            detail.outputName ||
+                            null,
+
+                        outputSize:
+                            detail.outputSize ||
+                            0,
+
+                        outputDuration:
+                            detail.outputDuration || 0,
+
+                        outputFormat:
+                            detail.outputFormat ||
+                            null,
+
+                        completedLabel:
+                            detail.completedLabel ||
+                            "Processed"
+
+                    }
+                );
+
+            }
+
+            /*
+            * If the previous result was stale,
+            * synchronize the file-list UI.
+            */
+
+            const resultItem =
+                results.getItem(
+                    index
+                );
+
+
+            if (
+                wasStale &&
+                resultItem &&
+                resultItem.stale !== true
+            ) {
+
+                notifyResultStaleState(
+                    index,
+                    false,
+                    resultItem.key
+                );
+            }
+
+
+            window
+                .EasyFileOperationProgress
+                ?.setItemProgress?.(
+                    index,
+                    100
+                );
+
+
+            updateDownloadAll();
+        }
+    );
+
+    /* =========================
+    RESULT DOWNLOADED
+    ========================= */
+
+    document.addEventListener(
+        "easyfiletools:processed-file-downloaded",
+        event => {
+
+            const detail =
+                event.detail || {};
+
+
+            const index =
+                Number(
+                    detail.index
+                );
+
+
+            if (
+                !Number.isInteger(index) ||
+                index < 0
+            ) {
+
+                return;
+            }
+
+
+            const results =
+                window.EasyFileOperationResults;
+
+
+            const resultItem =
+                results
+                    ?.getItem?.(
+                        index
+                    );
+
+
+            if (
+                !resultItem ||
+                !resultItem.result
+            ) {
+
+                return;
+            }
+
+
+            results.markDownloaded(
+                index
             );
 
-            updateDownloadAll(); 
+
+            console.log(
+                "[OPERATION ZONE] Result downloaded:",
+                index
+            );
+
         }
     );
 
     document.addEventListener(
-        "easyfiletools:conversion-cancelled",
-        (event) => {
+        "easyfiletools:operation-file-cancelled",
+        event => {
 
             const detail =
                 event.detail || {};
 
-            const index =
-                detail.index;
 
-            if (
-                index === undefined ||
-                index === null ||
-                index < 0 ||
-                index >=
-                    operationFileProgress.length
-            ) {
-                return;
-            }
-
-            operationFileProgress[index] =
-                0;
-
-            const total =
-                operationFileProgress.reduce(
-                    (sum, value) =>
-                        sum + value,
+            window
+                .EasyFileOperationProgress
+                ?.setItemProgress?.(
+                    detail.index,
                     0
                 );
-
-            const globalPercentage =
-                operationFileProgress.length > 0
-                    ? total /
-                        operationFileProgress.length
-                    : 0;
-
-            updateGlobalProgress(
-                globalPercentage,
-                "Conversion progress"
-            );
         }
     );
 
@@ -2157,89 +1977,84 @@ if (operationClearAllBtn) {
     ÉTAT DE CONVERSION
     ========================= */
 
+    let operationSuccessFeedbackShown = false;
+
+    async function showOperationSuccessFeedback() {
+
+        if (operationSuccessFeedbackShown) {
+            return;
+        }
+
+        operationSuccessFeedbackShown = true;
+
+        updateGlobalProgress(
+            100,
+            defaultProgressLabel
+        );
+
+        await window
+            .EasyFileOperationMessages
+            ?.success?.(
+                operationSuccessTitle,
+                operationSuccessMessage
+            );
+    }
+
     document.addEventListener(
-        "easyfiletools:conversion-started",
+        "easyfiletools:operation-started",
         () => {
 
-            operationIsConverting =
-                true;
+            operationSuccessFeedbackShown = false;
+            ignoreCancelledProgress = false;
 
-            operationIsPaused =
-                false;
+            const progress =
+                window.EasyFileOperationProgress;
 
-            operationFileProgress =
-                operationFiles.map(
-                    fileData => {
+            const results =
+                window.EasyFileOperationResults;
 
-                        return fileData.convertedUrl
-                            ? 100
-                            : 0;
+
+            progress?.setItems?.(
+                operationFiles.length,
+                0
+            );
+
+
+            const items =
+                results
+                    ?.getState?.()
+                    ?.items || [];
+
+
+            items.forEach(
+                (item, index) => {
+
+                    if (
+                        itemHasOperationResult(
+                            item
+                        ) &&
+                        item.stale !== true
+                    ) {
+
+                        progress?.setItemProgress?.(
+                            index,
+                            100
+                        );
+
                     }
-                );
 
-            const initialTotal =
-                operationFileProgress.reduce(
-                    (sum, value) =>
-                        sum + value,
-                    0
-                );
-
-            const initialPercentage =
-                operationFileProgress.length > 0
-                    ? initialTotal /
-                        operationFileProgress.length
-                    : 0;
-
-            updateGlobalProgress(
-                initialPercentage,
-                "Conversion progress"
+                }
             );
 
-            updateCancelButton();
-
-            updatePauseButton();
-
-            updateConvertButton();
 
             console.log(
-                "[OPERATION ZONE] Conversion started"
+                "[OPERATION ZONE] Operation started"
             );
         }
     );
 
     document.addEventListener(
-        "easyfiletools:conversion-paused",
-        () => {
-
-            operationIsPaused =
-                true;
-
-            updatePauseButton();
-
-            console.log(
-                "[OPERATION ZONE] Conversion paused"
-            );
-        }
-    );
-
-
-    document.addEventListener(
-        "easyfiletools:conversion-resumed",
-        () => {
-
-            operationIsPaused =
-                false;
-
-            updatePauseButton();
-
-            console.log(
-                "[OPERATION ZONE] Conversion resumed"
-            );
-        }
-    );
-
-    document.addEventListener(
-        "easyfiletools:conversion-ended",
+        "easyfiletools:operation-ended",
         async (event) => {
 
             const detail =
@@ -2249,81 +2064,111 @@ if (operationClearAllBtn) {
                 detail.cancelled === true;
 
 
-            operationIsConverting =
-                false;
+            /* =========================
+            CANCELLED
+            ========================= */
 
-            operationIsPaused =
-                false;
+            if (
+                wasCancelled
+            ) {
+                ignoreCancelledProgress = true;
+                resetOperationProgress();
 
-            updateCancelButton();
+                document
+                    .querySelectorAll(
+                        ".file-item"
+                    )
+                    .forEach(
+                        item => {
 
-            updatePauseButton();
+                            setFileItemProgress(
+                                item,
+                                0
+                            );
 
-            updateConvertButton();
+                        }
+                    );
+
+
+                console.log(
+                    "[OPERATION ZONE] Operation cancelled — progress reset."
+                );
+
+
+                return;
+            }
 
 
             /* =========================
             CHECK COMPLETE SUCCESS
             ========================= */
 
-            const allFilesConverted =
-                operationFiles.length > 0 &&
-                operationFiles.every(
-                    fileData =>
-                        fileData.convertedUrl
-                );
+            const allFilesCompleted =
+                window
+                    .EasyFileOperationResults
+                    ?.hasCurrentResult?.() ===
+                true;
+
+            // A final refresh is important for long-running PER_FILE tools:
+            // the last result event may arrive just before the lifecycle end.
+            updateDownloadAll();
 
 
             if (
-                !wasCancelled &&
-                allFilesConverted
+                allFilesCompleted
             ) {
 
-                updateGlobalProgress(
-                    100,
-                    "Conversion progress"
-                );
+                await showOperationSuccessFeedback();
 
-                if (
-                    typeof showSuccessModal ===
-                    "function"
-                ) {
-
-                    await showSuccessModal(
-                        "Conversion completed",
-                        "All files were converted successfully."
-                    );
-                }
             }
 
 
             console.log(
-                "[OPERATION ZONE] Conversion ended",
+                "[OPERATION ZONE] Operation ended",
                 {
-                    cancelled:
-                        wasCancelled,
 
-                    allFilesConverted:
-                        allFilesConverted
+                    cancelled:
+                        false,
+
+                    allFilesCompleted:
+                        allFilesCompleted
+
                 }
             );
 
         }
-    ); 
+    );
 
+
+    /*
+     * Controller-backed operations reach their authoritative COMPLETED
+     * state just after adapters emit operation-ended. Some engines finish
+     * publishing result metadata during that narrow gap, so operation-ended
+     * can be too early to decide whether the success modal should appear.
+     * COMPLETED is therefore the generic fallback. The per-run guard above
+     * prevents duplicate modals for operations whose operation-ended check
+     * already succeeded.
+     */
     document.addEventListener(
-        "easyfiletools:conversion-format-selected",
-        (event) => {
+        "easyfiletools:operation-state-changed",
+        async (event) => {
 
-            selectedConversionFormat =
-                event.detail?.format || null;
+            const detail = event.detail || {};
 
-            console.log(
-                "[OPERATION ZONE] Selected conversion format:",
-                selectedConversionFormat
-            );
+            if (
+                detail.operationId &&
+                detail.operationId !== operationZone.dataset.operation
+            ) {
+                return;
+            }
 
-            updateConvertButton();
+            if (detail.status !== "completed") {
+                return;
+            }
+
+            updateDownloadAll();
+
+            await showOperationSuccessFeedback();
         }
     );
 
@@ -2337,33 +2182,227 @@ if (operationClearAllBtn) {
 
             operationFiles = [];
 
-            downloadAllCompleted =
-                false;
+            window
+                .EasyFileOperationResults
+                ?.reset?.();
 
-            selectedConversionFormat =
-                null;
-
-            updateOperationClearAll();
-            updateDownloadAll();
-            updateChooseFormatLabel();
-            updateConvertButton();
+                updateDownloadAll();
             updateGlobalProgressState();
             resetOperationProgress();
 
-            if (conversionFormats) {
-
-                conversionFormats.classList.add(
-                    "hidden"
-                );
-
-                conversionFormats.innerHTML = "";
-
-            }
+            notifyOperationFilesUpdated();
 
             console.log(
                 "[OPERATION ZONE] All files cleared"
             );
         }
     );
+
+    /* =========================
+    OPERATION STATE REQUEST
+    ========================= */
+
+    document.addEventListener(
+        "easyfiletools:operation-state-requested",
+        (event) => {
+
+            const respond =
+                event.detail?.respond;
+
+            if (
+                typeof respond !==
+                "function"
+            ) {
+                return;
+            }
+
+            const results =
+                window.EasyFileOperationResults;
+
+
+            const hasFiles =
+                operationFiles.length > 0;
+
+
+            const hasOutputFiles =
+                results?.hasResult?.() === true;
+
+
+            const allFilesCompleted =
+                results?.hasCurrentResult?.() ===
+                true;
+
+
+            const allResultsDownloaded =
+                hasOutputFiles &&
+                (
+                    results
+                        ?.getUndownloadedCount?.() ||
+                    0
+                ) === 0;
+
+            respond(
+                {
+                    category:
+                        operationZone.dataset.category || "",
+
+                    operation:
+                        operationZone.dataset.operation || "",
+
+                    hasFiles:
+                        hasFiles,
+
+                    hasOutputFiles:
+                        hasOutputFiles,
+
+                    allFilesCompleted:
+                        allFilesCompleted,
+                    
+                    downloadAllCompleted:
+                        allResultsDownloaded,
+
+                    isDownloading:
+                        operationIsDownloading
+                }
+            );
+
+        }
+    );
+
+
+
+    /* =========================================================
+       EPHEMERAL RESULT LIFETIME
+
+       Generated blobs/results belong to the current operation page.
+       Source files persist inside the category workspace; results do not.
+       Clearing them on pagehide also fixes browser BFCache restores where
+       the DOM may be reconstructed without visible outputs while the old
+       in-memory result signatures still disable Run.
+    ========================================================= */
+
+    window.addEventListener(
+        "pagehide",
+        () => {
+            window.EasyFileOperationResults?.reset?.();
+
+            document.dispatchEvent(
+                new CustomEvent(
+                    "easyfiletools:operation-results-discarded",
+                    { detail: { reason: "pagehide" } }
+                )
+            );
+
+            document.dispatchEvent(
+                new CustomEvent(
+                    "easyfiletools:batch-result-cleared"
+                )
+            );
+        }
+    );
+
+    window.addEventListener(
+        "pageshow",
+        event => {
+            if (!event.persisted) {
+                return;
+            }
+
+            window.EasyFileOperationResults?.reset?.();
+
+            document.dispatchEvent(
+                new CustomEvent(
+                    "easyfiletools:operation-results-discarded",
+                    { detail: { reason: "bfcache-restore" } }
+                )
+            );
+
+            document.dispatchEvent(
+                new CustomEvent(
+                    "easyfiletools:batch-result-cleared"
+                )
+            );
+
+            void refreshOperationFiles();
+        }
+    );
+
+    /* =========================================================
+    PROTECTION AVANT REFRESH / FERMETURE DE PAGE
+    ========================================================= */
+
+
+    window.addEventListener(
+        "beforeunload",
+        (event) => {
+
+            /*
+            * Une navigation interne a déjà été
+            * validée par navigation-guard.js.
+            *
+            * Ne pas afficher un deuxième
+            * avertissement natif du navigateur.
+            */
+
+            if (
+                window.easyFileToolsNavigationApproved ===
+                true
+            ) {
+                return;
+            }
+
+
+            const undownloadedCount =
+                window
+                    .EasyFileOperationResults
+                    ?.getUndownloadedCount?.() ||
+                0;
+
+            const operationStatus =
+                window
+                    .EasyFileOperationController
+                    ?.getState?.()
+                    ?.status ||
+                "";
+
+
+            const controllerOperationInProgress =
+                operationStatus ===
+                    "running" ||
+                operationStatus ===
+                    "paused" ||
+                operationStatus ===
+                    "cancelling";
+
+
+            const genericOperationInProgress =
+                window
+                    .EasyFileOperationInteractionLock
+                    ?.isLocked?.() ===
+                true;
+
+
+            const operationInProgress =
+                controllerOperationInProgress ||
+                genericOperationInProgress;
+
+
+            const needsProtection =
+                undownloadedCount > 0 ||
+                operationInProgress;
+
+
+            if (!needsProtection) {
+                return;
+            }
+
+
+            event.preventDefault();
+
+            event.returnValue =
+                "";
+        }
+    );
+
 
 });

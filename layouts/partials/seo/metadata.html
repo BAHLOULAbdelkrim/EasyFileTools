@@ -1,0 +1,34 @@
+{{- $title := .Params.seoTitle | default (printf "%s | %s" .Title .Site.Title) -}}
+{{- if .IsHome -}}{{- $title = .Params.seoTitle | default .Site.Title -}}{{- end -}}
+{{- $description := .Description | default .Site.Params.description -}}
+{{- $indexable := partial "seo/indexable.html" . -}}
+<title>{{ $title }}</title>
+<meta name="description" content="{{ $description }}">
+<meta name="robots" content="{{ if $indexable }}index, follow, max-image-preview:large{{ else }}noindex, follow{{ end }}">
+{{ if ne .Kind "404" }}<link rel="canonical" href="{{ .Permalink }}">{{ end }}
+<meta property="og:title" content="{{ $title }}">
+<meta property="og:description" content="{{ $description }}">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="{{ .Site.Title }}">
+<meta property="og:locale" content="en_US">
+<meta property="og:url" content="{{ .Permalink }}">
+<meta property="og:image" content="{{ "images/easyfile-share.png" | absURL }}">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="EasyFile Tools — Audio, video, image and PDF tools">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{{ $title }}">
+<meta name="twitter:description" content="{{ $description }}">
+<meta name="twitter:image" content="{{ "images/easyfile-share.png" | absURL }}">
+<meta name="twitter:image:alt" content="EasyFile Tools — Audio, video, image and PDF tools">
+{{- if $indexable -}}
+{{- $siteID := printf "%s#website" .Site.Home.Permalink -}}
+{{- $graph := slice (dict "@type" "WebSite" "@id" $siteID "url" .Site.Home.Permalink "name" .Site.Title "inLanguage" .Site.Language.LanguageCode) (dict "@type" "WebPage" "@id" (printf "%s#webpage" .Permalink) "url" .Permalink "name" $title "description" $description "inLanguage" .Site.Language.LanguageCode "isPartOf" (dict "@id" $siteID)) -}}
+{{- if not .IsHome -}}
+{{- $items := slice -}}
+{{- range .Ancestors.Reverse -}}{{- $items = $items | append (dict "@type" "ListItem" "position" (add (len $items) 1) "name" (cond .IsHome "Home" .Title) "item" .Permalink) -}}{{- end -}}
+{{- $items = $items | append (dict "@type" "ListItem" "position" (add (len $items) 1) "name" .Title "item" .Permalink) -}}
+{{- $graph = $graph | append (dict "@type" "BreadcrumbList" "itemListElement" $items) -}}
+{{- end -}}
+<script type="application/ld+json">{{ dict "@context" "https://schema.org" "@graph" $graph | jsonify | safeJS }}</script>
+{{- end -}}

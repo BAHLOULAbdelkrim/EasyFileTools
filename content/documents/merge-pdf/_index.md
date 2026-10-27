@@ -1,16 +1,52 @@
 ---
+seoTitle: "Merge PDF Online | EasyFile Tools"
 title: "Merge PDF"
 url: "/documents/merge-pdf/"
-description: "................"
+icon: "files"
+operation: "merge-pdf"
+description: "Combine PDF files in any order directly in your browser while preserving the original page dimensions and visual quality."
+available: true
 keywords:
-  - ...............
-  - ...............
-tags: 
-  - blabla
-  - blabla
-weight: 7
+  - "merge pdf"
+  - "combine pdf files"
+  - "join pdf online"
+  - "private pdf merger"
+tags:
+  - "PDF"
+  - "Merge"
+  - "Documents"
+weight: 1
 ---
-🚧 Coming soon !
 
-This tool is currently under development.
+{{< category-intro
+    text="Combine multiple PDF files into one — Simple • Private • Fast"
+    file-type="document"
+>}}
 
+
+{{< zone-chargement
+    category="Document"
+>}}
+
+
+{{< liste-files
+    category="Document"
+>}}
+
+
+{{< operation-zone
+    category="Document"
+    operation="merge-pdf"
+    param-title="Merge Settings"
+    param-partial="document/merge-pdf-settings.html"
+    action-label="Merge"
+    progress-label="Merging progress"
+    success-title="Merge completed"
+    success-message="The PDF files were merged successfully."
+>}}
+
+
+{{< more-operations
+    category="Document"
+    current-operation="merge-pdf"
+>}}

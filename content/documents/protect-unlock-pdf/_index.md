@@ -1,16 +1,10 @@
 ---
 title: "Protect & Unlock PDF"
 url: "/documents/protect-unlock-pdf/"
-description: "................"
-keywords:
-  - ...............
-  - ...............
-tags: 
-  - blabla
-  - blabla
+description: "Protect & Unlock PDF is planned for a future release and is not available yet."
 weight: 14
 ---
-🚧 Coming soon !
+🚧 Coming soon.
 
-This tool is currently under development.
+This tool is not available yet. Please choose one of the currently available EasyFile Tools operations.
 

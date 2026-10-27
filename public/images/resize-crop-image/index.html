@@ -1,449 +1,87 @@
-<!doctype html>
-<html lang="fr">
-
-<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-
-  
-  <title>Resize / Crop Image - EasyFileTools — Outil tout-en-un pour gérer, convertir, transformer et automatiser des fichiers</title>
-  
-  
-  <meta name="description" content="Outil tout-en-un pour gérer, convertir, transformer et automatiser des fichiers : audio, vidéos, images, documents texte, tableurs, présentations, graphiques vectoriels, scripts, 3D, CAO, images médicales.">
-
-  <link rel="icon" type="image/png" href="http://localhost:1313/favicon_2.png">
-
-  
-  <script src="https://cdn.tailwindcss.com"></script>
-
-     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
-     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap" rel="stylesheet">
-     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap" rel="stylesheet">
-     
-     <style>
-     body { font-family: 'Inter', sans-serif; }
-      
-     .main-color { --tw-bg-opacity:1; background-color: theme(colors.emerald.400); }
-     </style>
-
-  
-  <link rel="canonical" href="http://localhost:1313/images/resize-crop-image/">
-
-  
-  <meta property="og:title" content="Resize / Crop Image — EasyFileTools — Outil tout-en-un pour gérer, convertir, transformer et automatiser des fichiers">
-  <meta property="og:description" content="Outil tout-en-un pour gérer, convertir, transformer et automatiser des fichiers : audio, vidéos, images, documents texte, tableurs, présentations, graphiques vectoriels, scripts, 3D, CAO, images médicales.">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="http://localhost:1313/images/resize-crop-image/">
-  
-  
-
-  
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Resize / Crop Image — EasyFileTools — Outil tout-en-un pour gérer, convertir, transformer et automatiser des fichiers">
-  <meta name="twitter:description" content="Outil tout-en-un pour gérer, convertir, transformer et automatiser des fichiers : audio, vidéos, images, documents texte, tableurs, présentations, graphiques vectoriels, scripts, 3D, CAO, images médicales.">
-  
-
-  
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-  
-  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Inter:wght@400;600;700&display=swap" as="style">
-
-  
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-
-  
-     <link rel="stylesheet" href="/css/main.css">
-     <link rel="stylesheet" href="/css/homepage/main.css">
-     <link rel="stylesheet" href="/css/common/zone-chargement.css">
-     <link rel="stylesheet" href="/css/common/liste-files.css">
-     <link rel="stylesheet" href="/css/common/operation-zone.css">
-     <link rel="stylesheet" href="/css/common/confirmation-modal.css">
-     <link rel="stylesheet" href="/css/common/notifications.css">
-
-  
-     <script defer src="/js/common/app-config.js"></script>
-     <script defer src="/js/common/file-categories.js"></script>
-     <script defer src="/js/common/file-utils.js"></script>
-     <script defer src="/js/common/file-storage.js"></script>
-     <script defer src="/js/common/file-list.js"></script>
-     <script defer src="/js/common/file-upload.js"></script>
-     <script defer src="/js/common/icons.js"></script>
-     <script defer src="/js/common/zone-chargement.js"></script>
-     <script defer src="/js/common/notifications.js"></script>
-     <script defer src="/js/common/operation-zone.js"></script>
-     <script defer src="/js/common/confirmation-modal.js"></script>
-
-     
-
-     
-
-     
-
-     
-
-     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
-     <script> pdfjsLib.GlobalWorkerOptions.workerSrc = "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js"; </script>
-     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
-
-</head>
-
-
-
-
-<body class="not-home" data-section="images">
-
-  
-  <header class="site-header">
-<div class="header-container">
-  <div class="header-left">
-    <a href="/" class="home-link">
-      <img src="/images/logo_3.webp" alt="Logo" class="logo">
-    <div class="site-name">
-    
-      </div>       
-    </a>
-  </div>
-
-    <nav class="top-menus" aria-label="Top navigation">
-      
-
-      <ul class="menu-grid">
-        
-          
-          <li class="menu-item">
-            <a href="/audio/" 
-              data-menu="audio">
-
-              
-
-              <i data-lucide="headphones" class="menu-icon"></i>
-              <span>Audio</span>
-
-            </a>
-          </li>
-        
-          
-          <li class="menu-item">
-            <a href="/video/" 
-              data-menu="video">
-
-              
-
-              <i data-lucide="video" class="menu-icon"></i>
-              <span>Video</span>
-
-            </a>
-          </li>
-        
-          
-          <li class="menu-item">
-            <a href="/images/" 
-              data-menu="images">
-
-              
-
-              <i data-lucide="image" class="menu-icon"></i>
-              <span>Images</span>
-
-            </a>
-          </li>
-        
-          
-          <li class="menu-item">
-            <a href="/documents/" 
-              data-menu="documents">
-
-              
-
-              <i data-lucide="file-text" class="menu-icon"></i>
-              <span>Documents</span>
-
-            </a>
-          </li>
-        
-          
-          <li class="menu-item">
-            <a href="/presentations/" 
-              data-menu="presentations">
-
-              
-
-              <i data-lucide="presentation" class="menu-icon"></i>
-              <span>Presentations</span>
-
-            </a>
-          </li>
-        
-          
-          <li class="menu-item">
-            <a href="/spreadsheets/" 
-              data-menu="spreadsheets">
-
-              
-
-              <i data-lucide="sheet" class="menu-icon"></i>
-              <span>Spreadsheets</span>
-
-            </a>
-          </li>
-        
-          
-          <li class="menu-item">
-            <a href="/vector-graphics/" 
-              data-menu="vector-graphics">
-
-              
-
-              <i data-lucide="pen-tool" class="menu-icon"></i>
-              <span>Vector Graphics</span>
-
-            </a>
-          </li>
-        
-          
-          <li class="menu-item">
-            <a href="/archives/" 
-              data-menu="archives">
-
-              
-
-              <i data-lucide="archive" class="menu-icon"></i>
-              <span>Archives</span>
-
-            </a>
-          </li>
-        
-          
-          <li class="menu-item">
-            <a href="/code/" 
-              data-menu="code">
-
-              
-
-              <i data-lucide="code-xml" class="menu-icon"></i>
-              <span>Code</span>
-
-            </a>
-          </li>
-        
-          
-          <li class="menu-item">
-            <a href="/3d-cad/" 
-              data-menu="cad-3d">
-
-              
-
-              <i data-lucide="boxes" class="menu-icon"></i>
-              <span>3D / CAD</span>
-
-            </a>
-          </li>
-        
-      </ul>
-
-    </nav>
-    
-</div>
-
-
-
-</header>
-
-
-
-
-
-  
-  <main class="site-main">
-    
-
-  <div class="container section-list">
-    <section class="content-column">
-      <div class="category-title">
-
-          <i class="category-icon"
-            data-lucide=""></i>
-
-          <h1 class="page-title">Resize / Crop Image</h1>
-
-          <i class="category-icon"
-            data-lucide=""></i>
-
-      </div>
-
-      
-          <div class="category-description">
-              <p>🚧 Coming soon !</p>
-<p>This tool is currently under development.</p>
-
-          </div>
-      
-
-      
-
-      <div class="submenus">
-        <ul>
-          
-        </ul>
-      </div>
-
-<div class="articles-grid">
-
-                
-</div>
-
-      
-        
-      
-    </section>
-  </div>
-
-
-
-
-  </main>
-
-  
-  <footer class="site-footer" style="padding:20px 0; background-color:#d1fae5ff;">
-  <div class="footer-container" style="max-width:1200px; margin:0 auto; text-align:center; display:flex; flex-direction:column; gap:10px;">
-
-    
-    
-
-    
-    
-
-    
-    
-  
-    
-    <p style="margin-top:15px;">© 2026 EasyFile Tools — All rights reserved.</p>
-
-  </div>
-</footer>
-
-
-
-<div class="image-modal" id="imageModal">
-  <span class="close-modal" id="closeModal">✕</span>
-  <img id="modalImage">
-</div>
-
-  
-
-<div
-    id="confirmation-modal"
-    class="confirmation-modal hidden"
->
-
-    <div
-        class="confirmation-modal-box"
-        role="dialog"
-        aria-modal="true"
-        aria-labelledby="confirmation-modal-title"
-    >
-
-        
-
-        <div class="confirmation-modal-header">
-
-            <i
-                id="confirmation-modal-icon"
-                data-lucide="triangle-alert"
-                class="confirmation-modal-icon"
-            ></i>
-
-            <h3 id="confirmation-modal-title">
-                Confirmation
-            </h3>
-
-        </div>
-
-        
-
-        <div
-            id="confirmation-modal-message"
-            class="confirmation-modal-message"
-        >
-        </div>
-
-        
-
-        <div class="confirmation-modal-actions">
-
-            <button
-                type="button"
-                id="confirmation-modal-cancel"
-                class="confirmation-modal-cancel"
-            >
-                <i data-lucide="x"></i>
-                Cancel
-            </button>
-
-            <button
-                type="button"
-                id="confirmation-modal-download-all"
-                class="confirmation-modal-download-all hidden"
-            >
-                <i data-lucide="download"></i>
-                Download All
-            </button>
-
-            <button
-                type="button"
-                id="confirmation-modal-confirm"
-                class="confirmation-modal-confirm"
-            >
-                <i data-lucide="check"></i>
-                Confirm
-            </button>
-
-        </div>
-
-    </div>
-
-</div>
-
-
-
-
-<div
-    id="notification-toast"
-    class="notification-toast hidden"
-    role="status"
-    aria-live="polite"
-    aria-atomic="true"
->
-    <div class="notification-toast-icon-wrapper">
-
-        <i
-            id="notification-toast-icon"
-            data-lucide="circle-check"
-            class="notification-toast-icon"
-        ></i>
-
-    </div>
-
-    <div class="notification-toast-content">
-
-        <div
-            id="notification-toast-title"
-            class="notification-toast-title"
-        >
-        </div>
-
-        <div
-            id="notification-toast-message"
-            class="notification-toast-message"
-        >
-        </div>
-
-    </div>
-</div>
-
-</body>
-</html>
-
+<!doctype html><html lang=en dir=ltr><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><title>Resize and Crop Image Online | EasyFile Tools</title><meta name=description content="Resize images to custom dimensions or crop them to common aspect ratios directly in your browser."><meta name=robots content="noindex, follow"><link rel=canonical href=http://127.0.0.1:4173/images/resize-crop-image/><meta property="og:title" content="Resize and Crop Image Online | EasyFile Tools"><meta property="og:description" content="Resize images to custom dimensions or crop them to common aspect ratios directly in your browser."><meta property="og:type" content="website"><meta property="og:site_name" content="EasyFile Tools"><meta property="og:locale" content="en_US"><meta property="og:url" content="http://127.0.0.1:4173/images/resize-crop-image/"><meta property="og:image" content="http://127.0.0.1:4173/images/easyfile-share.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="EasyFile Tools — Audio, video, image and PDF tools"><meta name=twitter:card content="summary_large_image"><meta name=twitter:title content="Resize and Crop Image Online | EasyFile Tools"><meta name=twitter:description content="Resize images to custom dimensions or crop them to common aspect ratios directly in your browser."><meta name=twitter:image content="http://127.0.0.1:4173/images/easyfile-share.png"><meta name=twitter:image:alt content="EasyFile Tools — Audio, video, image and PDF tools"><meta name=easyfile-ffmpeg-wasm-url content="https://pub-868138a7b23c40efa7fffd0827d97d96.r2.dev/engines/ffmpeg/core-original/ffmpeg-core.9f57947a5bd5.wasm"><link rel=icon type=image/svg+xml href="/logo_symbol.svg?v=3"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;family=Orbitron:wght@700;900&amp;display=optional" rel=stylesheet media=print onload='this.media="all"'><noscript><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;family=Orbitron:wght@700;900&amp;display=optional" rel=stylesheet></noscript><style>body{font-family:inter,system-ui,-apple-system,segoe ui,Arial,sans-serif}</style><link rel=stylesheet href=/optimized/css/easyfile-common.min.643efcb1fa0b4ee947de3a91089fde58c35e58828e430c2b17e8e9cfafb1d977.css><script defer src="/js/common/app-config.js?v=c4fd4b28a4c940ae"></script><script defer src=/optimized/js/common/file-policy.min.a99fc17cd55f943d929b7028cfb5871a39df463d0cc4168b89220007c874d370.js></script><script defer src="/js/common/safe-html.js?v=f083cb45abc20496"></script><script defer src="/js/common/url-import.js?v=a6aeae079fa3b251"></script><script defer src=/optimized/js/common/file-categories.min.4f9740f4fab3062b7c65c2b582904aee1d90ebdfd88d21f67020de772d51e6de.js></script><script defer src=/optimized/js/common/operations-config.min.3caf7c9343585e08a4e5a0deed3a15fff79b670677987227d1210ebf94ee6d24.js></script><script defer src="/js/common/optional-dependencies.js?v=ff1320fd45aaeff3"></script><script defer src=/optimized/js/common/category-operations.min.12d3dd20efc6f6f2ecdb296aa0bb84caf682d79f398a985d012fe7139c1072e0.js></script><script defer src=/optimized/js/common/more-operations.min.7f9f0ab6df29bb0f557f97c4dcfe760e1755fa4cde373a8d4a26cce8679c0dc5.js></script><script defer src=/optimized/js/common/file-utils.min.30c442d68782e7c89a4b6cf6c051c164be1b68b8d8fb2f8817cc7e5bbbc27b26.js></script><script defer src=/optimized/js/common/file-storage.min.857ce293754de84736f44c4526dec098c120fd155dbdc51fea74a2b619db69f4.js></script><script defer src=/optimized/js/common/file-list.min.346076f5d9008b3cc09f22d9d1798434976d3f7f09a0f05169ccf10e2743e873.js></script><script defer src=/optimized/js/common/icons.min.fa98552f7da03ff69b1f027f58581e880a9921f21e371f438a6118bd95f7b12a.js></script><script defer src=/optimized/js/common/zone-chargement.min.1608b5001b010f7e87ba0d8e202b32b8c756e89a7d71a082e518f2d74d80617a.js></script><script defer src="/js/common/notifications.js?v=4911a70ef39ccf05"></script><script defer src=/optimized/js/common/confirmation-modal.min.a5bbc5fd037803c480539d0592b899136c3ae2b966c4ef5eaa1a0acb4aee55cd.js></script><script defer src=/optimized/js/common/navigation-guard.min.08b4fd13957cdce9985784f15a5a470102eaa58ddfdbb9eeb85a30e33421bb8c.js></script><script defer src="/js/common/page-navigation.js?v=ca0d027698720bb3"></script><script defer src=/optimized/js/common/keyboard-navigation.min.ddb26103472556c6e405e56dba75497e370cf1f65a81943f059d429d69666817.js></script><script defer src="/js/common/operation/operation-controller.js?v=1919045f5b4b7e00"></script><script defer src="/js/common/operation/operation-progress.js?v=c670ddf9bdbf4259"></script><script defer src="/js/common/operation/operation-results.js?v=8677c65818c17da6"></script><script defer src="/js/common/operation/operation-downloads.js?v=51e9c53a031f40e2"></script><script defer src="/js/common/operation/operation-messages.js?v=43a27ad0afba5fc6"></script><script defer src="/js/common/operation-zone.js?v=5435c21165820bf4"></script><script defer src="/js/common/operation-interaction-lock.js?v=e69f19a81d8eeb18"></script><script defer src="/js/common/operation-ui-components.js?v=b9e83953cfb62e71"></script><script defer src="/js/image/image-upload-zone.js?v=0d98f2f6b60c0daf"></script><link rel=stylesheet href=/css/image/image-transform.css><script defer src="/js/image/common/image-raster-utils.js?v=2ad0ac66e3eec41d"></script><script defer src="/js/image/common/image-transform-engine.js?v=9e0f4dff579d7599"></script><script defer src="/js/image/common/image-transform-operation-adapter.js?v=9508b3100eabd038"></script><script defer src="/js/image/resize-crop-image/resize-crop-image-ui.js?v=f08902f74d8117c7"></script><script defer src="/js/image/resize-crop-image/resize-crop-image-engine.js?v=d09164d8f522ba29"></script><script defer src="/js/image/resize-crop-image/resize-crop-image-operation.js?v=61fd31cd81d95ea6"></script><link rel=stylesheet href="/css/image/image-operation-ui.css?v=c79a34bea1ebcb33"></head><body class=not-home data-section=images data-current-category=images><a class=skip-link href=#main-content>Skip to main content</a><header class=site-header><div class=header-container><div class=header-left><a href=/ class=home-link data-easyfile-navigation data-target-category><img src=/images/logo_epais.svg alt="EasyFile Tools — Home" width=493 height=151 class=logo><div class=site-name></div></a></div><nav class=top-menus aria-label="Top navigation"><ul class=menu-grid><li class=menu-item><a href=/audio/ data-menu=audio data-easyfile-navigation data-target-category=audio><i data-lucide=headphones class=menu-icon></i>
+<span>Audio</span></a></li><li class=menu-item><a href=/video/ data-menu=video data-easyfile-navigation data-target-category=video><i data-lucide=video class=menu-icon></i>
+<span>Video</span></a></li><li class=menu-item><a href=/images/ data-menu=images data-easyfile-navigation data-target-category=images><i data-lucide=image class=menu-icon></i>
+<span>Images</span></a></li><li class=menu-item><a href=/documents/ data-menu=documents data-easyfile-navigation data-target-category=documents><i data-lucide=file-text class=menu-icon></i>
+<span>Documents</span></a></li><li class="menu-item
+is-disabled"><a class=operation-disabled data-menu=presentations aria-disabled=true tabindex=-1><i data-lucide=presentation class=menu-icon></i>
+<span>Presentations</span></a></li><li class="menu-item
+is-disabled"><a class=operation-disabled data-menu=spreadsheets aria-disabled=true tabindex=-1><i data-lucide=sheet class=menu-icon></i>
+<span>Spreadsheets</span></a></li><li class="menu-item
+is-disabled"><a class=operation-disabled data-menu=vector-graphics aria-disabled=true tabindex=-1><i data-lucide=pen-tool class=menu-icon></i>
+<span>Vector Graphics</span></a></li><li class="menu-item
+is-disabled"><a class=operation-disabled data-menu=archives aria-disabled=true tabindex=-1><i data-lucide=archive class=menu-icon></i>
+<span>Archives</span></a></li><li class="menu-item
+is-disabled"><a class=operation-disabled data-menu=code aria-disabled=true tabindex=-1><i data-lucide=code-xml class=menu-icon></i>
+<span>Code</span></a></li><li class="menu-item
+is-disabled"><a class=operation-disabled data-menu=cad-3d aria-disabled=true tabindex=-1><i data-lucide=boxes class=menu-icon></i>
+<span>3D / CAD</span></a></li></ul></nav><details class=eft-mobile-navigation><summary>Categories <span aria-hidden=true>▾</span></summary><nav aria-label="Mobile categories"><ul><li><a href=/audio/ data-easyfile-navigation data-target-category=audio data-menu=audio>Audio</a></li><li><a href=/video/ data-easyfile-navigation data-target-category=video data-menu=video>Video</a></li><li><a href=/images/ data-easyfile-navigation data-target-category=images data-menu=images>Images</a></li><li><a href=/documents/ data-easyfile-navigation data-target-category=documents data-menu=documents>Documents</a></li><li><span class=eft-mobile-unavailable aria-disabled=true>Presentations — Coming soon</span></li><li><span class=eft-mobile-unavailable aria-disabled=true>Spreadsheets — Coming soon</span></li><li><span class=eft-mobile-unavailable aria-disabled=true>Vector Graphics — Coming soon</span></li><li><span class=eft-mobile-unavailable aria-disabled=true>Archives — Coming soon</span></li><li><span class=eft-mobile-unavailable aria-disabled=true>Code — Coming soon</span></li><li><span class=eft-mobile-unavailable aria-disabled=true>3D / CAD — Coming soon</span></li></ul></nav></details></div></header><main class=site-main id=main-content tabindex=-1><div class="container section-list"><section class=content-column><div class=page-heading><i class=page-heading-icon data-lucide=crop></i><h1 class=page-heading-title>Resize / Crop Image</h1><i class=page-heading-icon data-lucide=crop></i></div><div class=category-description><p class=category-intro>Resize or crop images — Precise • Private • Fast</p><h2 class=upload-section-title>Import your image files</h2><p><div id=upload-zone-container data-category=Image><div id=drop-zone><div class=upload-actions><label for=fileInput class=upload-btn><i data-lucide=folder-open></i>
+Browse
+</label><button type=button class=drag-drop id=dragBtn>
+<i data-lucide=upload></i>
+Drag & drop files here
+<i data-lucide=upload></i>
+</button>
+<button type=button class=upload-btn id=urlBtn>
+<i data-lucide=link></i>
+From URL</button></div><input type=file id=fileInput multiple><div id=urlModal class="url-modal hidden" role=dialog aria-modal=true aria-labelledby=urlModalTitle><div class=url-box><h3 id=urlModalTitle>Paste file URL</h3><label for=urlInput class=url-input-label>Direct file URL</label>
+<input type=url id=urlInput placeholder=https://example.com/file inputmode=url autocomplete=off spellcheck=false aria-describedby=urlImportWarning><p id=urlImportWarning class=url-import-warning>Use a direct HTTPS file link. The remote server must allow cross-origin downloads (CORS). Avoid sharing private access tokens in URLs.</p><div class=url-actions><button type=button id=urlCancel>
+<i data-lucide=x></i>
+Cancel
+</button>
+<button type=button id=urlAdd>
+<i data-lucide=plus></i>
+Add</button></div></div></div><p id=upload-info class=upload-info></p></div></div><div class=file-list-container data-category=Image><div class=file-counter><span id=fileCounter>0 file</span></div><div id=file-list></div><div class=category-clear-all-container><button type=button id=categoryClearAllBtn class=category-clear-all-btn disabled>
+<i data-lucide=trash-2></i>
+Clear All</button></div></div><script>(()=>{const e=document.currentScript.previousElementSibling;if(!e||!e.classList.contains("file-list-container"))return;try{const n=sessionStorage.getItem("easyfiletools:file-session-v2"),t=JSON.parse(sessionStorage.getItem("easyfiletools:restore-hint-v42")||"null");if(!n||t?.sessionId!==n||!Number.isInteger(t.count)||t.count<=0)return;const s=(e.dataset.category||"").toLowerCase();if(s&&(t.category||"").toLowerCase()!==s)return;e.dataset.restorePending="true",e.style.setProperty("--easyfile-expected-rows",String(Math.min(3,t.count))),e.querySelector("#file-list")?.setAttribute("aria-busy","true")}catch{}})()</script></p><div id=operation-zone class=operation-zone data-category=Image data-operation=resize-crop-image data-success-title="Images transformed" data-success-message="All images were resized or cropped successfully."><div class=operation-top><div class=download-all-wrapper><button type=button id=downloadAllBtn class=operation-download-all disabled>
+<i data-lucide=download></i>
+Download All</button></div></div><div id=downloadAllFormats class="download-all-formats hidden"></div><div class=operation-parameters><div class=operation-format-selector><div id=chooseFormatLabel class=operation-choose-format>Resize / Crop Settings</div></div><fieldset id=operationParametersFieldset class=operation-parameters-fieldset disabled><div class=operation-parameters-content><section id=resizeCropImageSettings class=image-transform-settings aria-labelledby=chooseFormatLabel><div class="image-transform-section eft-config-scope-card"><div class=image-transform-title>Configuration scope</div><div class=image-transform-help>Apply one configuration to every image or store independent settings for each image.</div><div class=eft-config-scope-actions id=resizeCropConfigScope><button type=button class="eft-config-scope-btn active" data-resize-config-scope=all>Same configuration for all</button>
+<button type=button class=eft-config-scope-btn data-resize-config-scope=per-file>Custom per image</button></div><div id=resizeCropConfigFileRow class="eft-config-file-row hidden"><label for=resizeCropConfigFile>Configure image</label>
+<select id=resizeCropConfigFile disabled><option value>Load an image first</option></select><div class=eft-config-note>Each image keeps its own resize/crop, output and quality settings.</div></div></div><div class=image-transform-section><div class=image-transform-title>Mode</div><div class=image-transform-choice-group><button type=button class="image-transform-choice active" data-resize-crop-mode=resize>Resize</button>
+<button type=button class=image-transform-choice data-resize-crop-mode=crop>Crop</button></div></div><div id=resizeImageControls class=image-transform-section><div class=image-transform-title>Target dimensions</div><div class=image-transform-help>With aspect ratio enabled, one dimension can be left empty.</div><div class="image-transform-grid two"><label>Width (px)<input id=resizeImageWidth type=number min=1 max=20000 step=1 value=1920></label>
+<label>Height (px)<input id=resizeImageHeight type=number min=1 max=20000 step=1 placeholder=Auto></label></div><label class=image-transform-check><input id=resizeImageKeepAspect type=checkbox checked> Keep aspect ratio</label>
+<label class=image-transform-check><input id=resizeImagePreventUpscale type=checkbox checked> Do not enlarge smaller images</label></div><div id=cropImageControls class="image-transform-section hidden"><div class=image-transform-title>Crop ratio</div><div class="image-transform-choice-group wrap"><button type=button class="image-transform-choice active" data-crop-ratio=1:1>1:1</button>
+<button type=button class=image-transform-choice data-crop-ratio=4:3>4:3</button>
+<button type=button class=image-transform-choice data-crop-ratio=3:2>3:2</button>
+<button type=button class=image-transform-choice data-crop-ratio=16:9>16:9</button>
+<button type=button class=image-transform-choice data-crop-ratio=9:16>9:16</button></div><div class="image-transform-title compact">Crop position</div><select id=cropImageAnchor><option value=center selected>Center</option><option value=top>Top</option><option value=bottom>Bottom</option><option value=left>Left</option><option value=right>Right</option><option value=top-left>Top left</option><option value=top-right>Top right</option><option value=bottom-left>Bottom left</option><option value=bottom-right>Bottom right</option></select><div class=crop-concept-preview aria-label="Crop ratio and position preview"><div class=crop-concept-caption><strong>Crop preview</strong>
+<span id=cropPreviewCaption>1:1 • Center</span></div><div id=cropPreviewFrame class=crop-preview-frame><div class=crop-preview-grid-lines></div><div id=cropPreviewArea class=crop-preview-area><span>1:1</span></div></div><div class=image-transform-help>The highlighted area is kept. This diagram explains the ratio and anchor; it is not a preview of the actual image.</div></div></div><div class=image-transform-section id=resizeCropOutputSection><div class=image-transform-title>Output format</div><select id=resizeCropOutputFormat><option value=same selected>Same as source</option><option value=jpg>JPG</option><option value=png>PNG</option><option value=webp>WebP</option><option value=avif>AVIF</option></select><div class="image-transform-title compact">Output quality</div><div class=image-transform-help>Applies only to JPG, WebP and AVIF outputs.</div><div class=image-transform-range-row><input id=resizeCropQuality class=eft-range type=range min=50 max=100 value=92 step=1>
+<strong id=resizeCropQualityValue>92%</strong></div></div><div id=resizeCropValidation data-eft-readiness-status class=image-transform-validation role=status aria-live=polite>Load one or more raster images.</div></section></div></fieldset></div><div class=operation-controls><button type=button id=cancelOperationBtn class=operation-cancel disabled>
+<i data-lucide=x></i>
+Cancel
+</button>
+<button type=button id=convertBtn class=operation-convert disabled>
+<i data-lucide=refresh-cw></i>
+Resize / Crop
+</button>
+<button type=button id=pauseOperationBtn class=operation-pause disabled>
+<i data-lucide=pause></i>
+Pause</button></div><div class=operation-progress><div class=progress-block><div class=progress-label><span id=globalProgressLabel>Image transform progress
+</span><span id=globalProgressPercentage>0%</span></div><div class=progress-bar><div id=globalProgress class="progress-fill global-progress" style=width:0%></div></div></div></div></div><div class=more-operations data-category=Image data-current-operation=resize-crop-image><h2 class=more-operations-title>More Image Tools</h2><div class=more-operations-list><a href=/images/image-formats-guide/ data-easyfile-navigation data-target-category=images>Image Formats (Guide)</a>
+<a href=/images/convert-image/ data-easyfile-navigation data-target-category=images>Convert Image</a>
+<a href=/images/compress-image/ data-easyfile-navigation data-target-category=images>Compress Image</a>
+<a href=/images/image-to-pdf/ data-easyfile-navigation data-target-category=images>Image to PDF</a>
+<a href=/images/rotate-flip-image/ data-easyfile-navigation data-target-category=images>Rotate / Flip Image</a>
+<a href=/images/remove-background/ data-easyfile-navigation data-target-category=images>Remove Background</a>
+<a href=/images/replace-colors/ data-easyfile-navigation data-target-category=images>Replace Colors</a></div></div></div><details class=tool-help><summary class=tool-help-summary><span class=tool-help-icon aria-hidden=true>?</span>
+<span>Help & tips</span>
+<span class=tool-help-chevron aria-hidden=true></span></summary><div class=tool-help-content><h2>How to resize or crop an image</h2><ol><li>Select an image and choose the resize or crop controls.</li><li>Set dimensions or a crop ratio and review the position.</li><li>Apply the change and download the image.</li></ol><h2>Example use cases</h2><ul><li>Crop a photo to a square profile image.</li></ul><h2>Limitations to consider</h2><ul><li>Upscaling does not recreate missing original detail.</li></ul><h2>Questions and practical tips</h2><h3>What is the difference between resizing and cropping?</h3><p>Resizing changes pixel dimensions. Cropping removes part of the image to change its framing. Keep the aspect ratio when resizing to avoid stretching the subject.</p><h3>Will enlarging an image add real detail?</h3><p>No. Enlarging creates more pixels but cannot recover missing detail. Enable the option that prevents enlargement when you only want to reduce images.</p><h3>Processing and file safety</h3><p>This tool processes files in your browser. Loading the page, libraries or AI models can still require network connections. Keep a copy of your original files and check the downloaded result before deleting them. Large files may require more memory and processing time than your device can provide.</p><p><a href=/images/ data-easyfile-navigation data-target-category=images>Browse Images tools and the formats guide</a></p></div></details><div class=submenus><ul></ul></div><div class=articles-grid></div><div class=operation-navigation><a href=/ class="operation-nav-btn operation-home" data-easyfile-navigation data-target-category><i data-lucide=house></i>
+Go to homepage
+</a><button type=button id=goBackBtn class="operation-nav-btn operation-back-btn" disabled aria-disabled=true>
+<i data-lucide=undo-2></i>
+Go back
+</button>
+<button type=button id=goToTopBtn class="operation-nav-btn operation-top-btn">
+<i data-lucide=arrow-up></i>
+Go to top</button></div></section></div></main><footer class=site-footer style="padding:20px 0;background-color:#d1fae5"><div class=footer-container style="max-width:1200px;margin:0 auto;text-align:center;display:flex;flex-direction:column;gap:10px"><p style=margin:0;color:#000>Simple browser-based tools for everyday file tasks.</p><nav class=footer-policy-links aria-label="Footer links"><a href=/about/ data-easyfile-navigation>About EasyFile Tools</a>
+<a href=/privacy/ data-easyfile-navigation>Privacy Policy</a>
+<a href=/legal/ data-easyfile-navigation>Legal Notice</a></nav><a href=/contact/#contact-form-title data-easyfile-navigation style="display:inline-block;align-self:center;padding:11px 18px;background-color:#047857;color:#fff;font-weight:600;text-decoration:none;border-radius:8px;cursor:pointer;outline-offset:3px">Contact us — Report a problem or suggest an improvement</a><p style=margin-top:12px>© 2026 EasyFile Tools. Third-party software remains subject to its own licenses.</p></div></footer><div id=confirmation-modal class="confirmation-modal hidden"><div class=confirmation-modal-box role=dialog aria-modal=true aria-labelledby=confirmation-modal-title><div class=confirmation-modal-header><i id=confirmation-modal-icon data-lucide=triangle-alert class=confirmation-modal-icon></i><h3 id=confirmation-modal-title>Confirmation</h3></div><div id=confirmation-modal-message class=confirmation-modal-message></div><div class=confirmation-modal-actions><button type=button id=confirmation-modal-cancel class=confirmation-modal-cancel>
+<i data-lucide=x></i>
+Cancel
+</button>
+<button type=button id=confirmation-modal-download-all class="confirmation-modal-download-all hidden">
+<i data-lucide=download></i>
+Download All
+</button>
+<button type=button id=confirmation-modal-confirm class=confirmation-modal-confirm>
+<i data-lucide=check></i>
+Confirm</button></div></div></div><div id=notification-toast class="notification-toast hidden" role=status aria-live=polite aria-atomic=true><div class=notification-toast-icon-wrapper><i id=notification-toast-icon data-lucide=circle-check class=notification-toast-icon></i></div><div class=notification-toast-content><div id=notification-toast-title class=notification-toast-title></div><div id=notification-toast-message class=notification-toast-message></div></div></div></body></html>

@@ -1,0 +1,19 @@
+/* EasyFile Tools V2
+ * The templates use custom component classes, not Tailwind utilities.
+ * These stable, local preflight/visibility rules replace the runtime
+ * Tailwind Play CDN. No npm build, remote compiler or generated CSS needed.
+ * Component CSS is loaded after this file and takes precedence.
+ */
+*, *::before, *::after { box-sizing: border-box; border-width: 0; border-style: solid; }
+html { line-height: 1.5; -webkit-text-size-adjust: 100%; tab-size: 4; }
+body { margin: 0; line-height: inherit; }
+hr { height: 0; color: inherit; border-top-width: 1px; }
+h1,h2,h3,h4,h5,h6 { font-size: inherit; font-weight: inherit; }
+a { color: inherit; text-decoration: inherit; }
+b,strong { font-weight: bolder; }
+button,input,optgroup,select,textarea { font: inherit; color: inherit; margin: 0; padding: 0; }
+button,select { text-transform: none; }
+button,[type="button"],[type="reset"],[type="submit"] { background-color: transparent; background-image: none; }
+img,svg,video,canvas { display: block; vertical-align: middle; }
+img,video { max-width: 100%; height: auto; }
+[hidden],.hidden { display: none !important; }

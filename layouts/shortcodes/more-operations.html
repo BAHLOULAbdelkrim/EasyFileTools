@@ -1,0 +1,17 @@
+<div
+    class="more-operations"
+    data-category="{{ .Get "category" }}"
+    data-current-operation="{{ .Get "current-operation" }}"
+>
+
+    <h2 class="more-operations-title">
+        More {{ .Get "category" }} Tools
+    </h2>
+
+    <div class="more-operations-list">
+{{ range .Page.Parent.Sections }}{{ if and .Params.available (ne .RelPermalink $.Page.RelPermalink) }}
+<a href="{{ .RelPermalink }}" data-easyfile-navigation data-target-category="{{ .Section }}">{{ .Title }}</a>
+{{ end }}{{ end }}
+</div>
+
+</div>

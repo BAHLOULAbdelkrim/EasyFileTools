@@ -1,8 +1,9 @@
 ---
+seoTitle: "Audio Tools Online | EasyFile Tools"
 title: "Audio"
 url: "/audio/"          # URL SEO-friendly
 icon: "headphones"
-description: "Convert, compress, trim, merge and optimize audio files online. Fast, secure and free."
+description: "Convert, cut, merge and split audio files by silence in your browser. Explore the available audio tools and compare common audio formats."
 keywords:
   - audio tools
   - audio converter
@@ -12,6 +13,13 @@ keywords:
   - online audio editor
 ---
 
-{{< login-signup category="" >}}
+<!--  <div class="section-spacer"></div>   -->
 
-<div class="section-spacer"></div>
+{{< category-intro
+    text="All the essential tools for your audio files — Fast • Secure • Free"
+    file-type="audio"
+>}}
+
+{{< zone-chargement category="Audio" >}}
+
+{{< liste-files category="Audio" >}}

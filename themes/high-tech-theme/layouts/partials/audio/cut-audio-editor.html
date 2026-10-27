@@ -1,0 +1,496 @@
+<section
+    id="cutAudioEditor"
+    class="cut-audio-editor"
+    aria-labelledby="chooseFormatLabel"
+>
+
+    <!-- =========================
+         ACTIVE FILE
+    ========================== -->
+
+    <div class="cut-audio-file-selector">
+
+        <div class="cut-audio-field">
+
+            <label for="cutAudioFileSelect">
+                Editing file
+            </label>
+
+            <select id="cutAudioFileSelect">
+                <option value="">
+                    No audio file loaded
+                </option>
+            </select>
+
+        </div>
+
+        <div
+            id="cutAudioConfiguredCounter"
+            class="cut-audio-configured-counter"
+        >
+            0 / 0 files configured
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         PREVIEW / PLAYER
+    ========================== -->
+
+    <div class="cut-audio-preview">
+
+        <div class="cut-audio-player-toolbar">
+
+            <button
+                type="button"
+                id="cutAudioPlayPauseBtn"
+                class="cut-audio-player-btn"
+                disabled
+            >
+                <i data-lucide="play"></i>
+                <span>Play</span>
+            </button>
+
+            <button
+                type="button"
+                id="cutAudioPlaySelectionBtn"
+                class="cut-audio-player-btn"
+                disabled
+            >
+                <i data-lucide="circle-play"></i>
+                <span>Play Selection</span>
+            </button>
+
+            <button
+                type="button"
+                id="cutAudioStopBtn"
+                class="cut-audio-player-btn"
+                disabled
+            >
+                <i data-lucide="square"></i>
+                <span>Stop</span>
+            </button>
+
+            <div class="cut-audio-player-time">
+
+                <span id="cutAudioCurrentTime">
+                    00:00:00.000
+                </span>
+
+                <span class="cut-audio-time-separator">
+                    /
+                </span>
+
+                <span id="cutAudioTotalTime">
+                    00:00:00.000
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <!-- =========================
+             WAVEFORM
+        ========================== -->
+
+        <div
+            id="cutAudioWaveformStage"
+            class="cut-audio-waveform-stage"
+        >
+
+            <canvas
+                id="cutAudioWaveformCanvas"
+                class="cut-audio-waveform-canvas"
+            ></canvas>
+
+
+            <!-- Selected area -->
+
+            <div
+                id="cutAudioSelection"
+                class="cut-audio-selection"
+            >
+
+                <button
+                    type="button"
+                    id="cutAudioStartHandle"
+                    class="
+                        cut-audio-handle
+                        cut-audio-handle-start
+                    "
+                    aria-label="Selection start"
+                    disabled
+                ></button>
+
+
+                <button
+                    type="button"
+                    id="cutAudioEndHandle"
+                    class="
+                        cut-audio-handle
+                        cut-audio-handle-end
+                    "
+                    aria-label="Selection end"
+                    disabled
+                ></button>
+
+            </div>
+
+
+            <!-- Playhead -->
+
+            <div
+                id="cutAudioPlayhead"
+                class="cut-audio-playhead"
+            ></div>
+
+        </div>
+
+
+        <p
+            id="cutAudioWaveformMessage"
+            class="cut-audio-waveform-message"
+        >
+            Load an audio file to display its waveform.
+        </p>
+
+        <div class="cut-audio-waveform-option">
+
+            <label class="cut-audio-waveform-toggle">
+
+                <input
+                    type="checkbox"
+                    id="cutAudioSkipWaveform"
+                >
+
+                <span
+                    class="cut-audio-waveform-toggle-track"
+                    aria-hidden="true"
+                >
+                    <span
+                        class="cut-audio-waveform-toggle-thumb"
+                    ></span>
+                </span>
+
+                <span class="cut-audio-waveform-toggle-text">
+
+                    <strong>
+                        Skip waveform (recommended for large files)
+                    </strong>
+
+                    <small>
+                        Use a simple timeline without loading FFmpeg. Uncheck to request a waveform for supported files.
+                    </small>
+
+                </span>
+
+            </label>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         TIME SETTINGS
+    ========================== -->
+
+    <div class="cut-audio-time-grid">
+
+        <div class="cut-audio-field">
+
+            <label for="cutAudioStartInput">
+                Start
+            </label>
+
+            <input
+                type="text"
+                id="cutAudioStartInput"
+                value="00:00:00.000"
+                inputmode="decimal"
+                autocomplete="off"
+                disabled
+            >
+
+        </div>
+
+
+        <div class="cut-audio-field">
+
+            <label for="cutAudioEndInput">
+                End
+            </label>
+
+            <input
+                type="text"
+                id="cutAudioEndInput"
+                value="00:00:00.000"
+                inputmode="decimal"
+                autocomplete="off"
+                disabled
+            >
+
+        </div>
+
+
+        <div class="cut-audio-field">
+
+            <label>
+                Selected duration
+            </label>
+
+            <div
+                id="cutAudioSelectedDuration"
+                class="cut-audio-readonly-value"
+            >
+                00:00:00.000
+            </div>
+
+        </div>
+
+
+        <div class="cut-audio-field">
+
+            <label>
+                Output duration
+            </label>
+
+            <div
+                id="cutAudioOutputDuration"
+                class="cut-audio-readonly-value"
+            >
+                00:00:00.000
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         CUT MODE
+    ========================== -->
+
+    <div class="cut-audio-settings-group">
+
+        <h3>
+            Cut Mode
+        </h3>
+
+        <div class="cut-audio-mode-buttons">
+
+            <button
+                type="button"
+                class="
+                    cut-audio-mode-btn
+                    active
+                "
+                data-cut-mode="keep"
+                aria-pressed="true"
+                disabled
+            >
+                <i data-lucide="crop"></i>
+
+                <span>
+                    Keep Selection
+                </span>
+            </button>
+
+
+            <button
+                type="button"
+                class="cut-audio-mode-btn"
+                data-cut-mode="remove"
+                aria-pressed="false"
+                disabled
+            >
+                <i data-lucide="eraser"></i>
+
+                <span>
+                    Remove Selection
+                </span>
+            </button>
+
+        </div>
+
+        <p
+            id="cutAudioModeHelp"
+            class="cut-audio-help"
+        >
+            Keep only the selected section.
+        </p>
+
+    </div>
+
+
+    <!-- =========================
+         FADES
+    ========================== -->
+
+    <div class="cut-audio-settings-group">
+
+        <h3>
+            Fade
+        </h3>
+
+        <div class="cut-audio-fade-grid">
+
+            <!-- Fade In -->
+
+            <div class="cut-audio-fade-option">
+
+                <label class="cut-audio-checkbox-label">
+
+                    <input
+                        type="checkbox"
+                        id="cutAudioFadeInEnabled"
+                        disabled
+                    >
+
+                    <span>
+                        Fade in
+                    </span>
+
+                </label>
+
+                <div class="cut-audio-fade-duration">
+
+                    <input
+                        type="number"
+                        id="cutAudioFadeInDuration"
+                        value="1"
+                        min="0.1"
+                        max="10"
+                        step="0.1"
+                        disabled
+                    >
+
+                    <span>
+                        s
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- Fade Out -->
+
+            <div class="cut-audio-fade-option">
+
+                <label class="cut-audio-checkbox-label">
+
+                    <input
+                        type="checkbox"
+                        id="cutAudioFadeOutEnabled"
+                        disabled
+                    >
+
+                    <span>
+                        Fade out
+                    </span>
+
+                </label>
+
+                <div class="cut-audio-fade-duration">
+
+                    <input
+                        type="number"
+                        id="cutAudioFadeOutDuration"
+                        value="1"
+                        min="0.1"
+                        max="10"
+                        step="0.1"
+                        disabled
+                    >
+
+                    <span>
+                        s
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         OUTPUT
+    ========================== -->
+
+    <div class="cut-audio-settings-group">
+
+        <h3>
+            Output
+        </h3>
+
+        <div class="cut-audio-field">
+
+            <label for="cutAudioOutputFormat">
+                Output format
+            </label>
+
+            <select
+                id="cutAudioOutputFormat"
+                disabled
+            >
+
+                <option value="same">
+                    Same as source
+                </option>
+
+                <option value="mp3">
+                    MP3
+                </option>
+
+                <option value="wav">
+                    WAV
+                </option>
+
+                <option value="flac">
+                    FLAC
+                </option>
+
+                <option value="aac">
+                    AAC
+                </option>
+
+                <option value="m4a">
+                    M4A
+                </option>
+
+                <option value="ogg">
+                    OGG
+                </option>
+
+                <option value="opus">
+                    OPUS
+                </option>
+
+            </select>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         VALIDATION
+    ========================== -->
+
+    <div
+        id="cutAudioValidation"
+        data-eft-readiness-status
+        class="cut-audio-validation"
+        role="status"
+        aria-live="polite"
+    >
+        Choose an audio file and select the section to cut.
+    </div>
+
+</section>

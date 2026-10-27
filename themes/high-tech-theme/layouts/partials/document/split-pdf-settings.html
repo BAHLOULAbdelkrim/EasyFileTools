@@ -1,0 +1,72 @@
+<section
+    id="splitPdfSettings"
+    class="pdf-operation-settings"
+    aria-labelledby="chooseFormatLabel"
+>
+
+    <div class="pdf-operation-info">
+        Split one or more PDF files. Use one rule for every PDF, or configure each PDF independently.
+    </div>
+
+    <div class="pdf-setting-section eft-config-scope-card">
+        <div class="pdf-setting-title">Configuration scope</div>
+        <div class="pdf-setting-help">Apply the same split rule to every PDF or store independent settings for each file.</div>
+        <div class="eft-config-scope-actions" id="splitPdfConfigScope">
+            <button type="button" class="eft-config-scope-btn active" data-split-config-scope="all">Same configuration for all</button>
+            <button type="button" class="eft-config-scope-btn" data-split-config-scope="per-file">Custom per PDF</button>
+        </div>
+
+        <div id="splitPdfConfigFileRow" class="eft-config-file-row hidden">
+            <label for="splitPdfConfigFile">Configure PDF</label>
+            <select id="splitPdfConfigFile" disabled>
+                <option value="">Load a PDF first</option>
+            </select>
+            <div class="eft-config-note">Each PDF keeps its own split mode and page selection.</div>
+        </div>
+    </div>
+
+    <div id="splitPdfDocumentInfo" class="pdf-setting-section">
+        <div class="pdf-setting-title">Document</div>
+        <div id="splitPdfPageCount">No PDF loaded</div>
+    </div>
+
+    <div class="pdf-setting-section">
+        <div class="pdf-setting-title">Split mode</div>
+        <div class="pdf-choice-group">
+            <button type="button" class="pdf-choice-btn active" data-split-mode="extract">
+                <strong>Extract pages</strong>
+                <span>Selected pages → one PDF</span>
+            </button>
+            <button type="button" class="pdf-choice-btn" data-split-mode="pages">
+                <strong>Every page</strong>
+                <span>One PDF per page</span>
+            </button>
+            <button type="button" class="pdf-choice-btn" data-split-mode="chunks">
+                <strong>Every N pages</strong>
+                <span>Split into groups</span>
+            </button>
+        </div>
+    </div>
+
+    <div id="splitPdfExtractSettings" class="pdf-setting-section">
+        <div class="pdf-setting-title">Pages to extract</div>
+        <div class="pdf-setting-help">Examples: 1,3,5-8</div>
+        <input id="splitPdfPages" type="text" placeholder="1,3,5-8">
+    </div>
+
+    <div id="splitPdfChunkSettings" class="pdf-setting-section" style="display:none">
+        <div class="pdf-setting-title">Pages per PDF</div>
+        <input id="splitPdfChunkSize" type="number" min="1" max="100" value="5">
+    </div>
+
+    <div
+        id="splitPdfValidation"
+        data-eft-readiness-status
+        class="pdf-validation eft-readiness-note"
+        role="status"
+        aria-live="polite"
+    >
+        Load one or more PDF files.
+    </div>
+
+</section>

@@ -1,0 +1,34 @@
+{{ define "main" }}
+  <div class="container article">
+
+    <!-- Colonne centrale : contenu principal -->
+    <article class="content-column">
+      {{ partial
+          "common/page-heading.html"
+          (dict
+              "title" .Title
+              "icon" .Params.icon
+          )
+      }}
+      {{ with .Params.image }}<img class="article-image" src="{{ . | relURL }}" alt="{{ $.Title }}">{{ end }}
+      <aside class="toc">
+          <h2>Contents</h2>
+          {{ .TableOfContents }}
+      </aside>
+      <div class="article-body">
+        {{ .Content }}
+      </div>
+    </article>
+
+    <!-- Colonne droite : pub -->
+    <aside class="right-ad">
+      <div class="ad-slot ad-right">
+        <!-- Tu pourras mettre ici une image ou un script pub -->
+        <!-- Exemple : <img src="{{ "images/pub-right.jpg" | relURL }}" alt="Publicité droite"> -->
+      </div>
+    </aside>
+
+  </div>
+
+  {{ end }}
+

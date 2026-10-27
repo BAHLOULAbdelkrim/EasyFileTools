@@ -129,18 +129,20 @@ body{
 
 /* Logo */
 .logo {
-  width: 1000px;
-
-  object-fit: contain;
+    width: 200px;
+    height: auto;
+    max-width: none;
+    object-fit: contain;
+    display: block;
+    flex-shrink: 0;
 }
 
-.site-name {
+/*.site-name {
     display: flex;
     flex-direction: column;
-    align-items: center; /* Centre EasyFile et Tools */
+    align-items: center;
     line-height: 1.3;
-}
-
+} */
 
 /* Grille des menus du haut */
 .menu-grid {
@@ -168,7 +170,7 @@ body{
   transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease, color 0.25s ease;
   position: relative;       /* nécessaire pour le ::before */
   overflow: hidden;         /* nécessaire pour le ::before */
-  width: 190px;
+  width: 181px;
 }
 
 .menu-item a::before {
@@ -201,6 +203,72 @@ body{
   color: var(--menu-hover-text);
   transform: translateY(-2px);
   box-shadow: 0 6px 14px rgba(0,0,0,0.12);
+}
+
+/* =========================================
+   MENUS PRINCIPAUX DÉSACTIVÉS
+========================================= */
+
+.menu-item a.operation-disabled {
+
+    background: #e5e7eb;
+
+    color: #9ca3af;
+
+    cursor: not-allowed;
+
+    opacity: 0.65;
+
+    transform: none;
+
+    box-shadow: none;
+
+    pointer-events: none;
+}
+
+
+/* PAS DE HOVER */
+
+.menu-item a.operation-disabled:hover {
+
+    background: #e5e7eb;
+
+    color: #9ca3af;
+
+    transform: none;
+
+    box-shadow: none;
+}
+
+
+/* PAS DE BRILLANCE */
+
+.menu-item a.operation-disabled::before {
+
+    display: none;
+}
+
+/* =========================================
+   COMING SOON
+========================================= */
+
+.coming-soon {
+
+    margin-left: auto;
+
+    padding: 3px 7px;
+
+    border-radius: 999px;
+
+    background: #d1d5db;
+
+    color: #6b7280;
+
+    font-size: 0.72rem;
+
+    font-weight: 700;
+
+    white-space: nowrap;
 }
 
 /* Header et structure existants */
@@ -298,7 +366,11 @@ body{
 
 .submenus li a {
   position: relative;
-  display: block;
+  
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
   padding: 10px;
   background: var(--submenu-bg);
   color: var(--submenu-text);
@@ -307,6 +379,12 @@ body{
   font-weight: 600;
   overflow: hidden;
   transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease, color 0.25s ease;
+}
+
+.submenu-icon {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
 }
 
 /* Avant c'était comme ça : */
@@ -353,6 +431,7 @@ body{
 }
 
 .submenus {
+  margin-top: 2rem;    /* espace apres upload/file-list sur les pages de menu */
   margin-bottom: 2rem; /* espace de 32px entre la liste et la zone centrale */
 }
 
@@ -360,6 +439,357 @@ body{
   0% { left: -75%; }
   100% { left: 125%; }
 }
+
+
+/* =========================================
+   SOUS-MENUS DÉSACTIVÉS
+========================================= */
+
+.submenus li a.operation-disabled {
+
+    background: #e5e7eb;
+    color: #9ca3af;
+    cursor: not-allowed;
+    opacity: 0.65;
+
+    transform: none;
+    box-shadow: none;
+
+    pointer-events: none;
+}
+
+
+/* PAS DE HOVER SUR UN OUTIL DÉSACTIVÉ */
+
+.submenus li a.operation-disabled:hover {
+
+    background: #e5e7eb;
+
+    color: #9ca3af;
+
+    transform: none;
+
+    box-shadow: none;
+
+}
+
+
+/* PAS D'EFFET DE BRILLANCE */
+
+.submenus li a.operation-disabled::before {
+
+    display: none;
+
+}
+
+
+
+/* =========================================
+   MORE OPERATIONS
+========================================= */
+
+.more-operations {
+
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+
+}
+
+
+/* TITRE */
+
+.more-operations-title {
+
+    margin-bottom: 1rem;
+
+}
+
+
+/* LISTE HORIZONTALE */
+
+.more-operations-list {
+
+    display: flex;
+
+    flex-wrap: wrap;
+
+    gap: 10px;
+
+    align-items: stretch;
+
+}
+
+
+/* BOUTONS */
+
+.more-operation-btn {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 8px;
+
+    padding: 10px 16px;
+
+    background: var(--submenu-bg);
+
+    color: var(--submenu-text);
+
+    border: none;
+
+    border-radius: 6px;
+
+    text-decoration: none !important;
+
+    font-weight: 600;
+
+    font-family: inherit;
+
+    font-size: inherit;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease,
+        background 0.25s ease,
+        color 0.25s ease;
+
+}
+
+
+/* ICÔNES */
+
+.more-operation-btn svg {
+
+    width: 18px;
+
+    height: 18px;
+
+    flex-shrink: 0;
+
+}
+
+
+/* HOVER */
+
+.more-operation-btn:hover {
+
+    background: var(--submenu-hover-bg);
+
+    color: var(--submenu-hover-text);
+
+    transform: scale(1.05);
+
+    box-shadow: 0 4px 15px rgba(0,0,0,0.25);
+
+}
+
+
+/* BOUTON DÉPLIER / REPLIER */
+
+.more-operations-toggle {
+
+    min-width: 100px;
+
+    background: transparent;
+
+    color: var(--violet);
+
+    border: 2px dashed var(--violet);
+
+    font-weight: 700;
+
+}
+
+.more-operations-toggle:hover {
+
+    background: var(--menu-bg);
+
+    color: var(--violet);
+
+    transform: scale(1.05);
+
+    box-shadow: none;
+
+}
+
+/* =========================================
+   TEXTE DESCRIPTIF
+========================================= */
+
+/*
+
+.category-intro {
+    margin: 1rem auto 1.5rem auto;
+    text-align: center;
+
+    font-size: 1.25rem;
+    font-weight: 700;
+    font-style: italic;
+    line-height: 4.0;
+
+    color: var(--green-text);
+
+    letter-spacing: 0.2px;
+}
+
+*/
+
+.category-intro {
+    margin: 1rem auto 1.5rem auto;
+    text-align: center;
+
+    font-family: "Segoe UI", system-ui, sans-serif;
+    font-size: 1.4rem;
+    font-weight: 650;
+    font-style: italic;
+    /* Avoid 4x line spacing on narrow screens and the oversized text LCP box. */
+    line-height: 1.5;
+
+    color: var(--green-text);
+}
+
+/* =========================================
+   UPLOAD SECTION TITLE
+========================================= */
+
+.upload-section-title {
+
+    margin: -20px 0 20px 0;
+
+    text-align: center;
+
+    font-size: 26px;
+    font-weight: 700;
+    line-height: 1.25;
+
+    /* color: #ad33ff; */
+    color: var(--violet);
+    opacity: 0.81;
+
+}
+
+/* =========================================
+   COMMON PAGE HEADING
+========================================= */
+
+.page-heading {
+
+    min-height: 52px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 12px;
+
+    margin: 0 0 18px 0;
+
+}
+
+
+.page-heading-title {
+
+    margin: 0;
+
+    text-align: center;
+
+    font-size: 42px;
+    font-weight: 800;
+    line-height: 1.15;
+
+    color: var(--violet);
+
+}
+
+.page-heading-title .green-text {
+    color: var(--green-text);
+}
+
+.page-heading-icon {
+
+    width: 30px;
+    height: 30px;
+
+    flex-shrink: 0;
+
+    color: var(--violet);
+
+}
+
+.page-title {
+    text-align: center;
+    font-size: 42px;
+    font-weight: 800;
+    color: var(--violet);
+    margin-top: -20px;
+    margin-bottom: 20px;
+}
+
+/* =========================================
+   MORE OPERATIONS — BOUTON DÉSACTIVÉ
+========================================= */
+
+.more-operation-btn.operation-disabled {
+
+    background: #e5e7eb;
+
+    color: #9ca3af;
+
+    cursor: not-allowed;
+
+    opacity: 0.65;
+
+    transform: none;
+
+    box-shadow: none;
+
+}
+
+
+.more-operation-btn.operation-disabled:hover {
+
+    background: #e5e7eb;
+
+    color: #9ca3af;
+
+    transform: none;
+
+    box-shadow: none;
+
+}
+
+
+
+/* =========================================
+   MORE OPERATIONS — TITRE
+========================================= */
+
+.more-operations-title {
+
+    display: flex;
+
+    align-items: center;
+
+    margin: 0 0 1rem 0;
+
+    padding-bottom: 8px;
+
+    color: var(--violet);
+
+    font-size: 1.35rem;
+
+    font-weight: 700;
+
+    border-bottom: 2px solid var(--menu-bg);
+
+}
+
+
 
 /*-------------------------------------------*/
 /*              signle.html                  */
@@ -670,3 +1100,210 @@ body.menu-open {
 }
 
 
+
+
+/* V1 Lot 4 — Visible focus on keyboard navigation (no layout changes). */
+.top-menus a:focus-visible,
+.submenus a:focus-visible,
+.home-link:focus-visible,
+.footer-policy-links a:focus-visible,
+.eft-mobile-navigation summary:focus-visible,
+.eft-mobile-navigation a:focus-visible {
+  outline: 3px solid #2563eb;
+  outline-offset: 3px;
+}
+
+/* Desktop: existing ten-category grid remains the navigation. */
+.eft-mobile-navigation { display: none; }
+
+@media (max-width: 900px) {
+  /* The original top menu grid is hidden on small screens; expose the
+     same available categories through a native keyboard/touch control. */
+  .header-container { justify-content: space-between; }
+  .eft-mobile-navigation { display: block; flex-shrink: 0; }
+  .eft-mobile-navigation > summary {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.65rem 0.8rem;
+    background: var(--menu-bg);
+    color: var(--violet);
+    font-weight: 700;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+  .eft-mobile-navigation > summary::-webkit-details-marker { display: none; }
+  .eft-mobile-navigation > summary:hover,
+  .eft-mobile-navigation[open] > summary {
+    background: var(--menu-hover-bg);
+    color: var(--menu-hover-text);
+  }
+  .eft-mobile-navigation nav {
+    position: absolute;
+    top: 100%;
+    left: 12px;
+    right: 12px;
+    max-height: min(65vh, 450px);
+    overflow-y: auto;
+    z-index: 1100;
+    background: #fff;
+    border: 1px solid #ddd6fe;
+    border-radius: 10px;
+    box-shadow: 0 8px 22px rgba(0,0,0,0.15);
+    padding: 10px;
+  }
+  .eft-mobile-navigation ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .eft-mobile-navigation li { margin: 0; }
+  .eft-mobile-navigation a,
+  .eft-mobile-navigation .eft-mobile-unavailable {
+    display: block;
+    padding: 0.65rem 0.75rem;
+    border-radius: 6px;
+    text-decoration: none;
+    color: var(--violet);
+    font-weight: 600;
+  }
+  .eft-mobile-navigation a:hover,
+  .eft-mobile-navigation a:focus-visible { background: var(--menu-hover-bg); }
+  .eft-mobile-navigation .eft-mobile-unavailable {
+    color: #6b7280;
+    font-weight: 400;
+  }
+}
+
+
+
+
+/* =========================================
+   MOBILE — CATEGORY SUBMENUS
+========================================= */
+
+@media (max-width: 900px) {
+
+  .submenus ul {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 10px;
+  }
+
+  .submenus li {
+    min-width: 0;
+  }
+
+  .submenus li a {
+    box-sizing: border-box;
+    width: 100%;
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+
+}
+
+
+
+
+/* =========================================
+   MOBILE V1 — PAGE WIDTH AND SPACING
+========================================= */
+
+@media (max-width: 900px) {
+
+  .site-main {
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+  }
+
+  .container.section-list,
+  .container.home-content {
+    grid-template-columns: minmax(0, 1fr) !important;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+  }
+
+  .container.section-list > .content-column,
+  .container.home-content > .content-column {
+    grid-column: 1 !important;
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+  }
+
+  #upload-zone-container,
+  #drop-zone,
+  .submenus,
+  .submenus ul {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+  }
+
+  .submenus ul {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .submenus li,
+  .submenus li a,
+  .submenus li a span {
+    min-width: 0;
+  }
+
+  .submenus li a {
+    box-sizing: border-box;
+    overflow-wrap: anywhere;
+  }
+
+}
+
+
+
+/* =========================================
+   EASYFILE V1 — MORE TOOLS TOUCH FEEDBACK
+========================================= */
+
+@media (hover: none), (pointer: coarse) {
+
+  /* Normal state: prevent sticky hover */
+  .more-operations-list .more-operation-btn:not(.operation-disabled):hover {
+    background: var(--submenu-bg);
+    color: var(--submenu-text);
+    transform: none;
+    box-shadow: none;
+  }
+
+  /* Expand / Collapse button */
+  .more-operations-list .more-operations-toggle:hover {
+    background: transparent;
+    color: var(--violet);
+    transform: none;
+    box-shadow: none;
+  }
+
+  /* Brief feedback while touching */
+  .more-operations-list .more-operation-btn:not(.operation-disabled):active {
+    background: var(--submenu-hover-bg);
+    color: var(--submenu-hover-text);
+    transform: scale(1.03);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  }
+
+  .more-operations-list .more-operations-toggle:active {
+    background: var(--menu-bg);
+    color: var(--violet);
+    transform: scale(1.03);
+  }
+
+  .more-operations-list .more-operation-btn {
+    transition-duration: 0.12s;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: rgba(107, 33, 168, 0.15);
+  }
+
+}

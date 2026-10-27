@@ -1,0 +1,30 @@
+<div class="page-heading">
+
+    {{ with .icon }}
+
+        <i
+            class="page-heading-icon"
+            data-lucide="{{ . }}"
+        ></i>
+
+    {{ end }}
+
+
+    <h1 class="page-heading-title">
+        {{ .title }}
+        {{ with .titleGreen }}
+            <span class="green-text">{{ . }}</span>
+        {{ end }}
+    </h1>
+
+
+    {{ with .icon }}
+
+        <i
+            class="page-heading-icon"
+            data-lucide="{{ . }}"
+        ></i>
+
+    {{ end }}
+
+</div>

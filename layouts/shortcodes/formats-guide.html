@@ -1,0 +1,6 @@
+{{ $category := .Get "category" }}
+
+{{ partial "common/formats-guide.html" (dict
+    "category" $category
+    "page" .Page
+) }}

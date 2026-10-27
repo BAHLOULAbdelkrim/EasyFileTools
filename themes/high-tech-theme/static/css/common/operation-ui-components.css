@@ -1,0 +1,454 @@
+/* =========================================================
+   EASYFILE TOOLS — GENERIC OPERATION UI COMPONENTS
+   Shared visual primitives for all operation families.
+========================================================= */
+
+/* ---------- Generic gradient range ---------- */
+.eft-range {
+    --eft-range-progress: 50%;
+    width: 100%;
+    height: 26px;
+    margin: 4px 0;
+    background: transparent;
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+}
+
+.eft-range::-webkit-slider-runnable-track {
+    width: 100%;
+    height: 8px;
+    background: linear-gradient(
+        to right,
+        var(--green-text) 0%,
+        var(--violet) var(--eft-range-progress),
+        #d1d5db var(--eft-range-progress),
+        #d1d5db 100%
+    );
+    border-radius: 999px;
+}
+
+.eft-range::-webkit-slider-thumb {
+    width: 18px;
+    height: 18px;
+    margin-top: -5px;
+    border: 0;
+    border-radius: 50%;
+    background: var(--green-text);
+    box-shadow: 0 2px 7px rgba(4, 120, 87, 0.30);
+    cursor: grab;
+    appearance: none;
+    -webkit-appearance: none;
+    transition: transform .2s ease, box-shadow .2s ease, opacity .2s ease;
+}
+
+.eft-range:not(:disabled)::-webkit-slider-thumb:hover {
+    transform: scale(1.12);
+    box-shadow: 0 3px 10px rgba(4, 120, 87, 0.38);
+}
+
+.eft-range:active:not(:disabled)::-webkit-slider-thumb { cursor: grabbing; }
+
+.eft-range::-moz-range-track {
+    width: 100%;
+    height: 8px;
+    background: linear-gradient(
+        to right,
+        var(--green-text) 0%,
+        var(--violet) var(--eft-range-progress),
+        #d1d5db var(--eft-range-progress),
+        #d1d5db 100%
+    );
+    border: 0;
+    border-radius: 999px;
+}
+
+.eft-range::-moz-range-thumb {
+    width: 18px;
+    height: 18px;
+    border: 0;
+    border-radius: 50%;
+    background: var(--green-text);
+    box-shadow: 0 2px 7px rgba(4, 120, 87, 0.30);
+    cursor: grab;
+    transition: transform .2s ease, box-shadow .2s ease, opacity .2s ease;
+}
+
+.eft-range:not(:disabled)::-moz-range-thumb:hover { transform: scale(1.12); }
+.eft-range:focus-visible { outline: none; }
+.eft-range:disabled { cursor: not-allowed; opacity: .48; }
+.eft-range:disabled::-webkit-slider-thumb,
+.eft-range:disabled::-moz-range-thumb { cursor: not-allowed; box-shadow: none; }
+
+/* ---------- Generic color picker ---------- */
+.eft-color-picker {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 205px;
+    padding: 7px 9px;
+    border: 1px solid #ddd6fe;
+    border-radius: 11px;
+    background: var(--violet-light);
+    transition: background-color .2s ease, border-color .2s ease, box-shadow .2s ease;
+}
+
+.eft-color-picker:hover:not(.disabled) {
+    background: var(--green-hover);
+    border-color: #86efac;
+    box-shadow: 0 0 0 2px rgba(4,120,87,.06);
+}
+
+.eft-color-swatch {
+    position: relative;
+    width: 42px;
+    height: 34px;
+    flex: 0 0 auto;
+    overflow: hidden;
+    border: 2px solid #fff;
+    border-radius: 9px;
+    background: var(--eft-color, #ffffff);
+    box-shadow: 0 0 0 1px #c4b5fd, 0 2px 7px rgba(0,0,0,.10);
+    cursor: pointer;
+}
+
+.eft-color-swatch input[type="color"] {
+    position: absolute;
+    inset: -8px;
+    width: calc(100% + 16px);
+    height: calc(100% + 16px);
+    padding: 0;
+    border: 0;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.eft-color-code {
+    min-width: 72px;
+    color: var(--green-text);
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: .02em;
+}
+
+.eft-color-reset {
+    margin-left: auto;
+    padding: 6px 8px;
+    border: 1px solid #c4b5fd;
+    border-radius: 8px;
+    background: #fff;
+    color: var(--violet);
+    font-size: 12px;
+    font-weight: 750;
+    cursor: pointer;
+    transition: background-color .2s ease, border-color .2s ease, color .2s ease;
+}
+
+.eft-color-reset:hover:not(:disabled) {
+    background: var(--green-hover);
+    border-color: #86efac;
+    color: var(--green-text);
+}
+
+.eft-color-picker.disabled,
+.eft-color-picker:has(input:disabled) { opacity: .5; }
+.eft-color-picker:has(input:disabled) .eft-color-swatch,
+.eft-color-picker:has(input:disabled) .eft-color-reset { cursor: not-allowed; }
+
+/* ---------- Generic status / information ---------- */
+.eft-status-note {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    padding: 12px 14px;
+    border: 1px solid #a7f3d0;
+    border-radius: 10px;
+    background: var(--green-hover);
+    color: var(--green-text);
+    font-size: 13px;
+    font-weight: 650;
+}
+.eft-status-note svg { width: 18px; height: 18px; flex: 0 0 auto; }
+
+/* ---------- Generic result card ---------- */
+.eft-result-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+    margin-top: 24px;
+    padding: 18px;
+    border: 1px solid var(--green-text);
+    border-radius: 14px;
+    background: var(--green-hover);
+}
+.eft-result-card.hidden { display: none; }
+.eft-result-card-info { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.eft-result-card-info strong { color: var(--green-text); font-weight: 800; overflow-wrap: anywhere; }
+.eft-result-card-info span { color: #4b5563; font-size: 13px; font-weight: 650; }
+.eft-result-download {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 10px 14px;
+    border: 0;
+    border-radius: 10px;
+    background: var(--violet);
+    color: #fff;
+    font: inherit;
+    font-weight: 800;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: transform .2s ease, box-shadow .2s ease, opacity .2s ease;
+}
+.eft-result-download::before {
+    content: "";
+    position: absolute;
+    top: -35%;
+    left: -45%;
+    width: 28%;
+    height: 170%;
+    background: rgba(255,255,255,.42);
+    transform: skewX(-20deg);
+    transition: left .55s ease;
+    pointer-events: none;
+}
+.eft-result-download:hover:not(:disabled)::before { left: 125%; }
+.eft-result-download:hover:not(:disabled) { transform: translateY(-1px); box-shadow: 0 5px 14px rgba(91,33,182,.22); }
+.eft-result-download:disabled { opacity: .5; cursor: not-allowed; }
+
+/* ---------- Contextually disabled setting ---------- */
+.eft-setting-disabled { opacity: .5; }
+
+@media (max-width: 650px) {
+    .eft-result-card { align-items: stretch; flex-direction: column; }
+    .eft-result-download { width: 100%; }
+    .eft-color-picker { width: 100%; box-sizing: border-box; }
+}
+
+/* Specific operation styles may target color inputs by ID; the generic picker owns their box. */
+.eft-color-swatch input[type="color"] {
+    width: calc(100% + 16px) !important;
+    height: calc(100% + 16px) !important;
+    padding: 0 !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    opacity: 0 !important;
+}
+
+
+/* ---------- Generic readiness note base ---------- */
+.eft-readiness-note {
+    margin-top: 14px;
+    padding: 12px 14px;
+    border: 1px solid #d1d5db;
+    border-radius: 10px;
+    background: #f8fafc;
+    color: #64748b;
+    font-size: 13px;
+    font-weight: 650;
+    transition: background-color .2s ease, border-color .2s ease, color .2s ease;
+}
+
+.eft-readiness-note.valid {
+    border-color: #a7f3d0;
+    background: var(--green-hover);
+    color: var(--green-text);
+}
+
+/* ---------- Generic operation readiness lifecycle states ---------- */
+[data-eft-readiness-status].eft-readiness-processing {
+    border-color: #ddd6fe !important;
+    background: var(--violet-light) !important;
+    color: var(--violet) !important;
+}
+
+[data-eft-readiness-status].eft-readiness-paused {
+    border-color: #fde68a !important;
+    background: #fffbeb !important;
+    color: #a16207 !important;
+}
+
+[data-eft-readiness-status].eft-readiness-completed {
+    border-color: #d1d5db !important;
+    background: #f8fafc !important;
+    color: #64748b !important;
+    font-weight: 700;
+}
+
+[data-eft-readiness-status].eft-readiness-cancelled {
+    border-color: #d1d5db !important;
+    background: #f8fafc !important;
+    color: #64748b !important;
+}
+
+/* ---------- Generic preview panel ---------- */
+.eft-preview-card {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    border: 1px solid #ddd6fe;
+    border-radius: 14px;
+    background: var(--submenu-bg);
+    transition: background-color .25s ease, border-color .25s ease, box-shadow .25s ease;
+}
+.eft-preview-card:hover {
+    background: #f0fdf4;
+    border-color: #86efac;
+    box-shadow: 0 5px 18px rgba(4,120,87,.08);
+}
+.eft-preview-card > summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    padding: 16px 18px;
+    color: var(--green-text);
+    font-size: 17px;
+    font-weight: 800;
+    cursor: pointer;
+    list-style: none;
+    user-select: none;
+}
+.eft-preview-card > summary::-webkit-details-marker { display: none; }
+.eft-preview-card > summary::after {
+    content: "⌄";
+    flex: 0 0 auto;
+    color: var(--violet);
+    font-size: 22px;
+    line-height: 1;
+    transform: rotate(0deg);
+    transition: transform .2s ease;
+}
+.eft-preview-card[open] > summary::after { transform: rotate(180deg); }
+.eft-preview-body { padding: 0 18px 18px; }
+.eft-preview-help { margin: -4px 0 14px; color: #6b7280; font-size: 13px; line-height: 1.45; }
+.eft-preview-toolbar {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: 14px;
+    margin-bottom: 12px;
+}
+.eft-preview-toolbar label {
+    display: grid;
+    gap: 6px;
+    min-width: min(100%, 300px);
+    color: var(--green-text);
+    font-size: 13px;
+    font-weight: 750;
+}
+.eft-preview-toolbar select {
+    width: 100%;
+    padding: 9px 10px;
+    border: 1px solid #cfd6e2;
+    border-radius: 9px;
+    background: #fff;
+    color: inherit;
+}
+.eft-preview-hint { color: #6b7280; font-size: 13px; font-weight: 650; }
+.eft-preview-stage {
+    position: relative;
+    display: grid;
+    place-items: center;
+    min-height: 250px;
+    overflow: hidden;
+    border: 1px solid #c4b5fd;
+    border-radius: 14px;
+    background-color: #fff;
+    background-image:
+        linear-gradient(45deg,#e5e7eb 25%,transparent 25%),
+        linear-gradient(-45deg,#e5e7eb 25%,transparent 25%),
+        linear-gradient(45deg,transparent 75%,#e5e7eb 75%),
+        linear-gradient(-45deg,transparent 75%,#e5e7eb 75%);
+    background-size: 20px 20px;
+    background-position: 0 0,0 10px,10px -10px,-10px 0;
+}
+.eft-preview-empty {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    padding: 20px;
+    color: #64748b;
+    font-weight: 650;
+    text-align: center;
+    background: rgba(255,255,255,.74);
+}
+
+/* ---------- Generic local file picker ---------- */
+.eft-file-picker { display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
+.eft-file-picker input[type="file"] {
+    position:absolute !important;
+    width:1px !important;
+    height:1px !important;
+    overflow:hidden !important;
+    clip:rect(0 0 0 0) !important;
+    white-space:nowrap !important;
+    clip-path:inset(50%) !important;
+}
+.eft-file-picker-button {
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:7px;
+    padding:9px 12px;
+    border:1px solid #c4b5fd;
+    border-radius:9px;
+    background:#fff;
+    color:var(--violet);
+    font-size:13px;
+    font-weight:800;
+    cursor:pointer;
+    transition:background-color .2s ease,border-color .2s ease,color .2s ease,transform .2s ease;
+}
+.eft-file-picker-button:hover { background:var(--green-hover); border-color:#86efac; color:var(--green-text); transform:translateY(-1px); }
+.eft-file-picker-name { min-width:0; max-width:360px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; color:#6b7280; font-size:13px; font-weight:650; }
+
+/* ---------- Generic all-files / per-file configuration ---------- */
+.eft-config-scope-card { display:grid; gap:12px; }
+.eft-config-scope-actions { display:flex; flex-wrap:wrap; gap:10px; }
+.eft-config-scope-btn {
+    padding:9px 13px;
+    border:1px solid #cfd6e2;
+    border-radius:9px;
+    background:#fff;
+    color:inherit;
+    font:inherit;
+    font-weight:700;
+    cursor:pointer;
+    transition:background-color .2s ease,border-color .2s ease,color .2s ease,transform .2s ease,box-shadow .2s ease;
+}
+.eft-config-scope-btn:hover:not(:disabled) { background:var(--green-hover); border-color:#86efac; color:var(--green-text); transform:translateY(-1px); }
+.eft-config-scope-btn.active { background:var(--violet-light); border-color:var(--violet); color:var(--violet); box-shadow:0 0 0 2px rgba(91,33,182,.10); }
+.eft-config-file-row { display:grid; gap:7px; margin-top:2px; }
+.eft-config-file-row label { color:var(--green-text); font-size:13px; font-weight:750; }
+.eft-config-file-row select { width:100%; max-width:420px; padding:9px 10px; border:1px solid #cfd6e2; border-radius:9px; background:#fff; }
+.eft-config-note { color:#6b7280; font-size:12px; line-height:1.45; }
+
+@media (max-width: 650px) {
+    .eft-preview-toolbar { align-items:stretch; flex-direction:column; }
+    .eft-file-picker { align-items:stretch; flex-direction:column; }
+    .eft-file-picker-button { width:100%; box-sizing:border-box; }
+    .eft-file-picker-name { max-width:100%; }
+    .eft-config-scope-actions { flex-direction:column; }
+    .eft-config-scope-btn { width:100%; }
+}
+
+/* V1: show potential information loss before a user starts conversion. */
+.eft-conversion-loss-note {
+    margin: 12px 0 16px;
+    padding: 10px 12px;
+    border: 1px solid #f0d79d;
+    border-radius: 8px;
+    background: #fffbeb;
+    color: #713f12;
+    font-size: 13px;
+    line-height: 1.5;
+}
+.eft-conversion-loss-note strong { font-weight: 700; }
+.eft-document-scope-note { margin: 6px 0 12px; font-size: 14px; line-height: 1.55; }
+.eft-document-scope-note strong { font-weight: 700; }

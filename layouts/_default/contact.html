@@ -1,0 +1,74 @@
+{{ define "main" }}
+<article class="about-page contact-page">
+  <header class="about-page-header">
+    {{ partial "common/page-heading.html" (dict "title" .Title) }}
+  </header>
+  <div class="about-page-body">{{ .Content }}</div>
+  <section class="eft-contact-panel" aria-labelledby="contact-form-title">
+    <h2 id="contact-form-title">Contact us / Report a problem</h2>
+    <p>Send a short technical report or suggestion anonymously. We do not ask for your name, email address or screenshots. Replies are not possible without a return address.</p>
+    {{ $sitekey := .Site.Params.contactTurnstileSiteKey | default "" }}
+    {{ if not $sitekey }}
+    <p class="eft-contact-notice" role="status">The reporting form is being prepared and is not accepting messages yet.</p>
+    {{ end }}
+    <form id="eft-contact-form" action="/api/contact" method="post" data-ready="{{ if $sitekey }}true{{ else }}false{{ end }}" novalidate>
+      <div class="eft-contact-grid">
+        <div>
+          <label for="eft-contact-kind">Message type <span aria-hidden="true">*</span></label>
+          <select id="eft-contact-kind" name="kind" required>
+            <option value="problem">Report a problem</option>
+            <option value="suggestion">Suggest an improvement</option>
+            <option value="question">General question</option>
+            <option value="privacy">Privacy concern</option>
+          </select>
+        </div>
+        <div>
+          <label for="eft-contact-tool">Tool name <span class="eft-contact-problem-required">*</span></label>
+          <select id="eft-contact-tool" name="tool">
+            <option value="">Select a tool (if applicable)</option>
+            {{ range .Site.Pages }}{{ if .Params.operation }}
+            <option value="{{ .Title }}">{{ .Title }}</option>
+            {{ end }}{{ end }}
+            <option value="Other">Other / not listed</option>
+          </select>
+        </div>
+        <div>
+          <label for="eft-contact-browser">Used browser</label>
+          <select id="eft-contact-browser" name="browser">
+            <option value="">Not specified</option><option>Chrome</option><option>Edge</option><option>Firefox</option><option>Safari</option><option>Other</option><option>Not sure</option>
+          </select>
+        </div>
+        <div>
+          <label for="eft-contact-os">Operating system</label>
+          <select id="eft-contact-os" name="os">
+            <option value="">Not specified</option><option>Windows</option><option>macOS</option><option>Linux</option><option>Android</option><option>iOS</option><option>Other</option><option>Not sure</option>
+          </select>
+        </div>
+        <div>
+          <label for="eft-contact-input">Input file format</label>
+          <input id="eft-contact-input" name="inputFormat" maxlength="12" placeholder="e.g. PNG" autocomplete="off" pattern="[A-Za-z0-9]{1,12}">
+        </div>
+        <div>
+          <label for="eft-contact-output">Output file format</label>
+          <input id="eft-contact-output" name="outputFormat" maxlength="12" placeholder="e.g. BMP" autocomplete="off" pattern="[A-Za-z0-9]{1,12}">
+        </div>
+      </div>
+      <label for="eft-contact-description">Description (30 words maximum) <span aria-hidden="true">*</span></label>
+      <textarea id="eft-contact-description" name="description" rows="3" maxlength="600" required aria-describedby="eft-contact-counter" placeholder="Briefly describe what happened."></textarea>
+      <div class="eft-contact-counter" id="eft-contact-counter" aria-live="polite">0 / 30 words</div>
+      <label for="eft-contact-steps">Steps to reproduce the problem <span class="eft-contact-problem-required">*</span></label>
+      <textarea id="eft-contact-steps" name="steps" rows="4" maxlength="2000" placeholder="1. Select Convert Image ..."></textarea>
+      <label for="eft-contact-error">Any error message displayed (optional)</label>
+      <textarea id="eft-contact-error" name="errorMessage" rows="3" maxlength="1500" placeholder="Paste an error message, if any."></textarea>
+      <div class="eft-contact-honey" aria-hidden="true"><label for="eft-contact-website">Leave this field blank</label><input id="eft-contact-website" name="website" tabindex="-1" autocomplete="off"></div>
+      <p class="eft-contact-notice">Please do not include names, email addresses, passwords, access tokens, private file contents or other confidential information in your message. No files or screenshots can be uploaded.</p>
+      <p class="eft-contact-notice">Submitting this form sends your report to our hosting infrastructure and email provider. Network providers may process your IP address even though the report itself does not include it. Read our <a href="{{ "/privacy/" | relURL }}">Privacy Policy</a>.</p>
+      {{ if $sitekey }}
+        <div class="cf-turnstile" data-sitekey="{{ $sitekey }}" data-theme="light"></div>
+      {{ end }}
+      <button class="eft-contact-submit" type="submit" {{ if not $sitekey }}disabled{{ end }}>Send message</button>
+      <p id="eft-contact-status" class="eft-contact-status" aria-live="polite" role="status"></p>
+    </form>
+  </section>
+</article>
+{{ end }}

@@ -1,8 +1,8 @@
 console.log("main.js loaded");
 
-window.MAX_FILES = APP_CONFIG.maxFiles;
+window.MAX_FILES = Math.max(...Object.values(EasyFilePolicy.profiles).map(p => p.maxFiles));
 
-window.MAX_SIZE = APP_CONFIG.maxFileSizeMB * 1024 * 1024;
+window.MAX_SIZE = Math.max(...Object.values(EasyFilePolicy.profiles).map(p => p.maxFileMB)) * EasyFilePolicy.MB;
 
 let selectedFiles = [];
 
@@ -65,16 +65,7 @@ function initializeUploadSettings() {
        ACCEPT FILE TYPES
     ========================= */
 
-    const acceptedExtensions = Object.values(FILE_CATEGORIES)
-        .flat()
-        .map(extension => "." + extension);
-
-    fileInput.accept = [
-        "image/*",
-        "video/*",
-        "audio/*",
-        ...acceptedExtensions
-    ].join(",");
+    fileInput.accept = getAllSupportedFileAccept();
 
 
     /* =========================
@@ -82,7 +73,7 @@ function initializeUploadSettings() {
     ========================= */
 
     uploadInfo.textContent =
-        `Maximum : ${APP_CONFIG.maxFiles} files — ${APP_CONFIG.maxFileSizeMB} MB/file`;
+        `Limits vary by category: Image 40 MB, Audio 100 MB, Video 100 MB, PDF 60 MB per file.`;
 }
 
 initializeUploadSettings();
@@ -95,6 +86,7 @@ initializeUploadSettings();
 window.handleUploadedFiles = async function(files) {
 
     const incoming = Array.from(files);
+    const deferredPdfEnrichment = [];
 
     for (const file of incoming) {
 
@@ -124,7 +116,9 @@ window.handleUploadedFiles = async function(files) {
             continue;
         }
 
-        if (selectedFiles.length >= MAX_FILES) {
+        const categoryProfile = EasyFilePolicy.resolve({ category });
+        if (!categoryProfile) { alert("No V1 file tool is available for this format yet."); continue; }
+        if (selectedFiles.length >= categoryProfile.maxFiles) {
 
             alert(
                 `Maximum ${MAX_FILES} files allowed.`
@@ -132,6 +126,13 @@ window.handleUploadedFiles = async function(files) {
 
             break;
         }
+
+        const policyResult = EasyFilePolicy.validate(file, {
+            category,
+            count: selectedFiles.length,
+            totalBytes: selectedFiles.reduce((sum, item) => sum + item.file.size, 0)
+        });
+        if (!policyResult.ok) { alert(`${file.name}: ${policyResult.reason}`); continue; }
 
         const fileData = {
 
@@ -150,6 +151,53 @@ window.handleUploadedFiles = async function(files) {
         };
 
         selectedFiles.push(fileData);
+
+
+        /*
+         * PDF parsing/rendering can be much slower than simply adding
+         * the File object. Never make the homepage wait for page count
+         * or thumbnail before showing and persisting the selection.
+         */
+        if (
+            category === "Document" &&
+            file.name.toLowerCase().endsWith(".pdf")
+        ) {
+
+            fileData.previewType = "icon";
+
+            deferredPdfEnrichment.push(
+                (async () => {
+
+                    try {
+                        if (typeof getPdfPageCount === "function") {
+                            fileData.meta.pages =
+                                await getPdfPageCount(file);
+                        }
+
+                        if (typeof getPdfThumbnail === "function") {
+                            const thumbnail =
+                                await getPdfThumbnail(file);
+
+                            if (thumbnail) {
+                                fileData.previewUrl = thumbnail;
+                                fileData.previewType = "image";
+                            }
+                        }
+                    }
+                    catch (error) {
+                        console.warn(
+                            "[HOMEPAGE] Deferred PDF preview failed:",
+                            file.name,
+                            error
+                        );
+                    }
+
+                    refreshFileList();
+                })()
+            );
+
+            continue;
+        }
 
 
         if (category === "Image") {
@@ -180,18 +228,6 @@ window.handleUploadedFiles = async function(files) {
 
 
         if (
-            category === "Document" &&
-            file.name.toLowerCase().endsWith(".pdf")
-        ) {
-
-            const pages =
-                await getPdfPageCount(file);
-
-            fileData.meta.pages = pages;
-        }
-
-
-        if (
             category === "Image" ||
             category === "Vector"
         ) {
@@ -210,17 +246,6 @@ window.handleUploadedFiles = async function(files) {
 
             fileData.previewType =
                 "video";
-
-        }
-        else if (
-            file.name.toLowerCase().endsWith(".pdf")
-        ) {
-
-            fileData.previewUrl =
-                await getPdfThumbnail(file);
-
-            fileData.previewType =
-                "pdf";
 
         }
         else {
@@ -242,6 +267,10 @@ window.handleUploadedFiles = async function(files) {
         selectedFiles,
         currentCategory
     );
+
+    /* The enrichment updates only display metadata; selection is
+       already durable for navigation at this point. */
+    void Promise.allSettled(deferredPdfEnrichment);
 
 };
 

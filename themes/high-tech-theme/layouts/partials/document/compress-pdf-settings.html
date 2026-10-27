@@ -1,0 +1,145 @@
+<section
+    id="compressPdfSettings"
+    class="pdf-operation-settings"
+    aria-labelledby="chooseFormatLabel"
+>
+
+    <div class="pdf-setting-section">
+
+        <div class="pdf-setting-title">
+            Compression mode
+        </div>
+
+
+        <div class="pdf-choice-group">
+
+            <button
+                type="button"
+                class="pdf-choice-btn active"
+                data-pdf-compression="safe"
+            >
+                <strong>Safe</strong>
+
+                <span>
+                    Preserve document structure
+                </span>
+            </button>
+
+
+            <button
+                type="button"
+                class="pdf-choice-btn"
+                data-pdf-compression="strong"
+            >
+                <strong>Strong</strong>
+
+                <span>
+                    Maximum size reduction
+                </span>
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <div
+        id="compressPdfStrongSettings"
+        style="display:none"
+    >
+
+        <div class="pdf-setting-grid">
+
+            <div class="pdf-setting-section">
+
+                <div class="pdf-setting-title">
+                    Page image quality
+                </div>
+
+                <div class="pdf-range-row">
+                    <input
+                    id="compressPdfQuality"
+                    class="eft-range"
+                    type="range"
+                    min="40"
+                    max="90"
+                    value="70"
+                    >
+
+                    <strong id="compressPdfQualityValue">
+                        70%
+                    </strong>
+                </div>
+
+            </div>
+
+
+            <div class="pdf-setting-section">
+
+                <div class="pdf-setting-title">
+                    Render quality
+                </div>
+
+                <select id="compressPdfScale">
+
+                    <option value="1">
+                        Compact
+                    </option>
+
+                    <option
+                        value="1.5"
+                        selected
+                    >
+                        Balanced
+                    </option>
+
+                    <option value="2">
+                        High
+                    </option>
+
+                </select>
+
+            </div>
+
+        </div>
+
+
+        <div class="pdf-operation-warning">
+
+            Strong compression converts each page to an image.
+            Text selection, links, forms and interactive elements
+            will no longer remain editable.
+
+        </div>
+
+    </div>
+
+
+    <div class="pdf-setting-section">
+
+        <label>
+
+            <input
+                id="compressPdfKeepSmaller"
+                type="checkbox"
+                checked
+            >
+
+            Keep the original if compression makes the file larger
+
+        </label>
+
+    </div>
+
+
+    <div
+        id="compressPdfValidation"
+        data-eft-readiness-status
+        class="pdf-validation eft-readiness-note"
+        role="status"
+        aria-live="polite"
+    >
+        Load one or more PDF files.
+    </div>
+
+</section>

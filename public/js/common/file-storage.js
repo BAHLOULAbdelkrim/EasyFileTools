@@ -1,392 +1,225 @@
-console.log("file-storage.js loaded");
-
-/* =========================================================
-   STOCKAGE DES FICHIERS SÉLECTIONNÉS
-   ========================================================= */
-
+/* Per-tab IndexedDB selection — navigation and reload survive; sibling tabs isolated.
+ * Keys are session-scoped, not the former global "currentSession" entry.
+ */
 const FILE_STORAGE_DB = "FileToolsDB";
 const FILE_STORAGE_STORE = "selectedFiles";
-const FILE_STORAGE_KEY = "currentSession";
+const FILE_STORAGE_SESSION_MARKER = "easyfiletools:file-session-v2";
+const FILE_STORAGE_PREFIX = "selection:v2:";
+let fileStorageCache = undefined;
+let fileStorageLoadPromise = null;
+let fileStorageSessionPromise = null;
+let fileStoragePendingWrite = Promise.resolve();
+let fileStorageSessionId = null;
 
-/*
-=========================================================
-
-   CACHE EN MÉMOIRE
-
-========================================================= */
-
-let fileStorageCache =
-    undefined;
-
-let fileStorageLoadPromise =
-    null;
-
-/* =========================================================
-   OUVRIR / CRÉER LA BASE INDEXEDDB
-   ========================================================= */
-
-function openFileStorage() {
-
-    return new Promise((resolve, reject) => {
-
-        const request = indexedDB.open(FILE_STORAGE_DB, 1);
-
-        request.onupgradeneeded = (event) => {
-
-            const db = event.target.result;
-
-            if (!db.objectStoreNames.contains(FILE_STORAGE_STORE)) {
-
-                db.createObjectStore(FILE_STORAGE_STORE);
-            }
-        };
-
-        request.onsuccess = () => {
-
-            resolve(request.result);
-        };
-
-        request.onerror = () => {
-
-            console.error(
-                "Unable to open file storage:",
-                request.error
-            );
-
-            reject(request.error);
-        };
+/* V4.2: lightweight same-tab visual hint, NOT another copy of file data. */
+const FILE_STORAGE_VISUAL_HINT = "easyfiletools:restore-hint-v42";
+function updateFileStorageVisualHint(data) {
+    const count = data?.files?.length || 0;
+    if (!count) clearPendingFileRestoreLayout();
+    try {
+        if (!count || !fileStorageSessionId) {
+            sessionStorage.removeItem(FILE_STORAGE_VISUAL_HINT);
+            return;
+        }
+        sessionStorage.setItem(FILE_STORAGE_VISUAL_HINT, JSON.stringify({
+            sessionId: fileStorageSessionId,
+            category: data.category || data.files[0]?.category || "",
+            count: Math.min(count, 10)
+        }));
+    } catch (_) { /* sessionStorage can be disabled independently of IndexedDB */ }
+}
+function clearPendingFileRestoreLayout() {
+    // Some embedded/test contexts provide storage without a full DOM.
+    if (typeof document === "undefined" || typeof document.querySelectorAll !== "function") return;
+    document.querySelectorAll('.file-list-container[data-restore-pending="true"]').forEach(list => {
+        list.removeAttribute("data-restore-pending");
+        list.style.removeProperty("--easyfile-expected-rows");
+        list.querySelector("#file-list")?.removeAttribute("aria-busy");
     });
 }
 
 
-/* =========================================================
-   SAUVEGARDER LA SÉLECTION
-   ========================================================= */
-
-async function saveSelectedFiles(files, category) {
-
-    if (!files || files.length === 0) {
-
-        await clearStoredFiles();
-
-        document.dispatchEvent(
-            new CustomEvent(
-                "easyfiletools:storage-updated",
-                {
-                    detail: {
-                        files: [],
-                        category: category
-                    }
-                }
-            )
-        );
-
-        return;
-    }
-
-    try {
-
-        const db =
-            await openFileStorage();
-
-        const transaction =
-            db.transaction(
-                FILE_STORAGE_STORE,
-                "readwrite"
-            );
-
-        const store =
-            transaction.objectStore(
-                FILE_STORAGE_STORE
-            );
-
-        const filesToStore =
-            files.map((fileData, index) => {
-
-                return {
-                    file: fileData.file,
-                    index: index,
-                    category: category
-                };
-
-            });
-
-        const dataToStore = {
-            files: filesToStore,
-            category: category
+function openFileStorage() {
+    return new Promise((resolve, reject) => {
+        const request = indexedDB.open(FILE_STORAGE_DB, 1);
+        request.onupgradeneeded = () => {
+            const db = request.result;
+            if (!db.objectStoreNames.contains(FILE_STORAGE_STORE)) db.createObjectStore(FILE_STORAGE_STORE);
         };
-
-        store.put(
-            dataToStore,
-            FILE_STORAGE_KEY
-        );
-
-        await new Promise((resolve, reject) => {
-
-            transaction.oncomplete =
-                resolve;
-
-            transaction.onerror = () => {
-                reject(transaction.error);
-            };
-
-            transaction.onabort = () => {
-                reject(transaction.error);
-            };
-
-        });
-
-        db.close();
-
-        fileStorageCache =
-            dataToStore;
-
-        fileStorageLoadPromise =
-            null;
-
-        console.log(
-            "[FILE STORAGE] Selection saved:",
-            filesToStore.length,
-            "file(s)"
-        );
-
-        /* =========================================
-           NOTIFIER LES AUTRES COMPOSANTS
-        ========================================= */
-
-        document.dispatchEvent(
-            new CustomEvent(
-                "easyfiletools:storage-updated",
-                {
-                    detail: {
-                        files: filesToStore,
-                        category: category
-                    }
-                }
-            )
-        );
-
-    }
-    catch (error) {
-
-        console.error(
-            "[FILE STORAGE] Save failed:",
-            error
-        );
-
-    }
+        request.onsuccess = () => resolve(request.result);
+        request.onerror = () => reject(request.error);
+    });
 }
-
-/* =========================================================
-   RÉCUPÉRER LA SÉLECTION
-   ========================================================= */
-
-async function loadSelectedFiles() {
-
-    /* =====================================================
-       DONNÉES DÉJÀ DISPONIBLES EN MÉMOIRE
-    ===================================================== */
-
-    if (
-        fileStorageCache !== undefined
-    ) {
-
-        console.log(
-            "[FILE STORAGE] Selection loaded from memory"
-        );
-
-        return fileStorageCache;
-    }
-
-
-    /* =====================================================
-       LECTURE INDEXEDDB DÉJÀ EN COURS
-    ===================================================== */
-
-    if (fileStorageLoadPromise) {
-
-        console.log(
-            "[FILE STORAGE] Reusing current IndexedDB load"
-        );
-
-        return fileStorageLoadPromise;
-    }
-
-
-    /* =====================================================
-       NOUVELLE LECTURE INDEXEDDB
-    ===================================================== */
-
-    fileStorageLoadPromise =
-        (async () => {
-
-            try {
-
-                const db =
-                    await openFileStorage();
-
-                const transaction =
-                    db.transaction(
-                        FILE_STORAGE_STORE,
-                        "readonly"
-                    );
-
-                const store =
-                    transaction.objectStore(
-                        FILE_STORAGE_STORE
-                    );
-
-                const request =
-                    store.get(
-                        FILE_STORAGE_KEY
-                    );
-
-                const data =
-                    await new Promise(
-                        (resolve, reject) => {
-
-                            request.onsuccess =
-                                () => {
-
-                                    resolve(
-                                        request.result ||
-                                        null
-                                    );
-                                };
-
-                            request.onerror =
-                                () => {
-
-                                    reject(
-                                        request.error
-                                    );
-                                };
-                        }
-                    );
-
-                db.close();
-
-                if (
-                    !data ||
-                    !data.files ||
-                    data.files.length === 0
-                ) {
-
-                    fileStorageCache =
-                        null;
-
-                    return null;
-                }
-
-                fileStorageCache =
-                    data;
-
-                console.log(
-                    "[FILE STORAGE] Selection loaded from IndexedDB:",
-                    data.files.length,
-                    "file(s)"
-                );
-
-                return data;
-
-            }
-            catch (error) {
-
-                console.error(
-                    "[FILE STORAGE] Load failed:",
-                    error
-                );
-
-                return null;
-            }
-            finally {
-
-                fileStorageLoadPromise =
-                    null;
-            }
-
-        })();
-
-    return fileStorageLoadPromise;
+function fileStorageTransaction(db, mode, callback) {
+    return new Promise((resolve, reject) => {
+        let result;
+        const tx = db.transaction(FILE_STORAGE_STORE, mode);
+        const store = tx.objectStore(FILE_STORAGE_STORE);
+        try { result = callback(store); } catch (error) { tx.abort(); reject(error); return; }
+        tx.oncomplete = () => resolve(result);
+        tx.onabort = () => reject(tx.error || new Error("IndexedDB transaction aborted"));
+        tx.onerror = () => reject(tx.error || new Error("IndexedDB transaction failed"));
+    });
 }
+const newFileStorageId = () => typeof crypto?.randomUUID === "function"
+    ? crypto.randomUUID() : `${Date.now()}-${Math.random().toString(36).slice(2)}`;
 
-/* =========================================================
-   SUPPRIMER LA SÉLECTION SAUVEGARDÉE
-   ========================================================= */
-
-async function clearStoredFiles() {
-
+async function ensureFileStorageSession() {
+    if (fileStorageSessionId) return fileStorageSessionId;
+    if (fileStorageSessionPromise) return fileStorageSessionPromise;
+    fileStorageSessionPromise = (async () => {
+        let id = sessionStorage.getItem(FILE_STORAGE_SESSION_MARKER);
+        if (!id || !/^[\w-]{12,100}$/.test(id)) id = newFileStorageId();
+        // Duplicating a tab can also clone sessionStorage. Ask live peers before reusing its id.
+        if (typeof BroadcastChannel !== "undefined") {
+            const channel = new BroadcastChannel("easyfiletools:file-session-v2");
+            const nonce = newFileStorageId();
+            let collision = false;
+            channel.onmessage = ({ data }) => {
+                if (!data || data.nonce === nonce) return;
+                if (data.type === "hello" && data.id === id) {
+                    collision = true;
+                    channel.postMessage({ type: "occupied", id, nonce, target: data.nonce });
+                }
+                if (data.type === "occupied" && data.id === id && data.target === nonce) collision = true;
+            };
+            channel.postMessage({ type: "hello", id, nonce });
+            await new Promise(resolve => setTimeout(resolve, 180));
+            if (collision) id = newFileStorageId();
+            channel.close();
+        }
+        sessionStorage.setItem(FILE_STORAGE_SESSION_MARKER, id);
+        fileStorageSessionId = id;
+        // Clean orphaned snapshots; never erase another live tab's recent data.
+        void pruneFileStorage().catch(error => console.warn("[FILE STORAGE] Cleanup failed:", error));
+        // Listen for the complete life of this document, including after the first load.
+        if (typeof BroadcastChannel !== "undefined") {
+            const channel = new BroadcastChannel("easyfiletools:file-session-v2");
+            channel.onmessage = ({ data }) => {
+                if (data?.type === "hello" && data.id === fileStorageSessionId) {
+                    channel.postMessage({ type: "occupied", id: fileStorageSessionId, nonce: newFileStorageId(), target: data.nonce });
+                }
+            };
+            window.addEventListener("pagehide", () => channel.close(), { once: true });
+        }
+        return id;
+    })();
+    try { return await fileStorageSessionPromise; }
+    finally { fileStorageSessionPromise = null; }
+}
+async function pruneFileStorage() {
+    const db = await openFileStorage();
     try {
-
-        const db = await openFileStorage();
-
-        const transaction =
-            db.transaction(
-                FILE_STORAGE_STORE,
-                "readwrite"
-            );
-
-        const store =
-            transaction.objectStore(
-                FILE_STORAGE_STORE
-            );
-
-        store.delete(FILE_STORAGE_KEY);
-
-        await new Promise((resolve, reject) => {
-
-            transaction.oncomplete = resolve;
-
-            transaction.onerror = () => {
-                reject(transaction.error);
+        const candidates = await new Promise((resolve, reject) => {
+            const keys = [];
+            const tx = db.transaction(FILE_STORAGE_STORE, "readonly");
+            const request = tx.objectStore(FILE_STORAGE_STORE).openCursor();
+            request.onsuccess = () => {
+                const cursor = request.result;
+                if (!cursor) return;
+                if (cursor.key === "currentSession") keys.push(cursor.key); // legacy global key
+                else if (String(cursor.key).startsWith(FILE_STORAGE_PREFIX)
+                    && cursor.key !== FILE_STORAGE_PREFIX + fileStorageSessionId
+                    && (!cursor.value?.updatedAt || cursor.value.updatedAt < Date.now() - 30 * 86400_000))
+                    keys.push(cursor.key);
+                cursor.continue();
             };
-
-            transaction.onabort = () => {
-                reject(transaction.error);
-            };
+            request.onerror = () => reject(request.error);
+            tx.oncomplete = () => resolve(keys);
+            tx.onerror = () => reject(tx.error);
         });
-
-        db.close();
-
-        fileStorageCache =
-            null;
-
-        fileStorageLoadPromise =
-            null;
-
-        console.log(
-            "[FILE STORAGE] Stored selection cleared"
-        );
-
-    }
-    catch (error) {
-
-        console.error(
-            "[FILE STORAGE] Clear failed:",
-            error
-        );
-    }
+        if (candidates.length) await fileStorageTransaction(db, "readwrite", store => {
+            for (const key of candidates) store.delete(key);
+        });
+    } finally { db.close(); }
 }
 
-
-/* =========================================================
-   RÉCUPÉRER DIRECTEMENT LES FICHIERS STOCKÉS
-   ========================================================= */
-
-async function getStoredFiles() {
-
-    const data =
-        await loadSelectedFiles();
-
-    if (
-        !data ||
-        !data.files ||
-        data.files.length === 0
-    ) {
-
-        return [];
-
+function normalizeSelection(data) {
+    if (!data?.files?.length) return null;
+    const files = data.files.map((stored, index) => {
+        const blob = stored?.blob || stored?.file || stored;
+        if (!(blob instanceof Blob)) return null;
+        return { file: new File([blob], stored.name || blob.name || `file-${index + 1}`,
+            { type: stored.type || blob.type || "application/octet-stream", lastModified: stored.lastModified || Date.now() }),
+            index: Number.isInteger(stored.index) ? stored.index : index,
+            category: stored.category || data.category || null };
+    }).filter(Boolean);
+    return files.length ? { files, category: data.category || null, storageVersion: 3 } : null;
+}
+function queueFileStorageWrite(operation) {
+    const current = fileStoragePendingWrite.then(operation).catch(error => {
+        document.dispatchEvent(new CustomEvent("easyfiletools:storage-error", { detail: { error } }));
+        throw error;
+    });
+    fileStoragePendingWrite = current.catch(() => {}); // queue recovers, current caller sees error
+    return current;
+}
+async function saveSelectedFiles(files, category) {
+    await ensureFileStorageSession();
+    return queueFileStorageWrite(async () => {
+        if (!files?.length) return clearStoredFilesInternal({ notify: true, category });
+        const persisted = files.map((item, index) => {
+            const source = item?.file || item;
+            if (!(source instanceof Blob)) throw new TypeError("Invalid file in selection");
+            return { blob: source.slice(0, source.size, source.type || "application/octet-stream"),
+                name: source.name || `file-${index + 1}`, type: source.type || "application/octet-stream",
+                lastModified: source.lastModified || Date.now(), index, category };
+        });
+        const record = { files: persisted, category, storageVersion: 3, updatedAt: Date.now() };
+        const db = await openFileStorage();
+        try { await fileStorageTransaction(db, "readwrite", store => store.put(record, FILE_STORAGE_PREFIX + fileStorageSessionId)); }
+        finally { db.close(); }
+        fileStorageCache = normalizeSelection(record);
+        updateFileStorageVisualHint(fileStorageCache);
+        fileStorageLoadPromise = null;
+        document.dispatchEvent(new CustomEvent("easyfiletools:storage-updated", { detail: { files: fileStorageCache.files, category } }));
+    });
+}
+async function loadSelectedFiles() {
+    await ensureFileStorageSession();
+    await fileStoragePendingWrite;
+    if (fileStorageCache !== undefined) return fileStorageCache;
+    if (fileStorageLoadPromise) return fileStorageLoadPromise;
+    fileStorageLoadPromise = (async () => {
+        const db = await openFileStorage();
+        try {
+            const data = await new Promise((resolve, reject) => {
+                const tx = db.transaction(FILE_STORAGE_STORE, "readonly");
+                const request = tx.objectStore(FILE_STORAGE_STORE).get(FILE_STORAGE_PREFIX + fileStorageSessionId);
+                request.onsuccess = () => resolve(request.result || null);
+                request.onerror = () => reject(request.error);
+            });
+            fileStorageCache = normalizeSelection(data);
+            updateFileStorageVisualHint(fileStorageCache);
+            return fileStorageCache;
+        } finally { db.close(); }
+    })();
+    try { return await fileStorageLoadPromise; }
+    catch (error) {
+        // No indefinite skeleton if browser storage is unavailable/denied.
+        updateFileStorageVisualHint(null);
+        throw error;
     }
-
-    return data.files;
+    finally { fileStorageLoadPromise = null; }
+}
+async function clearStoredFilesInternal(options = {}) {
+    const category = options.category || fileStorageCache?.category || null;
+    const db = await openFileStorage();
+    try { await fileStorageTransaction(db, "readwrite", store => store.delete(FILE_STORAGE_PREFIX + fileStorageSessionId)); }
+    finally { db.close(); }
+    fileStorageCache = null;
+    updateFileStorageVisualHint(null);
+    fileStorageLoadPromise = null;
+    if (options.notify !== false) {
+        document.dispatchEvent(new CustomEvent("easyfiletools:storage-updated", { detail: { files: [], category } }));
+        document.dispatchEvent(new CustomEvent("easyfiletools:files-cleared", { detail: { category, source: "file-storage" } }));
+    }
+}
+async function clearStoredFiles(options = {}) {
+    const normalized = typeof options === "string" ? { category: options } : options;
+    await ensureFileStorageSession();
+    return queueFileStorageWrite(() => clearStoredFilesInternal(normalized || {}));
+}
+async function getStoredFiles() {
+    return (await loadSelectedFiles())?.files || [];
 }

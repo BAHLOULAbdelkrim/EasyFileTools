@@ -1,16 +1,8 @@
 ---
-title: ""
-url: "/login/"          # URL SEO-friendly
-icon: "login"
-description: "Convert, compress and optimize presentation files online. Fast, secure and free."
-keywords:
-  - presentation tools
-  - PowerPoint converter
-  - PPT converter
-  - presentation editor
-  - compress PowerPoint
+title: "Log in"
+url: "/login/"
+noindex: true
+description: "EasyFile Tools accounts are not available yet. Use the currently available file tools without an account."
 ---
 
-🚧 Coming soon !
-
-Account creation is currently under development.
+Accounts are coming later. For now, EasyFile Tools is available without signing in.

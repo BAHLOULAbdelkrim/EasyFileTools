@@ -1,4 +1,7 @@
-console.log("common/zone-chargement.js loaded");
+console.log(
+    "common/zone-chargement.js loaded"
+);
+
 
 /*
 =========================================================
@@ -6,408 +9,725 @@ console.log("common/zone-chargement.js loaded");
 =========================================================
 */
 
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener(
+    "DOMContentLoaded",
+    async () => {
 
-    const uploadContainer =
-        document.getElementById("upload-zone-container");
-
-    if (!uploadContainer) {
-        return;
-    }
-
-    const dropZone =
-        document.getElementById("drop-zone");
-
-    const fileInput =
-        document.getElementById("fileInput");
-
-    const uploadInfo =
-        document.getElementById("upload-info");
-
-    const urlBtn =
-        document.getElementById("urlBtn");
-
-    const urlModal =
-        document.getElementById("urlModal");
-
-    const urlInput =
-        document.getElementById("urlInput");
-
-    const urlAdd =
-        document.getElementById("urlAdd");
-
-    const urlCancel =
-        document.getElementById("urlCancel");
-
-    /*
-    =====================================================
-       CATÉGORIE DE LA PAGE
-    =====================================================
-    */
-
-    const pageCategory =
-        uploadContainer.dataset.category || null;
-
-
-    /*
-    =====================================================
-       INFORMATIONS
-    =====================================================
-    */
-
-    if (uploadInfo) {
-
-        uploadInfo.textContent =
-            `Maximum : ${APP_CONFIG.maxFiles} files — ${APP_CONFIG.maxFileSizeMB} MB/file`;
-
-    }
-
-
-    /*
-    =====================================================
-       VALIDATION DES FICHIERS
-    =====================================================
-    */
-
-    function validateFiles(files) {
-
-        const validFiles = [];
-
-        const currentCount =
-            typeof window.getCurrentUploadFileCount === "function"
-                ? window.getCurrentUploadFileCount()
-                : 0;
-
-        let count = currentCount;
-
-        for (const file of files) {
-
-            if (count >= APP_CONFIG.maxFiles) {
-
-                showNotification(
-                    `Maximum <strong>${APP_CONFIG.maxFiles} fichiers</strong>.`,
-                    "warning"
-                );
-
-                break;
-            }
-
-            if (
-                file.size >
-                APP_CONFIG.maxFileSizeMB * 1024 * 1024
-            ) {
-
-                showNotification(
-                    `<strong>${file.name}</strong> est trop volumineux.<br>
-                    Taille maximale : <strong>${APP_CONFIG.maxFileSizeMB} Mo/file</strong>.`,
-                    "error"
-                );
-
-                continue;
-            }
-
-            const category =
-                getFileCategory(file.name);
-
-            if (category === "Unknown") {
-
-            showNotification(
-                `Ce type de fichier n'est pas supporté.`,
-                "error"
+        const uploadContainer =
+            document.getElementById(
+                "upload-zone-container"
             );
 
-                continue;
-            }
 
-            if (
-                pageCategory &&
-                category !== pageCategory
-            ) {
-
-                showNotification(
-                    `<strong>${file.name}</strong> n'est pas un fichier de la catégorie
-                    <strong>${pageCategory}</strong>.`,
-                    "error"
-                );
-
-                continue;
-            }
-
-            validFiles.push(file);
-
-            count++;
-        }
-
-        return validFiles;
-    }
-
-
-    /*
-    =====================================================
-       TRAITEMENT DES FICHIERS
-    =====================================================
-    */
-
-    async function processFiles(files) {
-
-        const validFiles =
-            validateFiles(files);
-
-        if (validFiles.length === 0) {
+        if (!uploadContainer) {
             return;
         }
 
+
+        const dropZone =
+            document.getElementById(
+                "drop-zone"
+            );
+
+
+        const fileInput =
+            document.getElementById(
+                "fileInput"
+            );
+
+
+        const uploadInfo =
+            document.getElementById(
+                "upload-info"
+            );
+
+
+        const urlBtn =
+            document.getElementById(
+                "urlBtn"
+            );
+
+
+        const urlModal =
+            document.getElementById(
+                "urlModal"
+            );
+
+
+        const urlInput =
+            document.getElementById(
+                "urlInput"
+            );
+
+
+        const urlAdd =
+            document.getElementById(
+                "urlAdd"
+            );
+
+
+        const urlCancel =
+            document.getElementById(
+                "urlCancel"
+            );
+
+
         /*
-        =========================================================
-        TRANSMISSION AUX MOTEURS SPÉCIFIQUES
-        =========================================================
+        =====================================================
+           PAGE CATEGORY
+        =====================================================
         */
 
-        document.dispatchEvent(
-            new CustomEvent(
-                "easyfiletools:files-selected",
-                {
-                    detail: {
-                        files: validFiles,
-                        category: pageCategory
-                    }
-                }
-            )
-        );
+        const pageCategory =
+            uploadContainer
+                .dataset
+                .category ||
+            null;
 
 
         /*
-        =========================================================
-        COMPATIBILITÉ HOMEPAGE
-        =========================================================
+         * Dynamic category used mainly
+         * by the homepage.
+         *
+         * null:
+         * no file has determined the
+         * category yet.
+         */
+
+        let browseCategory =
+            pageCategory;
+
+
+        /*
+        =====================================================
+           INFORMATIONS
+        =====================================================
         */
 
         if (
-            typeof window.handleUploadedFiles === "function"
+            uploadInfo
         ) {
 
-            await window.handleUploadedFiles(
-                validFiles
+            const profile = EasyFilePolicy.resolve({ category: pageCategory,
+                operation: document.getElementById("operation-zone")?.dataset?.operation });
+            uploadInfo.textContent = profile
+                ? `Up to ${profile.maxFiles} files • ${profile.maxFileMB} MB/file • ${profile.maxTotalMB} MB total`
+                : "Limits vary by category (Image, Audio, Video, PDF).";
+        }
+
+
+        /*
+        =====================================================
+           BROWSE FILTER
+        =====================================================
+        */
+
+        function updateBrowseFilter() {
+
+            if (!fileInput) {
+                return;
+            }
+
+
+            /*
+             * Category page:
+             * only this category.
+             *
+             * Homepage after first file:
+             * only the determined category.
+             *
+             * Homepage without files:
+             * every EasyFile Tools format.
+             */
+
+            if (
+                browseCategory
+            ) {
+
+                fileInput.accept =
+                    typeof getFileCategoryAccept ===
+                        "function"
+                        ? getFileCategoryAccept(
+                            browseCategory
+                        )
+                        : "";
+
+
+                console.log(
+                    "[UPLOAD ZONE] Browse filter:",
+                    browseCategory
+                );
+
+
+                return;
+            }
+
+
+            fileInput.accept =
+                typeof getAllSupportedFileAccept ===
+                    "function"
+                    ? getAllSupportedFileAccept()
+                    : "";
+
+
+            console.log(
+                "[UPLOAD ZONE] Browse filter: all supported formats"
             );
         }
-        
-    }
 
 
-    /*
-    =====================================================
-       BROWSE
-    =====================================================
-    */
+        /*
+        =====================================================
+           RESTORE HOMEPAGE CATEGORY
+        =====================================================
+        */
 
-    if (fileInput) {
+        async function syncBrowseCategoryFromStorage() {
 
-        fileInput.addEventListener(
-            "change",
-            async () => {
+            /*
+             * A category-specific page
+             * never changes category.
+             */
 
-                await processFiles(
-                    Array.from(fileInput.files)
-                );
+            if (
+                pageCategory
+            ) {
 
-                fileInput.value = "";
+                browseCategory =
+                    pageCategory;
+
+                updateBrowseFilter();
+
+                return;
             }
-        );
-    }
 
-    /* 
-    =====================================================
-    DRAG & DROP 
-    ===================================================== 
-    */
 
-    if (dropZone) {
+            if (
+                typeof loadSelectedFiles !==
+                "function"
+            ) {
 
-        /* =================================================
-        BLOQUER LE COMPORTEMENT NATIF DU NAVIGATEUR
-        ================================================= */
+                browseCategory =
+                    null;
 
-        dropZone.addEventListener(
-            "dragenter",
-            (event) => {
+                updateBrowseFilter();
 
-                event.preventDefault();
-                event.stopPropagation();
-
-                dropZone.classList.add("dragover");
-
+                return;
             }
-        );
-
-        dropZone.addEventListener(
-            "dragover",
-            (event) => {
-
-                event.preventDefault();
-                event.stopPropagation();
-
-                event.dataTransfer.dropEffect = "copy";
-
-                dropZone.classList.add("dragover");
-
-            }
-        );
-
-        dropZone.addEventListener(
-            "dragleave",
-            (event) => {
-
-                event.preventDefault();
-                event.stopPropagation();
-
-                dropZone.classList.remove("dragover");
-
-            }
-        );
-
-        dropZone.addEventListener(
-            "drop",
-            async (event) => {
-
-                event.preventDefault();
-                event.stopPropagation();
-
-                dropZone.classList.remove("dragover");
 
 
-                const files =
-                    Array.from(
-                        event.dataTransfer.files
-                    );
+            try {
+
+                const data =
+                    await loadSelectedFiles();
 
 
-                if (files.length === 0) {
+                const storedFiles =
+                    Array.isArray(
+                        data?.files
+                    )
+                        ? data.files
+                        : [];
+
+
+                if (
+                    storedFiles.length ===
+                    0
+                ) {
+
+                    browseCategory =
+                        null;
+
+                    updateBrowseFilter();
+
                     return;
                 }
 
 
-                await processFiles(files);
-
-            }
-        );
-
-    }
-
-    /*
-    =====================================================
-       FROM URL
-    =====================================================
-    */
-
-    if (
-        urlBtn &&
-        urlModal &&
-        urlInput &&
-        urlAdd &&
-        urlCancel
-    ) {
-
-        urlBtn.addEventListener(
-            "click",
-            () => {
-
-                urlModal.classList.remove(
-                    "hidden"
-                );
-
-                urlInput.focus();
-            }
-        );
+                const firstItem =
+                    storedFiles[0];
 
 
-        urlCancel.addEventListener(
-            "click",
-            () => {
-
-                urlModal.classList.add(
-                    "hidden"
-                );
-
-                urlInput.value = "";
-            }
-        );
+                let category =
+                    firstItem?.category ||
+                    null;
 
 
-        urlAdd.addEventListener(
-            "click",
-            async () => {
+                if (
+                    !category &&
+                    firstItem?.file
+                ) {
 
-                const url =
-                    urlInput.value.trim();
-
-                if (!url) {
-
-                    showNotification(
-                        `Veuillez entrer une URL.`,
-                        "warning"
-                    );
-
-                    return;
-                }
-
-                try {
-
-                    const response =
-                        await fetch(url);
-
-                    if (!response.ok) {
-
-                        throw new Error(
-                            "Download failed"
+                    category =
+                        getFileCategory(
+                            firstItem.file.name
                         );
+                }
+
+
+                if (
+                    category ===
+                    "Unknown"
+                ) {
+
+                    category =
+                        null;
+                }
+
+
+                browseCategory =
+                    category;
+
+
+                updateBrowseFilter();
+
+            }
+            catch (
+                error
+            ) {
+
+                console.warn(
+                    "[UPLOAD ZONE] Unable to restore Browse category:",
+                    error
+                );
+
+
+                browseCategory =
+                    null;
+
+
+                updateBrowseFilter();
+            }
+        }
+
+
+        /*
+        =====================================================
+           VALIDATION DES FICHIERS
+        =====================================================
+        */
+
+        function validateFiles(files, existing = []) {
+            const valid = [];
+            const operation = document.getElementById("operation-zone")?.dataset?.operation || null;
+            let selectedCategory = pageCategory || browseCategory;
+            let count = existing.length;
+            let totalBytes = existing.reduce((sum, item) => sum + (item?.file || item)?.size || 0, 0);
+            const seen = new Set(existing.map(item => {
+                const file = item?.file || item;
+                return `${file.name}::${file.size}::${file.lastModified || 0}`;
+            }));
+            for (const file of files) {
+                const identity = `${file.name}::${file.size}::${file.lastModified || 0}`;
+                if (seen.has(identity)) continue;
+                const category = getFileCategory(file.name);
+                if (selectedCategory && category !== selectedCategory) {
+                    showNotification(`File: ${file.name} — different category.`, "error");
+                    continue;
+                }
+                const result = EasyFilePolicy.validate(file, { category, operation, count, totalBytes });
+                if (!result.ok) {
+                    showNotification(`${file.name}: ${result.reason}`, "error");
+                    continue;
+                }
+                valid.push(file);
+                if (!selectedCategory) selectedCategory = category;
+                seen.add(identity);
+                count++;
+                totalBytes += file.size;
+            }
+            return valid;
+        }
+
+        /*
+        =====================================================
+           TRAITEMENT DES FICHIERS
+        =====================================================
+        */
+
+        async function processFiles(
+            files
+        ) {
+
+            const existingData = await loadSelectedFiles();
+            const existing = existingData?.category === (pageCategory || browseCategory)
+                ? (existingData?.files || []) : [];
+            const candidates = validateFiles(files, existing);
+            const validFiles = [];
+            for (const file of candidates) {
+                const inspected = await EasyFilePolicy.inspect(file);
+                if (!inspected.ok) {
+                    showNotification(`${file.name}: ${inspected.reason}`, "error", 6000);
+                    continue;
+                }
+                validFiles.push(file);
+            }
+
+
+            if (
+                validFiles.length ===
+                0
+            ) {
+
+                return;
+            }
+
+
+            /*
+             * Homepage:
+             * as soon as the first valid
+             * file is accepted, lock Browse
+             * to its category.
+             */
+
+            if (
+                !pageCategory &&
+                !browseCategory
+            ) {
+
+                const category =
+                    getFileCategory(
+                        validFiles[0].name
+                    );
+
+
+                if (
+                    category !==
+                    "Unknown"
+                ) {
+
+                    browseCategory =
+                        category;
+
+
+                    updateBrowseFilter();
+                }
+            }
+
+
+            /*
+            =====================================================
+               TRANSMISSION AUX MOTEURS SPÉCIFIQUES
+            =====================================================
+            */
+
+            document.dispatchEvent(
+                new CustomEvent(
+                    "easyfiletools:files-selected",
+                    {
+                        detail: {
+
+                            files:
+                                validFiles,
+
+                            category:
+                                pageCategory ||
+                                browseCategory
+                        }
                     }
+                )
+            );
 
-                    const blob =
-                        await response.blob();
 
-                    const parsedUrl =
-                        new URL(url);
+            /*
+            =====================================================
+               COMPATIBILITÉ HOMEPAGE
+            =====================================================
+            */
 
-                    const pathName =
-                        decodeURIComponent(
-                            parsedUrl.pathname
-                        );
+            if (
+                typeof window
+                    .handleUploadedFiles ===
+                    "function"
+            ) {
 
-                    const fileName =
-                        pathName.split("/").pop()
-                        || "file";
+                await window
+                    .handleUploadedFiles(
+                        validFiles
+                    );
+            }
+        }
 
-                    const file =
-                        new File(
-                            [blob],
-                            fileName,
-                            {
-                                type: blob.type
-                            }
-                        );
+
+        /*
+        =====================================================
+           BROWSE
+        =====================================================
+        */
+
+        if (
+            fileInput
+        ) {
+
+            fileInput.addEventListener(
+                "change",
+                async () => {
 
                     await processFiles(
-                        [file]
+                        Array.from(
+                            fileInput.files
+                        )
                     );
 
-                    urlInput.value = "";
 
-                    urlModal.classList.add(
-                        "hidden"
-                    );
+                    /*
+                     * Allows selecting the same
+                     * physical file again later.
+                     */
 
+                    fileInput.value =
+                        "";
                 }
-                catch (error) {
+            );
+        }
 
-                    console.error(error);
 
-                    showNotification(
-                        `Impossible de charger cette URL.`,
-                        "error"
+        /* Clicking the drop-zone button opens the same native picker as Browse.
+         * Drag-and-drop remains available on the surrounding drop zone. */
+        const dragBtn = document.getElementById("dragBtn");
+        if (dragBtn && fileInput) {
+            dragBtn.addEventListener("click", () => {
+                if (!dragBtn.disabled && !fileInput.disabled) fileInput.click();
+            });
+        }
+
+        /*
+        =====================================================
+           DRAG & DROP
+        =====================================================
+        */
+
+        if (
+            dropZone
+        ) {
+
+            dropZone.addEventListener(
+                "dragenter",
+                event => {
+
+                    event.preventDefault();
+
+                    event.stopPropagation();
+
+
+                    dropZone.classList.add(
+                        "dragover"
                     );
+                }
+            );
+
+
+            dropZone.addEventListener(
+                "dragover",
+                event => {
+
+                    event.preventDefault();
+
+                    event.stopPropagation();
+
+
+                    event.dataTransfer.dropEffect =
+                        "copy";
+
+
+                    dropZone.classList.add(
+                        "dragover"
+                    );
+                }
+            );
+
+
+            dropZone.addEventListener(
+                "dragleave",
+                event => {
+
+                    event.preventDefault();
+
+                    event.stopPropagation();
+
+
+                    dropZone.classList.remove(
+                        "dragover"
+                    );
+                }
+            );
+
+
+            dropZone.addEventListener(
+                "drop",
+                async event => {
+
+                    event.preventDefault();
+
+                    event.stopPropagation();
+
+
+                    dropZone.classList.remove(
+                        "dragover"
+                    );
+
+
+                    const files =
+                        Array.from(
+                            event
+                                .dataTransfer
+                                .files
+                        );
+
+
+                    if (
+                        files.length ===
+                        0
+                    ) {
+
+                        return;
+                    }
+
+
+                    await processFiles(
+                        files
+                    );
+                }
+            );
+        }
+
+
+        /* =====================================================
+           FROM URL — streamed, cancellable, bounded
+        ===================================================== */
+        if (urlBtn && urlModal && urlInput && urlAdd && urlCancel) {
+            let controller = null;
+            let busy = false;
+            const progress = document.createElement("div");
+            progress.id = "urlDownloadProgress";
+            progress.className = "url-download-progress";
+            progress.hidden = true;
+            const meter = document.createElement("progress");
+            meter.max = 100;
+            meter.value = 0;
+            meter.setAttribute("aria-label", "URL download progress");
+            const progressText = document.createElement("span");
+            progressText.setAttribute("role", "status");
+            progressText.setAttribute("aria-live", "polite");
+            progress.append(meter, progressText);
+            urlInput.insertAdjacentElement("afterend", progress);
+            urlBtn.addEventListener("click", () => { urlModal.classList.remove("hidden"); urlInput.focus(); });
+            urlCancel.addEventListener("click", () => {
+                controller?.abort();
+                if (!busy) { urlModal.classList.add("hidden"); urlInput.value = ""; progress.hidden = true; progressText.textContent = ""; }
+            });
+            urlAdd.addEventListener("click", async () => {
+                if (busy) return;
+                const address = urlInput.value.trim();
+                if (!address) { showNotification("Enter an HTTPS file URL.", "warning"); return; }
+                let parsed;
+                try { parsed = new URL(address); }
+                catch { showNotification("Enter a valid HTTPS file URL.", "error"); return; }
+                const operation = document.getElementById("operation-zone")?.dataset?.operation || null;
+                const possibleName = EasyFileUrlImport.fileNameFromUrl(parsed);
+                const category = pageCategory || browseCategory || getFileCategory(possibleName);
+                const policy = EasyFilePolicy.resolve({ category, operation });
+                if (!policy) { showNotification("Choose a supported file URL (Image, Audio, Video or PDF).", "error"); return; }
+                const stored = await loadSelectedFiles();
+                const existing = stored?.category === category ? (stored?.files || []) : [];
+                const total = existing.reduce((sum, item) => sum + (item?.file || item).size, 0);
+                if (existing.length >= policy.maxFiles || total >= policy.maxTotalMB * EasyFilePolicy.MB) {
+                    showNotification("Selection size or file count limit reached.", "error"); return;
+                }
+                controller = new AbortController();
+                busy = true;
+                urlAdd.disabled = true;
+                progress.hidden = false;
+                meter.removeAttribute("value");
+                progressText.textContent = "Downloading…";
+                try {
+                    const limit = Math.min(policy.maxFileMB * EasyFilePolicy.MB,
+                        policy.maxTotalMB * EasyFilePolicy.MB - total);
+                    const file = await EasyFileUrlImport.download(address, {
+                        limitBytes: limit, signal: controller.signal,
+                        onProgress: (received, declared) => {
+                            if (declared) meter.value = Math.min(100, received / declared * 100);
+                            else meter.removeAttribute("value");
+                            progressText.textContent = declared
+                                ? `Downloading: ${Math.round(received / declared * 100)}% (${(received / EasyFilePolicy.MB).toFixed(1)} MB)`
+                                : `Downloading: ${(received / EasyFilePolicy.MB).toFixed(1)} MB`;
+                        }
+                    });
+                    // An HTML error page is not a media file even when the URL ends in .mp3.
+                    if (/^(text\/html|application\/(json|xml|xhtml\+xml))$/i.test(file.type))
+                        throw new Error("The server returned a web page or API response, not a file.");
+                    const result = EasyFilePolicy.validate(file, { category, operation,
+                        count: existing.length, totalBytes: total });
+                    if (!result.ok) throw new Error(result.reason);
+                    await processFiles([file]);
+                    urlInput.value = "";
+                    urlModal.classList.add("hidden");
+                    progress.hidden = true;
+                    progressText.textContent = "";
+                } catch (error) {
+                    showNotification(error.message || "Unable to import this URL.", "error", 3000);
+                    progress.hidden = true;
+                    progressText.textContent = "";
+                } finally { busy = false; urlAdd.disabled = false; controller = null; }
+            });
+        }
+
+        /*
+        =====================================================
+           STORAGE UPDATED
+        =====================================================
+        */
+
+        document.addEventListener(
+            "easyfiletools:storage-updated",
+            async () => {
+
+                if (
+                    !pageCategory
+                ) {
+
+                    await syncBrowseCategoryFromStorage();
                 }
             }
         );
-    }
 
-});
+
+        /*
+        =====================================================
+           FILES CLEARED
+        =====================================================
+        */
+
+        document.addEventListener(
+            "easyfiletools:files-cleared",
+            () => {
+
+                if (
+                    pageCategory
+                ) {
+
+                    browseCategory =
+                        pageCategory;
+                }
+                else {
+
+                    browseCategory =
+                        null;
+                }
+
+
+                updateBrowseFilter();
+            }
+        );
+
+
+        /*
+        =====================================================
+           INITIAL BROWSE FILTER
+        =====================================================
+        */
+
+        await syncBrowseCategoryFromStorage();
+
+    }
+);

@@ -22,7 +22,7 @@
                 id="dragBtn"
             >
                 <i data-lucide="upload"></i>
-                Drag & Drop here
+                Drag & drop files here
                 <i data-lucide="upload"></i>
             </button>
 
@@ -49,6 +49,9 @@
         <div
             id="urlModal"
             class="url-modal hidden"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="urlModalTitle"
         >
 
             <div class="url-box">
@@ -58,11 +61,19 @@
                 </h3>
 
 
+                <label for="urlInput" class="url-input-label">Direct file URL</label>
                 <input
-                    type="text"
+                    type="url"
                     id="urlInput"
                     placeholder="https://example.com/file"
+                    inputmode="url"
+                    autocomplete="off"
+                    spellcheck="false"
+                    aria-describedby="urlImportWarning"
                 >
+                <p id="urlImportWarning" class="url-import-warning">
+                    Use a direct HTTPS file link. The remote server must allow cross-origin downloads (CORS). Avoid sharing private access tokens in URLs.
+                </p>
 
 
                 <div class="url-actions">

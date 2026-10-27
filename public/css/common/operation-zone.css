@@ -31,11 +31,14 @@
     margin-bottom: 25px;
 }
 
+.operation-top[hidden] {
+    display: none;
+}
+
 
 /* DOWNLOAD ALL */
 
-.operation-download-all,
-.operation-clear-all {
+.operation-download-all {
 
     display: inline-flex;
 
@@ -84,36 +87,6 @@
 .operation-download-all.active:hover {
 
     background: var(--green-text);
-
-    transform: scale(1.05);
-}
-
-
-/* CLEAR ALL */
-
-.operation-clear-all {
-
-    background: gray;
-
-    color: white;
-
-    opacity: 0.5;
-
-    cursor: not-allowed;
-}
-
-.operation-clear-all.active {
-
-    background: #ef4444;
-
-    opacity: 1;
-
-    cursor: pointer;
-}
-
-.operation-clear-all.active:hover {
-
-    background: #dc2626;
 
     transform: scale(1.05);
 }
@@ -254,6 +227,25 @@
 .audio-format-btn.active:hover::before,
 .audio-format-btn.selected:hover::before {
     animation: operationButtonShine 0.7s ease;
+}
+
+/* =========================
+   OPERATION PARAMETERS
+========================= */
+
+.operation-parameters {
+
+    margin-top: 20px;
+
+    margin-bottom: 25px;
+}
+
+
+.operation-parameters-content {
+
+    width: 100%;
+
+    margin-top: 15px;
 }
 
 /* =========================
@@ -502,58 +494,116 @@
 
     align-items: center;
 
+    gap: 16px;
+
     margin-top: 30px;
 }
 
 
-.operation-home,
-.operation-top-btn {
+/* =========================
+   NAVIGATION BUTTONS
+========================= */
+
+.operation-nav-btn {
 
     display: inline-flex;
 
     align-items: center;
+
     justify-content: center;
 
     gap: 8px;
 
     padding: 11px 18px;
 
-    border: none;
+    border: 2px dashed var(--green-text);
 
     border-radius: 12px;
 
-    background: var(--violet);
+    background: var(--green-hover);
 
-    color: white;
+    color: var(--green-text);
 
     font-size: 14px;
 
     font-weight: 600;
 
+    font-family: inherit;
+
     text-decoration: none;
 
     cursor: pointer;
 
-    transition: all 0.25s ease;
-}
-
-
-.operation-home:hover,
-.operation-top-btn:hover {
-
-    background: var(--green-text);
-
-    transform: scale(1.05);
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease,
+        background 0.25s ease,
+        color 0.25s ease,
+        border-color 0.25s ease;
 }
 
 
 /* =========================
-   LUCIDE ICONS
+   HOVER
 ========================= */
 
-.operation-zone svg {
+.operation-nav-btn:hover:not(:disabled) {
+
+    background: var(--green-hover);
+
+    color: var(--green-text);
+
+    transform: scale(1.05);
+
+    box-shadow:
+        0 4px 15px rgba(0, 0, 0, 0.20);
+}
+
+
+/* =========================
+   DISABLED
+========================= */
+
+.operation-nav-btn:disabled {
+
+    background: #e5e7eb;
+
+    color: #9ca3af;
+
+    border-color: #cbd5e1;
+
+    cursor: not-allowed;
+
+    opacity: 0.70;
+
+    transform: none;
+
+    box-shadow: none;
+}
+
+
+.operation-nav-btn:disabled:hover {
+
+    background: #e5e7eb;
+
+    color: #9ca3af;
+
+    border-color: #cbd5e1;
+
+    transform: none;
+
+    box-shadow: none;
+}
+
+
+/* =========================
+   NAVIGATION ICONS
+========================= */
+
+.operation-navigation svg {
 
     width: 20px;
+
     height: 20px;
 
     flex-shrink: 0;
@@ -565,47 +615,55 @@
 ========================= */
 
 .operation-download-all,
-.operation-clear-all,
 .operation-cancel,
 .operation-convert,
 .operation-pause,
-.operation-home,
-.operation-top-btn {
+.operation-nav-btn {
+
     position: relative;
+
     overflow: hidden;
 }
 
+
 .operation-download-all::before,
-.operation-clear-all::before,
 .operation-cancel::before,
 .operation-convert::before,
 .operation-pause::before,
-.operation-home::before,
-.operation-top-btn::before {
+.operation-nav-btn::before {
+
     content: "";
+
     position: absolute;
+
     top: 0;
+
     left: -120%;
+
     width: 60%;
+
     height: 100%;
+
     background: linear-gradient(
         120deg,
         transparent,
-        rgba(255,255,255,0.45),
+        rgba(255, 255, 255, 0.45),
         transparent
     );
+
     transform: skewX(-20deg);
 }
 
+
 .operation-download-all.active:hover::before,
-.operation-clear-all.active:hover::before,
 .operation-cancel.active:hover::before,
 .operation-convert.active:hover::before,
 .operation-pause.active:hover::before,
-.operation-home:hover::before,
-.operation-top-btn:hover::before {
+.operation-nav-btn:not(:disabled):hover::before {
+
     animation: operationButtonShine 0.7s ease;
 }
+
 
 @keyframes operationButtonShine {
 
@@ -616,7 +674,6 @@
     to {
         left: 140%;
     }
-
 }
 
 
@@ -736,3 +793,285 @@
         transform: scale(1);
     }
 }
+/* =========================================================
+   GENERIC OPERATION PARAMETER GATE
+========================================================= */
+
+.operation-parameters-fieldset {
+    min-width: 0;
+    margin: 0;
+    padding: 0;
+    border: 0;
+}
+
+/* All operation controls inherit the site's main typography. */
+.operation-parameters-fieldset button,
+.operation-parameters-fieldset input,
+.operation-parameters-fieldset select,
+.operation-parameters-fieldset textarea {
+    font-family: inherit;
+}
+
+.operation-parameters-fieldset:disabled {
+    opacity: 0.68;
+}
+
+.operation-parameters-fieldset:disabled button,
+.operation-parameters-fieldset:disabled input,
+.operation-parameters-fieldset:disabled select,
+.operation-parameters-fieldset:disabled textarea,
+.operation-parameters-fieldset:disabled label,
+.operation-parameters-fieldset:disabled [role="button"],
+.operation-parameters-fieldset:disabled [draggable="true"] {
+    cursor: not-allowed !important;
+}
+
+
+/* =========================================================
+   GENERIC PROCESSING LOCK
+========================================================= */
+
+body.operation-interaction-locked .operation-top,
+body.operation-interaction-locked #upload-zone-container,
+body.operation-interaction-locked .more-operations,
+body.operation-interaction-locked .operation-home,
+body.operation-interaction-locked .operation-back-btn {
+    opacity: 0.58;
+}
+
+body.operation-interaction-locked .operation-top button,
+body.operation-interaction-locked .operation-home,
+body.operation-interaction-locked .operation-back-btn,
+body.operation-interaction-locked .more-operation-btn,
+body.operation-interaction-locked .upload-btn,
+body.operation-interaction-locked .drag-drop {
+    cursor: not-allowed !important;
+    transform: none !important;
+}
+
+body.operation-interaction-locked .site-header a,
+body.operation-interaction-locked .site-header button,
+body.operation-interaction-locked .auth-bar a,
+body.operation-interaction-locked .auth-bar button,
+body.operation-interaction-locked .site-footer a,
+body.operation-interaction-locked .site-footer button,
+body.operation-interaction-locked .format-action {
+    opacity: 0.55;
+    cursor: not-allowed !important;
+    transform: none !important;
+}
+
+/*
+ * File information and progress remain fully readable while
+ * destructive/reordering/download interactions are locked.
+ */
+body.operation-interaction-locked .file-list-container .remove-btn,
+body.operation-interaction-locked .file-list-container .download-btn,
+body.operation-interaction-locked .file-list-container .file-multi-output-download,
+body.operation-interaction-locked .file-list-container .drag-handle {
+    opacity: 0.45;
+    cursor: not-allowed !important;
+    transform: none !important;
+}
+
+body.operation-interaction-locked .file-list-container .file-item:hover {
+    transform: none;
+    box-shadow: none;
+}
+
+/* Pause / Resume, Cancel and Go to top deliberately remain live. */
+body.operation-interaction-locked #pauseOperationBtn,
+body.operation-interaction-locked #cancelOperationBtn,
+body.operation-interaction-locked #goToTopBtn {
+    pointer-events: auto;
+}
+
+
+
+/* =========================================
+   EASYFILE V1 — RESPONSIVE OPERATION ZONE
+========================================= */
+
+/* Tablets and smartphones */
+@media (max-width: 900px) {
+
+  .operation-zone {
+    min-width: 0;
+    box-sizing: border-box;
+  }
+
+  /* Output format heading */
+  .operation-format-selector {
+    min-width: 0;
+    text-align: center;
+  }
+
+  .operation-choose-format {
+    max-width: 100%;
+    font-size: clamp(19px, 4.5vw, 26px);
+    line-height: 1.3;
+    overflow-wrap: anywhere;
+  }
+
+  .operation-parameters-content {
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  /* Cancel / Convert / Pause */
+  .operation-controls {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .operation-controls button {
+    flex: 1 1 170px;
+    min-width: 0;
+    box-sizing: border-box;
+    padding: 12px 14px;
+    white-space: normal;
+  }
+
+  /* Download All */
+  .operation-top {
+    justify-content: center;
+  }
+
+  .download-all-wrapper {
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  .download-all-formats {
+    justify-content: center;
+  }
+
+  .download-format-btn {
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
+}
+
+/* Smartphones */
+@media (max-width: 600px) {
+
+  .operation-zone {
+    padding: 16px 12px;
+  }
+
+  /* Controls displayed vertically */
+  .operation-controls {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .operation-controls button {
+    width: 100%;
+    flex: 0 0 auto;
+  }
+
+  /* Download All takes full width */
+  .download-all-wrapper {
+    width: 100%;
+  }
+
+  .operation-download-all {
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  /* Progress labels can wrap */
+  .operation-progress .progress-label {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+}
+
+
+
+/* =========================================
+   EASYFILE V1 — MOBILE OPERATION SETTINGS
+   Step 2B
+========================================= */
+
+/* Tablets and smartphones */
+@media (max-width: 900px) {
+
+  .operation-zone .operation-parameters,
+  .operation-zone .operation-parameters-fieldset,
+  .operation-zone .operation-parameters-content {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+  }
+
+  .operation-zone .operation-parameters-content > * {
+    min-width: 0;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
+}
+
+/* Small screens */
+@media (max-width: 600px) {
+
+  /* Parameter grids */
+  .operation-zone .operation-parameters-content
+  :is(
+    .video-setting-grid,
+    .video-compression-summary,
+    .pdf-setting-grid,
+    .auto-split-grid,
+    .image-transform-grid.two,
+    .replace-rule-grid
+  ) {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  /* Keep image format buttons responsive */
+  .operation-zone .operation-parameters-content
+  .image-conversion-formats {
+    grid-template-columns:
+      repeat(auto-fit, minmax(min(100%, 140px), 1fr));
+  }
+
+  /* Titles and controls in parameter cards */
+  .operation-zone .operation-parameters-content
+  :is(
+    .image-setting-header,
+    .compress-setting-header,
+    .pdf-setting-header,
+    .auto-split-header
+  ) {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+  }
+
+  /* Background selector in Convert Image */
+  .operation-zone .operation-parameters-content
+  .image-background-section {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+
+  /* Prevent choice buttons from overflowing */
+  .operation-zone .operation-parameters-content
+  :is(
+    .image-format-btn,
+    .video-choice-btn,
+    .pdf-choice-btn
+  ) {
+    min-width: 0;
+    max-width: 100%;
+    box-sizing: border-box;
+    overflow-wrap: anywhere;
+  }
+
+}
+

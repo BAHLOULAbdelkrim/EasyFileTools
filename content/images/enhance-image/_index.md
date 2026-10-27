@@ -1,16 +1,10 @@
 ---
 title: "Enhance Image"
 url: "/images/enhance-image/"
-description: "................"
-keywords:
-  - ...............
-  - ...............
-tags: 
-  - blabla
-  - blabla
+description: "Enhance Image is planned for a future release and is not available yet."
 weight: 9
 ---
-🚧 Coming soon !
+🚧 Coming soon.
 
-This tool is currently under development.
+This tool is not available yet. Please choose one of the currently available EasyFile Tools operations.
 

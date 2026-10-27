@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="{{ .Site.Language.LanguageCode }}" dir="{{ if eq .Site.Language.LanguageCode "ar" }}rtl{{ else }}ltr{{ end }}">
+
+{{ partial "head.html" . }}
+
+<!-- -----------------------------------------------------------
+     BODY
+     -----------------------------------------------------------
+     - Ajout d'une classe "home" ou "not-home" selon la page
+     - Ajout de data-section="<section>" utile pour JS/CSS
+     ----------------------------------------------------------- -->
+<body
+  class="{{ if .IsHome }}home{{ else }}not-home{{ end }}"
+  data-section="{{ .Section }}"
+  data-current-category="{{ .Section }}"
+>
+
+  <!-- ---------------------------------------------------------
+       HEADER GLOBAL (logo + menu principal)
+       --------------------------------------------------------- -->
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  {{ partial "header.html" . }}
+
+  {{/* V1: authentication is not available yet */}}
+
+  <!-- ---------------------------------------------------------
+       CONTENU PRINCIPAL DYNAMIQUE
+       ---------------------------------------------------------
+       Les pages enfants remplacent le block "main"
+       --------------------------------------------------------- -->
+  <main class="site-main" id="main-content" tabindex="-1">
+    {{ block "main" . }}{{ end }}
+  </main>
+
+  <!-- ---------------------------------------------------------
+       FOOTER
+       --------------------------------------------------------- -->
+  {{ partial "footer.html" . }}
+
+
+  {{ partial "common/confirmation-modal.html" . }}
+
+</body>
+</html>
+

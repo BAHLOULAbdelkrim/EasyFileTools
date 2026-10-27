@@ -1,3 +1,20 @@
+/* Confirmation messages may use only simple emphasis and line breaks.
+ * File names and all other text are inserted as text nodes, never parsed as HTML.
+ */
+function setSafeConfirmationMessage(element, message) {
+    element.replaceChildren();
+    let parent = element;
+    for (const token of String(message ?? "").split(/(<br\s*\/?>|<\/?strong>)/gi)) {
+        const tag = token.toLowerCase();
+        if (/^<br\s*\/?>$/.test(tag)) element.appendChild(document.createElement("br"));
+        else if (tag === "<strong>") {
+            parent = document.createElement("strong");
+            element.appendChild(parent);
+        } else if (tag === "</strong>") parent = element;
+        else if (token) parent.appendChild(document.createTextNode(token));
+    }
+}
+
 console.log("common/confirmation-modal.js loaded");
 
 /* =========================================================
@@ -63,8 +80,7 @@ function showConfirmationModal(
         titleElement.textContent =
             title;
 
-        messageElement.innerHTML =
-            message;
+        setSafeConfirmationMessage(messageElement, message);
 
 
         /* =================================================
@@ -398,8 +414,7 @@ function showMessageModal(
         titleElement.textContent =
             title;
 
-        messageElement.innerHTML =
-            message;
+        setSafeConfirmationMessage(messageElement, message);
 
 
         /* =================================================
@@ -650,8 +665,7 @@ function showClearAllWarningModal(
         titleElement.textContent =
             title;
 
-        messageElement.innerHTML =
-            message;
+        setSafeConfirmationMessage(messageElement, message);
 
 
         /* =========================
@@ -963,6 +977,425 @@ function showClearAllWarningModal(
         confirmBtn.addEventListener(
             "click",
             handleClear
+        );
+
+        document.addEventListener(
+            "keydown",
+            handleKeydown
+        );
+
+
+        cancelBtn.focus();
+
+    });
+}
+
+/* =========================================================
+   NAVIGATION WARNING MODAL
+========================================================= */
+
+function showNavigationWarningModal(
+    title,
+    message
+) {
+
+    return new Promise((resolve) => {
+
+        const modal =
+            document.getElementById(
+                "confirmation-modal"
+            );
+
+        const box =
+            modal?.querySelector(
+                ".confirmation-modal-box"
+            );
+
+        const header =
+            modal?.querySelector(
+                ".confirmation-modal-header"
+            );
+
+        const titleElement =
+            document.getElementById(
+                "confirmation-modal-title"
+            );
+
+        const messageElement =
+            document.getElementById(
+                "confirmation-modal-message"
+            );
+
+        const cancelBtn =
+            document.getElementById(
+                "confirmation-modal-cancel"
+            );
+
+        const downloadBtn =
+            document.getElementById(
+                "confirmation-modal-download-all"
+            );
+
+        const confirmBtn =
+            document.getElementById(
+                "confirmation-modal-confirm"
+            );
+
+
+        if (
+            !modal ||
+            !box ||
+            !header ||
+            !titleElement ||
+            !messageElement ||
+            !cancelBtn ||
+            !downloadBtn ||
+            !confirmBtn
+        ) {
+
+            console.warn(
+                "[NAVIGATION WARNING MODAL] Elements unavailable"
+            );
+
+            resolve(
+                "stay"
+            );
+
+            return;
+        }
+
+
+        /* =========================
+           VISUAL TYPE
+        ========================= */
+
+        box.classList.remove(
+            "modal-success",
+            "modal-error",
+            "modal-info",
+            "modal-navigation"
+        );
+
+        box.classList.add(
+            "modal-warning",
+            "modal-navigation"
+        );
+
+
+        /* =========================
+           CONTENT
+        ========================= */
+
+        titleElement.textContent =
+            title;
+
+        setSafeConfirmationMessage(messageElement, message);
+
+
+        /* =========================
+           ICON
+        ========================= */
+
+        const oldIcon =
+            document.getElementById(
+                "confirmation-modal-icon"
+            );
+
+        if (oldIcon) {
+
+            oldIcon.outerHTML = `
+                <i
+                    id="confirmation-modal-icon"
+                    data-lucide="triangle-alert"
+                    class="confirmation-modal-icon"
+                ></i>
+            `;
+        }
+
+
+        /* =========================
+           BUTTONS
+        ========================= */
+
+        cancelBtn.classList.remove(
+            "hidden"
+        );
+
+        downloadBtn.classList.remove(
+            "hidden"
+        );
+
+        cancelBtn.innerHTML = `
+            <i data-lucide="pause"></i>
+            Stay on this page
+        `;
+
+        downloadBtn.innerHTML = `
+            <i data-lucide="download"></i>
+            Download All
+        `;
+
+        confirmBtn.innerHTML = `
+            <i data-lucide="x"></i>
+            Leave without downloading
+        `;
+
+        if (
+            typeof createLocalIcons ===
+            "function"
+        ) {
+
+            createLocalIcons(
+                header
+            );
+
+            createLocalIcons(
+                cancelBtn
+            );
+
+            createLocalIcons(
+                downloadBtn
+            );
+
+            createLocalIcons(
+                confirmBtn
+            );
+        }
+        else if (
+            typeof lucide !==
+            "undefined"
+        ) {
+
+            lucide.createIcons();
+        }
+
+
+        /* =========================
+           SHOW
+        ========================= */
+
+        modal.classList.remove(
+            "hidden"
+        );
+
+
+        /* =========================
+           KEYBOARD SELECTION
+        ========================= */
+
+        let selectedAction =
+            "stay";
+
+
+        function updateSelection() {
+
+            cancelBtn.classList.toggle(
+                "active-focus",
+                selectedAction === "stay"
+            );
+
+            downloadBtn.classList.toggle(
+                "active-focus",
+                selectedAction === "download"
+            );
+
+            confirmBtn.classList.toggle(
+                "active-focus",
+                selectedAction === "leave"
+            );
+        }
+
+
+        updateSelection();
+
+
+        /* =========================
+           CLOSE
+        ========================= */
+
+        function closeModal(
+            action
+        ) {
+
+            modal.classList.add(
+                "hidden"
+            );
+
+            downloadBtn.classList.add(
+                "hidden"
+            );
+
+            cancelBtn.classList.remove(
+                "active-focus"
+            );
+
+            downloadBtn.classList.remove(
+                "active-focus"
+            );
+
+            confirmBtn.classList.remove(
+                "active-focus"
+            );
+
+
+            document.removeEventListener(
+                "keydown",
+                handleKeydown
+            );
+
+            cancelBtn.removeEventListener(
+                "click",
+                handleStay
+            );
+
+            downloadBtn.removeEventListener(
+                "click",
+                handleDownload
+            );
+
+            confirmBtn.removeEventListener(
+                "click",
+                handleLeave
+            );
+
+            box.classList.remove(
+                "modal-navigation"
+            );
+
+            resolve(
+                action
+            );
+        }
+
+
+        /* =========================
+           ACTIONS
+        ========================= */
+
+        function handleStay() {
+
+            closeModal(
+                "stay"
+            );
+        }
+
+
+        function handleDownload() {
+
+            closeModal(
+                "download"
+            );
+        }
+
+
+        function handleLeave() {
+
+            closeModal(
+                "leave"
+            );
+        }
+
+
+        /* =========================
+           KEYBOARD
+        ========================= */
+
+        function handleKeydown(event) {
+
+            if (
+                event.key === "Escape"
+            ) {
+
+                event.preventDefault();
+
+                closeModal(
+                    "stay"
+                );
+
+                return;
+            }
+
+
+            if (
+                event.key === "ArrowLeft"
+            ) {
+
+                event.preventDefault();
+
+                if (
+                    selectedAction === "leave"
+                ) {
+
+                    selectedAction =
+                        "download";
+                }
+                else {
+
+                    selectedAction =
+                        "stay";
+                }
+
+                updateSelection();
+
+                return;
+            }
+
+
+            if (
+                event.key === "ArrowRight"
+            ) {
+
+                event.preventDefault();
+
+                if (
+                    selectedAction === "stay"
+                ) {
+
+                    selectedAction =
+                        "download";
+                }
+                else {
+
+                    selectedAction =
+                        "leave";
+                }
+
+                updateSelection();
+
+                return;
+            }
+
+
+            if (
+                event.key === "Enter"
+            ) {
+
+                event.preventDefault();
+
+                closeModal(
+                    selectedAction
+                );
+            }
+        }
+
+
+        /* =========================
+           EVENTS
+        ========================= */
+
+        cancelBtn.addEventListener(
+            "click",
+            handleStay
+        );
+
+        downloadBtn.addEventListener(
+            "click",
+            handleDownload
+        );
+
+        confirmBtn.addEventListener(
+            "click",
+            handleLeave
         );
 
         document.addEventListener(

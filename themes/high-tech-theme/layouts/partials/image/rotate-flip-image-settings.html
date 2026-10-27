@@ -1,0 +1,83 @@
+<section id="rotateFlipImageSettings" class="image-transform-settings" aria-labelledby="chooseFormatLabel">
+    <div class="image-transform-section eft-config-scope-card">
+        <div class="image-transform-title">Configuration scope</div>
+        <div class="image-transform-help">Apply one transform to every image or configure rotation/flip independently for each image.</div>
+        <div class="eft-config-scope-actions" id="rotateFlipConfigScope">
+            <button type="button" class="eft-config-scope-btn active" data-rotate-config-scope="all">Same configuration for all</button>
+            <button type="button" class="eft-config-scope-btn" data-rotate-config-scope="per-file">Custom per image</button>
+        </div>
+        <div id="rotateFlipConfigFileRow" class="eft-config-file-row hidden">
+            <label for="rotateFlipConfigFile">Configure image</label>
+            <select id="rotateFlipConfigFile" disabled><option value="">Load an image first</option></select>
+            <div class="eft-config-note">Each image keeps its own rotation, flip, output and quality settings.</div>
+        </div>
+    </div>
+    <div class="image-transform-section">
+        <div class="image-transform-title">Rotation</div>
+        <div class="image-transform-choice-group wrap">
+            <button type="button" class="image-transform-choice" data-rotation="270">90° left</button>
+            <button type="button" class="image-transform-choice active" data-rotation="90">90° right</button>
+            <button type="button" class="image-transform-choice" data-rotation="180">180°</button>
+            <button type="button" class="image-transform-choice" data-rotation="0">No rotation</button>
+            <button type="button" class="image-transform-choice" data-rotation="custom">Custom angle</button>
+        </div>
+
+        <div id="rotateCustomAngleControls" class="rotate-custom-angle hidden">
+            <div class="rotate-angle-toolbar">
+                <label>
+                    Unit
+                    <select id="rotateAngleUnit">
+                        <option value="deg" selected>Degrees (°)</option>
+                        <option value="rad">Radians (rad)</option>
+                    </select>
+                </label>
+                <label>
+                    Angle
+                    <input id="rotateCustomAngleInput" type="number" min="-180" max="180" step="1" value="15">
+                </label>
+            </div>
+            <input id="rotateCustomAngleRange" class="eft-range" type="range" min="-180" max="180" step="1" value="15">
+            <div id="rotateAngleEquivalent" class="rotate-angle-equivalent">15° ≈ 0.2618 rad</div>
+            <div class="image-transform-help">The output canvas expands automatically so the full rotated image remains visible.</div>
+        </div>
+    </div>
+
+    <div class="image-transform-section">
+        <div class="image-transform-title">Flip</div>
+        <div class="image-transform-choice-group wrap">
+            <button type="button" class="image-transform-choice toggle" id="flipImageHorizontal">Horizontal mirror</button>
+            <button type="button" class="image-transform-choice toggle" id="flipImageVertical">Vertical mirror</button>
+        </div>
+    </div>
+
+    <div id="rotateCornerBackgroundSection" class="image-transform-section hidden">
+        <div class="image-transform-title">Corner background</div>
+        <div class="image-transform-help">Arbitrary rotations create new corners. Transparent formats keep them transparent; JPG uses this color.</div>
+        <div class="eft-color-picker" data-eft-color-picker data-default-color="#ffffff">
+            <label class="eft-color-swatch" title="Choose corner background color">
+                <input id="rotateCornerBackground" type="color" value="#ffffff">
+            </label>
+            <span class="eft-color-code">#FFFFFF</span>
+            <button type="button" class="eft-color-reset" data-eft-color-reset>Reset</button>
+        </div>
+    </div>
+
+    <div class="image-transform-section" id="rotateFlipOutputSection">
+        <div class="image-transform-title">Output format</div>
+        <select id="rotateFlipOutputFormat">
+            <option value="same" selected>Same as source</option>
+            <option value="jpg">JPG</option>
+            <option value="png">PNG</option>
+            <option value="webp">WebP</option>
+            <option value="avif">AVIF</option>
+        </select>
+        <div class="image-transform-title compact">Output quality</div>
+        <div class="image-transform-help">Applies only to JPG, WebP and AVIF outputs.</div>
+        <div class="image-transform-range-row">
+            <input id="rotateFlipQuality" class="eft-range" type="range" min="50" max="100" value="94" step="1">
+            <strong id="rotateFlipQualityValue">94%</strong>
+        </div>
+    </div>
+
+    <div id="rotateFlipValidation" data-eft-readiness-status class="image-transform-validation" role="status" aria-live="polite">Load one or more raster images.</div>
+</section>

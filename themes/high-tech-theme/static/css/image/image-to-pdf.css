@@ -1,0 +1,312 @@
+.image-to-pdf-settings {
+    width: 100%;
+}
+
+
+.pdf-order-info {
+    display: flex;
+    flex-direction: column;
+
+    gap: 4px;
+
+    margin-bottom: 20px;
+
+    padding: 13px 15px;
+
+    background: #f5f3ff;
+
+    border-radius: 10px;
+
+    color: var(--violet);
+}
+
+
+.pdf-order-info span {
+    font-size: 13px;
+}
+
+
+.pdf-setting-section {
+    margin-bottom: 18px;
+
+    padding: 17px;
+
+    background: #ffffff;
+
+    border: 1px solid #e5e7eb;
+    border-radius: 13px;
+}
+
+
+.pdf-setting-title {
+    margin-bottom: 6px;
+
+    font-size: 15px;
+    font-weight: 750;
+}
+
+
+.pdf-setting-help {
+    margin-bottom: 10px;
+
+    font-size: 12px;
+
+    color: #6b7280;
+}
+
+
+.pdf-setting-header {
+    display: flex;
+
+    align-items: flex-start;
+    justify-content: space-between;
+
+    gap: 20px;
+}
+
+
+.pdf-setting-section select,
+.pdf-filename,
+.pdf-custom-margin input {
+    width: 100%;
+
+    box-sizing: border-box;
+
+    padding: 10px 12px;
+
+    border: 1px solid #d1d5db;
+    border-radius: 9px;
+
+    background: #ffffff;
+}
+
+
+#imageToPdfQuality {
+    width: 100%;
+}
+
+
+/* FIT */
+
+.pdf-choice-group {
+    display: flex;
+
+    gap: 10px;
+}
+
+
+.pdf-choice-btn {
+    flex: 1;
+
+    padding: 10px;
+
+    border: 1px solid #d1d5db;
+    border-radius: 9px;
+
+    background: #ffffff;
+
+    cursor: pointer;
+}
+
+
+.pdf-choice-btn.active {
+    border-color: var(--violet);
+
+    box-shadow:
+        0 0 0 2px
+        rgba(91, 33, 182, 0.12);
+}
+
+
+/* CUSTOM MARGIN */
+
+.pdf-custom-margin {
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    margin-top: 10px;
+}
+
+
+.pdf-custom-margin.hidden {
+    display: none;
+}
+
+
+/* BACKGROUND */
+
+.pdf-background-row {
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 20px;
+}
+
+
+#imageToPdfBackground {
+    width: 54px;
+    height: 38px;
+}
+
+
+/* LOSSLESS ENCODING */
+
+.pdf-lossless-option {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    cursor: pointer;
+}
+
+.pdf-lossless-option input {
+    margin-top: 3px;
+}
+
+.pdf-lossless-option span {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.pdf-lossless-option small {
+    color: #6b7280;
+    line-height: 1.4;
+}
+
+
+/* VALIDATION */
+
+.pdf-validation {
+    margin-bottom: 18px;
+
+    padding: 12px 14px;
+
+    background: #f3f4f6;
+
+    border-radius: 10px;
+
+    color: #6b7280;
+
+    font-weight: 600;
+}
+
+
+.pdf-validation.valid {
+    background: var(--green-hover);
+
+    color: var(--green-text);
+}
+
+
+.pdf-validation.error {
+    background: #fee2e2;
+
+    color: #991b1b;
+}
+
+
+/* RESULT */
+
+.image-pdf-result {
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 20px;
+
+    padding: 15px;
+
+    border: 1px solid #d1d5db;
+    border-radius: 12px;
+
+    background: #f9fafb;
+}
+
+
+.image-pdf-result.hidden {
+    display: none;
+}
+
+
+.image-pdf-result-info {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 4px;
+}
+
+
+.image-pdf-result-info span {
+    font-size: 13px;
+
+    color: #6b7280;
+}
+
+
+.image-pdf-download {
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 7px;
+
+    padding: 10px 14px;
+
+    border: 0;
+    border-radius: 9px;
+
+    background: var(--violet);
+
+    color: white;
+
+    cursor: pointer;
+}
+
+
+@media (max-width: 650px) {
+
+    .image-pdf-result,
+    .pdf-background-row {
+        align-items: stretch;
+
+        flex-direction: column;
+    }
+
+
+    .pdf-setting-header {
+        flex-direction: column;
+
+        gap: 4px;
+    }
+
+}
+/* PDF result follows the generic BATCH result language used by Merge Audio. */
+.image-pdf-result {
+    margin-top: 24px;
+    padding: 18px;
+    border: 1px solid var(--green-text);
+    border-radius: 14px;
+    background: var(--green-hover);
+}
+.image-pdf-result-info strong { color: var(--green-text); font-weight: 800; }
+.image-pdf-result-info span { color: #4b5563; font-weight: 650; }
+.image-pdf-download { font-weight: 800; }
+
+/* Keep previous BATCH results visible when settings change, as in Merge Audio. */
+.image-pdf-result.stale {
+    border-color: #c2410c;
+    background: #fff7ed;
+    box-shadow: 0 0 0 2px rgba(194, 65, 12, 0.08);
+}
+
+.image-pdf-result.stale .image-pdf-result-info span {
+    color: #9a3412;
+    font-weight: 700;
+}

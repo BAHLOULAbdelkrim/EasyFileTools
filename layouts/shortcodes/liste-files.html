@@ -1,4 +1,5 @@
 
 {{ partial "common/liste-files.html" (dict
     "category" (.Get "category")
+    "showClearAll" .Page.IsSection
 ) }}

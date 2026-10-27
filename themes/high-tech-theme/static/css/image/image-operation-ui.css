@@ -1,0 +1,156 @@
+/* =========================================================
+   IMAGE OPERATION UI — SHARED VISUAL LANGUAGE
+
+   Mirrors the mature Audio operation cards:
+   - green section titles
+   - light-violet parameter cards
+   - green hover feedback
+   - consistent active choices and form focus states
+========================================================= */
+
+.convert-image-settings,
+.compress-image-settings,
+.image-to-pdf-settings,
+.remove-background-settings,
+.image-transform-settings {
+    width: 100%;
+}
+
+.image-setting-section,
+.compress-setting-section,
+.pdf-setting-section,
+.background-setting-section,
+.image-transform-section {
+    position: relative;
+    margin-bottom: 22px;
+    padding: 18px;
+
+    background: var(--submenu-bg);
+    border: 1px solid #ddd6fe;
+    border-radius: 14px;
+
+    transition:
+        background-color 0.25s ease,
+        border-color 0.25s ease,
+        box-shadow 0.25s ease,
+        transform 0.25s ease;
+}
+
+.image-setting-section:hover,
+.compress-setting-section:hover,
+.pdf-setting-section:hover,
+.background-setting-section:hover,
+.image-transform-section:hover {
+    background: #f0fdf4;
+    border-color: #86efac;
+    box-shadow: 0 5px 18px rgba(4, 120, 87, 0.08);
+    transform: translateY(-1px);
+}
+
+.image-setting-title,
+.compress-setting-title,
+.pdf-setting-title,
+.background-setting-title,
+.image-transform-title {
+    color: var(--green-text);
+    font-size: 17px;
+    font-weight: 750;
+}
+
+.image-setting-help,
+.compress-setting-help,
+.pdf-setting-help,
+.background-setting-help,
+.image-transform-help {
+    color: #6b7280;
+    line-height: 1.45;
+}
+
+/* Choice buttons */
+.image-format-btn,
+.compression-preset-btn,
+.pdf-choice-btn,
+.background-mode-btn,
+.background-format-btn,
+.image-transform-choice {
+    transition:
+        background-color 0.2s ease,
+        border-color 0.2s ease,
+        box-shadow 0.2s ease,
+        transform 0.2s ease,
+        opacity 0.2s ease;
+}
+
+.image-format-btn:not(:disabled):hover,
+.compression-preset-btn:not(:disabled):hover,
+.pdf-choice-btn:not(:disabled):hover,
+.background-mode-btn:not(:disabled):hover,
+.background-format-btn:not(:disabled):hover,
+.image-transform-choice:not(:disabled):hover {
+    background: var(--green-hover);
+    border-color: #86efac;
+    transform: translateY(-1px);
+}
+
+.image-format-btn.active,
+.compression-preset-btn.active,
+.pdf-choice-btn.active,
+.background-mode-btn.active,
+.background-format-btn.active,
+.image-transform-choice.active {
+    background: var(--violet-light);
+    color: var(--violet);
+    border-color: var(--violet);
+    box-shadow: 0 0 0 2px rgba(91, 33, 182, 0.10);
+}
+
+/* Text / number / select controls */
+.operation-parameters-content select,
+.operation-parameters-content input[type="text"],
+.operation-parameters-content input[type="number"] {
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease,
+        background-color 0.2s ease;
+}
+
+.operation-parameters-content select:hover:not(:disabled),
+.operation-parameters-content input[type="text"]:hover:not(:disabled),
+.operation-parameters-content input[type="number"]:hover:not(:disabled) {
+    border-color: #86efac;
+}
+
+.operation-parameters-content select:focus,
+.operation-parameters-content input[type="text"]:focus,
+.operation-parameters-content input[type="number"]:focus {
+    outline: none;
+    border-color: var(--green-text);
+    box-shadow: 0 0 0 3px rgba(4, 120, 87, 0.10);
+}
+
+/* The processing/empty fieldset lock must also freeze hover motion. */
+.operation-parameters-fieldset:disabled .image-setting-section:hover,
+.operation-parameters-fieldset:disabled .compress-setting-section:hover,
+.operation-parameters-fieldset:disabled .pdf-setting-section:hover,
+.operation-parameters-fieldset:disabled .background-setting-section:hover,
+.operation-parameters-fieldset:disabled .image-transform-section:hover {
+    background: var(--submenu-bg);
+    border-color: #ddd6fe;
+    box-shadow: none;
+    transform: none;
+}
+
+/* Clear All is visually locked as well as click-guarded while processing. */
+body.operation-interaction-locked .category-clear-all-btn,
+.category-clear-all-btn:disabled {
+    background: gray !important;
+    color: #ffffff !important;
+    opacity: 0.5 !important;
+    cursor: not-allowed !important;
+    transform: none !important;
+}
+
+body.operation-interaction-locked .category-clear-all-btn::before,
+.category-clear-all-btn:disabled::before {
+    animation: none !important;
+}

@@ -1,0 +1,8 @@
+{{ define "main" }}
+<article class="about-page">
+  <header class="about-page-header">
+    {{ partial "common/page-heading.html" (dict "title" .Title) }}
+  </header>
+  <div class="about-page-body">{{ .Content }}</div>
+</article>
+{{ end }}

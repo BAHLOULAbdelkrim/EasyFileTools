@@ -13,4 +13,41 @@
 
     <div id="file-list"></div>
 
+    {{ if .showClearAll }}
+
+        <div class="category-clear-all-container">
+
+            <button
+                type="button"
+                id="categoryClearAllBtn"
+                class="category-clear-all-btn"
+                disabled
+            >
+                <i data-lucide="trash-2"></i>
+                Clear All
+            </button>
+
+        </div>
+
+    {{ end }}
+
 </div>
+
+<!-- V4.2: only a count/category hint; files remain exclusively in IndexedDB. -->
+<script>
+(() => {
+  const list = document.currentScript.previousElementSibling;
+  if (!list || !list.classList.contains("file-list-container")) return;
+  try {
+    const id = sessionStorage.getItem("easyfiletools:file-session-v2");
+    const hint = JSON.parse(sessionStorage.getItem("easyfiletools:restore-hint-v42") || "null");
+    if (!id || hint?.sessionId !== id || !Number.isInteger(hint.count) || hint.count <= 0) return;
+    const pageCategory = (list.dataset.category || "").toLowerCase();
+    if (pageCategory && (hint.category || "").toLowerCase() !== pageCategory) return;
+    list.dataset.restorePending = "true";
+    list.style.setProperty("--easyfile-expected-rows", String(Math.min(3, hint.count)));
+    list.querySelector("#file-list")?.setAttribute("aria-busy", "true");
+  } catch (_) { /* storage blocked: keep the normal layout */ }
+})();
+</script>
+

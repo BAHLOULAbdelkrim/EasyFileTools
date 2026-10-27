@@ -1,0 +1,50 @@
+{{- $path := . -}}
+{{- $source := printf "static/%s" $path -}}
+{{- if not (fileExists $source) -}}
+  {{- $source = printf "themes/high-tech-theme/static/%s" $path -}}
+{{- end -}}
+{{- if not (fileExists $source) -}}
+  {{- errorf "Missing asset: %s" $path -}}
+{{- end -}}
+
+{{- /* Only first-party CSS and selected common JS. Keep vendor files and imported CSS untouched. */ -}}
+{{- $minifyPaths := slice
+    "css/common/tailwind-compat.css"
+    "css/seo.css"
+    "css/main.css"
+    "css/common/zone-chargement.css"
+    "css/common/liste-files.css"
+    "css/common/operation-zone.css"
+    "css/common/confirmation-modal.css"
+    "css/common/notifications.css"
+    "css/common/operation-ui-components.css"
+    "js/common/file-list.js"
+    "js/common/confirmation-modal.js"
+    "js/common/zone-chargement.js"
+    "js/common/navigation-guard.js"
+    "js/common/operations-config.js"
+    "js/common/more-operations.js"
+    "js/common/category-operations.js"
+    "js/common/file-categories.js"
+    "js/common/file-utils.js"
+    "js/common/file-storage.js"
+    "js/common/icons.js"
+    "js/common/file-policy.js"
+    "js/common/keyboard-navigation.js"
+    "js/homepage/main.js"
+    "js/homepage/homepage-storage.js"
+    "js/homepage/liste-files.js"
+-}}
+
+{{- $result := printf "%s?v=%s" ($path | relURL) (readFile $source | sha256 | truncate 16 "") -}}
+
+{{- if and hugo.IsProduction (in $minifyPaths $path) -}}
+  {{- $out := printf "optimized/%s" $path -}}
+  {{- $asset := resources.FromString $out (readFile $source) -}}
+  {{- $asset = resources.Minify $asset -}}
+  {{- $asset = resources.Fingerprint "sha256" $asset -}}
+  {{- $result = $asset.RelPermalink -}}
+{{- end -}}
+
+{{- /* Hugo < 0.166 requires exactly one unconditional return at the end. */ -}}
+{{- return $result -}}

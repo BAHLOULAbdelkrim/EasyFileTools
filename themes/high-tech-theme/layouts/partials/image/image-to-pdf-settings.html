@@ -1,0 +1,355 @@
+<section
+    id="imageToPdfSettings"
+    class="image-to-pdf-settings"
+    aria-labelledby="chooseFormatLabel"
+>
+
+    <div class="pdf-order-info">
+
+        <strong id="imageToPdfCount">
+            0 images
+        </strong>
+
+        <span>
+            PDF pages follow the file order shown above.
+            Drag files in the list to reorder them.
+        </span>
+
+    </div>
+
+
+    <!-- PAGE SIZE -->
+
+    <div class="pdf-setting-section">
+
+        <div class="pdf-setting-title">
+            Page size
+        </div>
+
+        <select id="imageToPdfPageSize">
+
+            <option value="auto">
+                Match each image
+            </option>
+
+            <option value="a4" selected>
+                A4
+            </option>
+
+            <option value="a3">
+                A3
+            </option>
+
+            <option value="letter">
+                Letter
+            </option>
+
+            <option value="legal">
+                Legal
+            </option>
+
+        </select>
+
+    </div>
+
+
+    <!-- ORIENTATION -->
+
+    <div class="pdf-setting-section">
+
+        <div class="pdf-setting-title">
+            Orientation
+        </div>
+
+        <select id="imageToPdfOrientation">
+
+            <option value="auto" selected>
+                Automatic
+            </option>
+
+            <option value="portrait">
+                Portrait
+            </option>
+
+            <option value="landscape">
+                Landscape
+            </option>
+
+        </select>
+
+    </div>
+
+
+    <!-- IMAGE FIT -->
+
+    <div class="pdf-setting-section">
+
+        <div class="pdf-setting-title">
+            Image fitting
+        </div>
+
+        <div class="pdf-setting-help">
+            Fit keeps the whole image visible. Fill page may crop the image edges.
+        </div>
+
+        <div class="pdf-choice-group">
+
+            <button
+                type="button"
+                class="pdf-choice-btn active"
+                data-pdf-fit="fit"
+            >
+                Fit
+            </button>
+
+            <button
+                type="button"
+                class="pdf-choice-btn"
+                data-pdf-fit="fill"
+            >
+                Fill page
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- MARGINS -->
+
+    <div class="pdf-setting-section">
+
+        <div class="pdf-setting-title">
+            Margins
+        </div>
+
+        <select id="imageToPdfMarginPreset">
+
+            <option value="0">
+                None
+            </option>
+
+            <option value="5">
+                Small — 5 mm
+            </option>
+
+            <option value="10" selected>
+                Medium — 10 mm
+            </option>
+
+            <option value="20">
+                Large — 20 mm
+            </option>
+
+            <option value="custom">
+                Custom
+            </option>
+
+        </select>
+
+
+        <div
+            id="imageToPdfCustomMarginRow"
+            class="pdf-custom-margin hidden"
+        >
+
+            <input
+                id="imageToPdfCustomMargin"
+                type="number"
+                min="0"
+                max="50"
+                step="1"
+                value="10"
+            >
+
+            <span>mm</span>
+
+        </div>
+
+    </div>
+
+
+    <!-- QUALITY -->
+
+    <div class="pdf-setting-section">
+
+        <div class="pdf-setting-header">
+
+            <div>
+
+                <div class="pdf-setting-title">
+                    Image quality
+                </div>
+
+                <div class="pdf-setting-help">
+                    Higher quality produces a larger PDF.
+                </div>
+
+            </div>
+
+
+            <strong id="imageToPdfQualityValue">
+                90%
+            </strong>
+
+        </div>
+
+
+        <input
+            id="imageToPdfQuality"
+            class="eft-range"
+            type="range"
+            min="50"
+            max="100"
+            step="1"
+            value="90"
+        >
+
+    </div>
+
+
+    <div class="pdf-setting-section">
+
+        <label class="pdf-lossless-option">
+            <input
+                id="imageToPdfLossless"
+                type="checkbox"
+            >
+
+            <span>
+                <strong>Lossless image encoding</strong>
+                <small>Preserves sharp graphics and text using PNG inside the PDF. Produces larger files.</small>
+            </span>
+        </label>
+
+    </div>
+
+
+    <!-- RESOLUTION -->
+
+    <div class="pdf-setting-section">
+
+        <div class="pdf-setting-title">
+            Maximum image resolution
+        </div>
+
+        <select id="imageToPdfMaxResolution">
+
+            <option value="0">
+                Original
+            </option>
+
+            <option value="2400" selected>
+                2400 px
+            </option>
+
+            <option value="1600">
+                1600 px
+            </option>
+
+            <option value="1200">
+                1200 px
+            </option>
+
+        </select>
+
+        <div class="pdf-setting-help">
+            Large images are scaled down to this limit. Smaller images are never enlarged.
+        </div>
+
+    </div>
+
+
+    <!-- BACKGROUND -->
+
+    <div class="pdf-setting-section pdf-background-row">
+
+        <div>
+
+            <div class="pdf-setting-title">
+                Page background
+            </div>
+
+            <div class="pdf-setting-help">
+                Used behind transparent images.
+            </div>
+
+        </div>
+
+
+        <div class="eft-color-picker" data-eft-color-picker data-default-color="#ffffff">
+            <label class="eft-color-swatch" title="Choose page background color">
+                <input id="imageToPdfBackground" type="color" value="#ffffff">
+            </label>
+            <span class="eft-color-code">#FFFFFF</span>
+            <button type="button" class="eft-color-reset" data-eft-color-reset>Reset</button>
+        </div>
+
+    </div>
+
+
+    <!-- NAME -->
+
+    <div class="pdf-setting-section">
+
+        <div class="pdf-setting-title">
+            PDF filename
+        </div>
+
+        <input
+            id="imageToPdfFilename"
+            class="pdf-filename"
+            type="text"
+            value="images.pdf"
+            maxlength="120"
+        >
+
+    </div>
+
+
+    <!-- VALIDATION -->
+
+    <div
+        id="imageToPdfValidation"
+        data-eft-readiness-status
+        class="pdf-validation"
+        role="status"
+        aria-live="polite"
+    >
+        Load one or more images.
+    </div>
+
+
+    <!-- RESULT -->
+
+    <div
+        id="imageToPdfResult"
+        class="image-pdf-result eft-result-card hidden"
+    >
+
+        <div class="image-pdf-result-info eft-result-card-info">
+
+            <strong id="imageToPdfResultName">
+                images.pdf
+            </strong>
+
+            <span id="imageToPdfResultMeta">
+                —
+            </span>
+
+        </div>
+
+
+        <button
+            id="imageToPdfResultDownload"
+            type="button"
+            class="image-pdf-download eft-result-download"
+        >
+            <i data-lucide="download"></i>
+
+            Download PDF
+        </button>
+
+    </div>
+
+</section>

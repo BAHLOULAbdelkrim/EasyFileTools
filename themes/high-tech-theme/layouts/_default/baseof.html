@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="fr">
+<html lang="en">
 
 {{ partial "head.html" . }}
 
@@ -9,12 +9,18 @@
      - Ajout d'une classe "home" ou "not-home" selon la page
      - Ajout de data-section="<section>" utile pour JS/CSS
      ----------------------------------------------------------- -->
-<body class="{{ if .IsHome }}home{{ else }}not-home{{ end }}" data-section="{{ .Section }}">
+<body
+  class="{{ if .IsHome }}home{{ else }}not-home{{ end }}"
+  data-section="{{ .Section }}"
+  data-current-category="{{ .Section }}"
+>
 
   <!-- ---------------------------------------------------------
        HEADER GLOBAL (logo + menu principal)
        --------------------------------------------------------- -->
   {{ partial "header.html" . }}
+
+  {{/* Authentication is not available in V1 */}}
 
   <!-- ---------------------------------------------------------
        CONTENU PRINCIPAL DYNAMIQUE

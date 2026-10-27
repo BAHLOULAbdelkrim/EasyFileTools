@@ -528,3 +528,135 @@
 .confirmation-modal-download-all.hidden {
     display: none !important;
 }
+
+
+
+
+/* =========================================================
+   NAVIGATION WARNING MODAL
+========================================================= */
+
+.confirmation-modal-box.modal-navigation {
+    width: min(620px, 92%);
+}
+
+.confirmation-modal-box.modal-navigation
+.confirmation-modal-actions {
+    align-items: stretch;
+}
+
+.confirmation-modal-box.modal-navigation
+.confirmation-modal-actions button {
+    flex: 1 1 0;
+
+    min-width: 0;
+
+    height: auto;
+
+    min-height: 58px;
+
+    padding: 10px 14px;
+
+    line-height: 1.25;
+
+    white-space: normal;
+
+    text-align: center;
+}
+
+
+
+
+/* =========================================
+   EASYFILE V1 — MOBILE MODALS AND TOASTS
+========================================= */
+
+@media (max-width: 600px) {
+
+  .confirmation-modal {
+    padding: 12px !important;
+    box-sizing: border-box;
+    overflow-y: auto;
+  }
+
+  .confirmation-modal-box,
+  .confirmation-modal-box.modal-navigation {
+    width: 100%;
+    max-width: 560px;
+    min-width: 0;
+    max-height: calc(100vh - 24px);
+    max-height: calc(100dvh - 24px);
+
+    padding: 18px 14px;
+    box-sizing: border-box;
+    overflow-y: auto;
+  }
+
+  .confirmation-modal-header {
+    flex-wrap: wrap;
+  }
+
+  .confirmation-modal-header h3 {
+    font-size: 19px;
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+
+  .confirmation-modal-message {
+    font-size: 15px;
+    line-height: 1.5;
+    overflow-wrap: anywhere;
+  }
+
+  .confirmation-modal-actions {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+
+  .confirmation-modal-actions button,
+  .confirmation-modal-box.modal-navigation
+  .confirmation-modal-actions button {
+    width: 100%;
+    min-width: 0;
+    min-height: 44px;
+    height: auto;
+    padding: 12px;
+    font-size: 15px;
+    white-space: normal;
+  }
+
+  .notification-toast {
+    left: 12px;
+    right: 12px;
+    bottom: 12px;
+
+    width: auto;
+    max-width: none;
+    padding: 12px;
+    gap: 10px;
+  }
+
+  .notification-toast-content,
+  .notification-toast-message {
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+
+}
+
+/* Prevent persistent enlargement on touchscreens */
+
+@media (hover: none), (pointer: coarse) {
+
+  .confirmation-modal-actions button:hover {
+    transform: none !important;
+  }
+
+  .confirmation-modal-actions button:active {
+    transform: scale(1.02) !important;
+  }
+
+}
+
+

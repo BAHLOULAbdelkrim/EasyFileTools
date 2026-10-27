@@ -20,6 +20,11 @@ document.addEventListener(
             return;
         }
 
+        const validation =
+            document.getElementById(
+                "genericConversionValidation"
+            );
+
 
         /* =========================
            STATE
@@ -31,6 +36,11 @@ document.addEventListener(
         let currentFiles =
             [];
 
+        let operationSettingsLocked =
+            window
+                .EasyFileOperationController
+                ?.isSettingsLocked?.() ===
+            true;
 
         /* =========================
            GET AUDIO FORMATS
@@ -178,6 +188,48 @@ document.addEventListener(
         }
 
 
+        function renderValidation() {
+
+            if (!validation) {
+                return;
+            }
+
+            const lifecycleState =
+                window.EasyFileOperationController?.getState?.();
+
+            if (
+                lifecycleState &&
+                !["idle", "ready"].includes(lifecycleState.status)
+            ) {
+                window.EasyFileUIControls?.applyReadinessState?.(lifecycleState);
+                return;
+            }
+
+            validation.classList.remove(
+                "valid"
+            );
+
+            if (currentFiles.length === 0) {
+                validation.textContent =
+                    "Load one or more audio files.";
+                return;
+            }
+
+            if (!selectedFormat) {
+                validation.textContent =
+                    "Choose an output format.";
+                return;
+            }
+
+            validation.textContent =
+                `Ready to convert ${currentFiles.length} ${currentFiles.length === 1 ? "audio file" : "audio files"}.`;
+
+            validation.classList.add(
+                "valid"
+            );
+        }
+
+
         /* =========================
            RENDER FORMATS
         ========================= */
@@ -259,6 +311,7 @@ document.addEventListener(
                     ========================= */
 
                     const isBlocked =
+                        operationSettingsLocked ||
                         !hasFiles ||
                         format ===
                             blockedFormat;
@@ -327,6 +380,9 @@ document.addEventListener(
             );
 
 
+            renderValidation();
+
+
             console.log(
                 "[AUDIO CONVERSION UI] Formats refreshed",
                 {
@@ -377,9 +433,61 @@ document.addEventListener(
                     data.files;
             }
 
+            if (!currentFiles.length) {
+                selectedFormat = null;
+                dispatchFormatSelection();
+            }
             renderFormats();
         }
 
+        /* =========================
+        OPERATION STATE
+        ========================= */
+
+        document.addEventListener(
+            "easyfiletools:operation-state-changed",
+            event => {
+
+                const detail =
+                    event.detail || {};
+
+
+                if (
+                    detail.operationId !==
+                    "convert-audio"
+                ) {
+
+                    return;
+                }
+
+
+                const locked =
+                    detail.settingsLocked ===
+                    true;
+
+
+                if (
+                    operationSettingsLocked ===
+                    locked
+                ) {
+
+                    return;
+                }
+
+
+                operationSettingsLocked =
+                    locked;
+
+
+                renderFormats();
+
+
+                console.log(
+                    "[AUDIO CONVERSION UI] Settings locked:",
+                    operationSettingsLocked
+                );
+            }
+        );        
 
         /* =========================
            STORAGE UPDATED
@@ -393,6 +501,13 @@ document.addEventListener(
             }
         );
 
+
+        document.addEventListener("easyfiletools:operation-settings-reset", event => {
+            if (event.detail?.operation !== "convert-audio") return;
+            selectedFormat = null;
+            renderFormats();
+            dispatchFormatSelection();
+        });
 
         /* =========================
            FILES CLEARED

@@ -1,0 +1,186 @@
+/* =========================================================
+   VIDEO OPERATION UI — SHARED EASYFILE VISUAL LANGUAGE
+
+   Aligned with the mature Audio/Image V1 operation cards:
+   - green section titles
+   - light-violet parameter cards
+   - green hover feedback
+   - violet active choices
+   - consistent focus + disabled/locked behaviour
+========================================================= */
+
+.video-operation-settings {
+    width: 100%;
+}
+
+.video-setting-section {
+    position: relative;
+    margin-bottom: 22px;
+    padding: 18px;
+
+    background: var(--submenu-bg);
+    border: 1px solid #ddd6fe;
+    border-radius: 14px;
+
+    transition:
+        background-color 0.25s ease,
+        border-color 0.25s ease,
+        box-shadow 0.25s ease,
+        transform 0.25s ease;
+}
+
+.video-setting-section:hover {
+    background: #f0fdf4;
+    border-color: #86efac;
+    box-shadow: 0 5px 18px rgba(4, 120, 87, 0.08);
+    transform: translateY(-1px);
+}
+
+.video-setting-title {
+    margin-bottom: 10px;
+    color: var(--green-text);
+    font-size: 17px;
+    font-weight: 750;
+}
+
+.video-setting-help {
+    margin-bottom: 12px;
+    color: #6b7280;
+    font-size: 13px;
+    line-height: 1.45;
+}
+
+.video-setting-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+}
+
+.video-setting-section select,
+.video-setting-section input[type="text"],
+.video-setting-section input[type="number"] {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 10px 11px;
+    background: #fff;
+    border: 1px solid #d1d5db;
+    border-radius: 9px;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease,
+        background-color 0.2s ease;
+}
+
+.video-setting-section select:hover:not(:disabled),
+.video-setting-section input[type="text"]:hover:not(:disabled),
+.video-setting-section input[type="number"]:hover:not(:disabled) {
+    border-color: #86efac;
+}
+
+.video-setting-section select:focus,
+.video-setting-section input[type="text"]:focus,
+.video-setting-section input[type="number"]:focus {
+    outline: none;
+    border-color: var(--green-text);
+    box-shadow: 0 0 0 3px rgba(4, 120, 87, 0.10);
+}
+
+.video-format-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    gap: 10px;
+}
+
+.video-choice-btn {
+    min-height: 50px;
+    padding: 10px 12px;
+    background: #fff;
+    border: 1px solid #d1d5db;
+    border-radius: 9px;
+    cursor: pointer;
+    font-weight: 700;
+
+    transition:
+        background-color 0.2s ease,
+        border-color 0.2s ease,
+        box-shadow 0.2s ease,
+        transform 0.2s ease,
+        opacity 0.2s ease;
+}
+
+.video-choice-btn:not(:disabled):hover {
+    background: var(--green-hover);
+    border-color: #86efac;
+    transform: translateY(-1px);
+}
+
+.video-choice-btn.active {
+    background: var(--violet-light);
+    color: var(--violet);
+    border-color: var(--violet);
+    box-shadow: 0 0 0 2px rgba(91, 33, 182, 0.10);
+}
+
+.video-check-row {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    cursor: pointer;
+}
+
+.video-validation {
+    padding: 12px 14px;
+    background: #f3f4f6;
+    border-radius: 10px;
+    color: #6b7280;
+    font-weight: 600;
+}
+
+.video-validation.valid {
+    background: var(--green-hover);
+    color: var(--green-text);
+}
+
+.video-validation.error {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+.video-compression-summary {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px;
+    margin-top: 18px;
+}
+
+.video-compression-summary > div {
+    padding: 12px;
+    background: var(--submenu-bg);
+    border: 1px solid #ddd6fe;
+    border-radius: 9px;
+}
+
+/* Freeze hover motion when the generic operation controller locks settings. */
+.operation-parameters-fieldset:disabled .video-setting-section:hover,
+body.operation-interaction-locked .video-setting-section:hover {
+    background: var(--submenu-bg);
+    border-color: #ddd6fe;
+    box-shadow: none;
+    transform: none;
+}
+
+.operation-parameters-fieldset:disabled .video-check-row,
+body.operation-interaction-locked .video-check-row {
+    cursor: not-allowed;
+}
+
+@media (max-width: 700px) {
+    .video-setting-grid,
+    .video-compression-summary {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Conversion-only informational caption; does not alter first-paint layout. */
+.video-setting-note { margin: .35rem 0 .5rem; font-size: .78rem; line-height: 1.45; color: var(--text-muted, #5e5970); }

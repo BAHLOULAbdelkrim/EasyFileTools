@@ -1,58 +1,197 @@
 {{ define "main" }}
 
-  <div class="container section-list">
-    <section class="content-column">
-      <div class="category-title">
+<div class="container section-list">
 
-          <i class="category-icon"
-            data-lucide="{{ .Params.icon }}"></i>
+  <section class="content-column">
 
-          <h1 class="page-title">{{ .Title }}</h1>
 
-          <i class="category-icon"
-            data-lucide="{{ .Params.icon }}"></i>
+    {{ partial
+        "common/page-heading.html"
+        (dict
+            "title" .Title
+            "icon" .Params.icon
+        )
+    }}
+
+
+    {{ if .Content }}
+
+      <div class="category-description">
+
+        {{ .Content }}
 
       </div>
 
-      {{ if .Content }}
-          <div class="category-description">
-              {{ .Content }}
-          </div>
-      {{ end }}
+    {{ end }}
 
-      {{ if .Params.image }}
-        <img class="section-cover" src="{{ .Params.image }}" alt="{{ .Title }}">
-      {{ end }}
 
-      <div class="submenus">
-        <ul>
-          {{ range .Sections }}
-            <li><a href="{{ .RelPermalink }}">{{ .Title }}</a></li>
-          {{ end }}
-        </ul>
-      </div>
+    {{ if .Params.image }}
 
-<div class="articles-grid">
+      <img
+          class="section-cover"
+          src="{{ .Params.image }}"
+          alt="{{ .Title }}"
+      >
 
-  {{ range where .Pages "Kind" "in" (slice "page") }}
-    <article class="card">
-      <a href="{{ .RelPermalink }}">
-        <h2>{{ .Title }}</h2>
-        <p>{{ .Summary }}</p>
-        {{ with .Params.image }}
-          <img src="{{ . | relURL }}" alt="{{ $.Title }}">
+    {{ end }}
+
+
+    <!-- =========================
+         SUBMENUS
+    ========================== -->
+
+    <div class="submenus">
+
+      <ul>
+
+        {{ range .Sections }}
+
+          {{ $available :=
+              .Params.available
+          }}
+
+
+          <li
+              class="
+                {{ if not $available }}
+                  is-disabled
+                {{ end }}
+              "
+          >
+
+
+            {{ if $available }}
+
+
+              <a
+                  href="{{ .RelPermalink }}"
+                  data-easyfile-navigation
+                  data-target-category="{{ $.Section }}"
+              >
+
+                {{ with .Params.icon }}
+
+                  <i
+                      class="submenu-icon"
+                      data-lucide="{{ . }}"
+                  ></i>
+
+                {{ end }}
+
+
+                <span>
+                  {{ .Title }}
+                </span>
+
+              </a>
+
+
+            {{ else }}
+
+
+              <a
+                  class="operation-disabled"
+                  aria-disabled="true"
+                  tabindex="-1"
+              >
+
+                {{ with .Params.icon }}
+
+                  <i
+                      class="submenu-icon"
+                      data-lucide="{{ . }}"
+                  ></i>
+
+                {{ end }}
+
+
+                <span>
+                  {{ .Title }}
+                </span>
+
+
+                <span class="coming-soon">
+
+                  Coming soon
+
+                </span>
+
+              </a>
+
+
+            {{ end }}
+
+
+          </li>
+
         {{ end }}
-      </a>
-    </article>
-  {{ end }}              
-</div>
 
-      {{ if .Paginator }}
-        {{ template "_internal/pagination.html" . }}
+      </ul>
+
+    </div>
+
+
+    <!-- =========================
+         ARTICLES
+    ========================== -->
+
+    <div class="articles-grid">
+
+      {{ range where
+          .Pages
+          "Kind"
+          "in"
+          (slice "page")
+      }}
+
+        <article class="card">
+
+          <a href="{{ .RelPermalink }}">
+
+            <h2>
+              {{ .Title }}
+            </h2>
+
+            <p>
+              {{ .Summary }}
+            </p>
+
+            {{ with .Params.image }}
+
+              <img
+                  src="{{ . | relURL }}"
+                  alt="{{ $.Title }}"
+              >
+
+            {{ end }}
+
+          </a>
+
+        </article>
+
       {{ end }}
-    </section>
-  </div>
 
-<!--  <script> lucide.createIcons();</script>  -->
+    </div>
+
+
+    {{ if .Paginator }}
+
+      {{ template
+          "_internal/pagination.html"
+          .
+      }}
+
+    {{ end }}
+
+
+    {{ partial
+        "common/page-navigation.html"
+        .
+    }}
+
+
+  </section>
+
+</div>
 
 {{ end }}

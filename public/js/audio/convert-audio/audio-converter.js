@@ -2,11 +2,14 @@ console.log(
     "[AUDIO CONVERTER] audio-converter.js loaded"
 );
 
-let audioConversionRunning = false;
+let audioConversionRunning =
+    false;
 
-let audioConversionCancelled = false;
+let audioConversionCancelled =
+    false;
 
-let audioCurrentFileIndex = -1;
+let audioCurrentFileIndex =
+    -1;
 
 let audioConversionPaused =
     false;
@@ -16,6 +19,7 @@ let audioResumeResolver =
 
 let audioFFmpegExecuting =
     false;
+
 
 /* =========================
    CONVERSION ARGUMENTS
@@ -27,104 +31,425 @@ function getAudioConversionArgs(
     outputName
 ) {
 
-    const specialFormats = {
+    const profiles =
+        globalThis
+            .EasyFileAudioEncodingProfiles;
 
-        opus: [
-            "-i",
-            inputName,
-            "-c:a",
-            "libopus",
-            "-ar",
-            "24000",
-            outputName
-        ],
-
-        m4b: [
-            "-i",
-            inputName,
-            "-c:a",
-            "aac",
-            "-f",
-            "mp4",
-            "-movflags",
-            "+faststart",
-            outputName
-        ],
-
-        wv: [
-            "-i",
-            inputName,
-            "-c:a",
-            "wavpack",
-            "-f",
-            "wv",
-            outputName
-        ],
-
-        tta: [
-            "-i",
-            inputName,
-            "-c:a",
-            "tta",
-            "-f",
-            "tta",
-            outputName
-        ],
-
-        voc: [
-            "-i",
-            inputName,
-            "-c:a",
-            "pcm_s16le",
-            "-f",
-            "voc",
-            outputName
-        ],
-
-        ra: [
-            "-i",
-            inputName,
-            "-c:a",
-            "ac3",
-            "-f",
-            "rm",
-            outputName
-        ],
-
-        rm: [
-            "-i",
-            inputName,
-            "-c:a",
-            "ac3",
-            "-f",
-            "rm",
-            outputName
-        ],
-
-        snd: [
-            "-i",
-            inputName,
-            "-f",
-            "au",
-            outputName
-        ]
-
-    };
 
     if (
-        specialFormats[format]
+        !profiles ||
+        typeof profiles.buildConversionArgs !==
+            "function"
     ) {
 
-        return specialFormats[format];
-
+        throw new Error(
+            "Shared audio encoding profiles are unavailable."
+        );
     }
 
-    return [
+
+    return profiles
+        .buildConversionArgs(
+            format,
+            inputName,
+            outputName
+        );
+}
+
+
+/* =========================
+   SAME-FORMAT PASSTHROUGH
+========================= */
+
+function getAudioFileExtension(
+    file
+) {
+
+    const fileName =
+        String(
+            file?.name ||
+            ""
+        ).trim();
+
+
+    const lastDotIndex =
+        fileName.lastIndexOf(
+            "."
+        );
+
+
+    if (
+        lastDotIndex <= 0 ||
+        lastDotIndex ===
+            fileName.length - 1
+    ) {
+
+        return "";
+    }
+
+
+    return fileName
+        .slice(
+            lastDotIndex + 1
+        )
+        .toLowerCase();
+}
+
+
+function canPassthroughAudioConversion(
+    file,
+    format
+) {
+
+    const sourceFormat =
+        getAudioFileExtension(
+            file
+        );
+
+
+    const requestedFormat =
+        String(
+            format ||
+            ""
+        )
+            .trim()
+            .toLowerCase();
+
+
+    return Boolean(
+        sourceFormat &&
+        requestedFormat &&
+        sourceFormat ===
+            requestedFormat
+    );
+}
+
+
+/* =========================
+   STREAM COPY / REMUX
+========================= */
+
+const AUDIO_STREAM_COPY_TARGETS = {
+
+    mp3: {
+        codecs: [
+            "mp3"
+        ],
+        muxer: "mp3"
+    },
+
+    wav: {
+        codecs: [
+            "pcm_s16le"
+        ],
+        muxer: "wav"
+    },
+
+    flac: {
+        codecs: [
+            "flac"
+        ],
+        muxer: "flac"
+    },
+
+    aac: {
+        codecs: [
+            "aac"
+        ],
+        muxer: "adts"
+    },
+
+    ogg: {
+        codecs: [
+            "vorbis"
+        ],
+        muxer: "ogg"
+    },
+
+    oga: {
+        codecs: [
+            "vorbis"
+        ],
+        muxer: "ogg"
+    },
+
+    opus: {
+        codecs: [
+            "opus"
+        ],
+        muxer: "ogg"
+    },
+
+    wma: {
+        codecs: [
+            "wmav2"
+        ],
+        muxer: "asf"
+    },
+
+    m4a: {
+        codecs: [
+            "aac"
+        ],
+        muxer: "mp4",
+        faststart: true
+    },
+
+    m4b: {
+        codecs: [
+            "aac"
+        ],
+        muxer: "mp4",
+        faststart: true
+    },
+
+    aiff: {
+        codecs: [
+            "pcm_s16be"
+        ],
+        muxer: "aiff"
+    },
+
+    aif: {
+        codecs: [
+            "pcm_s16be"
+        ],
+        muxer: "aiff"
+    },
+
+    aifc: {
+        codecs: [
+            "pcm_s16be"
+        ],
+        muxer: "aiff"
+    },
+
+    au: {
+        codecs: [
+            "pcm_s16be"
+        ],
+        muxer: "au"
+    },
+
+    snd: {
+        codecs: [
+            "pcm_s16be"
+        ],
+        muxer: "au"
+    },
+
+    ac3: {
+        codecs: [
+            "ac3"
+        ],
+        muxer: "ac3"
+    },
+
+    dts: {
+        codecs: [
+            "dts"
+        ],
+        muxer: "dts"
+    },
+
+    wv: {
+        codecs: [
+            "wavpack"
+        ],
+        muxer: "wv"
+    },
+
+    tta: {
+        codecs: [
+            "tta"
+        ],
+        muxer: "tta"
+    },
+
+    voc: {
+        codecs: [
+            "pcm_s16le"
+        ],
+        muxer: "voc"
+    },
+
+    ra: {
+        codecs: [
+            "ac3"
+        ],
+        muxer: "rm"
+    },
+
+    rm: {
+        codecs: [
+            "ac3"
+        ],
+        muxer: "rm"
+    }
+};
+
+
+function getAudioStreamCopyPlan(
+    probeInfo,
+    format
+) {
+
+    const requestedFormat =
+        String(
+            format ||
+            ""
+        )
+            .trim()
+            .toLowerCase();
+
+
+    const codecName =
+        String(
+            probeInfo?.codecName ||
+            ""
+        )
+            .trim()
+            .toLowerCase();
+
+
+    const target =
+        AUDIO_STREAM_COPY_TARGETS[
+            requestedFormat
+        ];
+
+
+    if (
+        !target ||
+        !codecName ||
+        !target.codecs.includes(
+            codecName
+        )
+    ) {
+
+        return null;
+    }
+
+
+    return {
+        codecName,
+        muxer:
+            target.muxer,
+        faststart:
+            target.faststart ===
+            true
+    };
+}
+
+
+function getAudioStreamCopyArgs(
+    inputName,
+    outputName,
+    plan
+) {
+
+    const args = [
         "-i",
         inputName,
-        outputName
+        "-map",
+        "0:a:0",
+        "-vn",
+        "-c:a",
+        "copy"
     ];
+
+
+    if (
+        plan?.muxer
+    ) {
+
+        args.push(
+            "-f",
+            plan.muxer
+        );
+    }
+
+
+    if (
+        plan?.faststart ===
+            true
+    ) {
+
+        args.push(
+            "-movflags",
+            "+faststart"
+        );
+    }
+
+
+    args.push(
+        outputName
+    );
+
+
+    return args;
 }
+
+
+/* =========================
+   CURRENT RESULT
+========================= */
+
+function hasCurrentAudioResult(
+    index,
+    format
+) {
+
+    const resultItem =
+        window
+            .EasyFileOperationResults
+            ?.getItem?.(
+                index
+            );
+
+
+    if (
+        !resultItem ||
+        !resultItem.result ||
+        resultItem.stale === true
+    ) {
+
+        return false;
+    }
+
+
+    const result =
+        resultItem.result;
+
+
+    const resultFormat =
+        String(
+            result.outputFormat ||
+            ""
+        ).toLowerCase();
+
+
+    const requestedFormat =
+        String(
+            format ||
+            ""
+        ).toLowerCase();
+
+
+    if (
+        resultFormat !==
+        requestedFormat
+    ) {
+
+        return false;
+    }
+
+
+    return Boolean(
+        result.outputUrl ||
+        result.outputBlob
+    );
+}
+
 
 /* =========================
    WAIT FOR RESUME
@@ -132,12 +457,16 @@ function getAudioConversionArgs(
 
 function waitForAudioResume() {
 
-    if (!audioConversionPaused) {
+    if (
+        !audioConversionPaused
+    ) {
+
         return Promise.resolve();
     }
 
+
     return new Promise(
-        (resolve) => {
+        resolve => {
 
             audioResumeResolver =
                 resolve;
@@ -145,31 +474,41 @@ function waitForAudioResume() {
     );
 }
 
+
 /* =========================
    CANCEL CONVERSION
 ========================= */
 
 document.addEventListener(
     "easyfiletools:conversion-cancel-requested",
-    (event) => {
+    event => {
 
         const category =
-            event.detail?.category || "";
+            event.detail?.category ||
+            "";
+
 
         if (
             category.toLowerCase() !==
             "audio"
         ) {
+
             return;
         }
 
-        if (!audioConversionRunning) {
+
+        if (
+            !audioConversionRunning
+        ) {
+
             return;
         }
+
 
         console.log(
             "[AUDIO CONVERTER] Cancelling conversion..."
         );
+
 
         audioConversionCancelled =
             true;
@@ -177,18 +516,22 @@ document.addEventListener(
         audioConversionPaused =
             false;
 
+
         resetFFmpeg();
 
-        if (audioResumeResolver) {
+
+        if (
+            audioResumeResolver
+        ) {
 
             audioResumeResolver();
 
             audioResumeResolver =
                 null;
         }
-
     }
 );
+
 
 /* =========================
    PAUSE CONVERSION
@@ -196,49 +539,60 @@ document.addEventListener(
 
 document.addEventListener(
     "easyfiletools:conversion-pause-requested",
-    (event) => {
+    event => {
 
         const category =
-            event.detail?.category || "";
+            event.detail?.category ||
+            "";
+
 
         if (
             category.toLowerCase() !==
             "audio"
         ) {
+
             return;
         }
+
 
         if (
             !audioConversionRunning ||
             audioConversionPaused ||
             audioConversionCancelled
         ) {
+
             return;
         }
+
 
         console.log(
             "[AUDIO CONVERTER] Pausing conversion..."
         );
 
+
         audioConversionPaused =
             true;
 
-        /*
-        FFmpeg est interrompu uniquement
-        s'il est réellement en train
-        d'exécuter la conversion.
-        */
 
-        if (audioFFmpegExecuting) {
+        /*
+         * FFmpeg is interrupted only
+         * while it is actually executing.
+         */
+
+        if (
+            audioFFmpegExecuting
+        ) {
 
             resetFFmpeg();
         }
+
 
         document.dispatchEvent(
             new CustomEvent(
                 "easyfiletools:conversion-paused",
                 {
                     detail: {
+
                         category:
                             "Audio",
 
@@ -258,34 +612,44 @@ document.addEventListener(
 
 document.addEventListener(
     "easyfiletools:conversion-resume-requested",
-    (event) => {
+    event => {
 
         const category =
-            event.detail?.category || "";
+            event.detail?.category ||
+            "";
+
 
         if (
             category.toLowerCase() !==
             "audio"
         ) {
+
             return;
         }
+
 
         if (
             !audioConversionRunning ||
             !audioConversionPaused ||
             audioConversionCancelled
         ) {
+
             return;
         }
+
 
         console.log(
             "[AUDIO CONVERTER] Resuming conversion..."
         );
 
+
         audioConversionPaused =
             false;
 
-        if (audioResumeResolver) {
+
+        if (
+            audioResumeResolver
+        ) {
 
             audioResumeResolver();
 
@@ -293,11 +657,13 @@ document.addEventListener(
                 null;
         }
 
+
         document.dispatchEvent(
             new CustomEvent(
                 "easyfiletools:conversion-resumed",
                 {
                     detail: {
+
                         category:
                             "Audio",
 
@@ -310,15 +676,18 @@ document.addEventListener(
     }
 );
 
+
 /* =========================
    AUDIO CONVERTER
 ========================= */
 
 document.addEventListener(
     "easyfiletools:conversion-requested",
-    async (event) => {
+    async event => {
 
-        if (audioConversionRunning) {
+        if (
+            audioConversionRunning
+        ) {
 
             console.warn(
                 "[AUDIO CONVERTER] Conversion already running"
@@ -327,17 +696,28 @@ document.addEventListener(
             return;
         }
 
+
         const detail =
-            event.detail || {};
+            event.detail ||
+            {};
+
 
         const category =
-            detail.category || "";
+            detail.category ||
+            "";
+
 
         const files =
-            detail.files || [];
+            Array.isArray(
+                detail.files
+            )
+                ? detail.files
+                : [];
+
 
         const format =
-            detail.format || null;
+            detail.format ||
+            null;
 
 
         /* =========================
@@ -348,6 +728,7 @@ document.addEventListener(
             category.toLowerCase() !==
             "audio"
         ) {
+
             return;
         }
 
@@ -375,17 +756,17 @@ document.addEventListener(
                 files:
                     files.length,
 
-                format:
-                    format
+                format
             }
         );
 
 
         /* =========================
-           FFMPEG
+           INITIAL STATE
         ========================= */
-        
-        audioConversionRunning = true;
+
+        audioConversionRunning =
+            true;
 
         audioConversionCancelled =
             false;
@@ -402,23 +783,29 @@ document.addEventListener(
         audioFFmpegExecuting =
             false;
 
+
         document.dispatchEvent(
             new CustomEvent(
                 "easyfiletools:conversion-started",
                 {
                     detail: {
-                        category: "Audio"
+                        category:
+                            "Audio"
                     }
                 }
             )
         );
+
 
         try {
 
             let ffmpeg =
                 await getFFmpeg();
 
-            if (audioConversionCancelled) {
+
+            if (
+                audioConversionCancelled
+            ) {
 
                 resetFFmpeg();
 
@@ -427,29 +814,37 @@ document.addEventListener(
                 );
             }
 
+
             /* =========================
-            RESET BEFORE OPUS
+               RESET BEFORE OPUS
             ========================= */
 
-            if (format === "opus") {
+            if (
+                format ===
+                "opus"
+            ) {
 
                 console.log(
                     "[AUDIO CONVERTER] Resetting FFmpeg before OPUS conversion"
                 );
 
+
                 resetFFmpeg();
+
 
                 ffmpeg =
                     await getFFmpeg();
             }
+
 
             console.log(
                 "[AUDIO CONVERTER] FFmpeg ready:",
                 ffmpeg
             );
 
+
             /* =========================
-            CONVERT ALL FILES
+               CONVERT ALL FILES
             ========================= */
 
             for (
@@ -458,35 +853,49 @@ document.addEventListener(
                 index++
             ) {
 
-                if (audioConversionCancelled) {
+                if (
+                    audioConversionCancelled
+                ) {
 
                     throw new Error(
                         "AUDIO_CONVERSION_CANCELLED"
                     );
                 }
 
+
                 audioCurrentFileIndex =
                     index;
 
-                    if (audioConversionPaused) {
 
-                        await waitForAudioResume();
+                if (
+                    audioConversionPaused
+                ) {
 
-                        if (audioConversionCancelled) {
+                    await waitForAudioResume();
 
-                            throw new Error(
-                                "AUDIO_CONVERSION_CANCELLED"
-                            );
-                        }
+
+                    if (
+                        audioConversionCancelled
+                    ) {
+
+                        throw new Error(
+                            "AUDIO_CONVERSION_CANCELLED"
+                        );
                     }
+                }
+
 
                 const fileData =
                     files[index];
 
+
                 const inputFile =
                     fileData?.file;
 
-                if (!inputFile) {
+
+                if (
+                    !inputFile
+                ) {
 
                     console.warn(
                         "[AUDIO CONVERTER] Invalid file skipped:",
@@ -498,16 +907,18 @@ document.addEventListener(
 
 
                 /* =========================
-                SKIP ALREADY CONVERTED FILE
+                   SKIP CURRENT RESULT
                 ========================= */
 
                 if (
-                    fileData.convertedUrl &&
-                    fileData.convertedFormat === format
+                    hasCurrentAudioResult(
+                        index,
+                        format
+                    )
                 ) {
 
                     console.log(
-                        `[AUDIO CONVERTER] File ${index + 1}/${files.length} already converted to ${format.toUpperCase()} — skipped:`,
+                        `[AUDIO CONVERTER] File ${index + 1}/${files.length} already has a current ${format.toUpperCase()} result — skipped:`,
                         inputFile.name
                     );
 
@@ -516,19 +927,23 @@ document.addEventListener(
 
 
                 /* =========================
-                FILE NAMES
+                   FILE NAMES
                 ========================= */
 
                 const inputName =
                     inputFile.name;
 
+
                 const baseName =
                     inputName.includes(".")
                         ? inputName.substring(
                             0,
-                            inputName.lastIndexOf(".")
+                            inputName.lastIndexOf(
+                                "."
+                            )
                         )
                         : inputName;
+
 
                 const outputName =
                     `${baseName}.${format}`;
@@ -541,70 +956,326 @@ document.addEventListener(
                     outputName
                 );
 
+
                 document.dispatchEvent(
                     new CustomEvent(
                         "easyfiletools:file-conversion-progress",
                         {
                             detail: {
-                                index: index,
-                                percentage: 0
+
+                                index,
+
+                                percentage:
+                                    0,
+
+                                progressLabel:
+                                    "Converting"
                             }
                         }
                     )
                 );
 
+
                 /* =========================
-                WRITE INPUT
+                   SAME FORMAT — PASSTHROUGH
                 ========================= */
 
-                const inputData =
-                    new Uint8Array(
-                        await inputFile.arrayBuffer()
+                if (
+                    canPassthroughAudioConversion(
+                        inputFile,
+                        format
+                    )
+                ) {
+
+                    console.log(
+                        `[AUDIO CONVERTER] File ${index + 1}/${files.length} already matches ${format.toUpperCase()} — passthrough without re-encoding:`,
+                        inputName
                     );
 
-                await ffmpeg.writeFile(
-                    inputName,
-                    inputData
-                );
+
+                    const outputBlob =
+                        inputFile;
+
+
+                    const outputUrl =
+                        URL.createObjectURL(
+                            outputBlob
+                        );
+
+
+                    document.dispatchEvent(
+                        new CustomEvent(
+                            "easyfiletools:file-conversion-progress",
+                            {
+                                detail: {
+
+                                    index,
+
+                                    percentage:
+                                        100,
+
+                                    progressLabel:
+                                        "Converting"
+                                }
+                            }
+                        )
+                    );
+
+
+                    document.dispatchEvent(
+                        new CustomEvent(
+                            "easyfiletools:file-converted",
+                            {
+                                detail: {
+
+                                    index,
+
+                                    fileData,
+
+                                    sourceFile:
+                                        inputFile,
+
+                                    sourceName:
+                                        inputName,
+
+                                    outputName,
+
+                                    outputFormat:
+                                        format,
+
+                                    blob:
+                                        outputBlob,
+
+                                    url:
+                                        outputUrl,
+
+                                    size:
+                                        outputBlob.size,
+
+                                    passthrough:
+                                        true
+                                }
+                            }
+                        )
+                    );
+
+
+                    continue;
+                }
+
 
                 /* =========================
-                CONVERT
+                   PREPARE INPUT
                 ========================= */
 
-                const ffmpegArgs =
+                if (
+                    typeof prepareFFmpegInputFiles !==
+                        "function"
+                ) {
+
+                    throw new Error(
+                        "Memory-efficient FFmpeg input preparation is not available."
+                    );
+
+                }
+
+
+                let inputHandle =
+                    await prepareFFmpegInputFiles(
+                        ffmpeg,
+                        [
+                            {
+                                file:
+                                    inputFile,
+
+                                name:
+                                    inputName
+                            }
+                        ],
+                        {
+                            label:
+                                "Convert Audio input",
+
+                            mountLabel:
+                                `convert_${index}`
+                        }
+                    );
+
+
+                const inputPath =
+                    inputHandle.paths[0];
+
+
+                /* =========================
+                   FFPROBE / STREAM COPY DECISION
+                ========================= */
+
+                let streamCopyPlan =
+                    null;
+
+
+                if (
+                    typeof probeAudioFile ===
+                        "function"
+                ) {
+
+                    try {
+
+                        const probeInfo =
+                            await probeAudioFile(
+                                ffmpeg,
+                                inputPath,
+                                `Convert Audio inspection (${inputName})`
+                            );
+
+
+                        streamCopyPlan =
+                            getAudioStreamCopyPlan(
+                                probeInfo,
+                                format
+                            );
+
+
+                        if (
+                            streamCopyPlan
+                        ) {
+
+                            console.log(
+                                `[AUDIO CONVERTER] File ${index + 1}/${files.length}: stream copy is compatible (${streamCopyPlan.codecName} → ${format.toUpperCase()}).`
+                            );
+
+                        }
+
+                    }
+                    catch (
+                        probeError
+                    ) {
+
+                        if (
+                            audioConversionCancelled
+                        ) {
+
+                            throw new Error(
+                                "AUDIO_CONVERSION_CANCELLED"
+                            );
+                        }
+
+
+                        console.warn(
+                            "[AUDIO CONVERTER] FFprobe inspection failed; using normal re-encode instead:",
+                            inputName,
+                            probeError
+                        );
+                    }
+                }
+
+
+                if (
+                    audioConversionPaused
+                ) {
+
+                    await waitForAudioResume();
+
+
+                    if (
+                        audioConversionCancelled
+                    ) {
+
+                        throw new Error(
+                            "AUDIO_CONVERSION_CANCELLED"
+                        );
+                    }
+                }
+
+
+                /* =========================
+                   CONVERSION ARGUMENTS
+                ========================= */
+
+                const reencodeArgs =
                     getAudioConversionArgs(
                         format,
-                        inputName,
+                        inputPath,
                         outputName
                     );
 
 
+                const executionAttempts =
+                    streamCopyPlan
+                        ? [
+                            {
+                                mode:
+                                    "stream-copy",
+
+                                label:
+                                    "Audio stream copy",
+
+                                args:
+                                    getAudioStreamCopyArgs(
+                                        inputPath,
+                                        outputName,
+                                        streamCopyPlan
+                                    )
+                            },
+                            {
+                                mode:
+                                    "reencode",
+
+                                label:
+                                    "Audio conversion",
+
+                                args:
+                                    reencodeArgs
+                            }
+                        ]
+                        : [
+                            {
+                                mode:
+                                    "reencode",
+
+                                label:
+                                    "Audio conversion",
+
+                                args:
+                                    reencodeArgs
+                            }
+                        ];
+
+
                 /* =========================
-                REAL FFMPEG PROGRESS
+                   REAL FFMPEG PROGRESS
                 ========================= */
 
                 const progressHandler =
-                    ({ progress }) => {
+                    (
+                        {
+                            progress
+                        }
+                    ) => {
 
                         const percentage =
                             Math.max(
                                 0,
                                 Math.min(
                                     100,
-                                    progress * 100
+                                    progress *
+                                    100
                                 )
                             );
+
 
                         document.dispatchEvent(
                             new CustomEvent(
                                 "easyfiletools:file-conversion-progress",
                                 {
                                     detail: {
-                                        index:
-                                            index,
 
-                                        percentage:
-                                            percentage
+                                        index,
+
+                                        percentage,
+
+                                        progressLabel:
+                                            "Converting"
                                     }
                                 }
                             )
@@ -621,108 +1292,250 @@ document.addEventListener(
                 let fileWasPaused =
                     false;
 
+
+                let usedStreamCopy =
+                    false;
+
+
+                let conversionSucceeded =
+                    false;
+
+
                 try {
 
-                    audioFFmpegExecuting =
-                        true;
+                    for (
+                        const attempt of
+                            executionAttempts
+                    ) {
 
-                    await ffmpeg.exec(
-                        ffmpegArgs
-                    );
+                        try {
 
-                }
-                catch (error) {
+                            audioFFmpegExecuting =
+                                true;
 
-                    if (audioConversionCancelled) {
 
-                        throw new Error(
-                            "AUDIO_CONVERSION_CANCELLED"
-                        );
+                            await execFFmpegOrThrow(
+                                ffmpeg,
+                                attempt.args,
+                                attempt.label
+                            );
+
+
+                            usedStreamCopy =
+                                attempt.mode ===
+                                "stream-copy";
+
+
+                            conversionSucceeded =
+                                true;
+
+
+                            break;
+
+                        }
+                        catch (
+                            error
+                        ) {
+
+                            if (
+                                audioConversionCancelled
+                            ) {
+
+                                throw new Error(
+                                    "AUDIO_CONVERSION_CANCELLED"
+                                );
+                            }
+
+
+                            if (
+                                audioConversionPaused
+                            ) {
+
+                                console.log(
+                                    "[AUDIO CONVERTER] Current file interrupted for pause:",
+                                    inputName
+                                );
+
+
+                                fileWasPaused =
+                                    true;
+
+
+                                break;
+                            }
+
+
+                            if (
+                                attempt.mode ===
+                                    "stream-copy"
+                            ) {
+
+                                console.warn(
+                                    "[AUDIO CONVERTER] Stream copy failed; falling back to normal re-encode:",
+                                    inputName,
+                                    error
+                                );
+
+
+                                try {
+                                    await ffmpeg.deleteFile(
+                                        outputName
+                                    );
+                                }
+                                catch (_) {}
+
+
+                                document.dispatchEvent(
+                                    new CustomEvent(
+                                        "easyfiletools:file-conversion-progress",
+                                        {
+                                            detail: {
+
+                                                index,
+
+                                                percentage:
+                                                    0,
+
+                                                progressLabel:
+                                                    "Converting"
+                                            }
+                                        }
+                                    )
+                                );
+
+
+                                continue;
+                            }
+
+
+                            if (
+                                typeof releaseFFmpegInputFiles ===
+                                    "function"
+                            ) {
+
+                                await releaseFFmpegInputFiles(
+                                    inputHandle
+                                );
+
+                            }
+
+
+                            inputHandle =
+                                null;
+
+
+                            throw error;
+                        }
+                        finally {
+
+                            audioFFmpegExecuting =
+                                false;
+                        }
                     }
-
-                    if (audioConversionPaused) {
-
-                        console.log(
-                            "[AUDIO CONVERTER] Current file interrupted for pause:",
-                            inputName
-                        );
-
-                        fileWasPaused =
-                            true;
-                    }
-                    else {
-
-                        throw error;
-                    }
-
                 }
                 finally {
-
-                    audioFFmpegExecuting =
-                        false;
 
                     ffmpeg.off(
                         "progress",
                         progressHandler
                     );
-                }                
+                }
+
+
+                if (
+                    !fileWasPaused &&
+                    !conversionSucceeded
+                ) {
+
+                    if (
+                        typeof releaseFFmpegInputFiles ===
+                            "function"
+                    ) {
+
+                        await releaseFFmpegInputFiles(
+                            inputHandle
+                        );
+
+                    }
+
+
+                    inputHandle =
+                        null;
+
+
+                    throw new Error(
+                        "Audio conversion ended without producing a result."
+                    );
+                }
+
 
                 /* =========================
-                PAUSE — WAIT AND RESTART FILE
+                   PAUSE — WAIT AND RESTART FILE
                 ========================= */
 
-                if (fileWasPaused) {
+                if (
+                    fileWasPaused
+                ) {
 
                     await waitForAudioResume();
 
-                    if (audioConversionCancelled) {
+
+                    if (
+                        audioConversionCancelled
+                    ) {
 
                         throw new Error(
                             "AUDIO_CONVERSION_CANCELLED"
                         );
                     }
 
+
                     /*
-                    FFmpeg a été terminé pendant Pause.
-                    On crée donc une nouvelle instance.
-                    */
+                     * FFmpeg was terminated
+                     * during Pause, so its mounted
+                     * browser File disappeared with it.
+                     */
+
+                    inputHandle =
+                        null;
+
 
                     ffmpeg =
                         await getFFmpeg();
 
-                    /*
-                    Le fichier interrompu doit repartir
-                    depuis 0 %.
-                    */
 
                     document.dispatchEvent(
                         new CustomEvent(
                             "easyfiletools:file-conversion-progress",
                             {
                                 detail: {
-                                    index:
-                                        index,
+
+                                    index,
 
                                     percentage:
-                                        0
+                                        0,
+
+                                    progressLabel:
+                                        "Converting"
                                 }
                             }
                         )
                     );
 
+
                     /*
-                    index-- compense le index++ automatique
-                    du for : le même fichier sera donc
-                    retraité.
-                    */
+                     * Retry the same file.
+                     */
 
                     index--;
 
+
                     continue;
-                }                
+                }
+
 
                 /* =========================
-                READ OUTPUT
+                   READ OUTPUT
                 ========================= */
 
                 const outputData =
@@ -730,51 +1543,58 @@ document.addEventListener(
                         outputName
                     );
 
+                // FFmpeg's successful exit alone is not an output file.
+                if (!outputData || !Number.isInteger(outputData.length) || outputData.length === 0) {
+                    throw new Error("Audio conversion produced an empty or unreadable output.");
+                }
 
                 console.log(
                     "[AUDIO CONVERTER] Conversion completed:",
                     outputName,
                     outputData.length,
-                    "bytes"
+                    "bytes",
+                    usedStreamCopy
+                        ? "(stream copy, no re-encode)"
+                        : "(re-encoded)"
                 );
 
 
                 /* =========================
-                CREATE DOWNLOAD
+                   CREATE RESULT
                 ========================= */
 
                 const outputBlob =
                     new Blob(
-                        [outputData.buffer],
+                        [
+                            outputData.buffer
+                        ],
                         {
                             type:
                                 `audio/${format}`
                         }
                     );
 
+
                 const outputUrl =
                     URL.createObjectURL(
                         outputBlob
                     );
 
-                /* =========================
-                STORE CONVERSION RESULT
-                ========================= */
 
-                fileData.convertedUrl =
-                    outputUrl;
+                /*
+                 * IMPORTANT:
+                 *
+                 * The engine does NOT store
+                 * the result in fileData.
+                 *
+                 * EasyFileOperationResults
+                 * is now the canonical result
+                 * store.
+                 */
 
-                fileData.convertedName =
-                    outputName;
-
-                fileData.convertedFormat =
-                    format;
-
-                fileData.convertedBlob =
-                    outputBlob;
 
                 /* =========================
-                SEND CONVERTED FILE
+                   SEND CONVERTED FILE
                 ========================= */
 
                 document.dispatchEvent(
@@ -783,11 +1603,9 @@ document.addEventListener(
                         {
                             detail: {
 
-                                index:
-                                    index,
+                                index,
 
-                                fileData:
-                                    fileData,
+                                fileData,
 
                                 sourceFile:
                                     inputFile,
@@ -795,8 +1613,7 @@ document.addEventListener(
                                 sourceName:
                                     inputName,
 
-                                outputName:
-                                    outputName,
+                                outputName,
 
                                 outputFormat:
                                     format,
@@ -808,44 +1625,64 @@ document.addEventListener(
                                     outputUrl,
 
                                 size:
-                                    outputBlob.size
+                                    outputBlob.size,
+
+                                streamCopy:
+                                    usedStreamCopy
                             }
                         }
                     )
                 );
 
+
                 /* =========================
-                CLEAN FFMPEG MEMORY
+                   CLEAN FFMPEG MEMORY
                 ========================= */
 
-                await ffmpeg.deleteFile(
-                    inputName
-                );
+                if (
+                    typeof releaseFFmpegInputFiles ===
+                        "function"
+                ) {
+
+                    await releaseFFmpegInputFiles(
+                        inputHandle
+                    );
+
+                }
+
+
+                inputHandle =
+                    null;
+
 
                 await ffmpeg.deleteFile(
                     outputName
                 );
 
+
                 /* =========================
-                RESET FFMPEG FOR OPUS
+                   RESET FFMPEG FOR OPUS
                 ========================= */
 
                 if (
-                    format === "opus" &&
-                    index < files.length - 1
+                    format ===
+                        "opus" &&
+                    index <
+                        files.length -
+                        1
                 ) {
 
                     console.log(
                         "[AUDIO CONVERTER] Reloading FFmpeg before next OPUS file"
                     );
 
-                resetFFmpeg();
 
-                ffmpeg =
-                    await getFFmpeg();
+                    resetFFmpeg();
 
-                }                
 
+                    ffmpeg =
+                        await getFFmpeg();
+                }
             }
 
 
@@ -854,22 +1691,26 @@ document.addEventListener(
                 files.length,
                 "file(s)"
             );
-            
         }
+        catch (
+            error
+        ) {
 
-        catch (error) {
-
-            if (audioConversionCancelled) {
+            if (
+                audioConversionCancelled
+            ) {
 
                 console.log(
                     "[AUDIO CONVERTER] Conversion cancelled by user"
                 );
+
 
                 document.dispatchEvent(
                     new CustomEvent(
                         "easyfiletools:conversion-cancelled",
                         {
                             detail: {
+
                                 category:
                                     "Audio",
 
@@ -887,18 +1728,19 @@ document.addEventListener(
                     error
                 );
             }
-
         }
         finally {
 
             audioConversionRunning =
                 false;
 
+
             document.dispatchEvent(
                 new CustomEvent(
                     "easyfiletools:conversion-ended",
                     {
                         detail: {
+
                             category:
                                 "Audio",
 
@@ -908,6 +1750,7 @@ document.addEventListener(
                     }
                 )
             );
+
 
             audioCurrentFileIndex =
                 -1;
@@ -924,10 +1767,10 @@ document.addEventListener(
             audioFFmpegExecuting =
                 false;
 
+
             console.log(
                 "[AUDIO CONVERTER] Conversion process released"
             );
         }
-
     }
 );

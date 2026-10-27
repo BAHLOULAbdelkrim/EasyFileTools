@@ -1,0 +1,183 @@
+<section
+    id="videoToAudioSettings"
+    class="video-operation-settings"
+    aria-labelledby="chooseFormatLabel"
+>
+
+    <div class="video-setting-section">
+
+        <div class="video-setting-title">
+            Audio format
+        </div>
+
+        <div class="video-format-grid">
+
+            <button
+                type="button"
+                class="video-choice-btn"
+                data-audio-format="mp3"
+            >
+                MP3
+            </button>
+
+            <button
+                type="button"
+                class="video-choice-btn"
+                data-audio-format="wav"
+            >
+                WAV
+            </button>
+
+            <button
+                type="button"
+                class="video-choice-btn"
+                data-audio-format="flac"
+            >
+                FLAC
+            </button>
+
+            <button
+                type="button"
+                class="video-choice-btn"
+                data-audio-format="aac"
+            >
+                AAC
+            </button>
+
+            <button
+                type="button"
+                class="video-choice-btn"
+                data-audio-format="m4a"
+            >
+                M4A
+            </button>
+
+            <button
+                type="button"
+                class="video-choice-btn"
+                data-audio-format="ogg"
+            >
+                OGG
+            </button>
+
+            <button
+                type="button"
+                class="video-choice-btn"
+                data-audio-format="opus"
+            >
+                OPUS
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <div class="video-setting-grid">
+
+        <div class="video-setting-section">
+
+            <div class="video-setting-title">
+                Bitrate
+            </div>
+            <div class="video-setting-help">
+                Controls compressed audio detail and file size. Higher values usually preserve more quality but create larger files.
+            </div>
+
+            <select id="videoAudioBitrate">
+
+                <option value="128k">
+                    128 kb/s
+                </option>
+
+                <option
+                    value="192k"
+                    selected
+                >
+                    192 kb/s
+                </option>
+
+                <option value="256k">
+                    256 kb/s
+                </option>
+
+                <option value="320k">
+                    320 kb/s
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <div class="video-setting-section">
+
+            <div class="video-setting-title">
+                Sample rate
+            </div>
+            <div class="video-setting-help">
+                Sets how many audio samples are stored each second. Original avoids unnecessary resampling.
+            </div>
+
+            <select id="videoAudioSampleRate">
+
+                <option value="original">
+                    Original
+                </option>
+
+                <option value="48000">
+                    48 kHz
+                </option>
+
+                <option value="44100">
+                    44.1 kHz
+                </option>
+
+                <option value="24000">
+                    24 kHz
+                </option>
+
+            </select>
+
+        </div>
+
+    </div>
+
+
+    <div class="video-setting-section">
+
+        <div class="video-setting-title">
+            Channels
+        </div>
+        <div class="video-setting-help">
+            Keep the source layout, force Stereo for two channels, or Mono for a single combined channel.
+        </div>
+
+        <select id="videoAudioChannels">
+
+            <option value="original">
+                Original
+            </option>
+
+            <option value="2">
+                Stereo
+            </option>
+
+            <option value="1">
+                Mono
+            </option>
+
+        </select>
+
+    </div>
+
+
+    <div
+        id="videoToAudioValidation"
+        data-eft-readiness-status
+        class="video-validation"
+    >
+        Load one or more videos and choose an audio format.
+    </div>
+
+</section>

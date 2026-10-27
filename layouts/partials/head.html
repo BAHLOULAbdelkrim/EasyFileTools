@@ -1,0 +1,299 @@
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  {{ partial "seo/metadata.html" . }}
+
+  {{/* Versioned, public R2 asset URL: no JavaScript, no secret, and no render-blocking request. */}}
+  {{ with .Site.Params.ffmpegWasmURL }}
+  <meta name="easyfile-ffmpeg-wasm-url" content="{{ . }}">
+  {{ end }}
+
+  <link rel="icon" type="image/svg+xml" href="{{ "logo_symbol.svg" | relURL }}?v=3">
+
+  <!-- The site uses its own CSS: production consolidates all common styles into one fingerprinted file. -->
+  <!-- Fonts are optional during first paint; keep the accessible noscript fallback. -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;family=Orbitron:wght@700;900&amp;display=optional" rel="stylesheet" media="print" onload="this.media='all'">
+  <noscript><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;family=Orbitron:wght@700;900&amp;display=optional" rel="stylesheet"></noscript>
+  <style>body { font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Arial, sans-serif; }</style>
+
+  {{ if hugo.IsProduction }}
+  <!-- V4: preserve original cascade order and flatten the two @imports in homepage/main.css. -->
+  <link rel="stylesheet" href="{{ partial "seo/common-css-v4.html" . }}">
+  {{ else }}
+  <!-- Development keeps the original individual stylesheets for easy CSS debugging. -->
+  <link rel="stylesheet" href="{{ partial "seo/asset-url.html" "css/common/tailwind-compat.css" }}">
+  <link rel="stylesheet" href="{{ partial "seo/asset-url.html" "css/seo.css" }}">
+  <link rel="stylesheet" href="{{ partial "seo/asset-url.html" "css/main.css" }}">
+  <link rel="stylesheet" href="{{ "css/homepage/main.css" | relURL }}">
+  <link rel="stylesheet" href="{{ partial "seo/asset-url.html" "css/common/zone-chargement.css" }}">
+  <link rel="stylesheet" href="{{ partial "seo/asset-url.html" "css/common/liste-files.css" }}">
+  <link rel="stylesheet" href="{{ partial "seo/asset-url.html" "css/common/operation-zone.css" }}">
+  <link rel="stylesheet" href="{{ partial "seo/asset-url.html" "css/common/confirmation-modal.css" }}">
+  <link rel="stylesheet" href="{{ partial "seo/asset-url.html" "css/common/notifications.css" }}">
+  <link rel="stylesheet" href="{{ partial "seo/asset-url.html" "css/common/operation-ui-components.css" }}">
+  {{ end }}
+
+  {{ if eq .RelPermalink "/contact/" }}
+  <link rel="stylesheet" href="{{ partial "seo/asset-url.html" "css/contact-form.css" }}">
+  <script defer src="{{ partial "seo/asset-url.html" "js/contact-form.js" }}"></script>
+  {{ if .Site.Params.contactTurnstileSiteKey }}
+  <script defer src="https://challenges.cloudflare.com/turnstile/v0/api.js"></script>
+  {{ end }}
+  {{ end }}
+
+  <!-- ---------------------------------------------------------
+       JAVASCRIPT DU SITE
+       --------------------------------------------------------- -->
+     <script defer src="{{ partial "seo/asset-url.html" "js/common/app-config.js" }}"></script>
+     <script defer src="{{ partial "seo/asset-url.html" "js/common/file-policy.js" }}"></script>
+     <script defer src="{{ partial "seo/asset-url.html" "js/common/safe-html.js" }}"></script>
+     <script defer src="{{ partial "seo/asset-url.html" "js/common/url-import.js" }}"></script>
+     <script defer src="{{ partial "seo/asset-url.html" "js/common/file-categories.js" }}"></script>
+     <script defer src="{{ partial "seo/asset-url.html" "js/common/operations-config.js" }}"></script>
+     <script defer src="{{ partial "seo/asset-url.html" "js/common/optional-dependencies.js" }}"></script>
+     <script defer src="{{ partial "seo/asset-url.html" "js/common/category-operations.js" }}"></script>
+     <script defer src="{{ partial "seo/asset-url.html" "js/common/more-operations.js" }}"></script>
+     <script defer src="{{ partial "seo/asset-url.html" "js/common/file-utils.js" }}"></script>
+     <script defer src="{{ partial "seo/asset-url.html" "js/common/file-storage.js" }}"></script>
+     <script defer src="{{ partial "seo/asset-url.html" "js/common/file-list.js" }}"></script>
+     <script defer src="{{ partial "seo/asset-url.html" "js/common/icons.js" }}"></script>
+     <script defer src="{{ partial "seo/asset-url.html" "js/common/zone-chargement.js" }}"></script>
+     <script defer src="{{ partial "seo/asset-url.html" "js/common/notifications.js" }}"></script>
+     <script defer src="{{ partial "seo/asset-url.html" "js/common/confirmation-modal.js" }}"></script>
+     <script defer src="{{ partial "seo/asset-url.html" "js/common/navigation-guard.js" }}"></script>
+     <script defer src="{{ partial "seo/asset-url.html" "js/common/page-navigation.js" }}"></script>
+     <script defer src="{{ partial "seo/asset-url.html" "js/common/keyboard-navigation.js" }}"></script>
+
+     {{ if .Params.operation }}
+     <script defer src="{{ partial "seo/asset-url.html" "js/common/operation/operation-controller.js" }}"></script>
+     <script defer src="{{ partial "seo/asset-url.html" "js/common/operation/operation-progress.js" }}"></script>
+     <script defer src="{{ partial "seo/asset-url.html" "js/common/operation/operation-results.js" }}"></script>
+     <script defer src="{{ partial "seo/asset-url.html" "js/common/operation/operation-downloads.js" }}"></script>
+     <script defer src="{{ partial "seo/asset-url.html" "js/common/operation/operation-messages.js" }}"></script>
+     <script defer src="{{ partial "seo/asset-url.html" "js/common/operation-zone.js" }}"></script>
+     <script defer src="{{ partial "seo/asset-url.html" "js/common/operation-interaction-lock.js" }}"></script>
+     <script defer src="{{ partial "seo/asset-url.html" "js/common/operation-ui-components.js" }}"></script>
+     {{ end }}
+
+     {{ if eq .RelPermalink "/" }}
+          <script defer src="{{ partial "seo/asset-url.html" "js/homepage/file-operations.js" }}"></script>
+          <script defer src="{{ partial "seo/asset-url.html" "js/homepage/liste-files.js" }}"></script>
+          <script defer src="{{ partial "seo/asset-url.html" "js/homepage/homepage-storage.js" }}"></script>
+          <script defer src="{{ partial "seo/asset-url.html" "js/homepage/main.js" }}"></script>
+     {{ end }}
+
+     {{ if eq .Section "audio" }}
+          <script defer src="{{ partial "seo/asset-url.html" "js/audio/audio-upload-zone.js" }}"></script>
+     {{ end }}
+
+     {{ if or
+          (eq .RelPermalink "/audio/convert-audio/")
+          (eq .RelPermalink "/audio/cut-audio/")
+          (eq .RelPermalink "/audio/merge-audio/")
+          (eq .RelPermalink "/audio/auto-split/")
+     }}
+          <script defer src="{{ partial "seo/asset-url.html" "js/audio/convert-audio/lib/ffmpeg.js" }}"></script>
+          <script defer src="{{ partial "seo/asset-url.html" "js/audio/convert-audio/ffmpeg-loader.js" }}"></script>
+          <script defer src="{{ partial "seo/asset-url.html" "js/audio/audio-encoding-profiles.js" }}"></script>
+     {{ end }}
+
+     {{ if eq .Params.operation "convert-audio" }}
+          <script defer src="{{ partial "seo/asset-url.html" "js/audio/convert-audio/audio-conversion-ui.js" }}"></script>
+          <script defer src="{{ partial "seo/asset-url.html" "js/audio/convert-audio/audio-converter.js" }}"></script>
+          <script defer src="{{ partial "seo/asset-url.html" "js/audio/convert-audio/convert-audio-operation.js" }}"></script>
+     {{ end }}
+
+     {{ if eq .Params.operation "cut-audio" }}
+          <link rel="stylesheet" href="{{ "css/audio/cut-audio.css" | relURL }}">
+          <script defer src="{{ partial "seo/asset-url.html" "js/audio/cut-audio/audio-cut-ui.js" }}"></script>
+          <script defer src="{{ partial "seo/asset-url.html" "js/audio/cut-audio/audio-cutter.js" }}"></script>
+          <script defer src="{{ partial "seo/asset-url.html" "js/audio/cut-audio/cut-audio-operation.js" }}"></script>
+     {{ end }}
+
+     {{ if eq .Params.operation "merge-audio" }}
+          <link rel="stylesheet" href="{{ "css/audio/merge-audio.css" | relURL }}">
+          <script defer src="{{ partial "seo/asset-url.html" "js/audio/merge-audio/audio-merge-ui.js" }}"></script>
+          <script defer src="{{ partial "seo/asset-url.html" "js/audio/merge-audio/audio-merger.js" }}"></script>
+          <script defer src="{{ partial "seo/asset-url.html" "js/audio/merge-audio/merge-audio-operation.js" }}"></script>
+     {{ end }}
+
+     {{ if eq .Params.operation "auto-split" }}
+          <link rel="stylesheet" href="{{ "css/audio/auto-split.css" | relURL }}">
+          <script defer src="{{ partial "seo/asset-url.html" "js/audio/auto-split/auto-split-ui.js" }}"></script>
+          <script defer src="{{ partial "seo/asset-url.html" "js/audio/auto-split/audio-auto-splitter.js" }}"></script>
+          <script defer src="{{ partial "seo/asset-url.html" "js/audio/auto-split/auto-split-operation.js" }}"></script>
+     {{ end }}
+
+     {{ if eq .Section "images" }}
+          <script defer src="{{ partial "seo/asset-url.html" "js/image/image-upload-zone.js" }}"></script>
+     {{ end }}
+
+     {{ if eq .Params.operation "convert-image" }}
+          <link rel="stylesheet" href="{{ "css/image/convert-image.css" | relURL }}">
+          <script defer src="{{ partial "seo/asset-url.html" "js/image/convert-image/image-conversion-ui.js" }}"></script>
+          <script defer src="{{ partial "seo/asset-url.html" "js/image/convert-image/image-converter.js" }}"></script>
+          <script defer src="{{ partial "seo/asset-url.html" "js/image/convert-image/convert-image-operation.js" }}"></script>
+     {{ end }}
+
+     {{ if eq .Params.operation "compress-image" }}
+          <link rel="stylesheet" href="{{ "css/image/compress-image.css" | relURL }}">
+          <script defer src="{{ partial "seo/asset-url.html" "js/image/compress-image/image-compression-ui.js" }}"></script>
+          <script defer src="{{ partial "seo/asset-url.html" "js/image/compress-image/image-compressor.js" }}"></script>
+          <script defer src="{{ partial "seo/asset-url.html" "js/image/compress-image/compress-image-operation.js" }}"></script>
+     {{ end }}
+
+     {{ if eq .Params.operation "image-to-pdf" }}
+          <link rel="stylesheet" href="{{ "css/image/image-to-pdf.css" | relURL }}">
+          <script defer src="{{ partial "seo/asset-url.html" "js/vendor/pdf-lib/pdf-lib.min.js" }}"></script>
+          <script defer src="{{ partial "seo/asset-url.html" "js/image/image-to-pdf/image-to-pdf-ui.js" }}"></script>
+          <script defer src="{{ partial "seo/asset-url.html" "js/image/image-to-pdf/image-to-pdf-engine.js" }}"></script>
+          <script defer src="{{ partial "seo/asset-url.html" "js/image/image-to-pdf/image-to-pdf-operation.js" }}"></script>
+     {{ end }}
+
+     {{ if eq .Params.operation "remove-background" }}
+          <link rel="stylesheet" href="{{ "css/image/remove-background.css" | relURL }}">
+          <script defer src="{{ partial "seo/asset-url.html" "js/image/remove-background/background-removal-ui.js" }}"></script>
+          <script defer src="{{ partial "seo/asset-url.html" "js/image/remove-background/background-removal-engine.js" }}"></script>
+          <script defer src="{{ partial "seo/asset-url.html" "js/image/remove-background/remove-background-operation.js" }}"></script>
+     {{ end }}
+
+     {{ if or
+          (eq .Params.operation "resize-crop-image")
+          (eq .Params.operation "rotate-flip-image")
+          (eq .Params.operation "replace-colors")
+     }}
+          <link rel="stylesheet" href="{{ "css/image/image-transform.css" | relURL }}">
+          <script defer src="{{ partial "seo/asset-url.html" "js/image/common/image-raster-utils.js" }}"></script>
+          {{ if ne .Params.operation "replace-colors" }}
+               <script defer src="{{ partial "seo/asset-url.html" "js/image/common/image-transform-engine.js" }}"></script>
+          {{ end }}
+          <script defer src="{{ partial "seo/asset-url.html" "js/image/common/image-transform-operation-adapter.js" }}"></script>
+     {{ end }}
+
+     {{ if eq .Params.operation "resize-crop-image" }}
+          <script defer src="{{ partial "seo/asset-url.html" "js/image/resize-crop-image/resize-crop-image-ui.js" }}"></script>
+          <script defer src="{{ partial "seo/asset-url.html" "js/image/resize-crop-image/resize-crop-image-engine.js" }}"></script>
+          <script defer src="{{ partial "seo/asset-url.html" "js/image/resize-crop-image/resize-crop-image-operation.js" }}"></script>
+     {{ end }}
+
+     {{ if eq .Params.operation "rotate-flip-image" }}
+          <script defer src="{{ partial "seo/asset-url.html" "js/image/rotate-flip-image/rotate-flip-image-ui.js" }}"></script>
+          <script defer src="{{ partial "seo/asset-url.html" "js/image/rotate-flip-image/rotate-flip-image-engine.js" }}"></script>
+          <script defer src="{{ partial "seo/asset-url.html" "js/image/rotate-flip-image/rotate-flip-image-operation.js" }}"></script>
+     {{ end }}
+
+     {{ if eq .Params.operation "replace-colors" }}
+          <link rel="stylesheet" href="{{ "css/image/replace-colors.css" | relURL }}">
+          <script defer src="{{ partial "seo/asset-url.html" "js/image/replace-colors/replace-colors-ui.js" }}"></script>
+          <script defer src="{{ partial "seo/asset-url.html" "js/image/replace-colors/replace-colors-engine.js" }}"></script>
+          <script defer src="{{ partial "seo/asset-url.html" "js/image/replace-colors/replace-colors-operation.js" }}"></script>
+     {{ end }}
+
+     {{ if and (eq .Section "images") .Params.operation }}
+          <link rel="stylesheet" href="{{ partial "seo/asset-url.html" "css/image/image-operation-ui.css" }}">
+     {{ end }}
+
+     {{ if eq .Section "video" }}
+          <script defer src="{{ partial "seo/asset-url.html" "js/video/video-upload-zone.js" }}"></script>
+     {{ end }}
+
+     {{ if or
+          (eq .Params.operation "convert-video")
+          (eq .Params.operation "compress-video")
+          (eq .Params.operation "video-to-audio")
+          (eq .Params.operation "trim-video")
+     }}
+          <link rel="stylesheet" href="{{ partial "seo/asset-url.html" "css/video/video-operations.css" }}">
+          <script defer src="{{ partial "seo/asset-url.html" "js/audio/convert-audio/lib/ffmpeg.js" }}"></script>
+          <script defer src="{{ partial "seo/asset-url.html" "js/audio/convert-audio/ffmpeg-loader.js" }}"></script>
+          <script defer src="{{ partial "seo/asset-url.html" "js/video/video-operation-adapter.js" }}"></script>
+     {{ end }}
+
+     {{ if eq .Params.operation "convert-video" }}
+          <script defer src="{{ partial "seo/asset-url.html" "js/video/convert-video/video-webcodecs.js" }}"></script>
+          <script defer src="{{ partial "seo/asset-url.html" "js/video/convert-video/video-conversion-ui.js" }}"></script>
+          <script defer src="{{ partial "seo/asset-url.html" "js/video/convert-video/video-converter.js" }}"></script>
+          <script defer src="{{ partial "seo/asset-url.html" "js/video/convert-video/convert-video-operation.js" }}"></script>
+     {{ end }}
+
+     {{ if eq .Params.operation "compress-video" }}
+          <script defer src="{{ partial "seo/asset-url.html" "js/video/convert-video/video-webcodecs.js" }}"></script>
+          <script defer src="{{ partial "seo/asset-url.html" "js/video/compress-video/video-compression-ui.js" }}"></script>
+          <script defer src="{{ partial "seo/asset-url.html" "js/video/compress-video/video-compressor.js" }}"></script>
+          <script defer src="{{ partial "seo/asset-url.html" "js/video/compress-video/compress-video-operation.js" }}"></script>
+     {{ end }}
+
+     {{ if eq .Params.operation "video-to-audio" }}
+          <script defer src="{{ partial "seo/asset-url.html" "js/video/video-fast-paths.js" }}"></script>
+          <script defer src="{{ partial "seo/asset-url.html" "js/audio/audio-encoding-profiles.js" }}"></script>
+          <script defer src="{{ partial "seo/asset-url.html" "js/video/video-to-audio/video-to-audio-ui.js" }}"></script>
+          <script defer src="{{ partial "seo/asset-url.html" "js/video/video-to-audio/video-audio-extractor.js" }}"></script>
+          <script defer src="{{ partial "seo/asset-url.html" "js/video/video-to-audio/video-to-audio-operation.js" }}"></script>
+     {{ end }}
+
+     {{ if eq .Params.operation "trim-video" }}
+          <link rel="stylesheet" href="{{ "css/video/trim-video.css" | relURL }}">
+          <script defer src="{{ partial "seo/asset-url.html" "js/video/video-fast-paths.js" }}"></script>
+          <script defer src="{{ partial "seo/asset-url.html" "js/video/trim-video/trim-video-ui.js" }}"></script>
+          <script defer src="{{ partial "seo/asset-url.html" "js/video/trim-video/video-trimmer.js" }}"></script>
+          <script defer src="{{ partial "seo/asset-url.html" "js/video/trim-video/trim-video-operation.js" }}"></script>
+     {{ end }}
+
+     {{ if eq .Section "documents" }}
+          <script defer src="{{ partial "seo/asset-url.html" "js/document/document-upload-zone.js" }}"></script>
+     {{ end }}
+
+     {{ if or
+          (eq .Params.operation "merge-pdf")
+          (eq .Params.operation "split-pdf")
+          (eq .Params.operation "compress-pdf")
+          (eq .Params.operation "pdf-to-image")
+     }}
+          <link rel="stylesheet" href="{{ partial "seo/asset-url.html" "css/document/pdf-operations.css" }}">
+          {{ if ne .Params.operation "pdf-to-image" }}
+              <script defer src="{{ partial "seo/asset-url.html" "js/vendor/pdf-lib/pdf-lib.min.js" }}"></script>
+          {{ end }}
+          <script defer src="{{ partial "seo/asset-url.html" "js/document/document-operation-adapter.js" }}"></script>
+     {{ end }}
+
+     {{ if eq .Params.operation "merge-pdf" }}
+          <script defer src="{{ partial "seo/asset-url.html" "js/document/merge-pdf/merge-pdf-ui.js" }}"></script>
+          <script defer src="{{ partial "seo/asset-url.html" "js/document/merge-pdf/pdf-merger.js" }}"></script>
+          <script defer src="{{ partial "seo/asset-url.html" "js/document/merge-pdf/merge-pdf-operation.js" }}"></script>
+     {{ end }}
+
+     {{ if eq .Params.operation "split-pdf" }}
+          <script defer src="{{ partial "seo/asset-url.html" "js/document/split-pdf/split-pdf-ui.js" }}"></script>
+          <script defer src="{{ partial "seo/asset-url.html" "js/document/split-pdf/pdf-splitter.js" }}"></script>
+          <script defer src="{{ partial "seo/asset-url.html" "js/document/split-pdf/split-pdf-operation.js" }}"></script>
+     {{ end }}
+
+     {{ if eq .Params.operation "pdf-to-image" }}
+          <script defer src="{{ partial "seo/asset-url.html" "js/document/pdf-to-image/pdf-to-image-ui.js" }}"></script>
+          <script defer src="{{ partial "seo/asset-url.html" "js/document/pdf-to-image/pdf-image-converter.js" }}"></script>
+          <script defer src="{{ partial "seo/asset-url.html" "js/document/pdf-to-image/pdf-to-image-operation.js" }}"></script>
+     {{ end }}
+
+     {{ if eq .Params.operation "compress-pdf" }}
+          <script defer src="{{ partial "seo/asset-url.html" "js/document/compress-pdf/compress-pdf-ui.js" }}"></script>
+          <script defer src="{{ partial "seo/asset-url.html" "js/document/compress-pdf/pdf-compressor.js" }}"></script>
+          <script defer src="{{ partial "seo/asset-url.html" "js/document/compress-pdf/compress-pdf-operation.js" }}"></script>
+     {{ end }}
+
+     {{ if eq .Params.guide "formats" }}
+          <link rel="stylesheet" href="{{ partial "seo/asset-url.html" "css/common/formats-guide.css" }}">
+     {{ end }}
+
+     {{ if eq .RelPermalink "/" }}
+          <script>
+               document.addEventListener("DOMContentLoaded", async () => {
+               console.log("[FILE STORAGE] Checking for saved files...");
+               await restoreSelectedFiles();
+               });
+          </script>
+     {{ end }}
+
+
+</head>
+

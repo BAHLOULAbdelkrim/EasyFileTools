@@ -6,9 +6,10 @@
   <title>{{ if .Title }}{{ .Title }} - {{ end }}{{ .Site.Title }}</title>
   
   <!-- Description SEO -->
-  <meta name="description" content="{{ .Site.Params.description }}">
+  {{ $pageDescription := .Description | default .Site.Params.description }}
+  <meta name="description" content="{{ $pageDescription }}">
 
-  <link rel="icon" type="image/png" href="{{ "favicon_2.png" | absURL }}">
+  <link rel="icon" type="image/svg+xml" href="{{ "logo_symbol.svg" | relURL }}?v=3">   
 
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -33,7 +34,7 @@
        OPEN GRAPH : aperçu partage réseaux sociaux
        --------------------------------------------------------- -->
   <meta property="og:title" content="{{ if .Title }}{{ .Title }} — {{ end }}{{ .Site.Title }}">
-  <meta property="og:description" content="{{ .Site.Params.description }}">
+  <meta property="og:description" content="{{ $pageDescription }}">
   <meta property="og:type" content="{{ if .IsPage }}article{{ else }}website{{ end }}">
   <meta property="og:url" content="{{ .Permalink }}">
   <!-- Option image OG (si tu veux ajouter plus tard) -->
@@ -44,7 +45,7 @@
        --------------------------------------------------------- -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="{{ if .Title }}{{ .Title }} — {{ end }}{{ .Site.Title }}">
-  <meta name="twitter:description" content="{{ .Site.Params.description }}">
+  <meta name="twitter:description" content="{{ $pageDescription }}">
   <!-- <meta name="twitter:image" content="{{ .Site.BaseURL }}images/og-default.jpg"> -->
 
   <!-- ---------------------------------------------------------
@@ -73,38 +74,240 @@
      <link rel="stylesheet" href="{{ "css/common/operation-zone.css" | relURL }}">
      <link rel="stylesheet" href="{{ "css/common/confirmation-modal.css" | relURL }}">
      <link rel="stylesheet" href="{{ "css/common/notifications.css" | relURL }}">
+     <link rel="stylesheet" href="{{ "css/common/operation-ui-components.css" | relURL }}?v={{ now.UnixNano }}">
 
   <!-- ---------------------------------------------------------
        JAVASCRIPT DU SITE
        --------------------------------------------------------- -->
-     <script defer src="{{ "js/common/app-config.js" | relURL }}"></script>
-     <script defer src="{{ "js/common/file-categories.js" | relURL }}"></script>
-     <script defer src="{{ "js/common/file-utils.js" | relURL }}"></script>
-     <script defer src="{{ "js/common/file-storage.js" | relURL }}"></script>
-     <script defer src="{{ "js/common/file-list.js" | relURL }}"></script>
-     <script defer src="{{ "js/common/file-upload.js" | relURL }}"></script>
-     <script defer src="{{ "js/common/icons.js" | relURL }}"></script>
-     <script defer src="{{ "js/common/zone-chargement.js" | relURL }}"></script>
-     <script defer src="{{ "js/common/notifications.js" | relURL }}"></script>
-     <script defer src="{{ "js/common/operation-zone.js" | relURL }}"></script>
-     <script defer src="{{ "js/common/confirmation-modal.js" | relURL }}"></script>
+     <script defer src="{{ "js/common/app-config.js" | relURL }}?v={{ now.UnixNano }}"></script>
+     <script defer src="{{ "js/common/file-policy.js" | relURL }}?v={{ now.UnixNano }}"></script>
+     <script defer src="{{ "js/common/safe-html.js" | relURL }}?v={{ now.UnixNano }}"></script>
+     <script defer src="{{ "js/common/url-import.js" | relURL }}?v={{ now.UnixNano }}"></script>
+     <script defer src="{{ "js/common/file-categories.js" | relURL }}?v={{ now.UnixNano }}"></script>
+     <script defer src="{{ "js/common/operations-config.js" | relURL }}?v={{ now.UnixNano }}"></script>
+     <script defer src="{{ "js/common/operation/operation-controller.js" | relURL }}?v={{ now.UnixNano }}"></script>
+     <script defer src="{{ "js/common/operation/operation-progress.js" | relURL }}?v={{ now.UnixNano }}"></script>
+     <script defer src="{{ "js/common/operation/operation-results.js" | relURL }}?v={{ now.UnixNano }}"></script>
+     <script defer src="{{ "js/common/operation/operation-downloads.js" | relURL }}?v={{ now.UnixNano }}"></script>
+     <script defer src="{{ "js/common/operation/operation-messages.js" | relURL }}?v={{ now.UnixNano }}"></script>
+     <script defer src="{{ "js/common/category-operations.js" | relURL }}?v={{ now.UnixNano }}"></script>
+     <script defer src="{{ "js/common/more-operations.js" | relURL }}?v={{ now.UnixNano }}"></script>
+     <script defer src="{{ "js/common/file-utils.js" | relURL }}?v={{ now.UnixNano }}"></script>
+     <script defer src="{{ "js/common/file-storage.js" | relURL }}?v={{ now.UnixNano }}"></script>
+     <script defer src="{{ "js/common/file-list.js" | relURL }}?v={{ now.UnixNano }}"></script>
+     <script defer src="{{ "js/common/file-upload.js" | relURL }}?v={{ now.UnixNano }}"></script>
+     <script defer src="{{ "js/common/icons.js" | relURL }}?v={{ now.UnixNano }}"></script>
+     <script defer src="{{ "js/common/zone-chargement.js" | relURL }}?v={{ now.UnixNano }}"></script>
+     <script defer src="{{ "js/common/notifications.js" | relURL }}?v={{ now.UnixNano }}"></script>
+     <script defer src="{{ "js/common/operation-zone.js" | relURL }}?v={{ now.UnixNano }}"></script>
+     <script defer src="{{ "js/common/confirmation-modal.js" | relURL }}?v={{ now.UnixNano }}"></script>
+     <script defer src="{{ "js/common/navigation-guard.js" | relURL }}?v={{ now.UnixNano }}"></script>
+     <script defer src="{{ "js/common/page-navigation.js" | relURL }}?v={{ now.UnixNano }}"></script>
+     <script defer src="{{ "js/common/operation-interaction-lock.js" | relURL }}?v={{ now.UnixNano }}"></script>
+     <script defer src="{{ "js/common/keyboard-navigation.js" | relURL }}?v={{ now.UnixNano }}"></script>
+     <script defer src="{{ "js/common/operation-ui-components.js" | relURL }}?v={{ now.UnixNano }}"></script>
 
      {{ if eq .RelPermalink "/" }}
-          <script defer src="{{ "js/homepage/file-operations.js" | relURL }}"></script>
-          <script defer src="{{ "js/homepage/liste-files.js" | relURL }}"></script>
-          <script defer src="{{ "js/homepage/homepage-storage.js" | relURL }}"></script>
-          <script defer src="{{ "js/homepage/main.js" | relURL }}"></script>
+          <script defer src="{{ "js/homepage/file-operations.js" | relURL }}?v={{ now.UnixNano }}"></script>
+          <script defer src="{{ "js/homepage/liste-files.js" | relURL }}?v={{ now.UnixNano }}"></script>
+          <script defer src="{{ "js/homepage/homepage-storage.js" | relURL }}?v={{ now.UnixNano }}"></script>
+          <script defer src="{{ "js/homepage/main.js" | relURL }}?v={{ now.UnixNano }}"></script>
      {{ end }}
 
-     {{ if and (eq .Section "audio") (ne .RelPermalink "/audio/") }}
-          <script defer src="{{ "js/audio/audio-upload-zone.js" | relURL }}"></script>
+     {{ if eq .Section "audio" }}
+          <script defer src="{{ "js/audio/audio-upload-zone.js" | relURL }}?v={{ now.UnixNano }}"></script>
      {{ end }}
 
-     {{ if eq .RelPermalink "/audio/convert-audio/" }}
-          <script defer src="{{ "js/audio/convert-audio/lib/ffmpeg.js" | relURL }}"></script>
-          <script defer src="{{ "js/audio/convert-audio/ffmpeg-loader.js" | relURL }}"></script>
-          <script defer src="{{ "js/audio/convert-audio/audio-conversion-ui.js" | relURL }}"></script>
-          <script defer src="{{ "js/audio/convert-audio/audio-converter.js" | relURL }}"></script>
+     {{ if or
+          (eq .RelPermalink "/audio/convert-audio/")
+          (eq .RelPermalink "/audio/cut-audio/")
+          (eq .RelPermalink "/audio/merge-audio/")
+          (eq .RelPermalink "/audio/auto-split/")
+     }}
+          <script defer src="{{ "js/audio/convert-audio/lib/ffmpeg.js" | relURL }}?v={{ now.UnixNano }}"></script>
+          <script defer src="{{ "js/audio/convert-audio/ffmpeg-loader.js" | relURL }}?v={{ now.UnixNano }}"></script>
+          <script defer src="{{ "js/audio/audio-encoding-profiles.js" | relURL }}?v={{ now.UnixNano }}"></script>
+     {{ end }}
+
+     {{ if eq .Params.operation "convert-audio" }}
+          <script defer src="{{ "js/audio/convert-audio/audio-conversion-ui.js" | relURL }}?v={{ now.UnixNano }}"></script>
+          <script defer src="{{ "js/audio/convert-audio/audio-converter.js" | relURL }}?v={{ now.UnixNano }}"></script>
+          <script defer src="{{ "js/audio/convert-audio/convert-audio-operation.js" | relURL }}?v={{ now.UnixNano }}"></script>
+     {{ end }}
+
+     {{ if eq .Params.operation "cut-audio" }}
+          <link rel="stylesheet" href="{{ "css/audio/cut-audio.css" | relURL }}">
+          <script defer src="{{ "js/audio/cut-audio/audio-cut-ui.js" | relURL }}?v={{ now.UnixNano }}"></script>
+          <script defer src="{{ "js/audio/cut-audio/audio-cutter.js" | relURL }}?v={{ now.UnixNano }}"></script>
+          <script defer src="{{ "js/audio/cut-audio/cut-audio-operation.js" | relURL }}?v={{ now.UnixNano }}"></script>
+     {{ end }}
+
+     {{ if eq .Params.operation "merge-audio" }}
+          <link rel="stylesheet" href="{{ "css/audio/merge-audio.css" | relURL }}">
+          <script defer src="{{ "js/audio/merge-audio/audio-merge-ui.js" | relURL }}?v={{ now.UnixNano }}"></script>
+          <script defer src="{{ "js/audio/merge-audio/audio-merger.js" | relURL }}?v={{ now.UnixNano }}"></script>
+          <script defer src="{{ "js/audio/merge-audio/merge-audio-operation.js" | relURL }}?v={{ now.UnixNano }}"></script>
+     {{ end }}
+
+     {{ if eq .Params.operation "auto-split" }}
+          <link rel="stylesheet" href="{{ "css/audio/auto-split.css" | relURL }}">
+          <script defer src="{{ "js/audio/auto-split/auto-split-ui.js" | relURL }}?v={{ now.UnixNano }}"></script>
+          <script defer src="{{ "js/audio/auto-split/audio-auto-splitter.js" | relURL }}?v={{ now.UnixNano }}"></script>
+          <script defer src="{{ "js/audio/auto-split/auto-split-operation.js" | relURL }}?v={{ now.UnixNano }}"></script>
+     {{ end }}
+
+     {{ if eq .Section "images" }}
+          <script defer src="{{ "js/image/image-upload-zone.js" | relURL }}?v={{ now.UnixNano }}"></script>
+     {{ end }}
+
+     {{ if eq .Params.operation "convert-image" }}
+          <link rel="stylesheet" href="{{ "css/image/convert-image.css" | relURL }}">
+          <script defer src="{{ "js/image/convert-image/image-conversion-ui.js" | relURL }}?v={{ now.UnixNano }}"></script>
+          <script defer src="{{ "js/image/convert-image/image-converter.js" | relURL }}?v={{ now.UnixNano }}"></script>
+          <script defer src="{{ "js/image/convert-image/convert-image-operation.js" | relURL }}?v={{ now.UnixNano }}"></script>
+     {{ end }}
+
+     {{ if eq .Params.operation "compress-image" }}
+          <link rel="stylesheet" href="{{ "css/image/compress-image.css" | relURL }}">
+          <script defer src="{{ "js/image/compress-image/image-compression-ui.js" | relURL }}?v={{ now.UnixNano }}"></script>
+          <script defer src="{{ "js/image/compress-image/image-compressor.js" | relURL }}?v={{ now.UnixNano }}"></script>
+          <script defer src="{{ "js/image/compress-image/compress-image-operation.js" | relURL }}?v={{ now.UnixNano }}"></script>
+     {{ end }}
+
+     {{ if eq .Params.operation "image-to-pdf" }}
+          <link rel="stylesheet" href="{{ "css/image/image-to-pdf.css" | relURL }}">
+          <script defer src="{{ "js/vendor/pdf-lib/pdf-lib.min.js" | relURL }}?v={{ now.UnixNano }}"></script>
+          <script defer src="{{ "js/image/image-to-pdf/image-to-pdf-ui.js" | relURL }}?v={{ now.UnixNano }}"></script>
+          <script defer src="{{ "js/image/image-to-pdf/image-to-pdf-engine.js" | relURL }}?v={{ now.UnixNano }}"></script>
+          <script defer src="{{ "js/image/image-to-pdf/image-to-pdf-operation.js" | relURL }}?v={{ now.UnixNano }}"></script>
+     {{ end }}
+
+     {{ if eq .Params.operation "remove-background" }}
+          <link rel="stylesheet" href="{{ "css/image/remove-background.css" | relURL }}">
+          <script defer src="{{ "js/image/remove-background/background-removal-ui.js" | relURL }}?v={{ now.UnixNano }}"></script>
+          <script defer src="{{ "js/image/remove-background/background-removal-engine.js" | relURL }}?v={{ now.UnixNano }}"></script>
+          <script defer src="{{ "js/image/remove-background/remove-background-operation.js" | relURL }}?v={{ now.UnixNano }}"></script>
+     {{ end }}
+
+     {{ if or
+          (eq .Params.operation "resize-crop-image")
+          (eq .Params.operation "rotate-flip-image")
+          (eq .Params.operation "replace-colors")
+     }}
+          <link rel="stylesheet" href="{{ "css/image/image-transform.css" | relURL }}">
+          <script defer src="{{ "js/image/common/image-raster-utils.js" | relURL }}?v={{ now.UnixNano }}"></script>
+          {{ if ne .Params.operation "replace-colors" }}
+               <script defer src="{{ "js/image/common/image-transform-engine.js" | relURL }}?v={{ now.UnixNano }}"></script>
+          {{ end }}
+          <script defer src="{{ "js/image/common/image-transform-operation-adapter.js" | relURL }}?v={{ now.UnixNano }}"></script>
+     {{ end }}
+
+     {{ if eq .Params.operation "resize-crop-image" }}
+          <script defer src="{{ "js/image/resize-crop-image/resize-crop-image-ui.js" | relURL }}?v={{ now.UnixNano }}"></script>
+          <script defer src="{{ "js/image/resize-crop-image/resize-crop-image-engine.js" | relURL }}?v={{ now.UnixNano }}"></script>
+          <script defer src="{{ "js/image/resize-crop-image/resize-crop-image-operation.js" | relURL }}?v={{ now.UnixNano }}"></script>
+     {{ end }}
+
+     {{ if eq .Params.operation "rotate-flip-image" }}
+          <script defer src="{{ "js/image/rotate-flip-image/rotate-flip-image-ui.js" | relURL }}?v={{ now.UnixNano }}"></script>
+          <script defer src="{{ "js/image/rotate-flip-image/rotate-flip-image-engine.js" | relURL }}?v={{ now.UnixNano }}"></script>
+          <script defer src="{{ "js/image/rotate-flip-image/rotate-flip-image-operation.js" | relURL }}?v={{ now.UnixNano }}"></script>
+     {{ end }}
+
+     {{ if eq .Params.operation "replace-colors" }}
+          <link rel="stylesheet" href="{{ "css/image/replace-colors.css" | relURL }}">
+          <script defer src="{{ "js/image/replace-colors/replace-colors-ui.js" | relURL }}?v={{ now.UnixNano }}"></script>
+          <script defer src="{{ "js/image/replace-colors/replace-colors-engine.js" | relURL }}?v={{ now.UnixNano }}"></script>
+          <script defer src="{{ "js/image/replace-colors/replace-colors-operation.js" | relURL }}?v={{ now.UnixNano }}"></script>
+     {{ end }}
+
+     {{ if and (eq .Section "images") .Params.operation }}
+          <link rel="stylesheet" href="{{ "css/image/image-operation-ui.css" | relURL }}?v={{ now.UnixNano }}">
+     {{ end }}
+
+     {{ if eq .Section "video" }}
+          <script defer src="{{ "js/video/video-upload-zone.js" | relURL }}?v={{ now.UnixNano }}"></script>
+     {{ end }}
+
+     {{ if or
+          (eq .Params.operation "convert-video")
+          (eq .Params.operation "compress-video")
+          (eq .Params.operation "video-to-audio")
+          (eq .Params.operation "trim-video")
+     }}
+          <link rel="stylesheet" href="{{ "css/video/video-operations.css" | relURL }}?v={{ now.UnixNano }}">
+          <script defer src="{{ "js/audio/convert-audio/lib/ffmpeg.js" | relURL }}?v={{ now.UnixNano }}"></script>
+          <script defer src="{{ "js/audio/convert-audio/ffmpeg-loader.js" | relURL }}?v={{ now.UnixNano }}"></script>
+          <script defer src="{{ "js/video/video-operation-adapter.js" | relURL }}?v={{ now.UnixNano }}"></script>
+     {{ end }}
+
+     {{ if eq .Params.operation "convert-video" }}
+          <script defer src="{{ "js/video/convert-video/video-conversion-ui.js" | relURL }}?v={{ now.UnixNano }}"></script>
+          <script defer src="{{ "js/video/convert-video/video-converter.js" | relURL }}?v={{ now.UnixNano }}"></script>
+          <script defer src="{{ "js/video/convert-video/convert-video-operation.js" | relURL }}?v={{ now.UnixNano }}"></script>
+     {{ end }}
+
+     {{ if eq .Params.operation "compress-video" }}
+          <script defer src="{{ "js/video/compress-video/video-compression-ui.js" | relURL }}?v={{ now.UnixNano }}"></script>
+          <script defer src="{{ "js/video/compress-video/video-compressor.js" | relURL }}?v={{ now.UnixNano }}"></script>
+          <script defer src="{{ "js/video/compress-video/compress-video-operation.js" | relURL }}?v={{ now.UnixNano }}"></script>
+     {{ end }}
+
+     {{ if eq .Params.operation "video-to-audio" }}
+          <script defer src="{{ "js/audio/audio-encoding-profiles.js" | relURL }}?v={{ now.UnixNano }}"></script>
+          <script defer src="{{ "js/video/video-to-audio/video-to-audio-ui.js" | relURL }}?v={{ now.UnixNano }}"></script>
+          <script defer src="{{ "js/video/video-to-audio/video-audio-extractor.js" | relURL }}?v={{ now.UnixNano }}"></script>
+          <script defer src="{{ "js/video/video-to-audio/video-to-audio-operation.js" | relURL }}?v={{ now.UnixNano }}"></script>
+     {{ end }}
+
+     {{ if eq .Params.operation "trim-video" }}
+          <link rel="stylesheet" href="{{ "css/video/trim-video.css" | relURL }}">
+          <script defer src="{{ "js/video/trim-video/trim-video-ui.js" | relURL }}?v={{ now.UnixNano }}"></script>
+          <script defer src="{{ "js/video/trim-video/video-trimmer.js" | relURL }}?v={{ now.UnixNano }}"></script>
+          <script defer src="{{ "js/video/trim-video/trim-video-operation.js" | relURL }}?v={{ now.UnixNano }}"></script>
+     {{ end }}
+
+     {{ if eq .Section "documents" }}
+          <script defer src="{{ "js/document/document-upload-zone.js" | relURL }}?v={{ now.UnixNano }}"></script>
+     {{ end }}
+
+     {{ if or
+          (eq .Params.operation "merge-pdf")
+          (eq .Params.operation "split-pdf")
+          (eq .Params.operation "compress-pdf")
+          (eq .Params.operation "pdf-to-image")
+     }}
+          <link rel="stylesheet" href="{{ "css/document/pdf-operations.css" | relURL }}?v={{ now.UnixNano }}">
+          <script defer src="{{ "js/vendor/pdf-lib/pdf-lib.min.js" | relURL }}?v={{ now.UnixNano }}"></script>
+          <script defer src="{{ "js/document/document-operation-adapter.js" | relURL }}?v={{ now.UnixNano }}"></script>
+     {{ end }}
+
+     {{ if eq .Params.operation "merge-pdf" }}
+          <script defer src="{{ "js/document/merge-pdf/merge-pdf-ui.js" | relURL }}?v={{ now.UnixNano }}"></script>
+          <script defer src="{{ "js/document/merge-pdf/pdf-merger.js" | relURL }}?v={{ now.UnixNano }}"></script>
+          <script defer src="{{ "js/document/merge-pdf/merge-pdf-operation.js" | relURL }}?v={{ now.UnixNano }}"></script>
+     {{ end }}
+
+     {{ if eq .Params.operation "split-pdf" }}
+          <script defer src="{{ "js/document/split-pdf/split-pdf-ui.js" | relURL }}?v={{ now.UnixNano }}"></script>
+          <script defer src="{{ "js/document/split-pdf/pdf-splitter.js" | relURL }}?v={{ now.UnixNano }}"></script>
+          <script defer src="{{ "js/document/split-pdf/split-pdf-operation.js" | relURL }}?v={{ now.UnixNano }}"></script>
+     {{ end }}
+
+     {{ if eq .Params.operation "pdf-to-image" }}
+          <script defer src="{{ "js/document/pdf-to-image/pdf-to-image-ui.js" | relURL }}?v={{ now.UnixNano }}"></script>
+          <script defer src="{{ "js/document/pdf-to-image/pdf-image-converter.js" | relURL }}?v={{ now.UnixNano }}"></script>
+          <script defer src="{{ "js/document/pdf-to-image/pdf-to-image-operation.js" | relURL }}?v={{ now.UnixNano }}"></script>
+     {{ end }}
+
+     {{ if eq .Params.operation "compress-pdf" }}
+          <script defer src="{{ "js/document/compress-pdf/compress-pdf-ui.js" | relURL }}?v={{ now.UnixNano }}"></script>
+          <script defer src="{{ "js/document/compress-pdf/pdf-compressor.js" | relURL }}?v={{ now.UnixNano }}"></script>
+          <script defer src="{{ "js/document/compress-pdf/compress-pdf-operation.js" | relURL }}?v={{ now.UnixNano }}"></script>
+     {{ end }}
+
+     {{ if eq .Params.guide "formats" }}
+          <link rel="stylesheet" href="{{ "css/common/formats-guide.css" | relURL }}?v={{ now.UnixNano }}">
      {{ end }}
 
      {{ if eq .RelPermalink "/" }}
@@ -116,9 +319,14 @@
           </script>
      {{ end }}
 
-     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
-     <script> pdfjsLib.GlobalWorkerOptions.workerSrc = "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js"; </script>
-     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+     {{ if or (eq .RelPermalink "/") (eq .Section "documents") }}
+          <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+          <script> pdfjsLib.GlobalWorkerOptions.workerSrc = "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js"; </script>
+     {{ end }}
+
+     {{ if .Params.operation }}
+          <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+     {{ end }}
 
 </head>
 

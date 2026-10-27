@@ -12,14 +12,16 @@
 baseURL = "https://easyfiletools.app/"
 
 # Titre global du site (utilisé dans <title> et SEO)
-title = "EasyFileTools — Outil tout-en-un pour gérer, convertir, transformer et automatiser des fichiers"
+title = "EasyFile Tools"
 
 # Langue principale
-languageCode = "fr"             # Pour HTML / SEO
-defaultContentLanguage = "fr"   # Langue par défaut du site
+languageCode = "en"             # Pour HTML / SEO
+defaultContentLanguage = "en"   # Langue par défaut du site
 
 # Thème Hugo utilisé
 theme = "high-tech-theme"
+enableRobotsTXT = true
+disableKinds = ["taxonomy", "term", "RSS"]
 
 # -------------------------------------------------------------
 # PAGINATION
@@ -49,13 +51,20 @@ endLevel = 2
 # PARAMÈTRES PERSONNALISÉS DU THÈME
 # -------------------------------------------------------------
 [params]
+  contactTurnstileSiteKey = "" # Public Turnstile site key; NOT the secret. Leave blank to disable sending.
+  # Public URL of the unmodified FFmpeg core stored on R2. Use HUGO_PARAMS_FFMPEGWASMURL
+  # as a Cloudflare Pages build environment variable; empty means local WASM in development.
+  ffmpegWasmURL = ""
+
+  seoIndexable = true # Use --environment preview for a non-indexable preview.
 
   # Description du site (utilisée pour les meta-description SEO)
-  description = "Outil tout-en-un pour gérer, convertir, transformer et automatiser des fichiers : audio, vidéos, images, documents texte, tableurs, présentations, graphiques vectoriels, scripts, 3D, CAO, images médicales."
+  description = "Fast, secure and easy-to-use online tools to convert, compress, edit, transform and manage your files."
 
   # Logo affiché dans le header
-  # logo = "images/logo-bg.webp"
-  logo = "images/logo_3.webp"
+  # logo = "images/easyfile-logo.webp"
+  # logo = "images/logo_3.webp"
+  logo = "images/logo_epais.svg"
 
   # -----------------------------------------------------------
   # PALETTE DE COULEURS DU THÈME

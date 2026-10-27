@@ -361,33 +361,198 @@ const AUDIO_CONVERSION_OUTPUT_FORMATS = [
     "rm"
 ];
 
- /* =========================
-    DETECTION DE CATEGORIE
- ========================= */
+/* =========================
+   FILE CATEGORY HELPERS
+========================= */
 
-function getFileCategory(fileName) {
+function getFileCategory(
+    fileName
+) {
 
-    const extension =
-        fileName
-            .split(".")
-            .pop()
+    if (!fileName) {
+        return "Unknown";
+    }
+
+
+    const normalizedName =
+        String(fileName)
             .toLowerCase();
 
+
     for (
-        const [category, extensions]
-        of Object.entries(FILE_CATEGORIES)
+        const [
+            category,
+            extensions
+        ]
+        of Object.entries(
+            FILE_CATEGORIES
+        )
     ) {
 
-        if (extensions.includes(extension)) {
+        /*
+         * Longest extensions first.
+         *
+         * Important for formats such as:
+         * .nii.gz
+         */
 
-            return category;
+        const sortedExtensions =
+            [...extensions]
+                .sort(
+                    (a, b) =>
+                        b.length -
+                        a.length
+                );
 
+
+        for (
+            const extension
+            of sortedExtensions
+        ) {
+
+            if (
+                normalizedName.endsWith(
+                    `.${extension.toLowerCase()}`
+                )
+            ) {
+
+                return category;
+            }
         }
-
     }
+
 
     return "Unknown";
 }
+
+
+/* =========================
+   CATEGORY EXTENSIONS
+========================= */
+
+function getFileCategoryExtensions(
+    category
+) {
+
+    if (
+        !category ||
+        !Array.isArray(
+            FILE_CATEGORIES[
+                category
+            ]
+        )
+    ) {
+
+        return [];
+    }
+
+
+    return [
+        ...FILE_CATEGORIES[
+            category
+        ]
+    ];
+}
+
+
+/* =========================
+   ALL SUPPORTED EXTENSIONS
+========================= */
+
+function getAllSupportedFileExtensions() {
+
+    return [
+        ...new Set(
+            Object
+                .values(
+                    FILE_CATEGORIES
+                )
+                .flat()
+                .map(
+                    extension =>
+                        extension
+                            .toLowerCase()
+                )
+        )
+    ];
+}
+
+
+/* =========================
+   BUILD INPUT ACCEPT
+========================= */
+
+function buildFileInputAccept(
+    extensions
+) {
+
+    if (
+        !Array.isArray(
+            extensions
+        )
+    ) {
+
+        return "";
+    }
+
+
+    return extensions
+        .filter(Boolean)
+        .map(
+            extension => {
+
+                const normalized =
+                    String(
+                        extension
+                    )
+                        .trim()
+                        .toLowerCase()
+                        .replace(
+                            /^\./,
+                            ""
+                        );
+
+
+                return normalized
+                    ? `.${normalized}`
+                    : null;
+            }
+        )
+        .filter(Boolean)
+        .join(",");
+}
+
+
+/* =========================
+   CATEGORY ACCEPT
+========================= */
+
+function getFileCategoryAccept(
+    category
+) {
+
+    return buildFileInputAccept(
+        window.EasyFilePolicy?.extensions(category) || []
+    );
+}
+
+
+/* =========================
+   ALL FORMATS ACCEPT
+========================= */
+
+function getAllSupportedFileAccept() {
+
+    return buildFileInputAccept(
+        window.EasyFilePolicy?.allExtensions() || []
+    );
+}
+
+
+console.log(
+    "file-categories.js loaded",
+    FILE_CATEGORIES
+);
 
 
 console.log("file-categories.js loaded", FILE_CATEGORIES);

@@ -1,53 +1,222 @@
 <header class="site-header">
+
 <div class="header-container">
+
   <div class="header-left">
-    <a href="{{ "/" | relURL }}" class="home-link">
-      <img src="{{ .Site.Params.logo | relURL }}" alt="Logo" class="logo">
-    <div class="site-name">
-<!--        <span class="orbitron">EasyFile</span>
-        <span class="orbitron1">Tools</span>         -->    
-      </div>       
+
+    <a
+        href="{{ "/" | relURL }}"
+        class="home-link"
+        data-easyfile-navigation
+        data-target-category=""
+    >
+
+      <img
+          src="{{ .Site.Params.logo | relURL }}"
+          alt="EasyFile Tools"
+          class="logo"
+          width="493"
+          height="151"
+          fetchpriority="high"
+          decoding="async"
+      >
+
+      <div class="site-name">
+      </div>
+
     </a>
+
   </div>
 
-    <nav class="top-menus" aria-label="Top navigation">
-      {{ $menuItems := dict
-        "audio" (dict "label" "Audio" "icon" "headphones")
-        "video" (dict "label" "Video" "icon" "video")
-        "images" (dict "label" "Images" "icon" "image")
-        "documents" (dict "label" "Documents" "icon" "file-text")
-        "presentations" (dict "label" "Presentations" "icon" "presentation")
-        "spreadsheets" (dict "label" "Spreadsheets" "icon" "sheet")
-        "vector-graphics" (dict "label" "Vector Graphics" "icon" "pen-tool")
-        "archives" (dict "label" "Archives" "icon" "archive")
-        "code" (dict "label" "Code" "icon" "code-xml")
-        "cad-3d" (dict "label" "3D / CAD" "icon" "boxes")
+
+  <nav
+      class="top-menus"
+      aria-label="Top navigation"
+  >
+
+    {{ $menuItems := dict
+
+      "audio"
+        (dict
+          "label" "Audio"
+          "icon" "headphones"
+        )
+
+      "video"
+        (dict
+          "label" "Video"
+          "icon" "video"
+        )
+
+      "images"
+        (dict
+          "label" "Images"
+          "icon" "image"
+        )
+
+      "documents"
+        (dict
+          "label" "Documents"
+          "icon" "file-text"
+        )
+
+      "presentations"
+        (dict
+          "label" "Presentations"
+          "icon" "presentation"
+        )
+
+      "spreadsheets"
+        (dict
+          "label" "Spreadsheets"
+          "icon" "sheet"
+        )
+
+      "vector-graphics"
+        (dict
+          "label" "Vector Graphics"
+          "icon" "pen-tool"
+        )
+
+      "archives"
+        (dict
+          "label" "Archives"
+          "icon" "archive"
+        )
+
+      "code"
+        (dict
+          "label" "Code"
+          "icon" "code-xml"
+        )
+
+      "cad-3d"
+        (dict
+          "label" "3D / CAD"
+          "icon" "boxes"
+        )
+
+    }}
+
+
+    <ul class="menu-grid">
+
+      {{ range $i, $m := slice
+          "audio"
+          "video"
+          "images"
+          "documents"
+          "presentations"
+          "spreadsheets"
+          "vector-graphics"
+          "archives"
+          "code"
+          "cad-3d"
       }}
 
-      <ul class="menu-grid">
-        {{ range $i, $m := slice "audio" "video" "images" "documents" "presentations" "spreadsheets" "vector-graphics" "archives" "code" "cad-3d" }}
-          {{ $page := site.GetPage (printf "/%s/_index.md" $m) }}
-          <li class="menu-item">
-            <a href="{{ if $page }}{{ $page.RelPermalink }}{{ else }}{{ printf "/%s/" $m | relURL }}{{ end }}" 
-              data-menu="{{ $m }}">
+        {{ $page :=
+            site.GetPage
+              (printf "/%s/_index.md" $m)
+        }}
 
-              {{ $item := index $menuItems $m }}
 
-              <i data-lucide="{{ $item.icon }}" class="menu-icon"></i>
-              <span>{{ $item.label }}</span>
+        {{/*
+            A main category becomes available
+            automatically if at least one
+            subsection is available.
+        */}}
+
+        {{ $available :=
+            false
+        }}
+
+
+        {{ if $page }}
+
+          {{ range $page.Sections }}
+
+            {{ if .Params.available }}
+
+              {{ $available =
+                  true
+              }}
+
+            {{ end }}
+
+          {{ end }}
+
+        {{ end }}
+
+
+        {{ $item :=
+            index
+              $menuItems
+              $m
+        }}
+
+
+        <li
+            class="
+              menu-item
+              {{ if not $available }}
+                is-disabled
+              {{ end }}
+            "
+        >
+
+          {{ if $available }}
+
+            <a
+                href="{{ if $page }}{{ $page.RelPermalink }}{{ else }}{{ printf "/%s/" $m | relURL }}{{ end }}"
+                data-menu="{{ $m }}"
+                data-easyfile-navigation
+                data-target-category="{{ $m }}"
+            >
+
+              <i
+                  data-lucide="{{ $item.icon }}"
+                  class="menu-icon"
+              ></i>
+
+              <span>
+                {{ $item.label }}
+              </span>
 
             </a>
-          </li>
-        {{ end }}
-      </ul>
 
-    </nav>
-    
+
+          {{ else }}
+
+
+            <a
+                class="operation-disabled"
+                data-menu="{{ $m }}"
+                aria-disabled="true"
+                tabindex="-1"
+            >
+
+              <i
+                  data-lucide="{{ $item.icon }}"
+                  class="menu-icon"
+              ></i>
+
+              <span>
+                {{ $item.label }}
+              </span>
+
+            </a>
+
+
+          {{ end }}
+
+        </li>
+
+      {{ end }}
+
+    </ul>
+
+  </nav>
+
 </div>
 
-<!-- <script> lucide.createIcons();</script>   -->
-
 </header>
-
-
-

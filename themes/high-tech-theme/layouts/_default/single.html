@@ -3,7 +3,13 @@
 
     <!-- Colonne centrale : contenu principal -->
     <article class="content-column">
-      <h1>{{ .Title }}</h1>
+      {{ partial
+          "common/page-heading.html"
+          (dict
+              "title" .Title
+              "icon" .Params.icon
+          )
+      }}
       <img class="article-image" src="{{ .Params.image }}" alt="{{ .Title }}">
       <aside class="toc">
           <h2>Sommaire</h2>

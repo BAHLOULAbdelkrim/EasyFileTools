@@ -1,0 +1,151 @@
+<section
+    id="autoSplitSettings"
+    class="auto-split-settings"
+    aria-labelledby="chooseFormatLabel"
+>
+
+    <div class="auto-split-section">
+
+        <div class="auto-split-header">
+
+            <div>
+                <div class="auto-split-title">
+                    Silence threshold
+                </div>
+
+                <div class="auto-split-help">
+                    Audio below this level is considered silence.
+                </div>
+            </div>
+
+            <strong id="autoSplitThresholdValue">
+                -40 dB
+            </strong>
+
+        </div>
+
+        <input
+            id="autoSplitThreshold"
+            type="range"
+            min="-60"
+            max="-20"
+            step="1"
+            value="-40"
+        >
+
+    </div>
+
+
+    <div class="auto-split-grid">
+
+        <div class="auto-split-section">
+
+            <div class="auto-split-title">
+                Minimum silence
+            </div>
+
+            <div class="auto-split-help">
+                Silence must last at least this long before creating a cut.
+            </div>
+
+            <div class="auto-split-number">
+
+                <input
+                    id="autoSplitMinSilence"
+                    type="number"
+                    min="0.2"
+                    max="5"
+                    step="0.1"
+                    value="0.8"
+                >
+
+                <span>s</span>
+
+            </div>
+
+        </div>
+
+
+        <div class="auto-split-section">
+
+            <div class="auto-split-title">
+                Minimum segment
+            </div>
+
+            <div class="auto-split-help">
+                Avoid creating very short audio fragments.
+            </div>
+
+            <div class="auto-split-number">
+
+                <input
+                    id="autoSplitMinSegment"
+                    type="number"
+                    min="1"
+                    max="60"
+                    step="1"
+                    value="3"
+                >
+
+                <span>s</span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="auto-split-section">
+
+        <div class="auto-split-title">
+            Output format
+        </div>
+
+        <select id="autoSplitOutputFormat">
+
+            <option value="same">
+                Same as source
+            </option>
+
+            <option value="mp3">MP3</option>
+            <option value="wav">WAV</option>
+            <option value="flac">FLAC</option>
+            <option value="aac">AAC</option>
+            <option value="m4a">M4A</option>
+            <option value="ogg">OGG</option>
+            <option value="opus">OPUS</option>
+
+        </select>
+
+    </div>
+
+
+    <div class="auto-split-info">
+        Cuts are placed near the middle of detected silence to avoid clipping speech or music.
+    </div>
+
+
+    <div
+        id="autoSplitValidation"
+        data-eft-readiness-status
+        class="auto-split-validation"
+    >
+        Load one or more audio files.
+    </div>
+
+
+    <div
+        id="autoSplitResults"
+        class="auto-split-results hidden"
+    >
+
+        <div class="auto-split-results-title">
+            Generated segments
+        </div>
+
+        <div id="autoSplitResultsContent"></div>
+
+    </div>
+
+</section>

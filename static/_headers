@@ -1,0 +1,9 @@
+# EasyFile Tools - Cloudflare Pages static responses (Lot 5, V1)
+# Applied by Cloudflare Pages, NOT by the local Hugo preview server.
+# Keep the CSP intentionally narrow until conversion/worker flows are tested on Pages.
+/*
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: DENY
+  Referrer-Policy: no-referrer
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=()
+  Content-Security-Policy: base-uri 'self'; object-src 'none'; frame-ancestors 'none'; form-action 'self'

@@ -1,16 +1,10 @@
 ---
 title: "E-book Converter"
 url: "/documents/ebook-converter/"
-description: "................"
-keywords:
-  - ...............
-  - ...............
-tags: 
-  - blabla
-  - blabla
+description: "E-book Converter is planned for a future release and is not available yet."
 weight: 6
 ---
-🚧 Coming soon !
+🚧 Coming soon.
 
-This tool is currently under development.
+This tool is not available yet. Please choose one of the currently available EasyFile Tools operations.
 

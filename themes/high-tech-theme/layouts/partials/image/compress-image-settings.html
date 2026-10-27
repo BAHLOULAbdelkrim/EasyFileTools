@@ -1,0 +1,162 @@
+<section
+    id="compressImageSettings"
+    class="compress-image-settings"
+    aria-labelledby="chooseFormatLabel"
+>
+
+    <div class="compress-setting-section">
+
+        <div class="compress-setting-title">
+            Compression level
+        </div>
+
+        <div class="compress-setting-help">
+            Light, Balanced and Strong are presets for the Image quality control below.
+        </div>
+
+
+        <div class="compression-presets">
+
+            <button
+                type="button"
+                class="compression-preset-btn"
+                data-compression-quality="0.88"
+            >
+                <strong>Light</strong>
+                <span>Better quality</span>
+            </button>
+
+
+            <button
+                type="button"
+                class="compression-preset-btn active"
+                data-compression-quality="0.78"
+            >
+                <strong>Balanced</strong>
+                <span>Recommended</span>
+            </button>
+
+
+            <button
+                type="button"
+                class="compression-preset-btn"
+                data-compression-quality="0.62"
+            >
+                <strong>Strong</strong>
+                <span>Smaller files</span>
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <div id="compressImageQualitySection" class="compress-setting-section">
+
+        <div class="compress-setting-header">
+
+            <div>
+
+                <div class="compress-setting-title">
+                    Image quality
+                </div>
+
+                <div class="compress-setting-help">
+                    Applies mainly to JPG, WebP and AVIF.
+                </div>
+
+            </div>
+
+
+            <strong
+                id="compressImageQualityValue"
+                class="compress-quality-value"
+            >
+                78%
+            </strong>
+
+        </div>
+
+
+        <input
+            id="compressImageQuality"
+            class="eft-range"
+            type="range"
+            min="30"
+            max="95"
+            step="1"
+            value="78"
+        >
+
+    </div>
+
+
+    <div class="compress-setting-section">
+
+        <label class="compress-checkbox-row">
+
+            <input
+                id="compressImageKeepSmaller"
+                type="checkbox"
+                checked
+            >
+
+            <span>
+
+                <strong>
+                    Keep original if compression makes the file larger
+                </strong>
+
+                <small>
+                    Prevents inefficient compression results.
+                </small>
+
+            </span>
+
+        </label>
+
+    </div>
+
+
+    <div class="compress-information eft-status-note">
+
+        <span>
+            Original dimensions and file format are preserved.
+        </span>
+
+    </div>
+
+
+    <section id="compressImageSummary" class="compress-summary-card hidden" aria-live="polite">
+        <div class="compress-summary-heading">
+            <div>
+                <div class="compress-summary-title">Compression results</div>
+                <div class="compress-summary-subtitle">Totals for the images processed in this run.</div>
+            </div>
+            <button id="compressSummaryToggle" type="button" class="compress-summary-toggle" aria-expanded="false">
+                <i data-lucide="chevrons-right"></i>
+                <span>Details</span>
+            </button>
+        </div>
+
+        <div class="compress-summary-totals">
+            <div><span>Total original</span><strong id="compressOriginalTotal">—</strong></div>
+            <div><span>Total compressed</span><strong id="compressOutputTotal">—</strong></div>
+            <div><span>Total saved</span><strong id="compressSavedTotal">—</strong></div>
+        </div>
+
+        <div id="compressSummaryDetails" class="compress-summary-details hidden"></div>
+    </section>
+
+
+    <div
+        id="compressImageValidation"
+        data-eft-readiness-status
+        class="compress-validation"
+        role="status"
+        aria-live="polite"
+    >
+        Load one or more images.
+    </div>
+
+</section>

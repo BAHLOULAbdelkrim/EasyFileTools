@@ -1,16 +1,10 @@
 ---
 title: "Convert Data Formats"
 url: "/code/convert-data-formats/"
-description: "........"
-keywords:
-  - .....
-  - .....
-tags: 
-  - blabla
-  - blabla
+description: "Convert Data Formats is planned for a future release and is not available yet."
 weight: 6
 ---
-🚧 Coming soon !
+🚧 Coming soon.
 
-This tool is currently under development.
+This tool is not available yet. Please choose one of the currently available EasyFile Tools operations.
 

@@ -16,7 +16,7 @@ function refreshFileList() {
         fileList,
         {
             category: currentCategory,
-            maxSize: MAX_SIZE,
+            maxSize: (EasyFilePolicy.resolve({ category: currentCategory })?.maxFileMB || 40) * EasyFilePolicy.MB,
             enableReorder: true,
 
             onReorder: async (fromIndex, targetIndex) => {

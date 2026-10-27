@@ -1,0 +1,498 @@
+.auto-split-settings {
+
+    width: 100%;
+
+}
+
+
+/* =========================================================
+   SECTIONS
+========================================================= */
+
+.auto-split-section {
+
+    position: relative;
+
+    margin-bottom: 22px;
+    padding: 18px;
+
+    background: var(--submenu-bg);
+
+    border: 1px solid #ddd6fe;
+    border-radius: 14px;
+
+    transition:
+        background-color 0.25s ease,
+        border-color 0.25s ease,
+        box-shadow 0.25s ease,
+        transform 0.25s ease;
+
+}
+
+
+.auto-split-section:hover {
+
+    background: #f0fdf4;
+
+    border-color: #86efac;
+
+    box-shadow:
+        0 5px 18px
+        rgba(4, 120, 87, 0.08);
+
+    transform: translateY(-1px);
+
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.auto-split-header {
+
+    display: flex;
+
+    align-items: flex-start;
+    justify-content: space-between;
+
+    gap: 20px;
+
+}
+
+
+/* =========================================================
+   TITLE
+========================================================= */
+
+.auto-split-title {
+
+    margin-bottom: 6px;
+
+    font-size: 17px;
+    font-weight: 750;
+
+    color: var(--green-text);
+
+}
+
+
+/* =========================================================
+   HELP TEXT
+========================================================= */
+
+.auto-split-help {
+
+    margin-bottom: 14px;
+
+    font-size: 13px;
+    line-height: 1.45;
+
+    color: #6b7280;
+
+}
+
+
+/* =========================================================
+   SETTINGS GRID
+========================================================= */
+
+.auto-split-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(
+            2,
+            minmax(0, 1fr)
+        );
+
+    gap: 14px;
+
+}
+
+
+/* =========================================================
+   NUMBER CONTROL
+========================================================= */
+
+.auto-split-number {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+}
+
+
+/* =========================================================
+   INPUTS / SELECT
+========================================================= */
+
+.auto-split-number input,
+#autoSplitOutputFormat {
+
+    width: 100%;
+
+    box-sizing: border-box;
+
+    padding: 9px 11px;
+
+    border: 1px solid #d1d5db;
+    border-radius: 9px;
+
+    background: #ffffff;
+
+    color: #374151;
+
+    font: inherit;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease,
+        background-color 0.2s ease;
+
+}
+
+
+.auto-split-number input:hover,
+#autoSplitOutputFormat:hover {
+
+    border-color: #c4b5fd;
+
+}
+
+
+.auto-split-number input:focus,
+#autoSplitOutputFormat:focus {
+
+    outline: none;
+
+    border-color: var(--violet);
+
+    box-shadow:
+        0 0 0 3px
+        rgba(107, 33, 168, 0.10);
+
+}
+
+
+/* =========================================================
+   THRESHOLD RANGE
+========================================================= */
+
+/* =========================================================
+   SILENCE THRESHOLD SLIDER
+========================================================= */
+
+#autoSplitThreshold {
+
+    --threshold-progress: 50%;
+
+    width: 100%;
+    height: 26px;
+
+    margin: 4px 0;
+
+    background: transparent;
+
+    cursor: pointer;
+
+    direction: rtl;
+
+    appearance: none;
+    -webkit-appearance: none;
+
+}
+
+
+/* =========================================================
+   CHROME / EDGE / SAFARI — TRACK
+========================================================= */
+
+#autoSplitThreshold::-webkit-slider-runnable-track {
+
+    width: 100%;
+    height: 8px;
+
+    background:
+        linear-gradient(
+            to right,
+
+            var(--green-text)
+                0%,
+
+            var(--violet)
+                var(--threshold-progress),
+
+            #d1d5db
+                var(--threshold-progress),
+
+            #d1d5db
+                100%
+        );
+
+    border-radius: 999px;
+
+}
+
+
+/* =========================================================
+   CHROME / EDGE / SAFARI — THUMB
+========================================================= */
+
+#autoSplitThreshold::-webkit-slider-thumb {
+
+    width: 18px;
+    height: 18px;
+
+    margin-top: -5px;
+
+    border: none;
+    border-radius: 50%;
+
+    background: var(--green-text);
+
+    box-shadow:
+        0 2px 7px
+        rgba(4, 120, 87, 0.30);
+
+    cursor: grab;
+
+    appearance: none;
+    -webkit-appearance: none;
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+
+}
+
+
+#autoSplitThreshold::-webkit-slider-thumb:hover {
+
+    transform: scale(1.12);
+
+    box-shadow:
+        0 3px 10px
+        rgba(4, 120, 87, 0.38);
+
+}
+
+
+#autoSplitThreshold:active::-webkit-slider-thumb {
+
+    cursor: grabbing;
+
+}
+
+
+/* =========================================================
+   FIREFOX — TRACK
+========================================================= */
+
+#autoSplitThreshold::-moz-range-track {
+
+    width: 100%;
+    height: 8px;
+
+    background:
+        linear-gradient(
+            to right,
+
+            var(--green-text)
+                0%,
+
+            var(--violet)
+                var(--threshold-progress),
+
+            #d1d5db
+                var(--threshold-progress),
+
+            #d1d5db
+                100%
+        );
+
+    border: none;
+    border-radius: 999px;
+
+}
+
+
+/* =========================================================
+   FIREFOX — THUMB
+========================================================= */
+
+#autoSplitThreshold::-moz-range-thumb {
+
+    width: 18px;
+    height: 18px;
+
+    border: none;
+    border-radius: 50%;
+
+    background: var(--green-text);
+
+    box-shadow:
+        0 2px 7px
+        rgba(4, 120, 87, 0.30);
+
+    cursor: grab;
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+
+}
+
+
+#autoSplitThreshold::-moz-range-thumb:hover {
+
+    transform: scale(1.12);
+
+}
+
+
+#autoSplitThreshold:focus-visible {
+
+    outline: none;
+
+}
+
+
+/* =========================================================
+   INFORMATION
+========================================================= */
+
+.auto-split-info {
+
+    margin-bottom: 18px;
+
+    padding: 12px 14px;
+
+    background: var(--violet-light);
+
+    border: 1px solid #ddd6fe;
+    border-radius: 10px;
+
+    color: var(--violet);
+
+    font-size: 13px;
+    line-height: 1.45;
+
+}
+
+
+/* =========================================================
+   VALIDATION
+========================================================= */
+
+.auto-split-validation {
+
+    padding: 12px 14px;
+
+    background: #f3f4f6;
+
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+
+    color: #6b7280;
+
+    font-weight: 600;
+
+    transition:
+        background-color 0.2s ease,
+        border-color 0.2s ease,
+        color 0.2s ease;
+
+}
+
+
+.auto-split-validation.valid {
+
+    background: var(--green-hover);
+
+    border-color: #86efac;
+
+    color: var(--green-text);
+
+}
+
+
+.auto-split-results {
+    margin-top: 22px;
+}
+
+
+.auto-split-results.hidden {
+    display: none;
+}
+
+
+.auto-split-results-title {
+    margin-bottom: 12px;
+
+    font-size: 17px;
+    font-weight: 750;
+}
+
+
+.auto-split-result-group {
+    margin-bottom: 14px;
+
+    padding: 14px;
+
+    border: 1px solid #e5e7eb;
+    border-radius: 11px;
+}
+
+
+.auto-split-result-file {
+    margin-bottom: 10px;
+
+    font-weight: 750;
+}
+
+
+.auto-split-segments {
+    display: flex;
+
+    flex-wrap: wrap;
+
+    gap: 8px;
+}
+
+
+.auto-split-segment-btn {
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 6px;
+
+    padding: 8px 10px;
+
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+
+    background: #fff;
+
+    cursor: pointer;
+}
+
+
+@media (max-width: 700px) {
+
+    .auto-split-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .auto-split-header {
+        flex-direction: column;
+
+        gap: 5px;
+    }
+
+}

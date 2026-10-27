@@ -1,0 +1,335 @@
+/* =========================================================
+   CONVERT IMAGE SETTINGS
+========================================================= */
+
+.convert-image-settings {
+
+    width: 100%;
+
+    box-sizing: border-box;
+}
+
+
+/* =========================================================
+   SECTIONS
+========================================================= */
+
+.image-setting-section {
+
+    margin-bottom: 22px;
+
+    padding: 18px;
+
+    border: 1px solid #e5e7eb;
+
+    border-radius: 14px;
+
+    background: #ffffff;
+
+    transition:
+        opacity 0.2s ease,
+        border-color 0.2s ease;
+}
+
+
+.image-setting-section.disabled {
+
+    opacity: 0.5;
+}
+
+
+.image-setting-title {
+
+    margin-bottom: 5px;
+
+    font-size: 16px;
+
+    font-weight: 750;
+}
+
+
+.image-setting-help {
+
+    margin-bottom: 14px;
+
+    font-size: 13px;
+
+    color: #6b7280;
+}
+
+
+.image-setting-header {
+
+    display: flex;
+
+    align-items: flex-start;
+
+    justify-content: space-between;
+
+    gap: 20px;
+}
+
+
+/* =========================================================
+   FORMAT BUTTONS
+========================================================= */
+
+.image-conversion-formats {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(
+            auto-fit,
+            minmax(150px, 1fr)
+        );
+
+    gap: 12px;
+}
+
+
+.image-format-btn {
+
+    min-height: 80px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: center;
+
+    align-items: flex-start;
+
+    gap: 5px;
+
+    padding: 14px;
+
+    border: 1px solid #d1d5db;
+
+    border-radius: 12px;
+
+    background: #ffffff;
+
+    cursor: pointer;
+
+    text-align: left;
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        border-color 0.2s ease,
+        opacity 0.2s ease;
+}
+
+
+.image-format-btn strong {
+
+    font-size: 17px;
+}
+
+
+.image-format-btn span {
+
+    font-size: 12px;
+
+    color: #6b7280;
+}
+
+
+.image-format-btn:not(:disabled):hover {
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 5px 15px
+        rgba(0, 0, 0, 0.08);
+}
+
+
+.image-format-btn.active {
+
+    border-color: var(--violet);
+
+    box-shadow:
+        0 0 0 2px
+        rgba(91, 33, 182, 0.12);
+}
+
+
+.image-format-btn:disabled {
+
+    opacity: 0.38;
+
+    cursor: not-allowed;
+}
+
+
+/* =========================================================
+   QUALITY
+========================================================= */
+
+.image-quality-value {
+
+    color: var(--violet);
+
+    white-space: nowrap;
+}
+
+
+#imageQualitySlider {
+
+    width: 100%;
+}
+
+
+/* =========================================================
+   BACKGROUND
+========================================================= */
+
+.image-background-section {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 20px;
+}
+
+
+.image-background-control {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+}
+
+
+#imageBackgroundColor {
+
+    width: 52px;
+
+    height: 38px;
+
+    padding: 2px;
+
+    border: 1px solid #d1d5db;
+
+    border-radius: 8px;
+
+    cursor: pointer;
+}
+
+
+#imageBackgroundValue {
+
+    min-width: 75px;
+
+    font-family: monospace;
+
+    font-weight: 700;
+}
+
+
+/* =========================================================
+   INFO
+========================================================= */
+
+.image-conversion-note {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 9px;
+
+    margin-bottom: 18px;
+
+    padding: 12px 14px;
+
+    border-radius: 10px;
+
+    background: #f5f3ff;
+
+    color: var(--violet);
+
+    font-size: 13px;
+}
+
+
+.image-conversion-note svg {
+
+    flex: 0 0 auto;
+
+    width: 18px;
+
+    height: 18px;
+}
+
+
+/* =========================================================
+   VALIDATION
+========================================================= */
+
+.image-conversion-validation {
+
+    padding: 12px 14px;
+
+    border-radius: 10px;
+
+    background: #f3f4f6;
+
+    color: #6b7280;
+
+    font-weight: 600;
+}
+
+
+.image-conversion-validation.valid {
+
+    background: var(--green-hover);
+
+    color: var(--green-text);
+}
+
+
+.image-conversion-validation.error {
+
+    background: #fee2e2;
+
+    color: #991b1b;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 650px) {
+
+    .image-background-section {
+
+        align-items: stretch;
+
+        flex-direction: column;
+    }
+
+
+    .image-setting-header {
+
+        flex-direction: column;
+
+        gap: 5px;
+    }
+
+}
+/* Use the site-wide green information language. */
+.image-conversion-note {
+    border: 1px solid #a7f3d0;
+    background: var(--green-hover);
+    color: var(--green-text);
+    font-weight: 650;
+}

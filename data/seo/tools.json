@@ -1,0 +1,491 @@
+{
+  "convert-audio": {
+    "heading": "How to convert an audio file",
+    "steps": [
+      "Select your audio files.",
+      "Choose the output format and review the audio settings.",
+      "Run the conversion and download the results."
+    ],
+    "faq": [
+      {
+        "question": "Which audio format should I choose?",
+        "answer": "MP3 is useful for broad playback support; WAV is suitable for uncompressed audio; FLAC uses lossless compression. Converting an already lossy source to WAV or FLAC does not restore discarded detail."
+      },
+      {
+        "question": "Why can the converted file be larger?",
+        "answer": "An uncompressed format or a higher output bitrate may create a larger file. Choose settings for your listening or editing needs, rather than expecting every conversion to reduce size."
+      }
+    ],
+    "examples": [
+      "Convert a voice memo to MP3 for common devices."
+    ],
+    "limitations": [
+      "An output codec cannot recover quality lost in a compressed source."
+    ]
+  },
+  "cut-audio": {
+    "heading": "How to cut an audio file",
+    "steps": [
+      "Select an audio file and open the cutting controls.",
+      "Choose the section to keep or remove and review the selection.",
+      "Run the operation and download the edited audio."
+    ],
+    "faq": [
+      {
+        "question": "What is the difference between keeping and removing a section?",
+        "answer": "Keeping a selection extracts that passage. Removing it cuts that passage out and retains the remaining audio. Check the mode before starting."
+      },
+      {
+        "question": "How can I avoid cutting a word or note?",
+        "answer": "Listen around both boundaries and adjust the selection before exporting. Keep the source file so you can revise the edit."
+      }
+    ],
+    "examples": [
+      "Keep a short interview quote, or remove a pause from a recording."
+    ],
+    "limitations": [
+      "For long recordings, use the timeline when a waveform is unavailable."
+    ]
+  },
+  "merge-audio": {
+    "heading": "How to merge audio files",
+    "steps": [
+      "Add the audio files you want to join.",
+      "Arrange their order and choose the output settings.",
+      "Merge the files and download the combined track."
+    ],
+    "faq": [
+      {
+        "question": "Does file order matter?",
+        "answer": "Yes. The selected sequence determines the order of the combined track. Review the file list before processing."
+      },
+      {
+        "question": "Will merging improve audio quality?",
+        "answer": "No. The result depends on the original recordings and export settings. Re-encoding with a lossy format may introduce additional quality loss."
+      }
+    ],
+    "examples": [
+      "Combine separate lecture recordings in their intended order."
+    ],
+    "limitations": [
+      "Track sample rates and encoders can affect the output after merging."
+    ]
+  },
+  "auto-split": {
+    "heading": "How to split audio by silence",
+    "steps": [
+      "Select the recording to split.",
+      "Adjust the silence detection settings to match the recording.",
+      "Start splitting, then review and download the resulting segments."
+    ],
+    "faq": [
+      {
+        "question": "Why are there too many segments?",
+        "answer": "Quiet speech or pauses inside a sentence may be detected as silence. Adjust the silence threshold and minimum silence duration, then try again."
+      },
+      {
+        "question": "Why were two passages kept together?",
+        "answer": "Background noise can prevent a pause from being recognized as silence. Review the detection settings and test a representative recording before processing a long one."
+      }
+    ],
+    "examples": [
+      "Split a speech recording into clips using quiet passages."
+    ],
+    "limitations": [
+      "Background noise and soft speech can be mistaken for pauses."
+    ]
+  },
+  "convert-image": {
+    "heading": "How to convert an image",
+    "steps": [
+      "Select the images to convert.",
+      "Choose an available output format and review its settings.",
+      "Convert the images and download the results."
+    ],
+    "faq": [
+      {
+        "question": "Which format preserves a transparent background?",
+        "answer": "PNG supports transparency; JPEG does not. When exporting to JPEG, check the background fill so that transparent areas appear as intended."
+      },
+      {
+        "question": "Will converting a photo to another format improve its detail?",
+        "answer": "No. A format change does not recreate details missing from the source. Choose a format for compatibility, transparency or file size."
+      }
+    ],
+    "examples": [
+      "Convert a PNG image to JPEG when transparency is not needed."
+    ],
+    "limitations": [
+      "JPEG discards transparency; changing file extension alone does not convert images."
+    ]
+  },
+  "compress-image": {
+    "heading": "How to compress an image",
+    "steps": [
+      "Select the images you want to reduce.",
+      "Review the compression settings.",
+      "Start compression and compare the results with the originals."
+    ],
+    "faq": [
+      {
+        "question": "Can every image become much smaller?",
+        "answer": "No. Files that are already optimized may offer little reduction. This tool avoids replacing a source with a larger compressed output."
+      },
+      {
+        "question": "Does compression change the image format?",
+        "answer": "This operation is designed to retain the original format. Use Convert Image when you want to change formats as well."
+      }
+    ],
+    "examples": [
+      "Reduce photo size before sharing by email."
+    ],
+    "limitations": [
+      "Aggressive settings may create visible artifacts, especially around fine text."
+    ]
+  },
+  "image-to-pdf": {
+    "heading": "How to turn images into a PDF",
+    "steps": [
+      "Select your images and review their order.",
+      "Choose page size, orientation and margins.",
+      "Create the PDF and download it."
+    ],
+    "faq": [
+      {
+        "question": "How do I prevent awkward page layouts?",
+        "answer": "Choose the page orientation and margins for your images. Review whether a standard paper size or automatic sizing better fits your document."
+      },
+      {
+        "question": "Will the PDF contain editable text?",
+        "answer": "Placing an image in a PDF does not recognize the text inside it. An image-based page remains an image unless it is processed separately with OCR."
+      }
+    ],
+    "examples": [
+      "Combine several scans into a single PDF file."
+    ],
+    "limitations": [
+      "Image-based PDF pages are not automatically searchable text."
+    ]
+  },
+  "remove-background": {
+    "heading": "How to remove an image background",
+    "steps": [
+      "Select an image with a clearly visible subject.",
+      "Run background removal and inspect the result.",
+      "Choose the background treatment and download the processed image."
+    ],
+    "faq": [
+      {
+        "question": "Why does the first operation take longer?",
+        "answer": "The browser needs to download the AI model and runtime before processing. That preparation is separate from the time needed to process your image."
+      },
+      {
+        "question": "Can the tool handle hair, glass and fine edges perfectly?",
+        "answer": "Results vary with the image. Fine hair, translucent objects and subjects close in color to the background can require closer inspection. Check the edges before using the result."
+      }
+    ],
+    "examples": [
+      "Remove the backdrop from a product photo."
+    ],
+    "limitations": [
+      "Fine hair and translucent objects may need manual correction."
+    ]
+  },
+  "resize-crop-image": {
+    "heading": "How to resize or crop an image",
+    "steps": [
+      "Select an image and choose the resize or crop controls.",
+      "Set dimensions or a crop ratio and review the position.",
+      "Apply the change and download the image."
+    ],
+    "faq": [
+      {
+        "question": "What is the difference between resizing and cropping?",
+        "answer": "Resizing changes pixel dimensions. Cropping removes part of the image to change its framing. Keep the aspect ratio when resizing to avoid stretching the subject."
+      },
+      {
+        "question": "Will enlarging an image add real detail?",
+        "answer": "No. Enlarging creates more pixels but cannot recover missing detail. Enable the option that prevents enlargement when you only want to reduce images."
+      }
+    ],
+    "examples": [
+      "Crop a photo to a square profile image."
+    ],
+    "limitations": [
+      "Upscaling does not recreate missing original detail."
+    ]
+  },
+  "rotate-flip-image": {
+    "heading": "How to rotate or flip an image",
+    "steps": [
+      "Select the image to transform.",
+      "Set the rotation or choose a horizontal or vertical flip.",
+      "Review the orientation and download the transformed image."
+    ],
+    "faq": [
+      {
+        "question": "How is a flip different from a rotation?",
+        "answer": "A flip mirrors the image along an axis. A rotation turns it around its center. A horizontal flip also mirrors any text visible in the image."
+      },
+      {
+        "question": "Should I check the output edges?",
+        "answer": "Yes. Rotation can change the canvas dimensions and expose background areas. Check the framing and output format before using the result."
+      }
+    ],
+    "examples": [
+      "Correct a sideways photo or mirror a graphic."
+    ],
+    "limitations": [
+      "Verify text direction after mirroring."
+    ]
+  },
+  "replace-colors": {
+    "heading": "How to replace colors in an image",
+    "steps": [
+      "Select an image and choose the color to target.",
+      "Set its replacement or removal and adjust the available controls.",
+      "Inspect the preview, apply the operation and download the image."
+    ],
+    "faq": [
+      {
+        "question": "Why did other parts of the image change?",
+        "answer": "Similar colors can appear in several areas. Adjust the matching controls and inspect small details and edges in the preview."
+      },
+      {
+        "question": "How do I keep a removed color transparent?",
+        "answer": "Choose an output format that supports transparency, such as PNG. JPEG cannot store transparent pixels."
+      }
+    ],
+    "examples": [
+      "Adjust the colors of a simple product graphic."
+    ],
+    "limitations": [
+      "Complex gradients may not match a single sampled color."
+    ]
+  },
+  "convert-video": {
+    "heading": "How to convert a video",
+    "steps": [
+      "Select one or more videos and choose an output format (MP4, WebM, MKV, MOV or AVI).",
+      "Choose Low, Medium or High video quality; Medium is selected initially. Higher quality may produce much larger files.",
+      "Keep \"Copy compatible streams when possible\" enabled to avoid re-encoding where possible. Choose a resolution and whether to keep audio.",
+      "Start conversion, then play and check each output before downloading or deleting the original."
+    ],
+    "examples": [
+      "Use WebM for a browser-friendly VP8/VP9 video, or MP4 for broad playback compatibility.",
+      "Choose High to prioritize visual detail, or Low for smaller files when some loss of detail is acceptable."
+    ],
+    "limitations": [
+      "For WebM re-encoding, EasyFile Tools prefers browser VP9 through WebCodecs and falls back to FFmpeg.wasm when VP9, decoding or required features are unavailable. Browser support varies.",
+      "Medium and High may generate files larger than the original. Re-encoding cannot restore detail already lost in the source.",
+      "Very large or long videos can exceed device memory limits. Do not close the tab during conversion.",
+      "Extra tracks, subtitles, chapters and metadata may not be preserved. Verify the output."
+    ],
+    "faq": [
+      {
+        "question": "Which quality should I use?",
+        "answer": "Low prioritizes speed and a smaller file, but visible detail loss is possible. Medium balances speed and picture quality (default). High prioritizes visual detail, often at the cost of a much larger file. Compare a sample before a long conversion."
+      },
+      {
+        "question": "What does \"Copy compatible streams\" do?",
+        "answer": "When the input video/audio codecs can be stored in the chosen container and you keep the original resolution, the streams can be copied without re-encoding. This is fast and preserves the original encoded quality. Otherwise the selected quality is used for re-encoding."
+      },
+      {
+        "question": "Why are some WebM conversions faster?",
+        "answer": "For WebM output, EasyFile Tools first copies already-compatible streams without re-encoding when possible. When re-encoding is required, it prefers VP9 through WebCodecs, with Low, Medium or High quality selected by you. If VP9 is unavailable or fails, FFmpeg.wasm takes over. VP8 is not used for automatic WebCodecs re-encoding because a tested browser VP8 encoder caused periodic keyframe artifacts. Speed varies by video, browser and device."
+      },
+      {
+        "question": "Does the selected video leave my device?",
+        "answer": "This version processes video locally in your browser and does not upload the selected file for conversion. The Mediabunny processing library currently loads on demand from a third-party CDN if it is not already cached; an Internet connection can therefore be needed the first time."
+      },
+      {
+        "question": "Why can a long video take a long time?",
+        "answer": "Converting without stream copy decodes and re-encodes many frames. A tiny video file can still contain thousands of frames; conversion speed is device- and browser-dependent."
+      }
+    ]
+  },
+  "compress-video": {
+    "heading": "How to compress a video",
+    "steps": [
+      "Select the videos you want to reduce.",
+      "Choose a quality preset and review the output options.",
+      "Compress the files and compare the size and playback quality."
+    ],
+    "faq": [
+      {
+        "question": "Does a smaller video always have the same quality?",
+        "answer": "No. Stronger lossy compression trades visual detail for size. Check motion, small text and dark areas when comparing outputs."
+      },
+      {
+        "question": "Why is the reduction smaller than expected?",
+        "answer": "A source may already be highly compressed. The achievable reduction depends on the source, output settings and codec, so a preset cannot guarantee a fixed final size."
+      },
+      {
+        "question": "When is compression faster?",
+        "answer": "For WebM output, compatible browsers can encode VP9 directly; otherwise EasyFile Tools uses FFmpeg. Other containers currently use FFmpeg. Results depend on your device and the source."
+      },
+      {
+        "question": "Why might the original be returned?",
+        "answer": "When Same as source and Keep original if larger are selected, the original file is returned if the compression is larger. An explicit WebM output always remains WebM."
+      }
+    ],
+    "examples": [
+      "Make a short clip smaller for easy sharing."
+    ],
+    "limitations": [
+      "Lower bitrates generally reduce image quality."
+    ]
+  },
+  "video-to-audio": {
+    "heading": "How to extract audio from a video",
+    "steps": [
+      "Select videos that contain an audio track.",
+      "Choose an audio output format and review the settings.",
+      "Run extraction and download the audio files."
+    ],
+    "faq": [
+      {
+        "question": "Why is there no audio to extract?",
+        "answer": "A silent video may contain no audio stream, or its audio codec may not be supported by the processing engine. Confirm that the source plays with sound."
+      },
+      {
+        "question": "Which output should I use?",
+        "answer": "MP3 is a common choice for listening. WAV or FLAC can be useful for further editing, but cannot restore information already lost in the original soundtrack."
+      },
+      {
+        "question": "Can extraction avoid re-encoding?",
+        "answer": "When the source audio codec already matches the requested format and the original sample rate and channel count are selected, the audio stream may be copied directly. Other cases use FFmpeg for conversion."
+      }
+    ],
+    "examples": [
+      "Extract a soundtrack from a video interview."
+    ],
+    "limitations": [
+      "Audio extraction cannot restore missing dialogue or quality."
+    ]
+  },
+  "trim-video": {
+    "heading": "How to trim a video",
+    "steps": [
+      "Select the video and set its start and end points.",
+      "Choose accurate cutting or the faster keyframe-based mode.",
+      "Run the trim and check the beginning and end of the result."
+    ],
+    "faq": [
+      {
+        "question": "Why does a fast cut start slightly away from my selection?",
+        "answer": "Fast cutting relies on existing keyframes. A requested boundary may not coincide with one. Use accurate re-encoding when the exact boundary matters."
+      },
+      {
+        "question": "Which mode is faster?",
+        "answer": "Keyframe-based cutting can avoid full re-encoding. Accurate mode re-encodes and may take longer, depending on the selected segment and device."
+      },
+      {
+        "question": "When is browser-assisted trimming available?",
+        "answer": "Fast trimming from the beginning of an MP4 or WebM can copy compatible streams without loading FFmpeg. Accurate WebM trimming can use VP9 when supported. Other trims use FFmpeg."
+      }
+    ],
+    "examples": [
+      "Keep only the useful section of a screen recording."
+    ],
+    "limitations": [
+      "Cuts without re-encoding may be limited to nearby keyframes."
+    ]
+  },
+  "merge-pdf": {
+    "heading": "How to merge PDF files",
+    "steps": [
+      "Select the PDFs to combine.",
+      "Arrange them in the intended order.",
+      "Merge the files and download the combined PDF."
+    ],
+    "faq": [
+      {
+        "question": "Will the pages be resized?",
+        "answer": "This merge operation preserves original page dimensions, so a combined PDF can contain pages of different sizes."
+      },
+      {
+        "question": "Should I retain the original PDFs?",
+        "answer": "Yes. Keep the source documents and check page order, page count and any interactive features in the combined result before sharing it."
+      }
+    ],
+    "examples": [
+      "Combine invoices into one PDF package."
+    ],
+    "limitations": [
+      "Encrypted or damaged PDFs may need unlocking or repair first."
+    ]
+  },
+  "split-pdf": {
+    "heading": "How to split a PDF",
+    "steps": [
+      "Select the PDF files to split.",
+      "Choose selected pages, individual pages or fixed-size page groups.",
+      "Run splitting and download the resulting documents."
+    ],
+    "faq": [
+      {
+        "question": "Can I extract only a few pages?",
+        "answer": "Yes. Use the selected-pages mode and check the page numbers against the document before processing."
+      },
+      {
+        "question": "When should I use page groups?",
+        "answer": "Groups are useful when a document contains repeated sets of pages. Check the final group if the document length is not a multiple of your chosen group size."
+      }
+    ],
+    "examples": [
+      "Split a course handout into smaller sections."
+    ],
+    "limitations": [
+      "Page numbering refers to the PDF page sequence, not printed labels."
+    ]
+  },
+  "compress-pdf": {
+    "heading": "How to compress a PDF",
+    "steps": [
+      "Select the PDFs you want to reduce.",
+      "Choose structural optimization or image-based compression.",
+      "Run compression and inspect the resulting document."
+    ],
+    "faq": [
+      {
+        "question": "Which compression mode should I choose?",
+        "answer": "Try structural optimization first when preserving the document structure matters. Image-based compression renders pages as images and can reduce scanned or image-heavy documents more strongly."
+      },
+      {
+        "question": "Can stronger compression affect searchable text?",
+        "answer": "Yes. Image-based compression can remove text selection, searchability and interactive features. Keep the original and test the exported PDF before replacing it."
+      }
+    ],
+    "examples": [
+      "Reduce a scanned PDF before uploading it to a portal."
+    ],
+    "limitations": [
+      "Re-rendering may remove selectable text, links and forms."
+    ]
+  },
+  "pdf-to-image": {
+    "heading": "How to convert PDF pages to images",
+    "steps": [
+      "Select one or more PDF files.",
+      "Choose PNG, JPG or WebP and adjust rendering resolution and quality.",
+      "Convert the pages and download the generated images."
+    ],
+    "faq": [
+      {
+        "question": "How does resolution affect the output?",
+        "answer": "Higher rendering resolution creates more pixels and can make small text clearer, but increases memory use and file size. Start with a moderate setting for long PDFs."
+      },
+      {
+        "question": "Are the resulting images editable text documents?",
+        "answer": "No. Each page becomes a raster image. Text recognition requires a separate OCR operation."
+      }
+    ],
+    "examples": [
+      "Export PDF slides as PNG pages for use in a presentation."
+    ],
+    "limitations": [
+      "Rasterized pages lose scalable text and may use more storage."
+    ]
+  }
+}

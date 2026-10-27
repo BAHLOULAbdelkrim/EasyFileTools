@@ -1,15 +1,9 @@
 ---
-title: "Video --> Image"
+title: "Video to Image"
 url: "/video/video-to-image/"
-description: "................"
-keywords:
-  - ...............
-  - ...............
-tags: 
-  - blabla
-  - blabla
+description: "Video to Image is planned for a future release and is not available yet."
 weight: 8
 ---
-🚧 Coming soon !
+🚧 Coming soon.
 
-This tool is currently under development.
+This tool is not available yet. Please choose one of the currently available EasyFile Tools operations.

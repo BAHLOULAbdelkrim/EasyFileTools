@@ -1,16 +1,10 @@
 ---
 title: "Convert Archive"
 url: "/archives/convert-archive/"
-description: "........"
-keywords:
-  - .....
-  - .....
-tags: 
-  - blabla
-  - blabla
+description: "Convert Archive is planned for a future release and is not available yet."
 weight: 2
 ---
-🚧 Coming soon !
+🚧 Coming soon.
 
-This tool is currently under development.
+This tool is not available yet. Please choose one of the currently available EasyFile Tools operations.
 

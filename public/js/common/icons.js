@@ -12,83 +12,35 @@ const LOCAL_ICONS_PATH = "/icons/";
 =========================================================
 */
 
+const cachedIconRequests = new Map();
+
 async function loadLocalIcon(iconName) {
+    if (!/^[a-z0-9-]+$/.test(iconName)) return null;
 
-    try {
-
-        const response =
-            await fetch(
-                `${LOCAL_ICONS_PATH}${iconName}.svg`
-            );
-
-        if (!response.ok) {
-
-            console.warn(
-                `[ICONS] Icon not found: ${iconName}`
-            );
-
-            return null;
-        }
-
-        const svgText =
-            await response.text();
-
-        const parser =
-            new DOMParser();
-
-        const doc =
-            parser.parseFromString(
-                svgText,
-                "image/svg+xml"
-            );
-
-        const svg =
-            doc.querySelector("svg");
-
-        if (!svg) {
-
-            console.warn(
-                `[ICONS] Invalid SVG: ${iconName}`
-            );
-
-            return null;
-        }
-
-        /*
-        ---------------------------------------------------------
-        Nettoyage / normalisation du SVG
-        ---------------------------------------------------------
-        */
-
-        svg.removeAttribute("xmlns:xlink");
-
-        svg.setAttribute(
-            "aria-hidden",
-            "true"
-        );
-
-        /*
-        IMPORTANT :
-        l'icône hérite de la couleur de son parent
-        */
-
-        svg.setAttribute(
-            "stroke",
-            "currentColor"
-        );
-
-        return svg;
-
+    if (!cachedIconRequests.has(iconName)) {
+        cachedIconRequests.set(iconName, (async () => {
+            try {
+                const response = await fetch(`${LOCAL_ICONS_PATH}${iconName}.svg`);
+                if (!response.ok) return null;
+                const svgText = await response.text();
+                const doc = new DOMParser().parseFromString(svgText, "image/svg+xml");
+                const svg = doc.querySelector("svg");
+                if (!svg || doc.querySelector("parsererror")) return null;
+                // The icons are trusted same-origin files; remove any unexpected
+                // active content in case a future asset is unintentionally edited.
+                svg.querySelectorAll("script,foreignObject").forEach(el => el.remove());
+                svg.removeAttribute("xmlns:xlink");
+                svg.setAttribute("aria-hidden", "true");
+                svg.setAttribute("stroke", "currentColor");
+                return svg;
+            } catch (error) {
+                console.warn(`[ICONS] Icon unavailable: ${iconName}`, error);
+                return null;
+            }
+        })());
     }
-    catch (error) {
-
-        console.error(
-            `[ICONS] Failed to load icon: ${iconName}`,
-            error
-        );
-
-        return null;
-    }
+    const template = await cachedIconRequests.get(iconName);
+    return template ? template.cloneNode(true) : null;
 }
 
 /*
@@ -98,78 +50,21 @@ async function loadLocalIcon(iconName) {
 */
 
 async function createLocalIcons(root = document) {
-
-    const elements =
-        root.querySelectorAll(
-            "i[data-lucide]"
-        );
-
-    for (const element of elements) {
-
-        const iconName =
-            element.getAttribute(
-                "data-lucide"
-            );
-
-        if (!iconName) {
-            continue;
-        }
-
-        const svg =
-            await loadLocalIcon(iconName);
-
-        if (!svg) {
-            continue;
-        }
-
-        /*
-        ---------------------------------------------------------
-        Copier les classes CSS de l'ancien <i>
-        ---------------------------------------------------------
-        */
-
-        if (element.className) {
-
-            svg.setAttribute(
-                "class",
-                element.className
-            );
-
-        }
-
-        /*
-        ---------------------------------------------------------
-        Copier les attributs utiles
-        ---------------------------------------------------------
-        */
-
+    const elements = Array.from(root.querySelectorAll("i[data-lucide]"));
+    // Parallel fetches remove a potentially long sequential icon-request chain.
+    await Promise.all(elements.map(async element => {
+        const iconName = element.getAttribute("data-lucide");
+        if (!iconName) return;
+        const svg = await loadLocalIcon(iconName);
+        if (!svg || !element.isConnected) return;
+        if (element.className) svg.setAttribute("class", element.className);
         for (const attribute of element.attributes) {
-
-            const name =
-                attribute.name;
-
-            if (
-                name === "data-lucide" ||
-                name === "class"
-            ) {
-                continue;
-            }
-
-            svg.setAttribute(
-                name,
-                attribute.value
-            );
-
+            const name = attribute.name;
+            if (name === "data-lucide" || name === "class") continue;
+            svg.setAttribute(name, attribute.value);
         }
-
-        /*
-        ---------------------------------------------------------
-        Remplacer l'ancien élément
-        ---------------------------------------------------------
-        */
-
         element.replaceWith(svg);
-    }
+    }));
 }
 
 /*

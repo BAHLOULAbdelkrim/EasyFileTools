@@ -1,0 +1,88 @@
+<section id="resizeCropImageSettings" class="image-transform-settings" aria-labelledby="chooseFormatLabel">
+    <div class="image-transform-section eft-config-scope-card">
+        <div class="image-transform-title">Configuration scope</div>
+        <div class="image-transform-help">Apply one configuration to every image or store independent settings for each image.</div>
+        <div class="eft-config-scope-actions" id="resizeCropConfigScope">
+            <button type="button" class="eft-config-scope-btn active" data-resize-config-scope="all">Same configuration for all</button>
+            <button type="button" class="eft-config-scope-btn" data-resize-config-scope="per-file">Custom per image</button>
+        </div>
+        <div id="resizeCropConfigFileRow" class="eft-config-file-row hidden">
+            <label for="resizeCropConfigFile">Configure image</label>
+            <select id="resizeCropConfigFile" disabled><option value="">Load an image first</option></select>
+            <div class="eft-config-note">Each image keeps its own resize/crop, output and quality settings.</div>
+        </div>
+    </div>
+    <div class="image-transform-section">
+        <div class="image-transform-title">Mode</div>
+        <div class="image-transform-choice-group">
+            <button type="button" class="image-transform-choice active" data-resize-crop-mode="resize">Resize</button>
+            <button type="button" class="image-transform-choice" data-resize-crop-mode="crop">Crop</button>
+        </div>
+    </div>
+
+    <div id="resizeImageControls" class="image-transform-section">
+        <div class="image-transform-title">Target dimensions</div>
+        <div class="image-transform-help">With aspect ratio enabled, one dimension can be left empty.</div>
+        <div class="image-transform-grid two">
+            <label>Width (px)<input id="resizeImageWidth" type="number" min="1" max="20000" step="1" value="1920"></label>
+            <label>Height (px)<input id="resizeImageHeight" type="number" min="1" max="20000" step="1" placeholder="Auto"></label>
+        </div>
+        <label class="image-transform-check"><input id="resizeImageKeepAspect" type="checkbox" checked> Keep aspect ratio</label>
+        <label class="image-transform-check"><input id="resizeImagePreventUpscale" type="checkbox" checked> Do not enlarge smaller images</label>
+    </div>
+
+    <div id="cropImageControls" class="image-transform-section hidden">
+        <div class="image-transform-title">Crop ratio</div>
+        <div class="image-transform-choice-group wrap">
+            <button type="button" class="image-transform-choice active" data-crop-ratio="1:1">1:1</button>
+            <button type="button" class="image-transform-choice" data-crop-ratio="4:3">4:3</button>
+            <button type="button" class="image-transform-choice" data-crop-ratio="3:2">3:2</button>
+            <button type="button" class="image-transform-choice" data-crop-ratio="16:9">16:9</button>
+            <button type="button" class="image-transform-choice" data-crop-ratio="9:16">9:16</button>
+        </div>
+
+        <div class="image-transform-title compact">Crop position</div>
+        <select id="cropImageAnchor">
+            <option value="center" selected>Center</option>
+            <option value="top">Top</option>
+            <option value="bottom">Bottom</option>
+            <option value="left">Left</option>
+            <option value="right">Right</option>
+            <option value="top-left">Top left</option>
+            <option value="top-right">Top right</option>
+            <option value="bottom-left">Bottom left</option>
+            <option value="bottom-right">Bottom right</option>
+        </select>
+
+        <div class="crop-concept-preview" aria-label="Crop ratio and position preview">
+            <div class="crop-concept-caption">
+                <strong>Crop preview</strong>
+                <span id="cropPreviewCaption">1:1 • Center</span>
+            </div>
+            <div id="cropPreviewFrame" class="crop-preview-frame">
+                <div class="crop-preview-grid-lines"></div>
+                <div id="cropPreviewArea" class="crop-preview-area"><span>1:1</span></div>
+            </div>
+            <div class="image-transform-help">The highlighted area is kept. This diagram explains the ratio and anchor; it is not a preview of the actual image.</div>
+        </div>
+    </div>
+
+    <div class="image-transform-section" id="resizeCropOutputSection">
+        <div class="image-transform-title">Output format</div>
+        <select id="resizeCropOutputFormat">
+            <option value="same" selected>Same as source</option>
+            <option value="jpg">JPG</option>
+            <option value="png">PNG</option>
+            <option value="webp">WebP</option>
+            <option value="avif">AVIF</option>
+        </select>
+        <div class="image-transform-title compact">Output quality</div>
+        <div class="image-transform-help">Applies only to JPG, WebP and AVIF outputs.</div>
+        <div class="image-transform-range-row">
+            <input id="resizeCropQuality" class="eft-range" type="range" min="50" max="100" value="92" step="1">
+            <strong id="resizeCropQualityValue">92%</strong>
+        </div>
+    </div>
+
+    <div id="resizeCropValidation" data-eft-readiness-status class="image-transform-validation" role="status" aria-live="polite">Load one or more raster images.</div>
+</section>

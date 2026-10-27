@@ -1,0 +1,1013 @@
+/* =========================================================
+   CUT AUDIO
+========================================================= */
+
+.cut-audio-editor {
+    width: 100%;
+
+    box-sizing: border-box;
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.cut-audio-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+
+    margin-bottom: 1.5rem;
+}
+
+.cut-audio-header h2 {
+    margin: 0;
+
+    color: var(--violet);
+    font-size: 1.45rem;
+    font-weight: 700;
+}
+
+.cut-audio-header svg {
+    width: 22px;
+    height: 22px;
+
+    color: var(--violet);
+}
+
+
+/* =========================================================
+   COMMON FIELD
+========================================================= */
+
+.cut-audio-field {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+
+    min-width: 0;
+}
+
+.cut-audio-field label {
+    font-size: 0.92rem;
+    font-weight: 700;
+
+    color: #374151;
+}
+
+.cut-audio-field input,
+.cut-audio-field select {
+    width: 100%;
+
+    padding: 10px 12px;
+
+    border: 1px solid #d1d5db;
+    border-radius: 9px;
+
+    background: #ffffff;
+
+    font-family: inherit;
+    font-size: 0.95rem;
+
+    box-sizing: border-box;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease,
+        background-color 0.2s ease;
+}
+
+
+.cut-audio-field input:hover:not(:disabled),
+.cut-audio-field select:hover:not(:disabled) {
+    border-color: #c4b5fd;
+}
+
+.cut-audio-field input:focus,
+.cut-audio-field select:focus {
+    outline: none;
+
+    border-color: var(--violet);
+
+    box-shadow:
+        0 0 0 3px rgba(107, 33, 168, 0.10);
+}
+
+.cut-audio-field input:disabled,
+.cut-audio-field select:disabled {
+    background: #f3f4f6;
+    color: #9ca3af;
+
+    cursor: not-allowed;
+}
+
+
+/* =========================================================
+   FILE SELECTOR
+========================================================= */
+
+.cut-audio-file-selector {
+    display: grid;
+
+    grid-template-columns:
+        minmax(220px, 1fr)
+        auto;
+
+    align-items: end;
+
+    gap: 16px;
+
+    margin-bottom: 1.25rem;
+}
+
+.cut-audio-configured-counter {
+    display: flex;
+    align-items: center;
+
+    min-height: 42px;
+
+    padding: 0 12px;
+
+    border-radius: 7px;
+
+    background: var(--menu-bg);
+
+    color: var(--violet);
+
+    font-size: 0.9rem;
+    font-weight: 700;
+
+    white-space: nowrap;
+}
+
+
+/* =========================================================
+   PREVIEW
+========================================================= */
+
+.cut-audio-preview {
+    width: 100%;
+
+    margin-bottom: 22px;
+
+    padding: 18px;
+
+    border: 1px solid #ddd6fe;
+    border-radius: 14px;
+
+    background: var(--submenu-bg);
+
+    box-sizing: border-box;
+
+    transition:
+        background-color 0.25s ease,
+        border-color 0.25s ease,
+        box-shadow 0.25s ease,
+        transform 0.25s ease;
+}
+
+
+.cut-audio-preview:hover {
+    background: #f0fdf4;
+
+    border-color: #86efac;
+
+    box-shadow:
+        0 5px 18px
+        rgba(4, 120, 87, 0.08);
+
+    transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   PLAYER
+========================================================= */
+
+.cut-audio-player-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+
+    gap: 8px;
+
+    margin-bottom: 14px;
+}
+
+.cut-audio-player-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 7px;
+
+    min-height: 38px;
+
+    padding: 8px 12px;
+
+    border: none;
+    border-radius: 6px;
+
+    background: var(--menu-bg);
+    color: var(--violet);
+
+    font-family: inherit;
+    font-size: 0.9rem;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.2s ease,
+        background 0.2s ease;
+}
+
+.cut-audio-player-btn:hover:not(:disabled) {
+    transform: translateY(-1px);
+}
+
+.cut-audio-player-btn:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+
+    transform: none;
+}
+
+.cut-audio-player-btn svg {
+    width: 17px;
+    height: 17px;
+}
+
+.cut-audio-player-time {
+    margin-left: auto;
+
+    font-variant-numeric: tabular-nums;
+
+    font-size: 0.9rem;
+    font-weight: 600;
+
+    color: #4b5563;
+}
+
+.cut-audio-time-separator {
+    margin: 0 5px;
+
+    color: #9ca3af;
+}
+
+
+/* =========================================================
+   WAVEFORM
+========================================================= */
+
+.cut-audio-waveform-stage {
+    position: relative;
+
+    width: 100%;
+    height: 180px;
+
+    overflow: hidden;
+
+    border: 1px solid #ddd6fe;
+    border-radius: 8px;
+
+    background: #ffffff;
+
+    cursor: pointer;
+
+    user-select: none;
+    touch-action: none;
+}
+
+.cut-audio-waveform-canvas {
+    position: absolute;
+
+    inset: 0;
+
+    width: 100%;
+    height: 100%;
+
+    display: block;
+}
+
+
+/* =========================================================
+   SELECTED REGION
+========================================================= */
+
+.cut-audio-selection {
+    position: absolute;
+
+    top: 0;
+    bottom: 0;
+
+    left: 0;
+    width: 100%;
+
+    background:
+        rgba(16, 185, 129, 0.13);
+
+    border-left:
+        2px solid var(--green-text);
+
+    border-right:
+        2px solid var(--green-text);
+
+    box-sizing: border-box;
+
+    pointer-events: none;
+}
+
+
+/* =========================================================
+   HANDLES
+========================================================= */
+
+.cut-audio-handle {
+    position: absolute;
+
+    top: 50%;
+
+    width: 12px;
+    height: 56px;
+
+    padding: 0;
+
+    border: none;
+    border-radius: 5px;
+
+    background: var(--green-text);
+
+    cursor: ew-resize;
+
+    pointer-events: auto;
+
+    transform: translateY(-50%);
+
+    touch-action: none;
+}
+
+.cut-audio-handle:disabled {
+    opacity: 0.4;
+
+    cursor: not-allowed;
+}
+
+.cut-audio-handle-start {
+    left: -7px;
+}
+
+.cut-audio-handle-end {
+    right: -7px;
+}
+
+
+/* =========================================================
+   PLAYHEAD
+========================================================= */
+
+.cut-audio-playhead {
+    position: absolute;
+
+    top: 0;
+    bottom: 0;
+
+    left: 0;
+
+    width: 2px;
+
+    background: var(--violet);
+
+    pointer-events: none;
+
+    transform: translateX(-1px);
+}
+
+
+/* =========================================================
+   WAVEFORM MESSAGE
+========================================================= */
+
+.cut-audio-waveform-message {
+    margin: 10px 0 0;
+
+    text-align: center;
+
+    color: #6b7280;
+
+    font-size: 0.88rem;
+}
+
+/* =========================================================
+   WAVEFORM / FAST TIMELINE SWITCH
+========================================================= */
+
+.cut-audio-waveform-option {
+    margin-top: 14px;
+
+    display: flex;
+    justify-content: center;
+}
+
+.cut-audio-waveform-toggle {
+    display: inline-flex;
+    align-items: center;
+
+    gap: 12px;
+
+    cursor: pointer;
+
+    user-select: none;
+}
+
+.cut-audio-waveform-toggle input {
+    position: absolute;
+
+    opacity: 0;
+
+    pointer-events: none;
+}
+
+.cut-audio-waveform-toggle-track {
+    position: relative;
+
+    flex: 0 0 auto;
+
+    width: 44px;
+    height: 24px;
+
+    border-radius: 999px;
+
+    background: #d1d5db;
+
+    transition:
+        background 0.2s ease;
+}
+
+.cut-audio-waveform-toggle-thumb {
+    position: absolute;
+
+    top: 3px;
+    left: 3px;
+
+    width: 18px;
+    height: 18px;
+
+    border-radius: 50%;
+
+    background: #ffffff;
+
+    box-shadow:
+        0 1px 4px
+        rgba(0, 0, 0, 0.2);
+
+    transition:
+        transform 0.2s ease;
+}
+
+.cut-audio-waveform-toggle
+input:checked
++
+.cut-audio-waveform-toggle-track {
+    background:
+        var(--violet);
+}
+
+.cut-audio-waveform-toggle
+input:checked
++
+.cut-audio-waveform-toggle-track
+.cut-audio-waveform-toggle-thumb {
+    transform:
+        translateX(20px);
+}
+
+.cut-audio-waveform-toggle-text {
+    display: flex;
+    flex-direction: column;
+
+    gap: 2px;
+
+    color: #374151;
+}
+
+.cut-audio-waveform-toggle-text strong {
+    font-size: 0.9rem;
+    font-weight: 700;
+}
+
+.cut-audio-waveform-toggle-text small {
+    color: #6b7280;
+
+    font-size: 0.8rem;
+    line-height: 1.35;
+}
+
+
+/* Disabled during Cut operation */
+.cut-audio-waveform-toggle
+input:disabled
++
+.cut-audio-waveform-toggle-track {
+    background: #d1d5db;
+}
+
+
+/* Dim the text while the option is locked */
+.cut-audio-waveform-toggle
+input:disabled
+~
+.cut-audio-waveform-toggle-text {
+    opacity: 0.55;
+}
+
+
+/* Show that the whole switch is temporarily unavailable */
+.cut-audio-waveform-toggle:has(input:disabled) {
+    cursor: not-allowed;
+}
+
+
+/* =========================================================
+   FAST TIMELINE MODE
+========================================================= */
+
+.cut-audio-waveform-stage.is-timeline-mode {
+    height: 54px;
+
+    background: #ffffff;
+}
+
+.cut-audio-waveform-stage.is-timeline-mode::before {
+    content: "";
+
+    position: absolute;
+
+    left: 14px;
+    right: 14px;
+
+    top: 50%;
+
+    height: 6px;
+
+    border-radius: 999px;
+
+    background: #d1d5db;
+
+    transform:
+        translateY(-50%);
+
+    pointer-events: none;
+}
+
+.cut-audio-waveform-stage.is-timeline-mode
+.cut-audio-waveform-canvas {
+    display: none;
+}
+
+.cut-audio-waveform-stage.is-timeline-mode
+.cut-audio-selection {
+    top: 50%;
+    bottom: auto;
+
+    height: 6px;
+
+    background:
+        var(--green-text);
+
+    border-left: none;
+    border-right: none;
+
+    border-radius: 999px;
+
+    transform:
+        translateY(-50%);
+}
+
+.cut-audio-waveform-stage.is-timeline-mode
+.cut-audio-handle {
+    top: 50%;
+
+    width: 14px;
+    height: 30px;
+
+    border-radius: 7px;
+}
+
+.cut-audio-waveform-stage.is-timeline-mode
+.cut-audio-handle-start {
+    left: -7px;
+}
+
+.cut-audio-waveform-stage.is-timeline-mode
+.cut-audio-handle-end {
+    right: -7px;
+}
+
+.cut-audio-waveform-stage.is-timeline-mode
+.cut-audio-playhead {
+    top: 8px;
+    bottom: 8px;
+}
+
+/* =========================================================
+   TIME GRID
+========================================================= */
+
+.cut-audio-time-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, minmax(0, 1fr));
+
+    gap: 12px;
+
+    margin-bottom: 22px;
+
+    padding: 18px;
+
+    border: 1px solid #ddd6fe;
+    border-radius: 14px;
+
+    background: var(--submenu-bg);
+
+    transition:
+        background-color 0.25s ease,
+        border-color 0.25s ease,
+        box-shadow 0.25s ease,
+        transform 0.25s ease;
+}
+
+
+.cut-audio-time-grid:hover {
+    background: #f0fdf4;
+
+    border-color: #86efac;
+
+    box-shadow:
+        0 5px 18px
+        rgba(4, 120, 87, 0.08);
+
+    transform: translateY(-1px);
+}
+
+.cut-audio-readonly-value {
+    min-height: 42px;
+
+    display: flex;
+    align-items: center;
+
+    padding: 10px 12px;
+
+    border: 1px solid #e5e7eb;
+    border-radius: 7px;
+
+    background: #f9fafb;
+
+    color: #374151;
+
+    font-size: 0.95rem;
+    font-weight: 600;
+
+    font-variant-numeric: tabular-nums;
+
+    box-sizing: border-box;
+}
+
+
+/* =========================================================
+   SETTINGS GROUP
+========================================================= */
+
+.cut-audio-settings-group {
+    margin-bottom: 22px;
+
+    padding: 18px;
+
+    border: 1px solid #ddd6fe;
+    border-radius: 14px;
+
+    background: var(--submenu-bg);
+
+    transition:
+        background-color 0.25s ease,
+        border-color 0.25s ease,
+        box-shadow 0.25s ease,
+        transform 0.25s ease;
+}
+
+
+.cut-audio-settings-group:hover {
+    background: #f0fdf4;
+
+    border-color: #86efac;
+
+    box-shadow:
+        0 5px 18px
+        rgba(4, 120, 87, 0.08);
+
+    transform: translateY(-1px);
+}
+
+
+.cut-audio-settings-group h3 {
+    margin:
+        0
+        0
+        14px;
+
+    color: var(--green-text);
+
+    font-size: 17px;
+    font-weight: 750;
+}
+
+
+/* =========================================================
+   MODE
+========================================================= */
+
+.cut-audio-mode-buttons {
+    display: flex;
+    flex-wrap: wrap;
+
+    gap: 10px;
+}
+
+.cut-audio-mode-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 8px;
+
+    padding: 9px 16px;
+
+    border: 1px solid #d1d5db;
+    border-radius: 10px;
+
+    background: #ffffff;
+    color: #4b5563;
+
+    font-family: inherit;
+    font-size: 0.95rem;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition:
+        background-color 0.2s ease,
+        color 0.2s ease,
+        border-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+
+.cut-audio-mode-btn:hover:not(:disabled) {
+    border-color: #c4b5fd;
+
+    transform: translateY(-1px);
+}
+
+
+.cut-audio-mode-btn.active {
+    background: var(--violet-light);
+    color: var(--violet);
+
+    border-color: var(--violet);
+}
+
+.cut-audio-mode-btn:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+
+    transform: none;
+}
+
+.cut-audio-mode-btn svg {
+    width: 18px;
+    height: 18px;
+}
+
+
+/* =========================================================
+   HELP
+========================================================= */
+
+.cut-audio-help {
+    margin:
+        10px
+        0
+        0;
+
+    color: #6b7280;
+
+    font-size: 0.9rem;
+}
+
+
+/* =========================================================
+   FADE
+========================================================= */
+
+.cut-audio-fade-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap: 12px;
+}
+
+.cut-audio-fade-option {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 12px;
+
+    padding: 12px;
+
+    border: 1px solid #d1d5db;
+    border-radius: 10px;
+
+    background: #ffffff;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+
+.cut-audio-fade-option:hover {
+    border-color: #c4b5fd;
+
+    box-shadow:
+        0 2px 8px
+        rgba(107, 33, 168, 0.06);
+}
+
+.cut-audio-checkbox-label {
+    display: inline-flex;
+    align-items: center;
+
+    gap: 8px;
+
+    font-size: 0.95rem;
+    font-weight: 600;
+
+    color: #374151;
+
+    cursor: pointer;
+}
+
+.cut-audio-checkbox-label input {
+    width: 17px;
+    height: 17px;
+}
+
+.cut-audio-fade-duration {
+    display: flex;
+    align-items: center;
+
+    gap: 5px;
+}
+
+.cut-audio-fade-duration input {
+    width: 80px;
+
+    padding: 8px 9px;
+
+    border: 1px solid #d1d5db;
+    border-radius: 9px;
+
+    background: #ffffff;
+
+    font-family: inherit;
+
+    box-sizing: border-box;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease,
+        background-color 0.2s ease;
+}
+
+
+.cut-audio-fade-duration input:hover:not(:disabled) {
+    border-color: #c4b5fd;
+}
+
+
+.cut-audio-fade-duration input:focus {
+    outline: none;
+
+    border-color: var(--violet);
+
+    box-shadow:
+        0 0 0 3px
+        rgba(107, 33, 168, 0.10);
+}
+
+
+.cut-audio-fade-duration input:disabled {
+    background: #f3f4f6;
+    color: #9ca3af;
+
+    cursor: not-allowed;
+}
+
+
+/* =========================================================
+   VALIDATION
+========================================================= */
+
+.cut-audio-validation {
+    padding: 12px 14px;
+
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+
+    background: #f3f4f6;
+
+    color: #6b7280;
+
+    font-size: 0.9rem;
+    font-weight: 600;
+
+    transition:
+        background-color 0.2s ease,
+        border-color 0.2s ease,
+        color 0.2s ease;
+}
+
+
+.cut-audio-validation.valid {
+    background: var(--green-hover);
+
+    border-color: #86efac;
+
+    color: var(--green-text);
+}
+
+
+.cut-audio-validation.invalid {
+    background: #fee2e2;
+
+    border-color: #fecaca;
+
+    color: #991b1b;
+}
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 900px) {
+
+    .cut-audio-time-grid {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+    }
+
+}
+
+
+@media (max-width: 650px) {
+
+    .cut-audio-editor {
+        padding: 1rem;
+    }
+
+    .cut-audio-file-selector {
+        grid-template-columns: 1fr;
+    }
+
+    .cut-audio-configured-counter {
+        justify-content: center;
+    }
+
+    .cut-audio-waveform-stage {
+        height: 150px;
+    }
+
+    .cut-audio-time-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .cut-audio-fade-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .cut-audio-player-time {
+        width: 100%;
+
+        margin-left: 0;
+        margin-top: 4px;
+
+        text-align: center;
+    }
+
+}

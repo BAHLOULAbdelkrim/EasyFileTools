@@ -10,23 +10,35 @@ function getImageDimensions(file) {
     return new Promise((resolve) => {
 
         const img = new Image();
+        const objectUrl = URL.createObjectURL(file);
+
+        const cleanup = () => {
+            img.onload = null;
+            img.onerror = null;
+            img.src = "";
+            URL.revokeObjectURL(objectUrl);
+        };
 
         img.onload = function () {
 
-            resolve({
-                width: img.width,
-                height: img.height
-            });
+            const result = {
+                width: img.naturalWidth || img.width,
+                height: img.naturalHeight || img.height
+            };
+
+            cleanup();
+            resolve(result);
 
         };
 
         img.onerror = function () {
 
+            cleanup();
             resolve(null);
 
         };
 
-        img.src = URL.createObjectURL(file);
+        img.src = objectUrl;
 
     });
 
@@ -61,18 +73,34 @@ function getAudioDuration(file) {
     return new Promise((resolve) => {
 
         const audio = new Audio();
+        const objectUrl = URL.createObjectURL(file);
 
         audio.preload = "metadata";
 
+        const cleanup = () => {
+            audio.onloadedmetadata = null;
+            audio.onerror = null;
+            audio.removeAttribute("src");
+            audio.load();
+            URL.revokeObjectURL(objectUrl);
+        };
+
         audio.onloadedmetadata = () => {
 
-            resolve(audio.duration);
+            const duration = audio.duration;
+            cleanup();
+            resolve(duration);
 
         };
 
-        audio.onerror = () => resolve(null);
+        audio.onerror = () => {
 
-        audio.src = URL.createObjectURL(file);
+            cleanup();
+            resolve(null);
+
+        };
+
+        audio.src = objectUrl;
 
     });
 
@@ -84,18 +112,34 @@ function getVideoDuration(file) {
     return new Promise((resolve) => {
 
         const video = document.createElement("video");
+        const objectUrl = URL.createObjectURL(file);
 
         video.preload = "metadata";
 
+        const cleanup = () => {
+            video.onloadedmetadata = null;
+            video.onerror = null;
+            video.removeAttribute("src");
+            video.load();
+            URL.revokeObjectURL(objectUrl);
+        };
+
         video.onloadedmetadata = () => {
 
-            resolve(video.duration);
+            const duration = video.duration;
+            cleanup();
+            resolve(duration);
 
         };
 
-        video.onerror = () => resolve(null);
+        video.onerror = () => {
 
-        video.src = URL.createObjectURL(file);
+            cleanup();
+            resolve(null);
+
+        };
+
+        video.src = objectUrl;
 
     });
 
@@ -107,68 +151,124 @@ function getVideoDuration(file) {
 ========================================================= */
 
 async function getPdfPageCount(file) {
+    let pdf = null;
+    try {
+        await window.EasyFileDependencies.ensurePdfJs();
+        const bytes = await file.arrayBuffer();
+        pdf = await pdfjsLib.getDocument({ data: bytes }).promise;
+        return pdf.numPages;
+    } catch (error) {
+        console.warn("[FILE UTILS] Unable to read PDF page count:", error);
+        return null;
+    } finally {
+        try { await pdf?.destroy?.(); } catch (_) { /* Ignore cleanup errors. */ }
+    }
+}
+
+
+async function getPdfThumbnail(file, onPageCount = null) {
+
+    let pdf =
+        null;
+
 
     try {
+        await window.EasyFileDependencies.ensurePdfJs();
 
         const arrayBuffer =
             await file.arrayBuffer();
 
-        const pdf =
+
+
+        pdf =
             await pdfjsLib.getDocument({
-                data: arrayBuffer
+                data:
+                    new Uint8Array(
+                        arrayBuffer
+                    )
             }).promise;
 
-        return pdf.numPages;
+        // Reuse the already opened PDF.
+        if (
+            typeof onPageCount === "function" &&
+            Number.isInteger(pdf.numPages) &&
+            pdf.numPages > 0
+        ) {
+            onPageCount(pdf.numPages);
+        }
 
-    } catch (error) {
+        const page =
+            await pdf.getPage(1);
 
-        console.error(error);
+
+
+        const viewport =
+            page.getViewport({
+                scale: 0.42
+            });
+
+
+        const canvas =
+            document.createElement("canvas");
+
+
+        const ctx =
+            canvas.getContext("2d");
+
+
+        canvas.width =
+            Math.max(1, Math.ceil(viewport.width));
+
+        canvas.height =
+            Math.max(1, Math.ceil(viewport.height));
+
+
+        ctx.fillStyle =
+            "#ffffff";
+
+        ctx.fillRect(
+            0,
+            0,
+            canvas.width,
+            canvas.height
+        );
+
+
+        await page.render({
+            canvasContext: ctx,
+            viewport
+        }).promise;
+
+
+        page.cleanup?.();
+
+
+        return canvas.toDataURL(
+            "image/jpeg",
+            0.82
+        );
+
+    }
+    catch (error) {
+
+        console.warn(
+            "[FILE UTILS] Unable to render PDF thumbnail:",
+            file?.name,
+            error
+        );
+
 
         return null;
+
+    }
+    finally {
+
+        await pdf?.destroy?.();
 
     }
 
 }
 
-
-async function getPdfThumbnail(file) {
-
-    const arrayBuffer =
-        await file.arrayBuffer();
-
-    const pdf =
-        await pdfjsLib.getDocument({
-            data: arrayBuffer
-        }).promise;
-
-    const page =
-        await pdf.getPage(1);
-
-    const viewport =
-        page.getViewport({
-            scale: 0.5
-        });
-
-    const canvas =
-        document.createElement("canvas");
-
-    const ctx =
-        canvas.getContext("2d");
-
-    canvas.width =
-        viewport.width;
-
-    canvas.height =
-        viewport.height;
-
-    await page.render({
-        canvasContext: ctx,
-        viewport: viewport
-    }).promise;
-
-    return canvas.toDataURL();
-
-}
 
 
 /* =========================================================
@@ -182,41 +282,167 @@ function getVideoThumbnail(file) {
         const video =
             document.createElement("video");
 
-        video.src =
+        const objectUrl =
             URL.createObjectURL(file);
 
-        video.muted = true;
+        let settled =
+            false;
 
-        video.currentTime = 1;
+        let seekRequested =
+            false;
 
-        video.addEventListener(
-            "loadeddata",
-            () => {
+        const cleanup = () => {
 
-                const canvas =
-                    document.createElement("canvas");
+            video.onloadedmetadata = null;
+            video.onloadeddata = null;
+            video.onseeked = null;
+            video.onerror = null;
 
-                canvas.width =
-                    video.videoWidth;
+            video.removeAttribute("src");
+            video.load();
 
-                canvas.height =
-                    video.videoHeight;
+            URL.revokeObjectURL(
+                objectUrl
+            );
 
-                const ctx =
-                    canvas.getContext("2d");
+        };
 
-                ctx.drawImage(
-                    video,
-                    0,
-                    0
+        const finish = (value) => {
+
+            if (settled) {
+                return;
+            }
+
+            settled = true;
+
+            cleanup();
+
+            resolve(value);
+
+        };
+
+        const captureFrame = () => {
+
+            if (
+                !video.videoWidth ||
+                !video.videoHeight
+            ) {
+                return;
+            }
+
+            const maxWidth =
+                320;
+
+            const scale =
+                Math.min(
+                    1,
+                    maxWidth /
+                        video.videoWidth
                 );
 
-                resolve(
-                    canvas.toDataURL()
+            const canvas =
+                document.createElement("canvas");
+
+            canvas.width =
+                Math.max(
+                    1,
+                    Math.round(
+                        video.videoWidth *
+                        scale
+                    )
                 );
+
+            canvas.height =
+                Math.max(
+                    1,
+                    Math.round(
+                        video.videoHeight *
+                        scale
+                    )
+                );
+
+            const ctx =
+                canvas.getContext("2d");
+
+            if (!ctx) {
+                finish(null);
+                return;
+            }
+
+            ctx.drawImage(
+                video,
+                0,
+                0,
+                canvas.width,
+                canvas.height
+            );
+
+            finish(
+                canvas.toDataURL(
+                    "image/jpeg",
+                    0.82
+                )
+            );
+
+        };
+
+        video.preload =
+            "metadata";
+
+        video.muted =
+            true;
+
+        video.playsInline =
+            true;
+
+        video.onloadedmetadata = () => {
+
+            const duration =
+                Number(video.duration);
+
+            if (
+                Number.isFinite(duration) &&
+                duration > 0.15
+            ) {
+
+                seekRequested =
+                    true;
+
+                video.currentTime =
+                    Math.min(
+                        1,
+                        Math.max(
+                            0,
+                            duration * 0.1
+                        )
+                    );
 
             }
-        );
+
+        };
+
+        video.onseeked = () => {
+
+            captureFrame();
+
+        };
+
+        video.onloadeddata = () => {
+
+            if (!seekRequested) {
+                captureFrame();
+            }
+
+        };
+
+        video.onerror = () => {
+
+            finish(null);
+
+        };
+
+        video.src =
+            objectUrl;
 
     });
 

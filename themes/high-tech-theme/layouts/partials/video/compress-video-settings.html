@@ -1,0 +1,105 @@
+<section
+    id="compressVideoSettings"
+    class="video-operation-settings"
+    aria-labelledby="chooseFormatLabel"
+>
+
+    <div class="video-setting-section">
+
+        <div class="video-setting-title">
+            Compression preset
+        </div>
+
+        <div class="video-format-grid">
+
+            <button
+                type="button"
+                class="video-choice-btn"
+                data-video-compression="speed"
+                title="Prioritize processing speed; output may be larger"
+            >
+                Fast
+            </button>
+
+            <button
+                type="button"
+                class="video-choice-btn"
+                data-video-compression="light"
+            >
+                Light
+            </button>
+
+            <button
+                type="button"
+                class="video-choice-btn active"
+                data-video-compression="balanced"
+            >
+                Balanced
+            </button>
+
+            <button
+                type="button"
+                class="video-choice-btn"
+                data-video-compression="strong"
+            >
+                Strong
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <div class="video-setting-section">
+
+        <div class="video-setting-title">
+            Output container
+        </div>
+
+        <select id="compressVideoContainer">
+
+            <option value="same">
+                Same as source
+            </option>
+
+            <option value="mp4">
+                MP4
+            </option>
+
+            <option value="webm">
+                WebM
+            </option>
+
+        </select>
+
+    </div>
+
+
+    <div class="video-setting-section">
+
+        <label class="video-check-row">
+
+            <input
+                id="compressVideoKeepSmaller"
+                type="checkbox"
+                checked
+            >
+
+            <span>
+                Keep original if compression makes the file larger
+            </span>
+
+        </label>
+
+    </div>
+
+
+    <div
+        id="compressVideoValidation"
+        data-eft-readiness-status
+        class="video-validation"
+    >
+        Load one or more videos.
+    </div>
+
+</section>

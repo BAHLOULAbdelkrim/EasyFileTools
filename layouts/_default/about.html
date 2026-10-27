@@ -1,0 +1,14 @@
+{{ define "main" }}
+<article class="about-page">
+  <header class="about-page-header">
+    {{ partial "common/page-heading.html" (dict "title" .Title "icon" .Params.icon) }}
+    <p class="about-page-intro">Everyday file tools, with clear information about how your files are processed.</p>
+  </header>
+  <div class="about-page-body">{{ .Content }}</div>
+</article>
+
+<div class="about-page-navigation">
+  {{ partial "common/page-navigation.html" . }}
+</div>
+
+{{ end }}

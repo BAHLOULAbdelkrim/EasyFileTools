@@ -1,0 +1,34 @@
+<footer class="site-footer" style="padding:20px 0; background-color:#d1fae5ff;">
+  <div class="footer-container" style="max-width:1200px; margin:0 auto; text-align:center; display:flex; flex-direction:column; gap:10px;">
+    <p style="margin:0; color:#000000;">Simple browser-based tools for everyday file tasks.</p>
+
+    <nav class="footer-policy-links" aria-label="Footer links">
+      <a href="{{ "/about/" | relURL }}" data-easyfile-navigation>{{ i18n "about" }}</a>
+      {{ with .Site.GetPage "/privacy/" }}<a href="{{ .RelPermalink }}" data-easyfile-navigation>{{ i18n "privacy" }}</a>{{ end }}
+      {{ with .Site.GetPage "/legal/" }}<a href="{{ .RelPermalink }}" data-easyfile-navigation>{{ i18n "legal" }}</a>{{ end }}
+    </nav>
+
+    {{ with .Site.GetPage "/contact/" }}
+    <a
+      href="{{ .RelPermalink }}#contact-form-title"
+      data-easyfile-navigation
+      style="
+        display: inline-block;
+        align-self: center;
+        padding: 11px 18px;
+        background-color: #047857;
+        color: #ffffff;
+        font-weight: 600;
+        text-decoration: none;
+        border-radius: 8px;
+        cursor: pointer;
+        outline-offset: 3px;
+      "
+    >
+      Contact us — Report a problem or suggest an improvement
+    </a>
+    {{ end }}
+
+    <p style="margin-top:12px;">© {{ now.Format "2006" }} EasyFile Tools. Third-party software remains subject to its own licenses.</p>
+  </div>
+</footer>

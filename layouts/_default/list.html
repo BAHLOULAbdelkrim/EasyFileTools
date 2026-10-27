@@ -1,0 +1,197 @@
+{{ define "main" }}
+
+<div class="container section-list">
+
+  <section class="content-column">
+
+
+    {{ partial
+        "common/page-heading.html"
+        (dict
+            "title" .Title
+            "icon" .Params.icon
+        )
+    }}
+
+
+
+    {{ if .Content }}
+
+      <div class="category-description">
+
+        {{ .Content }}
+
+      </div>
+
+    {{ end }}
+
+
+    {{ if .Params.image }}
+
+      <img
+          class="section-cover"
+          src="{{ .Params.image }}"
+          alt="{{ .Title }}"
+      >
+
+    {{ end }}
+
+
+    {{ partial "seo/tool-help.html" . }}
+
+    <!-- =========================
+         SUBMENUS
+    ========================== -->
+
+    <div class="submenus">
+
+      {{ if eq .Section "documents" }}
+        <p class="eft-document-scope-note">
+          <strong>PDF tools available now.</strong>
+          Editable Word and OpenDocument files (DOC, DOCX, ODT) are not supported by these tools yet.
+        </p>
+      {{ end }}
+
+      <ul>
+
+        {{ range .Sections }}
+
+          {{ $available :=
+              .Params.available
+          }}
+
+
+          <li
+              class="
+                {{ if not $available }}
+                  is-disabled
+                {{ end }}
+              "
+          >
+
+
+            {{ if $available }}
+
+
+              <a
+                  href="{{ .RelPermalink }}"
+                  data-easyfile-navigation
+                  data-target-category="{{ $.Section }}"
+              >
+
+                {{ with .Params.icon }}
+
+                  <i
+                      class="submenu-icon"
+                      data-lucide="{{ . }}"
+                  ></i>
+
+                {{ end }}
+
+
+                <span>
+                  {{ .Title }}
+                </span>
+
+              </a>
+
+
+            {{ else }}
+
+
+              <a
+                  class="operation-disabled"
+                  aria-disabled="true"
+                  tabindex="-1"
+              >
+
+                {{ with .Params.icon }}
+
+                  <i
+                      class="submenu-icon"
+                      data-lucide="{{ . }}"
+                  ></i>
+
+                {{ end }}
+
+
+                <span>
+                  {{ .Title }}
+                </span>
+
+
+                <span class="coming-soon">
+
+                  Coming soon
+
+                </span>
+
+              </a>
+
+
+            {{ end }}
+
+
+          </li>
+
+        {{ end }}
+
+      </ul>
+
+    </div>
+
+
+    <!-- =========================
+         ARTICLES
+    ========================== -->
+
+    <div class="articles-grid">
+
+      {{ range where
+          .Pages
+          "Kind"
+          "in"
+          (slice "page")
+      }}
+
+        <article class="card">
+
+          <a href="{{ .RelPermalink }}">
+
+            <h2>
+              {{ .Title }}
+            </h2>
+
+            <p>
+              {{ .Summary }}
+            </p>
+
+            {{ with .Params.image }}
+
+              <img
+                  src="{{ . | relURL }}"
+                  alt="{{ $.Title }}"
+              >
+
+            {{ end }}
+
+          </a>
+
+        </article>
+
+      {{ end }}
+
+    </div>
+
+
+    {{ partial
+        "common/page-navigation.html"
+        .
+    }}
+
+
+  </section>
+
+</div>
+
+{{ end }}

@@ -243,6 +243,13 @@
         width: 100%;
         justify-content: flex-end;
     }
+
+    .file-multi-outputs {
+
+        grid-template-columns:
+            1fr;
+
+    }
 }
 
 
@@ -446,6 +453,11 @@
     color: var(--violet);
 }
 
+.file-state.failed span,
+.file-state.failed svg {
+    color: #dc2626;
+}
+
 
 /* =========================================================
    FILE MAIN
@@ -523,4 +535,504 @@
     100% {
         transform: translateX(300%);
     }
+}
+
+
+
+/* =========================================================
+   MULTI OUTPUT RESULTS
+========================================================= */
+
+.file-multi-outputs {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(
+            2,
+            minmax(0, 1fr)
+        );
+
+    gap: 8px;
+
+    width: 100%;
+
+    margin-top: 8px;
+    padding-top: 10px;
+
+    border-top: 1px solid #ede9fe;
+
+}
+
+
+/* =========================================================
+   MULTI OUTPUT ROW
+========================================================= */
+
+.file-multi-output {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 14px;
+
+    min-width: 0;
+
+    padding: 8px 10px;
+
+    background: #fafafa;
+
+    border: 1px solid #ede9fe;
+    border-radius: 10px;
+
+    transition:
+        border-color 0.2s ease,
+        background-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+
+.file-multi-output:hover {
+    background: #faf5ff;
+
+    border-color: var(--violet-light);
+
+    transform: translateX(2px);
+}
+
+/* =========================================================
+   MULTI OUTPUT INFO
+========================================================= */
+
+.file-multi-output-info {
+
+    flex: 1;
+    min-width: 0;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 3px;
+
+}
+
+
+/* =========================================================
+   MULTI OUTPUT META
+========================================================= */
+
+.file-multi-output-meta {
+
+    font-size: 12px;
+    font-weight: 500;
+
+    line-height: 1.3;
+
+    color: #6b7280;
+
+}
+
+/* =========================================================
+   MULTI OUTPUT NAME
+========================================================= */
+
+.file-multi-output-name {
+    flex: 1;
+
+    min-width: 0;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+    font-size: 13px;
+    font-weight: 600;
+
+    color: #4b5563;
+}
+
+
+/* =========================================================
+   MULTI OUTPUT DOWNLOAD
+========================================================= */
+
+.file-multi-output-download {
+    position: relative;
+    overflow: hidden;
+
+    flex-shrink: 0;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+width: 34px;
+height: 34px;
+
+padding: 0;
+
+    border: none;
+    border-radius: 9px;
+
+    background: var(--violet);
+    color: white;
+
+    cursor: pointer;
+
+    transition:
+        background-color 0.2s ease,
+        transform 0.2s ease,
+        opacity 0.2s ease;
+}
+
+
+.file-multi-output-download:hover:not(:disabled) {
+    background: var(--green-text);
+
+    transform: scale(1.04);
+}
+
+
+/* shine */
+
+.file-multi-output-download::before {
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    left: -120%;
+
+    width: 60%;
+    height: 100%;
+
+    background: linear-gradient(
+        120deg,
+        transparent,
+        rgba(255,255,255,0.45),
+        transparent
+    );
+
+    transform: skewX(-20deg);
+}
+
+
+.file-multi-output-download:hover:not(:disabled)::before {
+    animation:
+        multiOutputDownloadShine
+        0.7s ease;
+}
+
+
+.file-multi-output-download svg {
+    width: 15px;
+    height: 15px;
+
+    flex-shrink: 0;
+}
+
+
+/* =========================================================
+   MULTI OUTPUT — DISABLED
+========================================================= */
+
+.file-multi-output-download:disabled {
+    opacity: 0.55;
+
+    cursor: wait;
+
+    transform: none;
+}
+
+
+/* =========================================================
+   MULTI OUTPUT — STALE
+========================================================= */
+
+.file-multi-outputs.stale {
+    opacity: 0.72;
+}
+
+
+.file-multi-outputs.stale
+.file-multi-output {
+    background: #f9fafb;
+}
+
+
+/* =========================================================
+   MULTI OUTPUT ANIMATION
+========================================================= */
+
+@keyframes multiOutputDownloadShine {
+
+    from {
+        left: -120%;
+    }
+
+    to {
+        left: 140%;
+    }
+
+}
+
+
+/* =========================================================
+   MULTI OUTPUT RESPONSIVE
+========================================================= */
+
+@media (max-width: 700px) {
+
+    .file-multi-output {
+        align-items: flex-start;
+
+        gap: 10px;
+    }
+
+
+    .file-multi-output-name {
+        white-space: normal;
+
+        overflow-wrap: anywhere;
+    }
+
+    .file-multi-output-download {
+
+        width: 32px;
+        height: 32px;
+
+        padding: 0;
+    }
+
+}
+/* =========================================================
+   GENERIC LONG FILE LIST COMPACTION
+
+   Used on homepage, category/menu pages and operation pages.
+========================================================= */
+
+.file-list-container.is-scroll-limited #file-list {
+    max-height: min(65vh, var(--file-list-scroll-height, 470px));
+    overflow-y: auto;
+    overflow-x: hidden;
+    overscroll-behavior: contain;
+    scrollbar-gutter: stable;
+    padding-right: 8px;
+}
+
+.file-list-container.is-scroll-limited #file-list:focus-within {
+    outline: 2px solid rgba(107, 33, 168, 0.12);
+    outline-offset: 4px;
+}
+
+@media (max-width: 700px) {
+    .file-list-container.is-scroll-limited #file-list {
+        max-height: min(64vh, var(--file-list-scroll-height, 470px));
+        padding-right: 4px;
+    }
+}
+
+.file-list-container.is-scroll-limited #file-list {
+    margin-top: 22px;
+}
+
+.file-list-container.is-scroll-limited .file-item {
+    padding: 14px 16px;
+    margin-bottom: 10px;
+}
+
+/* =========================================================
+   FILE LIST - CLEAR ALL
+
+   Shared bottom-right placement on menu and operation pages.
+========================================================= */
+
+.category-clear-all-container {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+
+    margin-top: 20px;
+}
+
+.category-clear-all-btn {
+    flex: 0 0 auto;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    border: none;
+    border-radius: 14px;
+    padding: 13px 22px;
+
+    background: gray;
+    color: white;
+    opacity: 0.5;
+    cursor: not-allowed;
+
+    font-size: 16px;
+    font-weight: 600;
+
+    position: relative;
+    overflow: hidden;
+
+    transition: all 0.25s ease;
+}
+
+.category-clear-all-btn.active {
+    background: #ef4444;
+    opacity: 1;
+    cursor: pointer;
+}
+
+.category-clear-all-btn.active:hover {
+    background: #dc2626;
+    transform: scale(1.05);
+}
+
+.category-clear-all-btn::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -120%;
+    width: 60%;
+    height: 100%;
+    background: linear-gradient(
+        120deg,
+        transparent,
+        rgba(255, 255, 255, 0.45),
+        transparent
+    );
+    transform: skewX(-20deg);
+}
+
+.category-clear-all-btn.active:hover::before {
+    animation: categoryClearAllShine 0.7s ease;
+}
+
+/*
+ * Generic processing/disabled state. Clear All sits outside the operation
+ * fieldset, so disabling it in JavaScript must also remove the active red
+ * styling and hover/shine feedback in every format, not only Images.
+ */
+body.operation-interaction-locked .category-clear-all-btn,
+.category-clear-all-btn:disabled {
+    background: gray !important;
+    color: #ffffff !important;
+    opacity: 0.5 !important;
+    cursor: not-allowed !important;
+    transform: none !important;
+}
+
+body.operation-interaction-locked .category-clear-all-btn:hover,
+.category-clear-all-btn:disabled:hover {
+    background: gray !important;
+    transform: none !important;
+}
+
+body.operation-interaction-locked .category-clear-all-btn::before,
+.category-clear-all-btn:disabled::before,
+body.operation-interaction-locked .category-clear-all-btn:hover::before,
+.category-clear-all-btn:disabled:hover::before {
+    animation: none !important;
+}
+
+@keyframes categoryClearAllShine {
+    from { left: -120%; }
+    to { left: 140%; }
+}
+
+@media (max-width: 700px) {
+    .category-clear-all-container {
+        margin-top: 16px;
+    }
+}
+
+
+/* Compact MULTI_OUTPUT summary for large generated sets. */
+.file-multi-output-summary {
+    background: #f8fafc;
+    border-style: dashed;
+}
+
+.file-multi-output-group-download {
+    width: auto;
+    min-width: 132px;
+    padding-inline: 11px;
+    gap: 6px;
+}
+
+.file-multi-output-group-download span {
+    white-space: nowrap;
+    font-size: 12px;
+    font-weight: 800;
+}
+
+/* =========================================================
+   MULTI OUTPUT — COMPACT GROUP
+
+   The summary uses the full file-information width. The only
+   group download action remains the source Download button in
+   the right-hand actions area, avoiding duplicate ZIP buttons.
+========================================================= */
+
+.file-main,
+.file-left,
+.file-info {
+    min-width: 0;
+}
+
+.file-left {
+    width: 100%;
+}
+
+.file-info {
+    flex: 1 1 auto;
+}
+
+.file-multi-output-summary {
+    grid-column: 1 / -1;
+    width: 100%;
+}
+
+
+/* V4.2 — IndexedDB restoration hint. No extra whitespace on empty pages.
+   The hint is removed after the list is actually rendered (or storage is empty). */
+.file-list-container[data-restore-pending="true"] #file-list {
+    min-height: min(55vh, calc(var(--easyfile-expected-rows, 1) * 110px));
+    background-image: linear-gradient(90deg, #f8f5fd 0%, #efe9f9 50%, #f8f5fd 100%);
+    background-repeat: no-repeat;
+    background-position: left top;
+    background-size: 100% 56px;
+    border-radius: 12px;
+}
+@media (max-width: 700px) {
+    .file-list-container[data-restore-pending="true"] #file-list {
+        min-height: min(60vh, calc(var(--easyfile-expected-rows, 1) * 160px));
+    }
+}
+
+
+
+
+/* =========================================
+   MOBILE — LONG FILE NAMES
+========================================= */
+
+@media (max-width: 900px) {
+
+  .file-name {
+    overflow-wrap: anywhere;
+    word-break: normal;
+  }
+
+  .file-left,
+  .file-info {
+    min-width: 0;
+    max-width: 100%;
+  }
+
 }

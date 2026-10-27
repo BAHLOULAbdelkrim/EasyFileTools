@@ -1,15 +1,9 @@
 ---
-title: "Text --> Speech"
+title: "Text to Speech"
 url: "/documents/text-to-speech/"
-description: "................"
-keywords:
-  - ...............
-  - ...............
-tags: 
-  - blabla
-  - blabla
+description: "Text to Speech is planned for a future release and is not available yet."
 weight: 5
 ---
-🚧 Coming soon !
+🚧 Coming soon.
 
-This tool is currently under development.
+This tool is not available yet. Please choose one of the currently available EasyFile Tools operations.

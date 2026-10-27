@@ -1,0 +1,73 @@
+<section
+    id="mergePdfSettings"
+    class="pdf-operation-settings"
+    aria-labelledby="chooseFormatLabel"
+>
+
+    <div class="pdf-operation-info">
+
+        PDF files are merged in the same order as the file list above.
+        Drag files to reorder them. Pages are copied without image re-encoding,
+        so their original page size, orientation and visual quality are preserved.
+
+    </div>
+
+
+    <div class="pdf-setting-section">
+
+        <div class="pdf-setting-title">
+            Output filename
+        </div>
+
+        <input
+            id="mergePdfFilename"
+            type="text"
+            value="merged.pdf"
+            maxlength="120"
+        >
+
+    </div>
+
+
+    <div
+        id="mergePdfValidation"
+        data-eft-readiness-status
+        class="pdf-validation eft-readiness-note"
+        role="status"
+        aria-live="polite"
+    >
+        Load at least two PDF files.
+    </div>
+
+
+    <div
+        id="mergePdfResult"
+        class="pdf-result-box eft-result-card hidden"
+    >
+
+        <div class="pdf-result-info eft-result-card-info">
+
+            <strong id="mergePdfResultName">
+                merged.pdf
+            </strong>
+
+            <span id="mergePdfResultMeta">
+                —
+            </span>
+
+        </div>
+
+
+        <button
+            id="mergePdfResultDownload"
+            type="button"
+            class="pdf-download-btn eft-result-download"
+        >
+            <i data-lucide="download"></i>
+
+            Download PDF
+        </button>
+
+    </div>
+
+</section>

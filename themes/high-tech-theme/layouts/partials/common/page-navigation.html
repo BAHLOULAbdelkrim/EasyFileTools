@@ -1,0 +1,67 @@
+<!-- =========================
+     BOTTOM NAVIGATION
+========================== -->
+
+<div class="operation-navigation">
+
+    <!-- =========================
+         HOMEPAGE
+    ========================== -->
+
+    {{ if .IsHome }}
+
+        <button
+            type="button"
+            class="operation-nav-btn operation-home"
+            disabled
+            aria-disabled="true"
+        >
+            <i data-lucide="house"></i>
+            Go to homepage
+        </button>
+
+    {{ else }}
+
+        <a
+            href="{{ "/" | relURL }}"
+            class="operation-nav-btn operation-home"
+            data-easyfile-navigation
+            data-target-category=""
+        >
+            <i data-lucide="house"></i>
+            Go to homepage
+        </a>
+
+    {{ end }}
+
+
+    <!-- =========================
+         GO BACK
+    ========================== -->
+
+    <button
+        type="button"
+        id="goBackBtn"
+        class="operation-nav-btn operation-back-btn"
+        disabled
+        aria-disabled="true"
+    >
+        <i data-lucide="undo-2"></i>
+        Go back
+    </button>
+
+
+    <!-- =========================
+         GO TO TOP
+    ========================== -->
+
+    <button
+        type="button"
+        id="goToTopBtn"
+        class="operation-nav-btn operation-top-btn"
+    >
+        <i data-lucide="arrow-up"></i>
+        Go to top
+    </button>
+
+</div>

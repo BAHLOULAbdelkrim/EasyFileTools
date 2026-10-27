@@ -1,0 +1,316 @@
+<section
+    id="removeBackgroundSettings"
+    class="remove-background-settings"
+    aria-labelledby="chooseFormatLabel"
+>
+
+    <!-- =====================================
+         AI ENGINE STATUS
+    ====================================== -->
+
+    <div class="background-ai-card">
+
+        <div class="background-ai-info">
+
+            <strong>
+                AI Background Removal
+            </strong>
+
+            <span>
+                Processing happens locally on your device.
+                An AI model is downloaded on first use,
+                shows loading progress, and is then reused from browser cache.
+            </span>
+
+        </div>
+
+        <div
+            id="backgroundAiStatus"
+            class="background-ai-status idle"
+        >
+            AI model not loaded
+        </div>
+
+    </div>
+
+
+    <!-- =====================================
+         BACKGROUND TYPE
+    ====================================== -->
+
+    <div class="background-setting-section">
+
+        <div class="background-setting-title">
+            Background
+        </div>
+
+        <div class="background-setting-help">
+            Remove the original background or replace it.
+        </div>
+
+
+        <div class="background-mode-buttons">
+
+            <button
+                type="button"
+                class="background-mode-btn active"
+                data-background-mode="transparent"
+            >
+                Transparent
+            </button>
+
+
+            <button
+                type="button"
+                class="background-mode-btn"
+                data-background-mode="color"
+            >
+                Solid color
+            </button>
+
+
+            <button
+                type="button"
+                class="background-mode-btn"
+                data-background-mode="image"
+            >
+                Custom image
+            </button>
+
+        </div>
+
+
+        <div
+            id="backgroundColorSettings"
+            class="background-extra-setting hidden"
+        >
+
+            <div class="eft-color-picker" data-eft-color-picker data-default-color="#ffffff">
+                <label class="eft-color-swatch" title="Choose replacement color">
+                    <input id="backgroundReplacementColor" type="color" value="#ffffff">
+                </label>
+                <span id="backgroundReplacementColorValue" class="eft-color-code">#FFFFFF</span>
+                <button type="button" class="eft-color-reset" data-eft-color-reset>Reset</button>
+            </div>
+
+        </div>
+
+
+        <div
+            id="backgroundImageSettings"
+            class="background-extra-setting hidden"
+        >
+
+            <div class="eft-file-picker">
+                <input
+                    id="backgroundReplacementImage"
+                    type="file"
+                    accept="image/png,image/jpeg,image/webp,image/avif"
+                >
+                <label for="backgroundReplacementImage" class="eft-file-picker-button">
+                    Choose background image
+                </label>
+                <span id="backgroundReplacementImageName" class="eft-file-picker-name">
+                    No background image selected
+                </span>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================
+         EDGE
+    ====================================== -->
+
+    <div class="background-setting-section">
+
+        <div class="background-setting-header">
+
+            <div>
+
+                <div class="background-setting-title">
+                    Edge softness
+                </div>
+
+                <div class="background-setting-help">
+                    Smooth difficult contours such as hair and fine details.
+                </div>
+
+            </div>
+
+            <strong id="backgroundEdgeValue">
+                1 px
+            </strong>
+
+        </div>
+
+
+        <input
+            id="backgroundEdgeSoftness"
+            class="eft-range"
+            type="range"
+            min="0"
+            max="5"
+            step="0.5"
+            value="1"
+        >
+
+    </div>
+
+
+    <!-- =====================================
+         OUTPUT FORMAT
+    ====================================== -->
+
+    <div class="background-setting-section">
+
+        <div class="background-setting-title">
+            Output format
+        </div>
+
+        <div class="background-output-formats">
+
+            <button
+                type="button"
+                class="background-format-btn"
+                data-background-format="png"
+            >
+                <strong>PNG</strong>
+                <span>Lossless • larger for photos</span>
+            </button>
+
+
+            <button
+                type="button"
+                class="background-format-btn active"
+                data-background-format="webp"
+            >
+                <strong>WebP</strong>
+                <span>Recommended • smaller</span>
+            </button>
+
+
+            <button
+                type="button"
+                class="background-format-btn"
+                data-background-format="jpg"
+            >
+                <strong>JPG</strong>
+                <span>Solid backgrounds</span>
+            </button>
+
+        </div>
+
+        <div class="background-setting-help background-output-hint">
+            WebP is recommended for transparent photos. PNG is lossless and is best for logos, text and graphics, but can be much larger.
+        </div>
+
+    </div>
+
+
+    <!-- =====================================
+         QUALITY
+    ====================================== -->
+
+    <div
+        id="backgroundQualitySection"
+        class="background-setting-section"
+    >
+
+        <div class="background-setting-header">
+
+            <div>
+
+                <div class="background-setting-title">
+                    Output quality
+                </div>
+
+                <div class="background-setting-help">
+                    Applies to WebP and JPG.
+                </div>
+
+            </div>
+
+            <strong id="backgroundQualityValue">
+                92%
+            </strong>
+
+        </div>
+
+
+        <input
+            id="backgroundOutputQuality"
+            class="eft-range"
+            type="range"
+            min="50"
+            max="100"
+            value="92"
+            step="1"
+            disabled
+        >
+
+    </div>
+
+
+    <!-- =====================================
+         VALIDATION
+    ====================================== -->
+
+    <div
+        id="backgroundRemovalValidation"
+        data-eft-readiness-status
+        class="background-validation"
+        role="status"
+        aria-live="polite"
+    >
+        Load one or more images.
+    </div>
+
+
+    <!-- =====================================
+         PREVIEW
+    ====================================== -->
+
+    <details
+        id="backgroundPreview"
+        class="eft-preview-card hidden"
+        open
+    >
+        <summary>Preview</summary>
+
+        <div class="eft-preview-body">
+            <div class="eft-preview-help">
+                Compare the original image with the generated result. You can switch between all processed images or collapse this preview.
+            </div>
+
+            <div class="eft-preview-toolbar">
+                <label>
+                    Preview image
+                    <select id="backgroundPreviewFile" disabled>
+                        <option value="">No processed image yet</option>
+                    </select>
+                </label>
+                <span id="backgroundPreviewHint" class="eft-preview-hint">The preview appears after processing.</span>
+            </div>
+
+            <div class="background-preview-grid">
+                <div class="background-preview-panel">
+                    <span>Original</span>
+                    <div class="background-preview-image-box">
+                        <img id="backgroundPreviewOriginal" alt="Original image preview">
+                    </div>
+                </div>
+
+                <div class="background-preview-panel">
+                    <span>Result</span>
+                    <div class="background-preview-image-box checkerboard">
+                        <img id="backgroundPreviewResult" alt="Background removed preview">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </details>
+
+</section>

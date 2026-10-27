@@ -40,6 +40,10 @@ async function restoreSelectedFiles() {
                 getFileCategory(file.name);
 
 
+            const safety = EasyFilePolicy.validate(file, { category, count: selectedFiles.length,
+                totalBytes: selectedFiles.reduce((sum, entry) => sum + entry.file.size, 0) });
+            if (!safety.ok) continue;
+
             const fileData = {
 
                 file: file,

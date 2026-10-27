@@ -46,9 +46,24 @@
 
     pointer-events: auto;
 
-    animation:
-        notificationAppear 0.3s ease,
-        notificationDisappear 0.3s ease 3.7s forwards;
+    opacity: 0;
+
+    transform:
+        translateY(-20px)
+        scale(0.96);
+
+    transition:
+        opacity 0.35s ease,
+        transform 0.35s ease;
+}
+
+.notification.visible {
+
+    opacity: 1;
+
+    transform:
+        translateY(0)
+        scale(1);
 }
 
 
@@ -144,49 +159,49 @@
 }
 
 
-/* =========================
-   ANIMATION
-========================= */
 
-@keyframes notificationAppear {
+/* =========================================
+   EASYFILE V1 — MOBILE NOTIFICATIONS
+========================================= */
 
-    from {
+@media (max-width: 600px) {
 
-        opacity: 0;
+  #notification-container {
+    left: 12px;
+    right: 12px;
+    top: 50%;
 
-        transform:
-            translateY(-20px)
-            scale(0.95);
-    }
+    width: auto;
+    max-height: 85vh;
+    max-height: 85dvh;
 
-    to {
+    transform: translateY(-50%);
+    align-items: stretch;
+    overflow-y: auto;
+  }
 
-        opacity: 1;
+  .notification {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+    border-radius: 12px;
+  }
 
-        transform:
-            translateY(0)
-            scale(1);
-    }
+  .notification-header {
+    padding: 11px 12px;
+    gap: 8px;
+    font-size: 16px;
+    flex-wrap: wrap;
+  }
+
+  .notification-body {
+    padding: 14px 12px;
+    font-size: 14px;
+    line-height: 1.5;
+    overflow-wrap: anywhere;
+    word-break: normal;
+  }
+
 }
 
-
-@keyframes notificationDisappear {
-
-    from {
-
-        opacity: 1;
-
-        transform:
-            translateY(0)
-            scale(1);
-    }
-
-    to {
-
-        opacity: 0;
-
-        transform:
-            translateY(-20px)
-            scale(0.95);
-    }
-}

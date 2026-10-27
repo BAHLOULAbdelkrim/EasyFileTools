@@ -1,0 +1,120 @@
+<section
+    id="pdfToImageSettings"
+    class="pdf-operation-settings"
+    aria-labelledby="chooseFormatLabel"
+>
+
+    <div class="pdf-setting-section">
+
+        <div class="pdf-setting-title">
+            Image format
+        </div>
+
+        <div class="pdf-choice-group">
+
+            <button
+                type="button"
+                class="pdf-choice-btn active"
+                data-pdf-image-format="png"
+            >
+                <strong>PNG</strong>
+                <span>Lossless</span>
+            </button>
+
+
+            <button
+                type="button"
+                class="pdf-choice-btn"
+                data-pdf-image-format="jpg"
+            >
+                <strong>JPG</strong>
+                <span>Smaller files</span>
+            </button>
+
+
+            <button
+                type="button"
+                class="pdf-choice-btn"
+                data-pdf-image-format="webp"
+            >
+                <strong>WebP</strong>
+                <span>Modern</span>
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <div class="pdf-setting-grid pdf-setting-grid-single">
+
+        <div class="pdf-setting-section">
+
+            <div class="pdf-setting-title">
+                Resolution
+            </div>
+
+            <select id="pdfToImageScale">
+
+                <option value="1">
+                    Standard
+                </option>
+
+                <option value="1.5">
+                    High
+                </option>
+
+                <option
+                    value="2"
+                    selected
+                >
+                    Very High
+                </option>
+
+                <option value="3">
+                    Print
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <div class="pdf-setting-section">
+
+            <div class="pdf-setting-title">
+                Quality
+            </div>
+
+            <div class="pdf-range-row">
+                <input
+                id="pdfToImageQuality"
+                class="eft-range"
+                type="range"
+                min="50"
+                max="100"
+                value="92"
+                >
+
+                <strong id="pdfToImageQualityValue">
+                    92%
+                </strong>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div
+        id="pdfToImageValidation"
+        data-eft-readiness-status
+        class="pdf-validation eft-readiness-note"
+        role="status"
+        aria-live="polite"
+    >
+        Load one or more PDF files.
+    </div>
+
+
+</section>

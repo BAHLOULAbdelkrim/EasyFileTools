@@ -1,0 +1,208 @@
+<section
+    id="convertImageSettings"
+    class="convert-image-settings"
+    aria-labelledby="chooseFormatLabel"
+>
+
+    <!-- =========================
+         OUTPUT FORMAT
+    ========================== -->
+
+    <div class="image-setting-section">
+
+        <div class="image-setting-title">
+            Output format
+        </div>
+
+        <div class="image-setting-help">
+            Choose the format for all converted images.
+        </div>
+
+
+        <div
+            id="imageConversionFormats"
+            class="image-conversion-formats"
+        >
+
+            <button
+                type="button"
+                class="image-format-btn"
+                data-image-format="png"
+                data-mime="image/png"
+            >
+                <strong>PNG</strong>
+                <span>Lossless • Transparency</span>
+            </button>
+
+
+            <button
+                type="button"
+                class="image-format-btn"
+                data-image-format="jpg"
+                data-mime="image/jpeg"
+            >
+                <strong>JPG</strong>
+                <span>Photos • Small files</span>
+            </button>
+
+
+            <button
+                type="button"
+                class="image-format-btn"
+                data-image-format="webp"
+                data-mime="image/webp"
+            >
+                <strong>WebP</strong>
+                <span>Modern • Web optimized</span>
+            </button>
+
+
+            <button
+                type="button"
+                class="image-format-btn"
+                data-image-format="avif"
+                data-mime="image/avif"
+            >
+                <strong>AVIF</strong>
+                <span>Modern • High compression</span>
+            </button>
+
+
+            <button
+                type="button"
+                class="image-format-btn"
+                data-image-format="bmp"
+                data-mime="image/bmp"
+            >
+                <strong>BMP</strong>
+                <span>Uncompressed bitmap</span>
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         QUALITY
+    ========================== -->
+
+    <div
+        id="imageQualitySection"
+        class="image-setting-section image-quality-section disabled"
+    >
+
+        <div class="image-setting-header">
+
+            <div>
+
+                <div class="image-setting-title">
+                    Output quality
+                </div>
+
+                <div
+                    id="imageQualityHelp"
+                    class="image-setting-help"
+                >
+                    Available for lossy output formats.
+                </div>
+
+            </div>
+
+
+            <strong
+                id="imageQualityValue"
+                class="image-quality-value"
+            >
+                90%
+            </strong>
+
+        </div>
+
+
+        <input
+            type="range"
+            id="imageQualitySlider"
+            class="eft-range"
+            min="10"
+            max="100"
+            step="1"
+            value="90"
+            disabled
+        >
+
+    </div>
+
+
+    <!-- =========================
+         TRANSPARENCY / BACKGROUND
+    ========================== -->
+
+    <div
+        id="imageBackgroundSection"
+        class="image-setting-section image-background-section disabled"
+    >
+
+        <div>
+
+            <div class="image-setting-title">
+                Transparency background
+            </div>
+
+            <div class="image-setting-help">
+                JPG and BMP do not preserve transparent pixels.
+            </div>
+
+        </div>
+
+
+        <div
+            class="eft-color-picker image-background-control"
+            data-eft-color-picker
+            data-default-color="#ffffff"
+        >
+            <label class="eft-color-swatch" title="Choose background color">
+                <input
+                    type="color"
+                    id="imageBackgroundColor"
+                    value="#ffffff"
+                    disabled
+                >
+            </label>
+            <span id="imageBackgroundValue" class="eft-color-code">#FFFFFF</span>
+            <button type="button" class="eft-color-reset" data-eft-color-reset disabled>Reset</button>
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         INFO
+    ========================== -->
+
+    <div class="image-conversion-note eft-status-note">
+
+        <i data-lucide="shield-check"></i>
+
+        <span>
+            Original dimensions are preserved. Images are processed locally in your browser.
+        </span>
+
+    </div>
+
+
+    <!-- =========================
+         VALIDATION
+    ========================== -->
+
+    <div
+        id="imageConversionValidation"
+        data-eft-readiness-status
+        class="image-conversion-validation"
+        role="status"
+        aria-live="polite"
+    >
+        Load one or more images and choose an output format.
+    </div>
+
+</section>

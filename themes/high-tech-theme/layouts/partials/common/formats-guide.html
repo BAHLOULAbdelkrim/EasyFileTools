@@ -1,0 +1,262 @@
+{{ $category := .category }}
+{{ $guide := index site.Data.formats $category }}
+
+{{ if $guide }}
+
+<section
+    class="formats-guide"
+    data-format-category="{{ $category }}"
+>
+
+    <!-- =========================================
+         INTRO
+    ========================================== -->
+
+    <div class="formats-guide-intro">
+
+        <p>
+            {{ $guide.intro }}
+        </p>
+
+    </div>
+
+
+    <!-- =========================================
+         QUICK CHOICE
+    ========================================== -->
+
+    {{ with $guide.quick_choices }}
+
+    <section class="formats-quick-choice">
+
+        <div class="formats-section-heading">
+
+            <span class="formats-section-eyebrow">
+                Quick Choice
+            </span>
+
+            <h2>
+                Choose a format quickly
+            </h2>
+
+        </div>
+
+
+        <div class="quick-choice-grid">
+
+            {{ range . }}
+
+            <div class="quick-choice-item">
+
+                <span class="quick-choice-label">
+                    {{ .label }}
+                </span>
+
+                <strong class="quick-choice-value">
+                    {{ .formats }}
+                </strong>
+
+            </div>
+
+            {{ end }}
+
+        </div>
+
+    </section>
+
+    {{ end }}
+
+
+    <!-- =========================================
+         OPTIONAL NOTE
+    ========================================== -->
+
+    {{ with $guide.note }}
+
+    <div class="formats-guide-note">
+
+        <strong>
+            {{ .title }}
+        </strong>
+
+        <span>
+            {{ .text }}
+        </span>
+
+    </div>
+
+    {{ end }}
+
+
+    {{ with $guide.secondary_note }}
+
+    <div class="formats-guide-note formats-guide-secondary-note">
+
+        <strong>
+            {{ .title }}
+        </strong>
+
+        <span>
+            {{ .text }}
+        </span>
+
+    </div>
+
+    {{ end }}
+
+
+    <!-- =========================================
+         FORMAT CARDS
+    ========================================== -->
+
+    <section class="formats-cards-section">
+
+        <div class="formats-section-heading">
+
+            <span class="formats-section-eyebrow">
+                Format Guide
+            </span>
+
+            <h2>
+                Compare the main formats
+            </h2>
+
+        </div>
+
+
+        <div class="formats-grid">
+
+            {{ range $guide.formats }}
+
+            <article class="format-card">
+
+                <!-- HEADER -->
+
+                <div class="format-card-header">
+
+                    <div>
+
+                        <h3 class="format-name">
+                            {{ .name }}
+                        </h3>
+
+                        <div class="format-extensions">
+                            {{ .extensions }}
+                        </div>
+
+                    </div>
+
+                    {{ with .status }}
+
+                    <span class="format-status">
+                        {{ . }}
+                    </span>
+
+                    {{ end }}
+
+                </div>
+
+
+                <!-- DESCRIPTION -->
+
+                <p class="format-description">
+                    {{ .description }}
+                </p>
+
+
+                <!-- FACTS -->
+
+                {{ with .facts }}
+
+                <dl class="format-facts">
+
+                    {{ range . }}
+
+                    <div class="format-fact">
+
+                        <dt>
+                            {{ .label }}
+                        </dt>
+
+                        <dd>
+                            {{ .value }}
+                        </dd>
+
+                    </div>
+
+                    {{ end }}
+
+                </dl>
+
+                {{ end }}
+
+
+                <!-- BEST FOR -->
+
+                {{ with .best_for }}
+
+                <div class="format-best-for">
+
+                    <span class="format-best-label">
+                        Best for
+                    </span>
+
+                    <strong>
+                        {{ . }}
+                    </strong>
+
+                </div>
+
+                {{ end }}
+
+
+                <!-- NOTE -->
+
+                {{ with .note }}
+
+                <div class="format-card-note">
+                    {{ . }}
+                </div>
+
+                {{ end }}
+
+                <!-- ACTION -->
+
+                {{ if .action_url }}
+
+                <a
+                    class="format-action"
+                    href="{{ .action_url | relURL }}"
+                    data-easyfile-navigation
+                    data-target-category="{{ $guide.navigation_category }}"
+                >
+
+                    <span>
+                        {{ .action_label | default "Explore tools" }}
+                    </span>
+
+                    <span aria-hidden="true">
+                        →
+                    </span>
+
+                </a>
+
+                {{ end }}
+
+            </article>
+
+            {{ end }}
+
+        </div>
+
+    </section>
+
+</section>
+
+{{ else }}
+
+<p>
+    Format guide data not found.
+</p>
+
+{{ end }}

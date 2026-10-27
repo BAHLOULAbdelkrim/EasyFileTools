@@ -207,6 +207,14 @@ document.addEventListener(
 ========================================================= */
 
 document.addEventListener(
+    "easyfiletools:operation-results-discarded",
+    () => {
+        refreshAudioFileList();
+    }
+);
+
+
+document.addEventListener(
     "easyfiletools:files-cleared",
     () => {
 
@@ -261,6 +269,10 @@ async function handleAudioFiles(files) {
            CRÉATION DES DONNÉES DU FICHIER
         ================================================= */
 
+        const safety = EasyFilePolicy.validate(file, { category: "Audio", operation: document.getElementById("operation-zone")?.dataset?.operation,
+            count: audioSelectedFiles.length, totalBytes: audioSelectedFiles.reduce((sum, item) => sum + item.file.size, 0) });
+        if (!safety.ok) { alert(`${file.name}: ${safety.reason}`); continue; }
+
         const fileData = {
 
             file: file,
@@ -285,6 +297,34 @@ async function handleAudioFiles(files) {
             fileData
         );
 
+        /* =================================================
+        PRÉCHARGEMENT FFMPEG
+
+        Dès qu'un premier fichier audio valide est ajouté,
+        on commence à charger FFmpeg en arrière-plan.
+
+        On n'attend volontairement pas le résultat ici :
+        l'affichage et la préparation du fichier continuent
+        normalement pendant le chargement de FFmpeg.
+        ================================================= */
+
+        if (
+            typeof getFFmpeg ===
+            "function"
+        ) {
+
+            getFFmpeg().catch(
+                (error) => {
+
+                    console.warn(
+                        "[AUDIO ZONE] FFmpeg preload failed:",
+                        error
+                    );
+
+                }
+            );
+        }
+
         refreshAudioFileList();
 
         const currentIndex =
@@ -296,7 +336,6 @@ async function handleAudioFiles(files) {
             audioFileList?.querySelector(
                 `.file-item[data-file-index="${currentIndex}"]`
             );
-
 
         /* =================================================
         ÉTAT : LOADING
@@ -384,7 +423,7 @@ function refreshAudioFileList() {
 
             category: "Audio",
 
-            maxSize: APP_CONFIG.maxFileSizeMB * 1024 * 1024,
+            maxSize: EasyFilePolicy.resolve({ category: "Audio", operation: document.getElementById("operation-zone")?.dataset?.operation }).maxFileMB * EasyFilePolicy.MB,
 
             enableReorder: true,
 
@@ -575,6 +614,9 @@ async function loadAudioFilesFromStorage() {
     for (
         const item of audioFiles
     ) {
+        const safety = EasyFilePolicy.validate(item.file, { category: "Audio", operation: document.getElementById("operation-zone")?.dataset?.operation,
+            count: restoredFiles.length, totalBytes: restoredFiles.reduce((sum, entry) => sum + entry.file.size, 0) });
+        if (!safety.ok) continue;
 
         /*
         * Un File relu depuis IndexedDB
@@ -694,19 +736,7 @@ async function saveAudioFilesToStorage() {
         audioSelectedFiles.length === 0
     ) {
 
-        await clearStoredFiles();
-
-        document.dispatchEvent(
-            new CustomEvent(
-                "easyfiletools:storage-updated",
-                {
-                    detail: {
-                        files: [],
-                        category: "Audio"
-                    }
-                }
-            )
-        );
+        await clearStoredFiles({ category: "Audio" });
 
         return;
     }

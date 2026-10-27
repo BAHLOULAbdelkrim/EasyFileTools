@@ -1,0 +1,21 @@
+/* Scoped CSS: keeps V4.2 common bundle and core Lighthouse strategies unchanged. */
+.eft-contact-panel {box-sizing:border-box;max-width:850px;margin:24px auto 40px;padding:clamp(16px,3vw,30px);border:1px solid #cbd5e1;border-radius:12px;background:#fff;color:#172554}
+.eft-contact-panel h2 {font-size:clamp(1.25rem,3vw,1.7rem);margin:0 0 10px;color:#4c1d95}
+.eft-contact-panel p {line-height:1.6}
+.eft-contact-panel form {margin-top:20px}
+.eft-contact-grid {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px 20px;margin-bottom:14px}
+.eft-contact-panel label {display:block;font-weight:600;margin:12px 0 5px;color:#334155}
+.eft-contact-panel input,.eft-contact-panel select,.eft-contact-panel textarea {display:block;box-sizing:border-box;width:100%;max-width:100%;min-width:0;padding:10px 12px;background:white;color:#0f172a;border:1px solid #64748b;border-radius:7px;font:inherit;line-height:1.4}
+.eft-contact-panel textarea {resize:vertical;min-height:80px}
+.eft-contact-panel :is(input,select,textarea,button):focus-visible {outline:3px solid #7c3aed;outline-offset:2px}
+.eft-contact-counter {font-size:.85rem;text-align:right;color:#475569;margin:2px 0 14px}
+.eft-contact-counter.eft-contact-over {font-weight:700;color:#b91c1c}
+.eft-contact-notice {padding:8px 12px;border-left:3px solid #0f766e;background:#f0fdfa;font-size:.9rem;overflow-wrap:anywhere}
+.eft-contact-panel a {text-decoration:underline;color:#4c1d95}
+.eft-contact-submit {background:#047857;border:0;color:white;border-radius:7px;font-size:1rem;font-weight:700;padding:12px 24px;cursor:pointer;margin-top:16px}
+.eft-contact-submit:disabled {background:#94a3b8;cursor:not-allowed}
+.eft-contact-status {font-weight:600;min-height:1.5em;overflow-wrap:anywhere}
+.eft-contact-status[data-type="error"] {color:#b91c1c}
+.eft-contact-status[data-type="success"] {color:#047857}
+.eft-contact-honey {position:absolute!important;left:-10000px!important;opacity:0!important;width:1px;height:1px;overflow:hidden}
+@media(max-width:640px){.eft-contact-grid{grid-template-columns:minmax(0,1fr)}.eft-contact-panel{margin:16px auto 32px;padding:16px}}

@@ -1,0 +1,29 @@
+# EasyFile Tools — generated files and local environment
+# Generated Hugo files (do not commit/deploy source copies)
+/.hugo_build.lock
+/public/
+/resources/
+/node_modules/
+
+# Local test reports and browser traces
+/reports/lighthouse/*.report.html
+/reports/lighthouse/*.report.json
+/reports/lighthouse/summary.csv
+
+# Operating-system/editor leftovers
+.DS_Store
+Thumbs.db
+Desktop.ini
+*.swp
+*.swo
+
+# Files excluded from the Cloudflare source repository
+/reports/
+/experiments/
+*.bak
+*.old
+*.orig
+*.tmp
+
+# This >25 MiB binary must be served from R2, NOT committed to Pages.
+/themes/high-tech-theme/static/js/audio/convert-audio/lib/ffmpeg-core.wasm

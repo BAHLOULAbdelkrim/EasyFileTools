@@ -1,0 +1,20 @@
+{{ with index .Site.Data.seo.tools (.Params.operation | default "") }}
+<details class="tool-help">
+  <summary class="tool-help-summary">
+    <span class="tool-help-icon" aria-hidden="true">?</span>
+    <span>Help &amp; tips</span>
+    <span class="tool-help-chevron" aria-hidden="true"></span>
+  </summary>
+  <div class="tool-help-content">
+    <h2>{{ .heading }}</h2>
+    <ol>{{ range .steps }}<li>{{ . }}</li>{{ end }}</ol>
+    {{ with .examples }}<h2>Example use cases</h2><ul>{{ range . }}<li>{{ . }}</li>{{ end }}</ul>{{ end }}
+    {{ with .limitations }}<h2>Limitations to consider</h2><ul>{{ range . }}<li>{{ . }}</li>{{ end }}</ul>{{ end }}
+    <h2>Questions and practical tips</h2>
+    {{ range .faq }}<h3>{{ .question }}</h3><p>{{ .answer }}</p>{{ end }}
+    <h3>Processing and file safety</h3>
+    <p>This tool processes files in your browser. Loading the page, libraries or AI models can still require network connections. Keep a copy of your original files and check the downloaded result before deleting them. Large files may require more memory and processing time than your device can provide.</p>
+    {{ with $.Parent }}<p><a href="{{ .RelPermalink }}" data-easyfile-navigation data-target-category="{{ .Section }}">Browse {{ .Title }} tools and the formats guide</a></p>{{ end }}
+  </div>
+</details>
+{{ end }}
