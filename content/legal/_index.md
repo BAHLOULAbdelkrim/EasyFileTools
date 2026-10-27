@@ -27,7 +27,7 @@ seoIndex: true
 
 ## Third-party components
 
-The site includes software components governed by their respective licenses. Their use does not remove the copyright or license obligations applicable to those components. See the notices and licenses distributed with those components where applicable.
+The site includes software components governed by their respective licenses. Their use does not remove the copyright or license obligations applicable to those components. See the [Open Source Licenses](/open-source-licenses/) page for FFmpeg and related source-code information.
 
 ## Service and contact
 

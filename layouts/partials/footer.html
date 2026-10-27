@@ -6,6 +6,7 @@
       <a href="{{ "/about/" | relURL }}" data-easyfile-navigation>{{ i18n "about" }}</a>
       {{ with .Site.GetPage "/privacy/" }}<a href="{{ .RelPermalink }}" data-easyfile-navigation>{{ i18n "privacy" }}</a>{{ end }}
       {{ with .Site.GetPage "/legal/" }}<a href="{{ .RelPermalink }}" data-easyfile-navigation>{{ i18n "legal" }}</a>{{ end }}
+      {{ with .Site.GetPage "/open-source-licenses/" }}<a href="{{ .RelPermalink }}" data-easyfile-navigation>Open Source Licenses</a>{{ end }}
     </nav>
 
     {{ with .Site.GetPage "/contact/" }}
