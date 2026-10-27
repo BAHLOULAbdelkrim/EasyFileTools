@@ -11,11 +11,14 @@
 
   <link rel="icon" type="image/svg+xml" href="{{ "logo_symbol.svg" | relURL }}?v=3">
 
-  <!-- The site uses its own CSS: production consolidates all common styles into one fingerprinted file. -->
-  <!-- Fonts are optional during first paint; keep the accessible noscript fallback. -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;family=Orbitron:wght@700;900&amp;display=optional" rel="stylesheet" media="print" onload="this.media='all'">
-  <noscript><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;family=Orbitron:wght@700;900&amp;display=optional" rel="stylesheet"></noscript>
-  <style>body { font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Arial, sans-serif; }</style>
+  <!-- Typography stability: load the font CSS before first paint, not via
+       media=print/onload. With display=optional, a cold visit could keep the
+       fallback font until the next navigation, creating a visibly bolder first visit.
+       Preconnect minimizes the extra stylesheet cost; swap applies the intended
+       typography during the FIRST visit instead of requiring a refresh. -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;family=Orbitron:wght@700;900&amp;display=swap">
 
   {{ if hugo.IsProduction }}
   <!-- V4: preserve original cascade order and flatten the two @imports in homepage/main.css. -->
