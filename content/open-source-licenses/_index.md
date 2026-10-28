@@ -19,7 +19,7 @@ The GPL and other third-party licenses apply to their respective components. Eas
 
 ## Sources and build materials
 
-**[Download FFmpeg source collection and build materials (ZIP, approximately 130 MB)](https://pub-2f28a95bb5d044828b25e3c93f0c490f.r2.dev/ffmpeg/FFmpeg-EasyFileTools-Sources-COMPLETEES-A-VERIFIER.zip)**
+**[Download FFmpeg source collection and build materials (ZIP, approximately 130 MB)](https://licenses.easyfiletools.app/ffmpeg/FFmpeg-EasyFileTools-Sources-COMPLETEES-A-VERIFIER.zip)**
 
 Source archive SHA-256: `09b92189e04250adcd69851b76ad97487a48720d834de65361b8a3b4f5a85546`.
 
