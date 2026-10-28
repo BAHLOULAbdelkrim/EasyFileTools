@@ -7,4 +7,4 @@
   Referrer-Policy: no-referrer
   Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=()
   Content-Security-Policy: base-uri 'self'; object-src 'none'; frame-ancestors 'none'; form-action 'self'
-  Content-Security-Policy-Report-Only: script-src 'self' https://challenges.cloudflare.com
+  Content-Security-Policy-Report-Only: script-src 'self' https://challenges.cloudflare.com 'sha256-GC08yyC32xf9B0oO0QOK/OiINcHTrnqyGlIxYByAjNo=' 'sha256-BBw/vY1RWfVCnoHWnOVQGeJR1MV8sWdKINIcq3nR7uw='
