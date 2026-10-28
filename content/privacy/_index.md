@@ -5,7 +5,7 @@ layout: "policy"
 seoIndex: true
 ---
 
-**Last updated: October 17, 2026**
+**Last updated: October 28, 2026**
 
 ## 1. About this website
 
@@ -39,7 +39,7 @@ The form does not request:
 
 You may provide technical details such as the tool name, browser, operating system, input and output formats, a short description, steps to reproduce a problem and any error message displayed.
 
-When the reporting service is enabled, messages are transmitted through our hosting infrastructure to an email delivery provider.
+When a report is submitted, its content is transmitted through Cloudflare Pages Functions and Resend to the website operator's receiving mailbox.
 
 Our application does not intentionally add your IP address to these messages and does not maintain a separate database of submitted reports.
 
@@ -67,7 +67,7 @@ When you use the **From URL** feature, your browser attempts to retrieve the fil
 
 Cloudflare Turnstile is used to help prevent automated submissions. The application validates the Turnstile response without deliberately sending your IP address in the optional `remoteip` field.
 
-Report messages are delivered through Resend when the email integration is enabled. The provider processes the message content to deliver the email.
+Report messages are delivered through Resend and forwarded to a receiving Gmail mailbox. These providers process the message and related delivery information to provide their services.
 
 External services may process technical information according to their own privacy policies.
 
@@ -85,11 +85,11 @@ Files stored locally in your browser remain under the control of your browser an
 
 Contact messages are not stored in a separate EasyFile Tools application database. However, they are delivered to a receiving mailbox and may be processed or retained by the email service provider.
 
-**Contact message retention:** 90 days.
+**Contact message retention:** Reports are kept for as long as needed to review the request, investigate the issue and document any necessary follow-up. The retention period is determined by whether the report remains unresolved, whether it is relevant to a recurring problem, and whether an applicable legal obligation requires longer retention. Messages that are no longer needed for these purposes are deleted following review of the receiving mailbox. This does not control any separate technical or delivery-record retention by email or infrastructure providers.
 
 Infrastructure providers may also retain technical information under their applicable service arrangements.
 
-Depending on the features used, data recipients may include Cloudflare, Resend and providers of externally loaded website resources.
+Depending on the features used, data recipients may include Cloudflare, Resend, Google (Gmail) and providers of externally loaded website resources.
 
 Any applicable international data transfers and their safeguards must be assessed according to the services actually used.
 

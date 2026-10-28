@@ -11,11 +11,11 @@ seoIndex: true
 
 **Publisher:** EasyFile Tools is operated by an individual on a non-professional basis. The website is currently not monetized and is not operated by a registered business.
 
-**Publisher identification:** In accordance with Article 1-1 II of French Law No. 2004-575 of June 21, 2004 (LCEN), the publisher has chosen not to disclose their personal identification details publicly. The identification details required by law have been provided to the hosting provider.
+**Publisher identification:** The publisher is an individual acting on a non-professional basis who has chosen not to publish personal identification details. The publisher has provided identifying and contact information through the Cloudflare account and billing process. Under Article 1-1 II of French Law No. 2004-575 of June 21, 2004 (LCEN), withholding this information from public display is conditional on the hosting provider having the personal identification details required by law.
 
 ## Hosting provider
 
-**Expected provider:** Cloudflare, Inc. (Cloudflare Pages)
+**Hosting provider:** Cloudflare, Inc. (Cloudflare Pages)
 
 **Address:** 101 Townsend St, San Francisco, CA 94107, United States
 
