@@ -1,5 +1,5 @@
 ---
-seoTitle: "Compress Video Online | EasyFile Tools"
+seoTitle: "Compress Video Online | FileMorning"
 title: "Compress Video"
 url: "/video/compress-video/"
 icon: "minimize-2"

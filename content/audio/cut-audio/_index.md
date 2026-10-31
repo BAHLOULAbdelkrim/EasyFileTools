@@ -1,5 +1,5 @@
 ---
-seoTitle: "Cut Audio Online | EasyFile Tools"
+seoTitle: "Cut Audio Online | FileMorning"
 title: "Cut Audio"
 url: "/audio/cut-audio/"
 icon: "scissors"

@@ -1,5 +1,5 @@
 ---
-seoTitle: "Video to Audio Online | EasyFile Tools"
+seoTitle: "Video to Audio Online | FileMorning"
 title: "Video to Audio"
 url: "/video/video-to-audio/"
 icon: "music"

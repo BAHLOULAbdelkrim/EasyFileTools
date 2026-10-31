@@ -89,7 +89,7 @@ for (const file of walk(out)) {
   for (const img of tags(html, 'img')) localAssetCheck(relative, attribute(img, 'src'), warn);
 }
 
-for (const relative of ['robots.txt', 'sitemap.xml', 'images/easyfile-share.png']) {
+for (const relative of ['robots.txt', 'sitemap.xml', 'images/filemorning_share.png']) {
   if (!fs.existsSync(path.join(out, relative))) errors.push(`${relative} missing from Hugo output`);
 }
 if (indexable === 0) warnings.push('No explicitly indexable pages detected. Check robots directives.');

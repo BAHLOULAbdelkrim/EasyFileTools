@@ -97,13 +97,13 @@ test('font strategy and accessibility fallbacks remain unchanged',()=>{
  assert.match(head,/meta name="viewport"/);
 });
 
-// Match the intrinsic aspect ratio in static/images/logo.svg to reserve space before SVG decoding.
+// Match the intrinsic aspect ratio in static/images/logo_morning.svg to reserve space before SVG decoding.
 test('header reserves near-exact intrinsic logo aspect ratio to reduce CLS',()=>{
  const header=read('layouts/partials/header.html');
- assert.match(header,/width="493"\s+height="151"\s+class="logo"/);
- const svg=read('static/images/logo.svg');
+ assert.match(header,/width="441"\s+height="156"\s+class="logo"/);
+ const svg=read('static/images/logo_morning.svg');
  const width=Number(svg.match(/\bwidth="([0-9.]+)"/)?.[1]);
  const height=Number(svg.match(/\bheight="([0-9.]+)"/)?.[1]);
  assert.ok(width>0&&height>0);
- assert.ok(Math.abs(width/height-493/151)<0.01);
+ assert.ok(Math.abs(width/height-441/156)<0.01);
 });

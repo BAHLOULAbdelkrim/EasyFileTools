@@ -1,6 +1,6 @@
 ---
 title: "Document Formats (Guide)"
-seoTitle: "PDF vs DOCX vs ODT: Document Format Guide | EasyFile Tools"
+seoTitle: "PDF vs DOCX vs ODT: Document Format Guide | FileMorning"
 url: "/documents/document-formats-guide/"
 icon: "book-text"
 guide: "formats"

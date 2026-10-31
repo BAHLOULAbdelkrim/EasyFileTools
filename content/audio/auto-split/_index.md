@@ -1,5 +1,5 @@
 ---
-seoTitle: "Split Audio by Silence Online | EasyFile Tools"
+seoTitle: "Split Audio by Silence Online | FileMorning"
 title: "Auto Split"
 url: "/audio/auto-split/"
 icon: "square-split-horizontal"

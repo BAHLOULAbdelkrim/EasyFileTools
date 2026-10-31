@@ -1,5 +1,5 @@
 ---
-seoTitle: "Resize and Crop Image Online | EasyFile Tools"
+seoTitle: "Resize and Crop Image Online | FileMorning"
 title: "Resize / Crop Image"
 url: "/images/resize-crop-image/"
 icon: "crop"

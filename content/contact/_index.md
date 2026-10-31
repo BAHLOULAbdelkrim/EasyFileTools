@@ -1,11 +1,11 @@
 ---
-title: "Contact EasyFile Tools"
-description: "Send an anonymous technical report, suggestion, question or privacy inquiry to EasyFile Tools without providing a name or email address."
+title: "Contact FileMorning"
+description: "Send an anonymous technical report, suggestion, question or privacy inquiry to FileMorning without providing a name or email address."
 layout: "contact"
 seoIndex: true
 ---
 
-## Help us improve EasyFile Tools
+## Help us improve FileMorning
 
 Use the form below to tell us about a malfunction, ask a question or suggest an improvement. Select the tool and describe what happened so the issue can be reproduced.
 

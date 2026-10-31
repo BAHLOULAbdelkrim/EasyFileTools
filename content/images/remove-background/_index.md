@@ -1,5 +1,5 @@
 ---
-seoTitle: "Remove Image Background Online | EasyFile Tools"
+seoTitle: "Remove Image Background Online | FileMorning"
 title: "Remove Background"
 url: "/images/remove-background/"
 icon: "eraser"

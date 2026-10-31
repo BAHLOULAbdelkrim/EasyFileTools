@@ -1,5 +1,5 @@
 ---
-seoTitle: "Merge PDF Online | EasyFile Tools"
+seoTitle: "Merge PDF Online | FileMorning"
 title: "Merge PDF"
 url: "/documents/merge-pdf/"
 icon: "files"

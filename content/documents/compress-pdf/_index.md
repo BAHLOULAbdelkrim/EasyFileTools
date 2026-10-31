@@ -1,5 +1,5 @@
 ---
-seoTitle: "Compress PDF Online | EasyFile Tools"
+seoTitle: "Compress PDF Online | FileMorning"
 title: "Compress PDF"
 url: "/documents/compress-pdf/"
 icon: "minimize-2"

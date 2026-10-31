@@ -276,7 +276,7 @@
       "Choose High to prioritize visual detail, or Low for smaller files when some loss of detail is acceptable."
     ],
     "limitations": [
-      "For WebM re-encoding, EasyFile Tools prefers browser VP9 through WebCodecs and falls back to FFmpeg.wasm when VP9, decoding or required features are unavailable. Browser support varies.",
+      "For WebM re-encoding, FileMorning prefers browser VP9 through WebCodecs and falls back to FFmpeg.wasm when VP9, decoding or required features are unavailable. Browser support varies.",
       "Medium and High may generate files larger than the original. Re-encoding cannot restore detail already lost in the source.",
       "Very large or long videos can exceed device memory limits. Do not close the tab during conversion.",
       "Extra tracks, subtitles, chapters and metadata may not be preserved. Verify the output."
@@ -292,7 +292,7 @@
       },
       {
         "question": "Why are some WebM conversions faster?",
-        "answer": "For WebM output, EasyFile Tools first copies already-compatible streams without re-encoding when possible. When re-encoding is required, it prefers VP9 through WebCodecs, with Low, Medium or High quality selected by you. If VP9 is unavailable or fails, FFmpeg.wasm takes over. VP8 is not used for automatic WebCodecs re-encoding because a tested browser VP8 encoder caused periodic keyframe artifacts. Speed varies by video, browser and device."
+        "answer": "For WebM output, FileMorning first copies already-compatible streams without re-encoding when possible. When re-encoding is required, it prefers VP9 through WebCodecs, with Low, Medium or High quality selected by you. If VP9 is unavailable or fails, FFmpeg.wasm takes over. VP8 is not used for automatic WebCodecs re-encoding because a tested browser VP8 encoder caused periodic keyframe artifacts. Speed varies by video, browser and device."
       },
       {
         "question": "Does the selected video leave my device?",
@@ -322,7 +322,7 @@
       },
       {
         "question": "When is compression faster?",
-        "answer": "For WebM output, compatible browsers can encode VP9 directly; otherwise EasyFile Tools uses FFmpeg. Other containers currently use FFmpeg. Results depend on your device and the source."
+        "answer": "For WebM output, compatible browsers can encode VP9 directly; otherwise FileMorning uses FFmpeg. Other containers currently use FFmpeg. Results depend on your device and the source."
       },
       {
         "question": "Why might the original be returned?",

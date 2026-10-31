@@ -1,6 +1,6 @@
 ---
 title: "Image Formats (Guide)"
-seoTitle: "JPG vs PNG vs WebP: Image Format Guide | EasyFile Tools"
+seoTitle: "JPG vs PNG vs WebP: Image Format Guide | FileMorning"
 url: "/images/image-formats-guide/"
 icon: "book-text"
 guide: "formats"

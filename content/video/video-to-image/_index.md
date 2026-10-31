@@ -6,4 +6,4 @@ weight: 8
 ---
 🚧 Coming soon.
 
-This tool is not available yet. Please choose one of the currently available EasyFile Tools operations.
+This tool is not available yet. Please choose one of the currently available FileMorning operations.

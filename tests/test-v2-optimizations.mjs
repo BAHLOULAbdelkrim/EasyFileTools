@@ -66,10 +66,10 @@ test('Cut Audio never requests FFmpeg for waveform preview', () => {
 });
 
 test('Social sharing image exists at 1200 x 630',()=>{
-  const img=fs.readFileSync(path.join(root,'static/images/easyfile-share.png'));
+  const img=fs.readFileSync(path.join(root,'static/images/filemorning_share.png'));
   assert.equal(img.readUInt32BE(16),1200);
   assert.equal(img.readUInt32BE(20),630);
-  assert.match(read('layouts/partials/seo/metadata.html'), /images\/easyfile-share\.png/);
+  assert.match(read('layouts/partials/seo/metadata.html'), /images\/filemorning_share\.png/);
 });
 
 test('All 19 tools have English use-case and limitation guidance',()=>{

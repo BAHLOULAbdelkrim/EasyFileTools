@@ -108,7 +108,7 @@ formats:
       - label: "Animation"
         value: "Yes"
     best_for: "Simple looping animations and compatibility-focused animated graphics"
-    note: "EasyFile Tools does not yet expose GIF conversion in Convert Image; a dedicated Image to GIF tool is planned."
+    note: "FileMorning does not yet expose GIF conversion in Convert Image; a dedicated Image to GIF tool is planned."
     action_label: "Explore Image tools"
     action_url: "/images/"
 

@@ -23,8 +23,8 @@ function buildFixture(meta) {
   fs.mkdirSync(path.join(temp, 'images'));
   fs.writeFileSync(path.join(temp, 'robots.txt'), 'User-agent: *\nAllow: /');
   fs.writeFileSync(path.join(temp, 'sitemap.xml'), '<urlset/>');
-  fs.writeFileSync(path.join(temp, 'images/easyfile-share.png'), 'PNG');
-  fs.writeFileSync(path.join(temp, 'index.html'), '<html lang=en><head><title>Home</title><meta name=description content=Homepage><meta name=robots content=\"index, follow\"><link rel=canonical href=\"https://example.com/\"><meta property=og:image content=\"https://example.com/images/easyfile-share.png\"></head></html>');
+  fs.writeFileSync(path.join(temp, 'images/filemorning_share.png'), 'PNG');
+  fs.writeFileSync(path.join(temp, 'index.html'), '<html lang=en><head><title>Home</title><meta name=description content=Homepage><meta name=robots content=\"index, follow\"><link rel=canonical href=\"https://example.com/\"><meta property=og:image content=\"https://example.com/images/filemorning_share.png\"></head></html>');
   for (const [slug, attr] of Object.entries(meta)) {
     const dir = path.join(temp, slug);
     fs.mkdirSync(dir, { recursive: true });
@@ -32,7 +32,7 @@ function buildFixture(meta) {
       ${attr}
       <meta name=robots content="noindex, follow">
       <link rel=canonical href="https://example.com/${slug}/">
-      <meta property=og:image content="https://example.com/images/easyfile-share.png"></head><body>Test</body></html>`);
+      <meta property=og:image content="https://example.com/images/filemorning_share.png"></head><body>Test</body></html>`);
   }
   return temp;
 }

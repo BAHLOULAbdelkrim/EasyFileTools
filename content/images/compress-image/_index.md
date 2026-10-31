@@ -1,5 +1,5 @@
 ---
-seoTitle: "Compress Image Online | EasyFile Tools"
+seoTitle: "Compress Image Online | FileMorning"
 title: "Compress Image"
 url: "/images/compress-image/"
 icon: "minimize-2"

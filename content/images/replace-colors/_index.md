@@ -1,5 +1,5 @@
 ---
-seoTitle: "Replace Image Colors Online | EasyFile Tools"
+seoTitle: "Replace Image Colors Online | FileMorning"
 title: "Replace Colors"
 url: "/images/replace-colors/"
 icon: "repeat-2"

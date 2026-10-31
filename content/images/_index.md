@@ -1,5 +1,5 @@
 ---
-seoTitle: "Online Image Tools: Convert, Resize & Compress | EasyFile Tools"
+seoTitle: "Online Image Tools: Convert, Resize & Compress | FileMorning"
 title: "Images"
 url: "/images/"          # URL SEO-friendly
 # menu_image: "/images/menu_pc-portables.webp"

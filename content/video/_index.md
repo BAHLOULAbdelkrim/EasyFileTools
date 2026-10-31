@@ -1,5 +1,5 @@
 ---
-seoTitle: "Video Tools Online | EasyFile Tools"
+seoTitle: "Video Tools Online | FileMorning"
 title: "Video"
 url: "/video/"          # URL SEO-friendly
 icon: "video"

@@ -1,5 +1,5 @@
 ---
-seoTitle: "Trim Video Online | EasyFile Tools"
+seoTitle: "Trim Video Online | FileMorning"
 title: "Trim Video"
 url: "/video/trim-video/"
 icon: "scissors"

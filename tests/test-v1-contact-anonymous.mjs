@@ -4,14 +4,14 @@ import fs from 'node:fs';
 import { onRequestPost, onRequest } from '../functions/api/contact.js';
 
 const env = { TURNSTILE_SECRET_KEY: 'a-very-secret-key', RESEND_API_KEY: 'other-secret', CONTACT_FROM_EMAIL: 'reports@test.example', CONTACT_TO_EMAIL: 'private-recipient@test.example' };
-const origin = 'https://easyfiletools.app';
+const origin = 'https://filemorning.com';
 function form(overrides = {}) { return { kind:'problem', tool:'Convert Image', browser:'Chrome', os:'Windows', inputFormat:'PNG', outputFormat:'BMP', description:'BMP background is incorrect', steps:'Load PNG then convert to BMP', errorMessage:'', website:'', turnstileToken:'valid-test-token', ...overrides }; }
 function request(body=form(), options={}) { return new Request(`${origin}/api/contact`, { method:'POST', headers: {'Origin':options.origin || origin, 'Content-Type':options.contentType || 'application/json'}, body:options.raw || JSON.stringify(body) }); }
 async function invoke(payload=form(), options={}) {
   const calls=[]; const previous=globalThis.fetch;
   globalThis.fetch=async (url, init)=>{
     calls.push([url, init]);
-    if (url.includes('turnstile')) return Response.json(options.verify || {success:true, hostname:'easyfiletools.app'});
+    if (url.includes('turnstile')) return Response.json(options.verify || {success:true, hostname:'filemorning.com'});
     if (url.includes('resend')) return Response.json({id:'a-123'}, {status:options.sendStatus || 200});
     throw new Error('Unexpected URL');
   };
@@ -40,7 +40,7 @@ test('rejects non-JSON body',async()=>{
   assert.equal(res.status,415); assert.equal(calls.length,0);
 });
 test('rejects invalid Turnstile and sends no email',async()=>{
-  const {res,calls}=await invoke(form(),{verify:{success:false,hostname:'easyfiletools.app'}});
+  const {res,calls}=await invoke(form(),{verify:{success:false,hostname:'filemorning.com'}});
   assert.equal(res.status,403); assert.equal(calls.length,1);
 });
 test('rejects Turnstile hostname mismatch',async()=>{

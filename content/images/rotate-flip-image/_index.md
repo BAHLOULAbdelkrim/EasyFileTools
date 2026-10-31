@@ -1,5 +1,5 @@
 ---
-seoTitle: "Rotate and Flip Image Online | EasyFile Tools"
+seoTitle: "Rotate and Flip Image Online | FileMorning"
 title: "Rotate / Flip Image"
 url: "/images/rotate-flip-image/"
 icon: "refresh-cw"

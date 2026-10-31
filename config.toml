@@ -9,10 +9,10 @@
 # -------------------------------------------------------------
 
 # URL de base du site (obligatoire pour Cloudflare Pages)
-baseURL = "https://easyfiletools.app/"
+baseURL = "https://filemorning.com/"
 
 # Titre global du site (utilisé dans <title> et SEO)
-title = "EasyFile Tools"
+title = "FileMorning"
 
 # Langue principale
 languageCode = "en"             # Pour HTML / SEO
@@ -62,9 +62,7 @@ endLevel = 2
   description = "Fast, secure and easy-to-use online tools to convert, compress, edit, transform and manage your files."
 
   # Logo affiché dans le header
-  # logo = "images/easyfile-logo.webp"
-  # logo = "images/logo_3.webp"
-  logo = "images/logo_epais.svg"
+  logo = "images/logo_morning.svg"
 
   # -----------------------------------------------------------
   # PALETTE DE COULEURS DU THÈME

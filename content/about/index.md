@@ -1,13 +1,13 @@
 ---
-title: "About EasyFile Tools"
-description: "Learn how EasyFile Tools helps you work with audio, video, images and PDFs, and what browser-based processing means for your files."
+title: "About FileMorning"
+description: "Learn how FileMorning helps you work with audio, video, images and PDFs, and what browser-based processing means for your files."
 seoIndex: true
 layout: "about"
 ---
 
 ## Tools for everyday file tasks
 
-EasyFile Tools brings together browser-based operations for audio, video, images and PDF documents. Start with the [available tools on the homepage](/), select a file and review the settings before processing. Features labelled “Coming soon” are not yet available.
+FileMorning brings together browser-based operations for audio, video, images and PDF documents. Start with the [available tools on the homepage](/), select a file and review the settings before processing. Features labelled “Coming soon” are not yet available.
 
 ## Browser-based processing
 
@@ -23,7 +23,7 @@ Keep the original file until you have opened and checked the downloaded result. 
 
 Explore [audio tools](/audio/), [video tools](/video/), [image tools](/images/) or [PDF tools](/documents/). Each category also includes a guide comparing common file formats.
 
-## Help us improve EasyFile Tools
+## Help us improve FileMorning
 
 Found a problem or have a suggestion ?
 

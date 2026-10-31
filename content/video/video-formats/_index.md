@@ -1,6 +1,6 @@
 ---
 title: "Video Formats (Guide)"
-seoTitle: "MP4 vs WebM vs MKV: Video Format Guide | EasyFile Tools"
+seoTitle: "MP4 vs WebM vs MKV: Video Format Guide | FileMorning"
 url: "/video/video-formats-guide/"
 icon: "book-text"
 guide: "formats"

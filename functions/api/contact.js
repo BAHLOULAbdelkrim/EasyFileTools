@@ -1,4 +1,4 @@
-// EasyFile Tools V1 — anonymous, server-side contact reports.
+// FileMorning V1 — anonymous, server-side contact reports.
 // Receives NO required name/email/upload and NEVER accesses CF-Connecting-IP.
 // Secrets belong in Cloudflare Pages Environment Variables (encrypted secrets).
 const BODY_LIMIT = 12 * 1024;
@@ -91,7 +91,7 @@ export async function onRequestPost({ request, env }) {
     }
 
     const plainText = [
-      'EasyFile Tools — anonymous website message',
+      'FileMorning — anonymous website message',
       `Type: ${payload.kind}`,
       `Tool: ${payload.tool || 'Not specified'}`,
       `Browser (visitor-selected): ${payload.browser || 'Not specified'}`,
@@ -110,7 +110,7 @@ export async function onRequestPost({ request, env }) {
       body: JSON.stringify({
         from: env.CONTACT_FROM_EMAIL,
         to: [env.CONTACT_TO_EMAIL],
-        subject: `EasyFile Tools: ${payload.kind === 'problem' ? 'Problem report' : payload.kind === 'privacy' ? 'Privacy inquiry' : payload.kind === 'suggestion' ? 'Suggestion' : 'Question'}`,
+        subject: `FileMorning: ${payload.kind === 'problem' ? 'Problem report' : payload.kind === 'privacy' ? 'Privacy inquiry' : payload.kind === 'suggestion' ? 'Suggestion' : 'Question'}`,
         text: plainText,
       }),
     });

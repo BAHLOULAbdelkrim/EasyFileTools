@@ -2,7 +2,7 @@
 title: "Sign up"
 url: "/signup/"
 noindex: true
-description: "EasyFile Tools accounts are not available yet. Use the currently available file tools without an account."
+description: "FileMorning accounts are not available yet. Use the currently available file tools without an account."
 ---
 
-Accounts are coming later. For now, EasyFile Tools is available without signing in.
+Accounts are coming later. For now, FileMorning is available without signing in.

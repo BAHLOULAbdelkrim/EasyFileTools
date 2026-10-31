@@ -1,5 +1,5 @@
 ---
-seoTitle: "Split PDF Online | EasyFile Tools"
+seoTitle: "Split PDF Online | FileMorning"
 title: "Split PDF"
 url: "/documents/split-pdf/"
 icon: "square-split-horizontal"

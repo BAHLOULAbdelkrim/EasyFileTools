@@ -1,6 +1,6 @@
 ---
 title: "Audio Formats (Guide)"
-seoTitle: "MP3 vs WAV vs FLAC: Audio Format Guide | EasyFile Tools"
+seoTitle: "MP3 vs WAV vs FLAC: Audio Format Guide | FileMorning"
 url: "/audio/audio-formats-guide"
 icon: "book-text"
 guide: "formats"

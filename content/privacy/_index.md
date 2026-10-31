@@ -1,15 +1,15 @@
 ---
 title: "Privacy Policy"
-description: "How EasyFile Tools handles local files, anonymous messages, storage and external network requests."
+description: "How FileMorning handles local files, anonymous messages, storage and external network requests."
 layout: "policy"
 seoIndex: true
 ---
 
-**Last updated: October 28, 2026**
+**Last updated: October 31, 2026**
 
 ## 1. About this website
 
-EasyFile Tools is currently a personal, non-commercial project that provides browser-based file processing tools.
+FileMorning is currently a personal, non-commercial project that provides browser-based file processing tools.
 
 We aim to limit the collection of personal information and keep file processing on the user's device whenever possible.
 
@@ -17,7 +17,7 @@ For information about the website publisher and hosting provider, please see our
 
 ## 2. File processing and local storage
 
-Available file-processing tools are designed to process your files locally in your browser, without routinely uploading them to an EasyFile Tools conversion server.
+Available file-processing tools are designed to process your files locally in your browser, without routinely uploading them to a FileMorning conversion server.
 
 Some tools may temporarily store selected files and related information using browser storage, including IndexedDB and session storage, to support navigation and restore your working selection.
 
@@ -49,11 +49,11 @@ As reports are anonymous, we cannot reply individually to their senders.
 
 ## 4. IP addresses and technical information
 
-When you access EasyFile Tools, your browser communicates with the website's hosting infrastructure.
+When you access FileMorning, your browser communicates with the website's hosting infrastructure.
 
 Cloudflare and other infrastructure providers may process technical information, including IP addresses, to deliver the website, provide security and maintain the service.
 
-EasyFile Tools does not intentionally record visitors' IP addresses in its contact application or include them in the reports received by the website operator.
+FileMorning does not intentionally record visitors' IP addresses in its contact application or include them in the reports received by the website operator.
 
 This does not mean that IP addresses are never processed or retained by infrastructure providers.
 
@@ -83,7 +83,7 @@ Where applicable, the website operator relies on legitimate interests in maintai
 
 Files stored locally in your browser remain under the control of your browser and device.
 
-Contact messages are not stored in a separate EasyFile Tools application database. However, they are delivered to a receiving mailbox and may be processed or retained by the email service provider.
+Contact messages are not stored in a separate FileMorning application database. However, they are delivered to a receiving mailbox and may be processed or retained by the email service provider.
 
 **Contact message retention:** Reports are kept for as long as needed to review the request, investigate the issue and document any necessary follow-up. The retention period is determined by whether the report remains unresolved, whether it is relevant to a recurring problem, and whether an applicable legal obligation requires longer retention. Messages that are no longer needed for these purposes are deleted following review of the receiving mailbox. This does not control any separate technical or delivery-record retention by email or infrastructure providers.
 
@@ -95,11 +95,11 @@ Any applicable international data transfers and their safeguards must be assesse
 
 ## 8. Cookies and similar technologies
 
-EasyFile Tools uses browser storage for certain functional features, including file selection and navigation.
+FileMorning uses browser storage for certain functional features, including file selection and navigation.
 
-Advertising and audience analytics technologies are not planned for the initial version of the website.
+The website uses Cloudflare Web Analytics to monitor website traffic and performance. Cloudflare may process technical data relating to page requests and visits under its applicable privacy practices. This analytics feature is not intended to read the contents of files you process in your browser.
 
-If non-essential analytics, advertising or similar technologies are introduced, this policy will be updated and any legally required consent mechanism will be implemented.
+We do not currently use advertising tracking on the website. If additional non-essential analytics, advertising or similar technologies are introduced, we will update this policy and implement any legally required consent mechanism.
 
 External services may also use technologies governed by their own privacy practices.
 
@@ -109,7 +109,7 @@ Where applicable under data protection law, you may have rights to access, recti
 
 You may also lodge a complaint with the French data protection authority, the [CNIL](https://www.cnil.fr/).
 
-**Privacy rights contact:** [privacy@easyfiletools.app](mailto:privacy@easyfiletools.app)
+**Privacy rights contact:** [filemorning.com@gmail.com](mailto:filemorning.com@gmail.com)
 
 The anonymous reporting form can be used to raise privacy concerns, but it cannot support individual replies or identity verification.
 

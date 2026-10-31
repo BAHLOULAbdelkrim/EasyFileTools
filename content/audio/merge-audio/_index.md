@@ -1,5 +1,5 @@
 ---
-seoTitle: "Merge Audio Online | EasyFile Tools"
+seoTitle: "Merge Audio Online | FileMorning"
 title: "Merge Audio"
 url: "/audio/merge-audio/"
 icon: "merge"
